@@ -18,9 +18,9 @@ public class CardDTO {
 	private String brand;	
 	private String card_image;	
 	private String card_url;	
-	private String fee_domestic;	
-	private String fee_foreign;	
-	private String prev_month_cost;	
+	private int fee_domestic;	
+	private int fee_foreign;	
+	private int prev_month_cost;	
 	private int card_like;	
 	private int card_views;
 }
