@@ -23,6 +23,7 @@ header.main-header {
 
 /* 왼쪽 로그인 */
 .header-left {
+  margin-left: 20px;
   display: flex;
   gap: 20px;
 }
@@ -48,6 +49,7 @@ header.main-header {
 
 /* 오른쪽 검색 */
 .header-right {
+  margin-right: 20px;
   display: flex;
   align-items: center;
   gap: 10px;
