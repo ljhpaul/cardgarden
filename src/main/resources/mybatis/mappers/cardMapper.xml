@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.firstzone.card">
+
+<select id="searchCards" resultType="CardDTO" parameterType="map">
+    SELECT DISTINCT c.* 
+    FROM card c
+    LEFT JOIN CardBenefitDetail cbd ON c.card_id = cbd.card_id
+    LEFT JOIN BenefitDetail bd ON cbd.benefitdetail_id = bd.benefitdetail_id
+    WHERE 
+        LOWER(c.card_name) LIKE CONCAT('%', LOWER(#{keyword}), '%')
+        OR LOWER(c.company) LIKE CONCAT('%', LOWER(#{keyword}), '%')
+        OR LOWER(c.brand) LIKE CONCAT('%', LOWER(#{keyword}), '%')
+        OR LOWER(cbd.cardbenefitdetail_text) LIKE CONCAT('%', LOWER(#{keyword}), '%')
+        OR LOWER(bd.benefitdetail_name) LIKE CONCAT('%', LOWER(#{keyword}), '%')
+    <choose>
+        <when test="sort == 'views'">
+            ORDER BY c.card_views DESC
+        </when>
+        <when test="sort == 'likes'">
+            ORDER BY c.card_like DESC
+        </when>
+        <when test="sort == 'name'">
+            ORDER BY c.card_name ASC
+        </when>
+        <otherwise>
+            ORDER BY c.card_name ASC  
+        </otherwise>
+    </choose>
+    LIMIT #{offset}, #{pageSize}
+</select>
+
+<select id="countCards" resultType="int" parameterType="map">
+    SELECT COUNT(DISTINCT c.card_id)
+    FROM card c
+    LEFT JOIN CardBenefitDetail cbd ON c.card_id = cbd.card_id
+    LEFT JOIN BenefitDetail bd ON cbd.benefitdetail_id = bd.benefitdetail_id
+    WHERE 
+        LOWER(c.card_name) LIKE CONCAT('%', LOWER(#{keyword}), '%')
+        OR LOWER(c.company) LIKE CONCAT('%', LOWER(#{keyword}), '%')
+        OR LOWER(c.brand) LIKE CONCAT('%', LOWER(#{keyword}), '%')
+        OR LOWER(cbd.cardbenefitdetail_text) LIKE CONCAT('%', LOWER(#{keyword}), '%')
+        OR LOWER(bd.benefitdetail_name) LIKE CONCAT('%', LOWER(#{keyword}), '%')
+</select>
+
+
+
+
+
+
+</mapper>

@@ -38,6 +38,7 @@
 		<property name="dataSource" ref="dataSource" />
 		<property name="configLocation" value="classpath:mybatis/sqlMapConfig.xml" />
 		<property name="mapperLocations" value="classpath:mybatis/mappers/*Mapper.xml" />
+		<property name="typeAliasesPackage" value="com.firstzone.card.dto" />
 	</bean>
 	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg ref="sqlSessionFactory" />
