@@ -1,0 +1,74 @@
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #f6f7fb;
+    margin: 0;
+    padding: 0;
+}
+
+h2 {
+    color: #42557c;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+a {
+    text-decoration: none;
+    color: #4773ec;
+    font-weight: bold;
+}
+
+a:hover {
+    color: #274bbb;
+    text-decoration: underline;
+}
+
+table {
+    border-collapse: collapse;
+    width: 70%;
+    margin: 30px auto;
+    background: #fff;
+    box-shadow: 0 2px 12px rgba(66, 85, 124, 0.12);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+th, td {
+    padding: 12px 20px;
+    text-align: center;
+}
+
+th {
+    background: #e7eefe;
+    color: #38507a;
+    font-size: 1.1em;
+}
+
+td {
+    border-bottom: 1px solid #e6e6e6;
+}
+
+tr:last-child td {
+    border-bottom: none;
+}
+
+tr:hover {
+    background: #f0f6ff;
+    transition: background 0.15s;
+}
+
+a[href*="addForm"] {
+    display: inline-block;
+    margin: 0 0 18px 18px;
+    padding: 7px 20px;
+    background: #4773ec;
+    color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 6px rgba(71, 115, 236, 0.07);
+    transition: background 0.18s;
+}
+
+a[href*="addForm"]:hover {
+    background: #274bbb;
+    color: #fff;
+}
