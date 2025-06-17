@@ -1,13 +1,24 @@
+<<<<<<< Updated upstream
 <%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="cpath" value="${pageContext.request.contextPath}" />
 <%@ include file="../common/header.jsp" %>
 
+=======
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="cpath" value="${pageContext.request.contextPath}" />
+>>>>>>> Stashed changes
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
+<<<<<<< Updated upstream
 <title>카드조회</title>
+=======
+<title>Ch_ym</title>
+>>>>>>> Stashed changes
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -49,12 +60,20 @@ div, form {
 	justify-content: center; /* 수평 가운데 정렬 */
 }
 
+<<<<<<< Updated upstream
 /* header {
+=======
+header {
+>>>>>>> Stashed changes
 	width: 100%;
 	height: 200px;
 	margin: 0 auto;
 	background-color: blue;
+<<<<<<< Updated upstream
 } */
+=======
+}
+>>>>>>> Stashed changes
 
 #content {
   margin-top : 30px;
@@ -119,9 +138,16 @@ div, form {
 </style>
 </head>
 <body>
+<<<<<<< Updated upstream
 <div>됐으면 좋겠다 ㅎㅎ</div>
 	<div class="wrap">
 
+=======
+	<header></header>
+	<div class="wrap">
+
+
+>>>>>>> Stashed changes
 		<!-- 콘텐츠 영역 -->
 		<div id="content">
 		<div class="cardtype">
