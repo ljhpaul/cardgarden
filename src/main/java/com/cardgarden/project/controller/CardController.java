@@ -17,7 +17,7 @@ public class CardController {
 	
 	String namespace = "com.cardgarden.inCon.";
 	
-	@GetMapping("/inCon.do")
+	@GetMapping("/inCon")
 	public String insertView(Model model) {
 		
 	
@@ -30,10 +30,10 @@ public class CardController {
 		
 	}
 	
-	@GetMapping("/cardAll.do")
+	@GetMapping("/cardAll")
 	public String cardall() {
 		
-		return "cardgarden/cardAll";
+		return "cardSelect/cardAll";
 	}
 
 	
