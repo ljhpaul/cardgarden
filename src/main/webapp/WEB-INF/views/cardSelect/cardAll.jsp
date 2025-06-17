@@ -70,28 +70,12 @@ div, form {
 	justify-content: center; /* 수평 가운데 정렬 */
 }
 
-<<<<<<< HEAD
-<<<<<<< Updated upstream
 /* header {
-=======
-header {
->>>>>>> Stashed changes
-=======
-header {
->>>>>>> de1acd047e6abcfe4fd4d33b3d5750bd560c51b4
 	width: 100%;
 	height: 200px;
 	margin: 0 auto;
 	background-color: blue;
-<<<<<<< HEAD
-<<<<<<< Updated upstream
 } */
-=======
-}
->>>>>>> Stashed changes
-=======
-}
->>>>>>> de1acd047e6abcfe4fd4d33b3d5750bd560c51b4
 
 #content {
   margin-top : 30px;
@@ -156,22 +140,8 @@ header {
 </style>
 </head>
 <body>
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-<div>됐으면 좋겠다 ㅎㅎ</div>
 	<div class="wrap">
 
-=======
-=======
->>>>>>> de1acd047e6abcfe4fd4d33b3d5750bd560c51b4
-	<header></header>
-	<div class="wrap">
-
-
-<<<<<<< HEAD
->>>>>>> Stashed changes
-=======
->>>>>>> de1acd047e6abcfe4fd4d33b3d5750bd560c51b4
 		<!-- 콘텐츠 영역 -->
 		<div id="content">
 		<div class="cardtype">
