@@ -1,0 +1,42 @@
+@charset "EUC-KR";
+
+/* 폰트 정의 */
+@font-face {
+  font-family: 'NanumSquareRound';
+  src: url('/resources/fonts/NanumSquareRoundOTFL.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'NanumSquareRound';
+  src: url('/resources/fonts/NanumSquareRoundOTFR.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'NanumSquareRound';
+  src: url('/resources/fonts/NanumSquareRoundOTFB.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'NanumSquareRound';
+  src: url('/resources/fonts/NanumSquareRoundOTFEB.otf') format('opentype');
+  font-weight: 800;
+  font-style: normal;
+}
+
+/*색상(메인은 m, 서브는 s)*/
+:root {
+  --main: #F0F3F1;
+  --m1: #8FB098;
+  --m2: #DFEED8;
+  --m3: #646F58;
+  --s1: #FFAEBC;
+  --s2: #FFF5E1;
+  --font: 'NanumSquareRound', sans-serif;
+}
+/*링크밑줄제거 */
+a {
+  text-decoration: none;
+}
