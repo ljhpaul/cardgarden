@@ -13,10 +13,10 @@ import com.cardgarden.project.model.cardSelect.UserConsumptionPatternService;
 
 @Controller
 public class CardController {
-	
+
 	@Autowired
 	UserConsumptionPatternService ucpService;
-	
+
 	String namespace = "com.cardgarden.inCon.";
 	
 	@GetMapping("/inCon.do")
