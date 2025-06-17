@@ -6,12 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 
 import com.cardgarden.project.model.selectCard.UserConsumptionPatternDTO;
 import com.cardgarden.project.model.selectCard.UserConsumptionPatternService;
 @Controller
 =======
+=======
+>>>>>>> de1acd047e6abcfe4fd4d33b3d5750bd560c51b4
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.cardgarden.project.model.cardSelectAll.UserConsumptionPatternDTO;
@@ -19,11 +22,15 @@ import com.cardgarden.project.model.cardSelectAll.UserConsumptionPatternService;
 
 @Controller
 @RequestMapping("/card")
+<<<<<<< HEAD
 >>>>>>> Stashed changes
+=======
+>>>>>>> de1acd047e6abcfe4fd4d33b3d5750bd560c51b4
 public class CardController {
 	
 	@Autowired
 	UserConsumptionPatternService ucpService;
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 	
 	String namespace = "com.cardgarden.inCon.";
@@ -52,6 +59,11 @@ public class CardController {
 	
 	String namespace = "com.cardgarden.inCon.";
 	
+=======
+	
+	String namespace = "com.cardgarden.inCon.";
+	
+>>>>>>> de1acd047e6abcfe4fd4d33b3d5750bd560c51b4
 	@GetMapping("/inCon.do")
 	public String insertView(Model model) {
 		
