@@ -7,22 +7,16 @@
 - feature/기능명-세부기능명-담당자: 개별 기능 개발 브랜치('-'로 연결)
   담당 기능 안에서의 merge는 자율적으로 하되 전체 통합시 merge는 담당자가 진행
   - 회원관련	[feature/auth]
-    - 로그인	[feature/auth-login-ljh]
-  - 마이페이지	[feature/mypage-ljh]
+    - 로그인	[feature/auth-login]
+  - 마이페이지	[feature/mypage]
   - 카드관련	[feature/card]
-    - 카드조회	[feature/card-search-condition-ycs]
+    - 카드조회	[feature/card-search-condition]
     - 카드검색	[feature/card-search-keyword]
       - 각자가 세부 브랜치 파서 진행, merge는 협업자의 승인 하에
-			[feature/card-search-keyword-lsh]
-			[feature/card-search-keyword-kkm]
     - 카드상세보기	[feature/card-detail]
-			[feature/card-detail-lsh]
-			[feature/card-detail-kkm]
-  - 이벤트		[feature/event-ybd]
-  - 커스터마이징	[feature/card-customizing-ybd]
+  - 이벤트		[feature/event]
+  - 커스터마이징	[feature/card-customizing]
   - 공통 UI	[feature/ui-header]
-			[feature/ui-header-ycs]
-			[feature/ui-header-ybd]
 
 - hotfix/버그명: 긴급 수정 브랜치
 - docs/문서명: 문서/규칙/README 등 관리용
@@ -31,8 +25,8 @@
 ## 💡 코드리뷰/PR 방법
 
 - 1. [develop]를 pull한 후 각자의 기능에 해당하는 branch 생성 (ex. [develop] → [feature/card])
-- 2. 기능브랜치 → 세부기능브랜치 → 담당자브랜치까지 쭉 생성 : [feature/기능명-세부기능명-담당자]
-- 2. 각자 [feature/기능명-세부기능명-담당자]에서 개발
+- 2. 기능브랜치 → 세부기능브랜치 까지 쭉 생성 : [feature/기능명-세부기능명]
+- 2. 각자 [feature/기능명-세부기능명]에서 개발
 - 3. PR(Pull Request) 작성 시, 리뷰어 지정 및 변경내용/테스트 방법 명시
 - 4. 리뷰 후 [feature/기능명]에 merge
 - 5. 최종 통합시 [develop]에 각 기능별 브랜치를 총괄 담당자가 merge
