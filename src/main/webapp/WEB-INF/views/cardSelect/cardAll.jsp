@@ -119,7 +119,7 @@ div, form {
 </style>
 </head>
 <body>
-
+<div>계정 잘 바뀌었나..?</div>
 	<div class="wrap">
 
 		<!-- 콘텐츠 영역 -->
