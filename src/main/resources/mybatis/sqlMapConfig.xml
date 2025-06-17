@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+  
+  <settings>
+    <setting name="logImpl" value="LOG4J"/>
+    <setting name="jdbcTypeForNull" value="NULL"/>
+  </settings>
+  
+  <typeAliases>
+<!-- 별칭예시입니다. 주석 확인후 기능에 맞게 수정하세요~! 
+		sqlMap.config에서 지정한 별칭이 Mapper.xml에서 resultType으로 사용
+     <typeAlias type="com.shinhan.spring.model.emp.EmpDTO" alias="empDTO"/> -->
+     <typeAlias type="com.cardgarden.project.model.sample.SampleDTO" alias="sampleDTO"/>
+  </typeAliases>
+  
+</configuration>

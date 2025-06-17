@@ -6,13 +6,43 @@
 	<appender name="console" class="org.apache.log4j.ConsoleAppender">
 		<param name="Target" value="System.out" />
 		<layout class="org.apache.log4j.PatternLayout">
-			<param name="ConversionPattern" value="%-5p: %c - %m%n" />
+			<param name="ConversionPattern" value="%-5p: %c - %M %m%n" />
+		</layout>
+	</appender>
+	
+	<!-- DailyFile Appenders -->
+	<appender name="dailyFileAppender" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="C:\\spring\\logs\\output.log" />
+		<param name="Append" value="true" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="DatePattern"  value="'.'yyyy-MM-dd"/>
+			<param name="ConversionPattern"  value="[%d{HH:mm:ss}][%-5p](%F:%L)-%m%n"/>
 		</layout>
 	</appender>
 	
 	<!-- Application Loggers -->
+	<!-- 수준: debug > info > warn > error -->
 	<logger name="com.cardgarden.project">
 		<level value="info" />
+	</logger>
+	
+	<!-- Query Loggers -->
+	<logger name="jdbc.sqlonly" additivity="false">
+		<level value="INFO" />
+		<appender-ref ref="console" />
+	</logger>
+	
+	<!-- 결과 Log나오기 -->
+<!-- 	<logger name="jdbc.resultsettable" additivity="false">
+		<level value="INFO" />
+		<appender-ref ref="console" />
+	</logger> -->
+	
+	<logger name="jdbc.resultset" >
+	<level value="off"></level>
+	</logger>
+	<logger name="jdbc.resultsettable" >
+	<level value="off"></level>
 	</logger>
 	
 	<!-- 3rdparty Loggers -->
@@ -36,6 +66,7 @@
 	<root>
 		<priority value="warn" />
 		<appender-ref ref="console" />
+		<appender-ref ref="dailyFileAppender" />
 	</root>
 	
 </log4j:configuration>
