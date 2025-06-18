@@ -45,8 +45,8 @@
 
     <!--검색 -->
     <div class="header-right">
-      <form action="${cpath}/search.do" method="get">
-        <input type="text" name="question" class="text1" placeholder="검색어를 입력하세요">
+      <form action="${cpath}/card/cardsearch"" method="get">
+        <input type="text" name="keyword" class="text1" placeholder="검색어를 입력하세요">
       </form>
       <a href="${cpath}/mypage/likes.do"><i class="fa-regular fa-heart"></i></a>
     </div>
