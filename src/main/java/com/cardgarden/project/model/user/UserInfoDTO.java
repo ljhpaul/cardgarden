@@ -1,4 +1,4 @@
-package com.cardgarden.project.model.userInfo;
+package com.cardgarden.project.model.user;
 
 import java.sql.Date;
 
