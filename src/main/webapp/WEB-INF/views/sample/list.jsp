@@ -7,7 +7,7 @@
 </head>
 <body>
 <h2>Sample List</h2>
-<a href="${pageContext.request.contextPath}/sample/addForm">[추가]</a>
+<a href="${pageContext.request.contextPath}/sample/addForm">[추 가]</a>
 <table border="1">
     <tr>
         <th>ID</th><th>Name</th><th>상세</th><th>수정</th><th>삭제</th>
