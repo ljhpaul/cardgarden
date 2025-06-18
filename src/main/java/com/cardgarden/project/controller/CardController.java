@@ -14,30 +14,30 @@ import com.cardgarden.project.model.cardSelect.UserConsumptionPatternService;
 @Controller
 public class CardController {
 
-	@Autowired
-	UserConsumptionPatternService ucpService;
+   @Autowired
+   UserConsumptionPatternService ucpService;
 
-	String namespace = "com.cardgarden.inCon.";
-	
-	@GetMapping("/inCon.do")
-	public String insertView(Model model) {
-		
-	
-		List<UserConsumptionPatternDTO>  benefitCategorylist = ucpService.selectAll();
-		
-		System.out.println(benefitCategorylist.size());
-	    model.addAttribute("benefitCategorylist", benefitCategorylist); // JSPø°º≠ ¿Ã ¿Ã∏ß¿∏∑Œ ªÁøÎ ∞°¥…
-		
-		return "cardgarden/insertUserConsumptionPattern"; // ∫‰ ¿Ã∏ß
-		
-	}
-	
-	@GetMapping("/cardAll.do")
-	public String cardall() {
-		
-		return "cardgarden/cardAll";
-	}
+   String namespace = "com.cardgarden.inCon.";
+   
+   @GetMapping("/inCon.do")
+   public String insertView(Model model) {
+      
+   
+      List<UserConsumptionPatternDTO>  benefitCategorylist = ucpService.selectAll();
+      
+      System.out.println(benefitCategorylist.size());
+       model.addAttribute("benefitCategorylist", benefitCategorylist); // JSPÏóêÏÑú Ïù¥ Ïù¥Î¶ÑÏúºÎ°ú ÏÇ¨Ïö© Í∞ÄÎä•
+      
+      return "cardgarden/insertUserConsumptionPattern"; // Î∑∞ Ïù¥Î¶Ñ
+      
+   }
+   
+   @GetMapping("/cardAll.do")
+   public String cardall() {
+      
+      return "cardgarden/cardAll";
+   }
 
-	
+   
 
 }

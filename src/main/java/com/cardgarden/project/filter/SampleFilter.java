@@ -13,34 +13,34 @@ import javax.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * @WebFilter : ¼­ºí¸´ 3¹öÀüºÎÅÍ Áö¿ø, ÇÏÀ§¹öÀüÀº web.xmlÀ» ÅëÇØ .xmlÆÄÀÏ µî·Ï LoginChkFiilter´Â .do
- *            ¿äÃ»½Ã¿¡¸¸ ¼öÇàÇÏµµ·Ï ÇÏ±â
+ * @WebFilter : ì„œë¸”ë¦¿ 3ë²„ì „ë¶€í„° ì§€ì›, í•˜ìœ„ë²„ì „ì€ web.xmlì„ í†µí•´ .xmlíŒŒì¼ ë“±ë¡ LoginChkFiilterëŠ” .do
+ *            ìš”ì²­ì‹œì—ë§Œ ìˆ˜í–‰í•˜ë„ë¡ í•˜ê¸°
  */
 @Slf4j
 //@WebFilter("/sample/*")
 public class SampleFilter implements Filter {
 
-	@Override
-	public void init(FilterConfig filterConfig) throws ServletException {
-		
-	}
+   @Override
+   public void init(FilterConfig filterConfig) throws ServletException {
+      
+   }
 
-	@Override
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		//============================================================
-		HttpServletRequest req = (HttpServletRequest) request;
-		log.info("LoginChkFiilter ¿äÃ»ÁÖ¼Ò È®ÀÎ: " + req.getRequestURL());
-		log.info("[SampleFilter] Before chain.doFilter");
-		//---------------------------------------------------------
-		chain.doFilter(request, response);
-		//---------------------------------------------------------
-		log.info("[SampleFilter] After chain.doFilter");
-		//============================================================
-	}
+   @Override
+   public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+      //============================================================
+      HttpServletRequest req = (HttpServletRequest) request;
+      log.info("LoginChkFiilter ìš”ì²­ì£¼ì†Œ í™•ì¸: " + req.getRequestURL());
+      log.info("[SampleFilter] Before chain.doFilter");
+      //---------------------------------------------------------
+      chain.doFilter(request, response);
+      //---------------------------------------------------------
+      log.info("[SampleFilter] After chain.doFilter");
+      //============================================================
+   }
 
-	@Override
-	public void destroy() {
+   @Override
+   public void destroy() {
 
-	}
+   }
 
 }

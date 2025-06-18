@@ -8,48 +8,48 @@ import org.springframework.stereotype.Repository;
 
 import lombok.extern.slf4j.Slf4j;
 
-@Repository //DAO + BeanµÓ∑œ + DBøπø‹ Spring øπø‹∑Œ √≥∏Æ
+@Repository //DAO + BeanÎì±Î°ù + DBÏòàÏô∏ Spring ÏòàÏô∏Î°ú Ï≤òÎ¶¨
 @Slf4j
 public class UserInfoDAO implements UserInfoDAOInterface {
-	
-	@Autowired
-	SqlSession sqlSession;
-	
-	String namespace = "com.cardgarden.sample.";
+   
+   @Autowired
+   SqlSession sqlSession;
+   
+   String namespace = "com.cardgarden.sample.";
 
-	@Override
-	public List<UserInfoDTO> selectAll() {
-		List<UserInfoDTO> dtolist = sqlSession.selectList(namespace + "selectAll");
-		log.info(dtolist.size() + "∞« ¡∂»∏µ (lombok_Slf4j)");
-		return dtolist;
-	}
+   @Override
+   public List<UserInfoDTO> selectAll() {
+      List<UserInfoDTO> dtolist = sqlSession.selectList(namespace + "selectAll");
+      log.info(dtolist.size() + "Í±¥ Ï°∞ÌöåÎê®(lombok_Slf4j)");
+      return dtolist;
+   }
 
-	@Override
-	public UserInfoDTO selectById(int id) {
-		UserInfoDTO sample = sqlSession.selectOne(namespace + "selectById", id);
-		log.info(sample.toString() + " ... (lombok_Slf4j)");
-		return sample;
-	}
+   @Override
+   public UserInfoDTO selectById(int id) {
+      UserInfoDTO sample = sqlSession.selectOne(namespace + "selectById", id);
+      log.info(sample.toString() + " ... (lombok_Slf4j)");
+      return sample;
+   }
 
-	@Override
-	public int insert(UserInfoDTO dto) {
-		int result = sqlSession.insert(namespace + "insert", dto);
-		log.info(result + "∞« ¿‘∑¬µ (lombok_Slf4j)");
-		return result;
-	}
+   @Override
+   public int insert(UserInfoDTO dto) {
+      int result = sqlSession.insert(namespace + "insert", dto);
+      log.info(result + "Í±¥ ÏûÖÎ†•Îê®(lombok_Slf4j)");
+      return result;
+   }
 
-	@Override
-	public int update(UserInfoDTO dto) {
-		int result = sqlSession.update(namespace + "update", dto);
-		log.info(result + "∞« ºˆ¡§µ (lombok_Slf4j)");
-		return result;
-	}
+   @Override
+   public int update(UserInfoDTO dto) {
+      int result = sqlSession.update(namespace + "update", dto);
+      log.info(result + "Í±¥ ÏàòÏ†ïÎê®(lombok_Slf4j)");
+      return result;
+   }
 
-	@Override
-	public int delete(int id) {
-		int result = sqlSession.delete(namespace + "delete", id);
-		log.info(result + "∞« ªË¡¶µ (lombok_Slf4j)");
-		return result;
-	}
-	
+   @Override
+   public int delete(int id) {
+      int result = sqlSession.delete(namespace + "delete", id);
+      log.info(result + "Í±¥ ÏÇ≠Ï†úÎê®(lombok_Slf4j)");
+      return result;
+   }
+   
 }

@@ -16,7 +16,7 @@ public class SampleController {
     @Autowired
     SampleService sampleService;
     
-    // 0. ·¹ÀÌÀÌ¿ô Å×½ºÆ®
+    // 0. ë ˆì´ì´ì›ƒ í…ŒìŠ¤íŠ¸
     @GetMapping("/testPage")
     public String testPage(Model model) {
         List<SampleDTO> list = sampleService.selectAll();
@@ -24,7 +24,7 @@ public class SampleController {
         return "";  // /WEB-INF/views/sample/list.jsp
     }
     
-    // 1. ÀüÃ¼ ¸®½ºÆ®
+    // 1. ì „ì²´ ë¦¬ìŠ¤íŠ¸
     @GetMapping("/list")
     public String list(Model model) {
         List<SampleDTO> list = sampleService.selectAll();
@@ -32,7 +32,7 @@ public class SampleController {
         return "sample/list";  // /WEB-INF/views/sample/list.jsp
     }
 
-    // 2. »ó¼¼Á¶È¸ (id·Î)
+    // 2. ìƒì„¸ì¡°íšŒ (idë¡œ)
     @GetMapping("/detail")
     public String detail(@RequestParam int id, Model model) {
         SampleDTO dto = sampleService.selectById(id);
@@ -40,20 +40,20 @@ public class SampleController {
         return "sample/detail"; // /WEB-INF/views/sample/detail.jsp
     }
 
-    // 3. µî·Ï Æû
+    // 3. ë“±ë¡ í¼
     @GetMapping("/addForm")
     public String addForm() {
         return "sample/addForm"; // /WEB-INF/views/sample/addForm.jsp
     }
 
-    // 3-1. µî·Ï Ã³¸®
+    // 3-1. ë“±ë¡ ì²˜ë¦¬
     @PostMapping("/add")
     public String add(@ModelAttribute SampleDTO dto) {
         sampleService.insert(dto);
         return "redirect:/sample/list";
     }
 
-    // 4. ¼öÁ¤ Æû
+    // 4. ìˆ˜ì • í¼
     @GetMapping("/editForm")
     public String editForm(@RequestParam int id, Model model) {
         SampleDTO dto = sampleService.selectById(id);
@@ -61,14 +61,14 @@ public class SampleController {
         return "sample/editForm"; // /WEB-INF/views/sample/editForm.jsp
     }
 
-    // 4-1. ¼öÁ¤ Ã³¸®
+    // 4-1. ìˆ˜ì • ì²˜ë¦¬
     @PostMapping("/edit")
     public String edit(@ModelAttribute SampleDTO dto) {
         sampleService.update(dto);
         return "redirect:/sample/list";
     }
 
-    // 5. »èÁ¦ Ã³¸®
+    // 5. ì‚­ì œ ì²˜ë¦¬
     @GetMapping("/delete")
     public String delete(@RequestParam int id) {
         sampleService.delete(id);
