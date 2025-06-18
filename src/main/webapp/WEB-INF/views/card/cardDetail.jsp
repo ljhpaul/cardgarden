@@ -117,7 +117,7 @@
 						<p>${card.company}</p>
 						<p>${card.card_type}</p>
 						<p>${card.brand}</p>
-				
+						<%-- <a href="${cpath}/card/cardlike.do" target="_blank" class="go-button">좋아요: ${card.card_like}</a> --%>
 						<div class="card-tags">
 							<span>국내연회비: ${card.fee_domestic}원</span>
 							<span>해외연회비: ${card.fee_foreign}원</span>
@@ -127,6 +127,7 @@
 								카드사 바로가기
 							</a>
 					</div>
+				
 				</div>
 
 		</c:forEach>
