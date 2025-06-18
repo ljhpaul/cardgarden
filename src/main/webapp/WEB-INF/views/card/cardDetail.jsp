@@ -121,7 +121,7 @@
 						<div class="card-tags">
 							<span>국내연회비: ${card.fee_domestic}원</span>
 							<span>해외연회비: ${card.fee_foreign}원</span>
-							<span>전월실적: ${card.prev_month_cost}원</span>
+							<span>전월실적: ${card.prev_month_cost}만원</span>
 						</div>
 							<a href="${card.card_url}" target="_blank" class="go-button">
 								카드사 바로가기
