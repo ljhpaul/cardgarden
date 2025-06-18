@@ -8,15 +8,15 @@ import org.springframework.stereotype.Service;
 
 
 
-@Service //@Componet + ¼­ºñ½º ¿ªÇÒ
+@Service //@Componet + ì„œë¹„ìŠ¤ ì—­í• 
 public class UserConsumptionPatternService {
-	
-	@Autowired
-	UserConsumptionPatternDAO UserConDAO;
-	
-	public List<UserConsumptionPatternDTO> selectAll() {
-		List<UserConsumptionPatternDTO>  benefitCategorylist = UserConDAO.selectAll();
-		return benefitCategorylist;
-	}
+   
+   @Autowired
+   UserConsumptionPatternDAO UserConDAO;
+   
+   public List<UserConsumptionPatternDTO> selectAll() {
+      List<UserConsumptionPatternDTO>  benefitCategorylist = UserConDAO.selectAll();
+      return benefitCategorylist;
+   }
 
 }

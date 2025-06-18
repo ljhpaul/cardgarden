@@ -7,17 +7,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 
-@Repository //DAO + BeanµÓ∑œ + DBøπø‹ Spring øπø‹∑Œ √≥∏Æ
+@Repository //DAO + BeanÎì±Î°ù + DBÏòàÏô∏ Spring ÏòàÏô∏Î°ú Ï≤òÎ¶¨
 public class UserConsumptionPatternDAO {
-	
-	@Autowired
-	SqlSession sqlSession;
-	
-	String namespace = "com.cardgarden.inCon.";
-	
-	public List<UserConsumptionPatternDTO> selectAll() {
-		List<UserConsumptionPatternDTO> benefitCategorylist = sqlSession.selectList(namespace + "selectAll");
-		return benefitCategorylist;
-	}
+   
+   @Autowired
+   SqlSession sqlSession;
+   
+   String namespace = "com.cardgarden.inCon.";
+   
+   public List<UserConsumptionPatternDTO> selectAll() {
+      List<UserConsumptionPatternDTO> benefitCategorylist = sqlSession.selectList(namespace + "selectAll");
+      return benefitCategorylist;
+   }
 
 }
