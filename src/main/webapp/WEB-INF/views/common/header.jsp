@@ -11,6 +11,7 @@
 <!---->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://kit.fontawesome.com/ec9dd02254.js" crossorigin="anonymous"></script>
+<script src="${cpath}/resources/js/header.js?after"></script>
 
 <link rel="stylesheet" href="${cpath}/resources/css/common.css?after">
 <link rel="stylesheet" href="${cpath}/resources/css/header.css?after">
@@ -44,8 +45,8 @@
 
     <!--검색 -->
     <div class="header-right">
-      <form action="${cpath}/search.do" method="get">
-        <input type="text" name="question" class="text1" placeholder="검색어를 입력하세요">
+      <form action="${cpath}/card/cardsearch"" method="get">
+        <input type="text" name="keyword" class="text1" placeholder="검색어를 입력하세요">
       </form>
       <a href="${cpath}/mypage/likes.do"><i class="fa-regular fa-heart"></i></a>
     </div>
@@ -60,3 +61,34 @@
   </div>
 </header>
 </div>
+
+<!-- sticky -->
+<nav class="sticky-menu">
+  <div class="menu-inner">
+    
+    <!-- 왼쪽 로고 -->
+    <div class="menu-left">
+      <a href="${cpath}/main">
+        <img class="mascot" src="${cpath}/resources/images/mascot/flower/Mascot_flower_1.png" style="height: 36px;">
+        <img class="logo" src="${cpath}/resources/images/common/logo.png" style="height: 26px;">
+      </a>
+    </div>
+
+    <!-- 가운데 메뉴 -->
+    <div class="menu-center">
+      <a href="${cpath}/card/list.do">카드</a>
+      <a href="${cpath}/recommend/ai.do">AI 추천</a>
+      <a href="${cpath}/customizing.do">커스터마이징</a>
+      <a href="${cpath}/event/list.do">이벤트</a>
+    </div>
+
+    <!-- 오른쪽 검색 + 하트 -->
+    <div class="menu-right">
+      <form action="${cpath}/search.do" method="get">
+        <input type="text" name="question" placeholder="검색어">
+      </form>
+      <a href="${cpath}/mypage/likes.do"><i class="fa-regular fa-heart"></i></a>
+    </div>
+
+  </div>
+</nav>

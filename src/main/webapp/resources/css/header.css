@@ -16,10 +16,9 @@ header.main-header {
   align-items: center;
   box-sizing: border-box;
   position: relative;
+  height: 100px;
 
 }
-
-
 
 /* 왼쪽 로그인 */
 .header-left {
@@ -31,6 +30,10 @@ header.main-header {
   font-size: 16px;
   color: var(--m1);
   font-weight: 600;
+}
+.header-left a:hover {
+  color: var(--m3);        
+  text-decoration: none;
 }
 
 /* 로고 */
@@ -45,6 +48,9 @@ header.main-header {
 }
 .header-logo .logo {
   height: 50px;
+}
+.header-logo a:hover {     
+  text-decoration: none;
 }
 
 /* 오른쪽 검색 */
@@ -108,3 +114,105 @@ margin-bottom: 15px;
   font-size: 20px;
   color: var(--m3);
 }
+.header-bottom a:hover {
+  color: var(--m1);        
+  text-decoration: none;
+}
+
+.sticky-menu {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  background-color: white;
+
+  border-bottom: 2px solid var(--m1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  visibility: hidden;
+}
+
+.sticky-menu.visible {
+  visibility: visible;
+}
+
+.sticky-menu .menu-inner {
+  max-width: 1440px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between; 
+  align-items: center;
+  padding: 0 10px;
+  height: 60px;
+}
+
+.menu-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.menu-left img {
+  height: 30px; 
+}
+.menu-left a:hover {     
+  text-decoration: none;
+}
+
+.menu-center {
+  display: flex;
+  gap: 100px;
+  justify-content: center;
+  flex-grow: 1;
+}
+
+.menu-center a {
+  font-size: 16px;
+  font-weight: bold;
+  font-family: var(--font);
+  color: black;
+  text-decoration: none;
+}
+
+.menu-center a:hover {
+  color: var(--m1);
+  text-decoration: none;
+}
+
+.menu-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height:100%;
+
+}
+
+.menu-right input {
+  height: 28px;
+  width: 160px;
+  border-radius: 15px;
+  border: 1px solid var(--m1);
+  padding-left: 30px;
+  background-image: url("/cardgarden/resources/images/common/search.png");
+  background-size: 14px;
+  background-repeat: no-repeat;
+  background-position: 10px center;
+  font-size: 13px;
+  font-family: var(--font);
+  margin-top:12px;
+}
+
+.menu-right input::placeholder {
+  color: var(--m1);
+}
+
+.menu-right a i {
+  font-size: 20px;
+  color: var(--m3);
+}
+
+.menu-right input:focus {
+  font-family: var(--font);
+  font-size: 12px;
+  background-color: var(--main); 
+  outline: none; 
+  color: var(--m3); 
+}
+
