@@ -6,10 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CardService {
+public class CardSearchService {
 
     @Autowired
-    private CardDAOInterface cardDAO;
+    private CardSearchDAOInterface cardDAO;
 
     // 카드 검색 (페이지네이션 포함)
     public List<CardDTO> searchCards(String keyword, String sort, int page, int pageSize) {

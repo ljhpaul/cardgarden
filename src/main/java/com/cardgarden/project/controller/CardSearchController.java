@@ -9,14 +9,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.cardgarden.project.model.card.CardDTO;
-import com.cardgarden.project.model.card.CardService;
+import com.cardgarden.project.model.card.CardSearchService;
 
 @Controller
 @RequestMapping("/card")
-public class CardController {
+public class CardSearchController {
 
     @Autowired
-    private CardService cardService;
+    private CardSearchService cardService;
 
     @RequestMapping("/cardsearch")
     public String searchCard(HttpServletRequest request) {
