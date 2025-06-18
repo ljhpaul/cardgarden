@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 
 
-@Service //@Componet + 서비스 역할
+@Service 
 public class UserConsumptionPatternService {
 	
 	@Autowired

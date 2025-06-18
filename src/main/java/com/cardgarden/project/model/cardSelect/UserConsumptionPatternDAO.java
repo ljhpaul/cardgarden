@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 
-@Repository //DAO + Bean등록 + DB예외 Spring 예외로 처리
+@Repository 
 public class UserConsumptionPatternDAO {
 	
 	@Autowired

@@ -11,7 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 public class SampleAdvice {
 
-    // ¿øÇÏ´Â Å¸°Ù ÆĞÅ°Áö/°èÃş¸íÀ¸·Î ¼öÁ¤ÇØ¼­ »ç¿ë
+    // ì›í•˜ëŠ” íƒ€ê²Ÿ íŒ¨í‚¤ì§€/ê³„ì¸µëª…ìœ¼ë¡œ ìˆ˜ì •í•´ì„œ ì‚¬ìš©
 //	@Pointcut("within(com.cardgarden.project.model.sample.SampleService)")
 	@Pointcut("execution(* selectAll())")
     public void targetMethod() {}
@@ -29,15 +29,15 @@ public class SampleAdvice {
     @Around("targetMethod()")
     public Object around(ProceedingJoinPoint jp) throws Throwable {
 		//============================================================
-		/* ÁÖ°ü½É»ç¸¦ °¡±â Àü */
+		/* ì£¼ê´€ì‹¬ì‚¬ë¥¼ ê°€ê¸° ì „ */
     	log.info("[SampleAdvice] Around - before: {}", jp.getSignature().toShortString());
     	
     	
 		//------------------------------------------------------------
-		/* ÁÖ°ü½É»ç¿¡ °¡±â */
+		/* ì£¼ê´€ì‹¬ì‚¬ì— ê°€ê¸° */
     	Object result = jp.proceed();
 		//------------------------------------------------------------
-		/* ÁÖ°ü½É»ç¸¦ ´Ù³à¿Â ÈÄ */
+		/* ì£¼ê´€ì‹¬ì‚¬ë¥¼ ë‹¤ë…€ì˜¨ í›„ */
     	log.info("[SampleAdvice] Around - after: {}", jp.getSignature().toShortString());
     	
     	

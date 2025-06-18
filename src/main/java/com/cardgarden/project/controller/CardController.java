@@ -26,9 +26,9 @@ public class CardController {
 		List<UserConsumptionPatternDTO>  benefitCategorylist = ucpService.selectAll();
 		
 		System.out.println(benefitCategorylist.size());
-	    model.addAttribute("benefitCategorylist", benefitCategorylist); // JSP¿¡¼­ ÀÌ ÀÌ¸§À¸·Î »ç¿ë °¡´É
+	    model.addAttribute("benefitCategorylist", benefitCategorylist); // JSPì—ì„œ ì´ ì´ë¦„ìœ¼ë¡œ ì‚¬ìš© ê°€ëŠ¥
 		
-		return "cardgarden/insertUserConsumptionPattern"; // ºä ÀÌ¸§
+		return "cardgarden/insertUserConsumptionPattern"; // ë·° ì´ë¦„
 		
 	}
 	
