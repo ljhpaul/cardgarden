@@ -1,4 +1,4 @@
-package com.cardgarden.project.model.card;
+package com.cardgarden.project.model.cardDetail;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

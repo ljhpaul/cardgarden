@@ -1,4 +1,4 @@
-package com.cardgarden.project.model.card;
+package com.cardgarden.project.model.cardDetail;
 
 import java.util.List;
 

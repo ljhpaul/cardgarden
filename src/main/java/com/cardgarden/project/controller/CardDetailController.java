@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.cardgarden.project.model.card.CardDetailDTO;
-import com.cardgarden.project.model.card.CardService;
+import com.cardgarden.project.model.cardDetail.CardDetailDTO;
+import com.cardgarden.project.model.cardDetail.CardService;
 
 @Controller
 @RequestMapping("/card")
-public class CardController {
+public class CardDetailController {
 
     @Autowired
     private CardService cardService;
