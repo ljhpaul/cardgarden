@@ -1,6 +1,8 @@
-package com.cardgarden.project.model.user;
+package com.cardgarden.project.model.user.dao;
 
 import java.util.List;
+
+import com.cardgarden.project.model.user.dto.UserInfoDTO;
 
 public interface UserInfoDAOInterface {
 	
