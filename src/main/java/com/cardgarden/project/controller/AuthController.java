@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/sample")
-public class SampleController {
+@RequestMapping("/auth")
+public class AuthController {
 
     @Autowired
     SampleService sampleService;
