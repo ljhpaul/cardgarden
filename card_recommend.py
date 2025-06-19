@@ -170,7 +170,7 @@ import sys
 import json
 
 # -- [여기서부터 로그/분석은 stderr만!] --
-print("테스트 로그입니다!", file=sys.stderr)
+# print("테스트 로그입니다!", file=sys.stderr)
 
 # -- [마지막 딱 한 줄만] --
 print(json.dumps(result_list, ensure_ascii=False))
