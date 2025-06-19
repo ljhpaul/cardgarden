@@ -14,6 +14,8 @@
 		sqlMap.config에서 지정한 별칭이 Mapper.xml에서 resultType으로 사용
      <typeAlias type="com.shinhan.spring.model.emp.EmpDTO" alias="empDTO"/> -->
      <typeAlias type="com.cardgarden.project.model.sample.SampleDTO" alias="sampleDTO"/>
+     <typeAlias type="com.cardgarden.project.model.custom.dto.CustomAssetDTO" alias="CustomAssetDTO"/>
   </typeAliases>
+  
   
 </configuration>

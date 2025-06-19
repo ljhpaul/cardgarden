@@ -40,7 +40,6 @@ public class SampleAdvice {
       /* 주관심사를 다녀온 후 */
        log.info("[SampleAdvice] Around - after: {}", jp.getSignature().toShortString());
        
-       
       //============================================================      
        return result;
     }
