@@ -8,47 +8,47 @@ import org.springframework.stereotype.Service;
 
 import lombok.extern.java.Log;
 
-@Service //@Componet + ¼­ºñ½º ¿ªÇÒ
+@Service //@Componet + ì„œë¹„ìŠ¤ ì—­í• 
 @Log
 public class SampleService {
-	
-	@Autowired	//Å¸ÀÔÀÌ °°À¸¸é Injection, °°Àº Å¸ÀÔÀÌ ¿©·¯ °³ ÀÖÀ¸¸é ÀÌ¸§À¸·Î Injection
-	@Qualifier("sampleDAO")
-	SampleDAOInterface sampleDAO;
+   
+   @Autowired   //íƒ€ì…ì´ ê°™ìœ¼ë©´ Injection, ê°™ì€ íƒ€ì…ì´ ì—¬ëŸ¬ ê°œ ìˆìœ¼ë©´ ì´ë¦„ìœ¼ë¡œ Injection
+   @Qualifier("sampleDAO")
+   SampleDAOInterface sampleDAO;
 
-	public List<SampleDTO> selectAll() {
-		List<SampleDTO> dtolist = sampleDAO.selectAll();
-		log.info("SampleService¿¡¼­ ·Î±×Ãâ·Â:" + dtolist.size() + "°Ç");
-		return dtolist;
-	}
+   public List<SampleDTO> selectAll() {
+      List<SampleDTO> dtolist = sampleDAO.selectAll();
+      log.info("SampleServiceì—ì„œ ë¡œê·¸ì¶œë ¥:" + dtolist.size() + "ê±´");
+      return dtolist;
+   }
 
-	// 2.Select(Read)..»ó¼¼º¸±â
-	public SampleDTO selectById(int id) {
-		SampleDTO dto = sampleDAO.selectById(id);
-		log.info("SampleService¿¡¼­ ·Î±×Ãâ·Â:" + dto.toString());
-		return dto;
-	}
+   // 2.Select(Read)..ìƒì„¸ë³´ê¸°
+   public SampleDTO selectById(int id) {
+      SampleDTO dto = sampleDAO.selectById(id);
+      log.info("SampleServiceì—ì„œ ë¡œê·¸ì¶œë ¥:" + dto.toString());
+      return dto;
+   }
 
-	// 3.Inert
-	public int insert(SampleDTO dto) {
-		int result = sampleDAO.insert(dto);
-		log.info("SampleService¿¡¼­ ·Î±×Ãâ·Â:" + result + "°Ç insert");
-		return result;
-	}
+   // 3.Inert
+   public int insert(SampleDTO dto) {
+      int result = sampleDAO.insert(dto);
+      log.info("SampleServiceì—ì„œ ë¡œê·¸ì¶œë ¥:" + result + "ê±´ insert");
+      return result;
+   }
 
-	// 4.Update
-	public int update(SampleDTO dto) {
-		int result = sampleDAO.update(dto);
-		log.info("SampleService¿¡¼­ ·Î±×Ãâ·Â:" + result + "°Ç update");
-		return result;
-	}
+   // 4.Update
+   public int update(SampleDTO dto) {
+      int result = sampleDAO.update(dto);
+      log.info("SampleServiceì—ì„œ ë¡œê·¸ì¶œë ¥:" + result + "ê±´ update");
+      return result;
+   }
 
-	// 5.Delete
-	public int delete(int id) {
-		int result = sampleDAO.delete(id);
-		log.info("SampleService¿¡¼­ ·Î±×Ãâ·Â:" + result + "°Ç delete");
-		return result;
-	}
+   // 5.Delete
+   public int delete(int id) {
+      int result = sampleDAO.delete(id);
+      log.info("SampleServiceì—ì„œ ë¡œê·¸ì¶œë ¥:" + result + "ê±´ delete");
+      return result;
+   }
 }
 
 

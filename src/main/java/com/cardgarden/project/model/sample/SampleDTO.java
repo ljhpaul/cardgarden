@@ -5,13 +5,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-//DTO(Data Transfer Object) ... dataÀü¼Û½Ã »ç¿ëµÇ´Â °´Ã¼ÀÇ Æ²(template)
-//JavaBeans±â¼úÀº default»ı¼ºÀÚ°¡ ÀÖ¾î¾ßÇÑ´Ù.
+//DTO(Data Transfer Object) ... dataì „ì†¡ì‹œ ì‚¬ìš©ë˜ëŠ” ê°ì²´ì˜ í‹€(template)
+//JavaBeansê¸°ìˆ ì€ defaultìƒì„±ìê°€ ìˆì–´ì•¼í•œë‹¤.
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Data
 public class SampleDTO {
-	private int id;
-	private String name;
+   private int id;
+   private String name;
 }

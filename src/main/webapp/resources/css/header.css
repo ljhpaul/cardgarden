@@ -1,96 +1,93 @@
-@charset "UTF-8";
-
 header.main-header {
   width: 100%;
+  font-family: var(--font);
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-family: var(--font);
-  box-sizing: border-box;
-  margin-top: 100px;
+  padding-top:50px;
+  background-color: white;
 }
+
+.header-container {
+  width: 100%;
+  max-width: 1440px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+  position: relative;
+  height: 100px;
+
+}
+
+/* 왼쪽 로그인 */
+.header-left {
+  margin-left: 20px;
+  display: flex;
+  gap: 20px;
+  margin-bottom: -20px;
+}
+.header-left a {
+  font-size: 16px;
+  color: var(--m1);
+  font-weight: 600;
+}
+.header-left a:hover {
+  color: var(--m3);        
+  text-decoration: none;
+}
+
 /* 로고 */
 .header-logo {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
+  margin-left: 80px;
   display: flex;
   align-items: center;
   gap: 20px;
-  bottom: -40px;
 }
-
 .header-logo .mascot {
   height: 100px;
 }
 .header-logo .logo {
   height: 50px;
-  object-fit: contain;
+  margin-bottom: 20px;
 }
-
-.header-top {
-  width: 100%;
-  max-width: 1440px;
-  height:100%;
-  display: flex;
-  justify-content: space-between;
-  box-sizing: border-box;
-  align-items: center;
-  position:relative;
-  margin: 40px;
-}
-
-.header-left {
-  position: absolute;
-  left: 40px;
-  bottom: -20px;
-  display: flex;
-  gap: 20px;
-  align-items: center;
-}
-
-.header-left a {
-  font-size: 16px;
-  color: var(--m1);
-  font-weight: 600;
+.header-logo a:hover {     
   text-decoration: none;
 }
 
+/* 오른쪽 검색 */
 .header-right {
+  margin-right: 20px;
   display: flex;
   align-items: center;
   gap: 10px;
-  position: absolute;
-  right:40px;
-  bottom:-38px;
+  margin-bottom: -20px;
 }
-.header-right a{
-margin-bottom: 15px;
-}
-.header-right a i {
-  font-size: 24px; 
-  color: var(--m3); 
-}
-
 .header-right input {
-  background-image: url("/spring/resources/images/common/search.png");
+  background-image: url("/cardgarden/resources/images/common/search.png");
   background-size: 16px;
-  background-position: 15px center ;
+  background-position: 15px center;
   background-repeat: no-repeat;
   text-indent: 35px;
   height: 40px;
   width: 200px;
   border: 1px solid var(--m1);
   border-radius: 20px;
-  font-family: var(--font);
   font-size: 15px;
   font-weight: 400;
   color: var(--m3);
 }
-.header-right input::placeholder  {
+.header-right input::placeholder {
   color: var(--m1);
-  font-size: 15px;
-  font-weight: 400;
+  font-family:var(--font);
+}
+.header-right a i {
+  font-size: 24px;
+  color: var(--m3);
+}
+
+.header-right a{
+margin-bottom: 15px;
 }
 
 .header-right input:focus {
@@ -102,28 +99,123 @@ margin-bottom: 15px;
   color: var(--m3); 
 }
 
-/* 메뉴 */
+/* 하단 메뉴 */
 .header-bottom {
   width: 100%;
   display: flex;
   justify-content: center;
-  gap: 70px;
+  gap: 200px;
   padding: 10px 0;
-  font-family: var(--font);
   border-top: 1px solid var(--m1);
   border-bottom: 1px solid var(--m1);
-
 }
-
 .header-bottom a {
   font-size: 20px;
   font-weight: bold;
   color: black;
 }
-
 .header-bottom a i {
-  font-size: 20px; 
-  color: var(--m3); 
+  font-size: 20px;
+  color: var(--m3);
+}
+.header-bottom a:hover {
+  color: var(--m1);        
+  text-decoration: none;
 }
 
+.sticky-menu {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  background-color: white;
+  border-bottom: 2px solid var(--m1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  visibility: hidden;
+}
+
+.sticky-menu.visible {
+  visibility: visible;
+}
+
+.sticky-menu .menu-inner {
+  max-width: 1440px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between; 
+  align-items: center;
+  padding: 0 10px;
+  height: 60px;
+}
+
+.menu-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.menu-left img {
+  height: 30px; 
+}
+.menu-left a:hover {     
+  text-decoration: none;
+}
+
+.menu-center {
+  display: flex;
+  gap: 100px;
+  justify-content: center;
+  flex-grow: 1;
+}
+
+.menu-center a {
+  font-size: 16px;
+  font-weight: bold;
+  font-family: var(--font);
+  color: black;
+  text-decoration: none;
+}
+
+.menu-center a:hover {
+  color: var(--m1);
+  text-decoration: none;
+}
+
+.menu-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height:100%;
+
+}
+
+.menu-right input {
+  height: 28px;
+  width: 160px;
+  border-radius: 15px;
+  border: 1px solid var(--m1);
+  padding-left: 30px;
+  background-image: url("/cardgarden/resources/images/common/search.png");
+  background-size: 14px;
+  background-repeat: no-repeat;
+  background-position: 10px center;
+  font-size: 13px;
+  font-family: var(--font);
+  margin-top:12px;
+}
+
+.menu-right input::placeholder {
+  color: var(--m1);
+}
+
+.menu-right a i {
+  font-size: 20px;
+  color: var(--m3);
+}
+
+.menu-right input:focus {
+  font-family: var(--font);
+  font-size: 12px;
+  background-color: var(--main); 
+  outline: none; 
+  color: var(--m3); 
+}
 
