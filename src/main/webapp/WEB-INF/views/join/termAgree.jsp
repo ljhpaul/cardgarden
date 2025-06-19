@@ -104,6 +104,8 @@
 }
 .term-modal-content {
   font-size: 15px; color: #333; line-height: 1.7; max-height: 340px; overflow-y: auto; margin-bottom: 22px;
+  background-color: #f9faf9;
+  padding: 10px;
 }
 .term-modal-btns {
   display: flex; justify-content: flex-end; gap: 10px;
@@ -166,7 +168,7 @@
 <div class="term-modal-bg" id="termModalBg">
   <div class="term-modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
     <div class="term-modal-title" id="modalTitle">약관 제목</div>
-    <div class="term-modal-content" id="modalContent"></div>
+    <div class="term-modal-content" id="modalContent" style="white-space: pre-wrap;"></div>
     <div class="term-modal-btns">
       <button type="button" class="term-modal-btn" id="agreeBtn">동의</button>
       <button type="button" class="term-modal-btn" id="closeBtn">닫기</button>
