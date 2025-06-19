@@ -17,7 +17,7 @@ public class TermDAO implements TermDAOInterface {
    @Autowired
    SqlSession sqlSession;
    
-   String namespace = "com.cardgarden.sample.";
+   String namespace = "com.cardgarden.term.";
 
    @Override
    public List<TermDTO> selectAll() {
@@ -28,9 +28,9 @@ public class TermDAO implements TermDAOInterface {
 
    @Override
    public TermDTO selectById(int id) {
-      TermDTO sample = sqlSession.selectOne(namespace + "selectById", id);
-      log.info(sample.toString() + " ... (lombok_Slf4j)");
-      return sample;
+      TermDTO dto = sqlSession.selectOne(namespace + "selectById", id);
+      log.info(dto.toString() + " ... (lombok_Slf4j)");
+      return dto;
    }
 
    @Override

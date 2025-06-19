@@ -12,27 +12,34 @@
 
 <div class="join-method-section">
   <div class="join-method-box">
-    <h2 class="join-method-title">회원가입 방법 선택</h2>
+    <h2 class="join-method-title">카드가든 회원가입</h2>
 
     <!-- 일반 회원가입 버튼 -->
-    <form action="${cpath}/user/join/term" method="get" style="width:100%;">
-      <button type="submit" class="join-method-btn">
-        <i class="fa fa-user"></i> 일반 회원가입
-      </button>
-    </form>
+    <a href="${cpath}/user/join/term" class="join-method-btn">
+ 	  <img src="${cpath}/resources/images/auth/joinUser.png" width="18"/> 일반 회원가입
+	</a>
 
     <div class="join-method-divider">또는</div>
 
     <!-- 소셜 계정 회원가입 버튼 -->
     <div class="join-method-socials">
       <a class="social-btn google" href="${cpath}/oauth2/authorization/google">
-        <i class="fa fa-google"></i> Google
+        <img class="googleLogo" src="${cpath}/resources/images/auth/google.png"
+         data-default="${cpath}/resources/images/auth/google.png"
+         data-hover="${cpath}/resources/images/auth/google_hover.png"
+         width="50">
       </a>
       <a class="social-btn naver" href="${cpath}/oauth2/authorization/naver">
-        <i class="fa fa-leaf"></i> Naver
+        <img class="naverLogo" src="${cpath}/resources/images/auth/naver.png"
+         data-default="${cpath}/resources/images/auth/naver.png"
+         data-hover="${cpath}/resources/images/auth/naver_hover.png"
+         width="50">
       </a>
       <a class="social-btn kakao" href="${cpath}/oauth2/authorization/kakao">
-        <i class="fa fa-comment"></i> Kakao
+        <img class="kakaoLogo" src="${cpath}/resources/images/auth/kakao.png"
+         data-default="${cpath}/resources/images/auth/kakao.png"
+         data-hover="${cpath}/resources/images/auth/kakao_hover.png"
+         width="50">
       </a>
     </div>
     <div class="join-method-login">
@@ -63,24 +70,27 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 }
 .join-method-title {
   font-size: 2.0rem;
   font-weight: 700;
   color: var(--m1);
-  margin-bottom: 30px;
+  margin-bottom: 45px;
 }
 .join-method-btn {
-  width: 100%;
+  width: 80%;
   height: 52px;
   border-radius: 6px;
+  border-bottom: 16px;
+  box-shadow: 0 2px 16px rgba(100,130,120,0.08);
   background: var(--m1);
   color: #fff;
   font-size: 1.18rem;
   font-weight: 600;
   border: none;
-  margin-top: 12px;
-  margin-bottom: 24px;
+  margin-top: 18px;
+  margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -92,35 +102,26 @@
 }
 .join-method-divider {
   color: #999;
+  margin-top: 16px;
   margin-bottom: 18px;
   font-size: 1.07rem;
 }
 .join-method-socials {
   width: 100%;
   display: flex;
-  gap: 10px;
+  gap: 25px;
   justify-content: center;
   margin-bottom: 18px;
 }
-.social-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  width: 90px;
-  height: 44px;
-  border-radius: 10px;
-  font-size: 1rem;
-  font-weight: 600;
-  background: #f8faf6;
-  border: 1px solid #e4e6ee;
-  color: #444;
-  transition: border 0.2s, background 0.2s;
-  text-align: center;
-}
-.social-btn.google:hover { border-color: #e5482e; color: #e5482e; }
-.social-btn.naver:hover { border-color: #03c75a; color: #03c75a; }
-.social-btn.kakao:hover { border-color: #fee500; color: #fee500; }
+.social-btn { 
+  box-shadow: 0 2px 16px rgba(100,130,120,0.08);
+  border-radius: 10%;     /* ← 꼭 추가! */
+  overflow: hidden;       /* ← 꼭 추가! */
+ }
+.social-btn:hover { box-shadow: 0 3px 24px rgba(84, 118, 106, 0.142); }
+.social-btn.google:hover { border: 2px; border-color: #e5482e; color: #e5482e; }
+.social-btn.naver:hover { border: 2px; border-color: #03c75a; color: #03c75a; }
+.social-btn.kakao:hover { border: 2px; border-color: #fee500; color: #fee500; }
 .social-btn .fa { font-size: 1.2em; }
 .join-method-login {
   margin-top: 24px;
@@ -138,3 +139,21 @@
   color: var(--m3);
 }
 </style>
+
+<script>
+$(function() {
+  $(".social-btn").hover(
+    function() {
+      // 소셜 로그인 버튼에 마우스 올릴 때
+      var img = $(this).find("img");
+      img.attr("src", img.data("hover"));
+    }, 
+    function() {
+      // 소셜 로그인 버튼에서 마우스 벗어날 때
+      var img = $(this).find("img");
+      img.attr("src", img.data("default"));
+    });
+});
+</script>
+
+
