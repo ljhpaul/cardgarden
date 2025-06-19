@@ -125,7 +125,7 @@ header {
   border: 1px solid #ccc;
   padding: 12px;
   margin: 20px auto;              /* 가운데 정렬 + 위아래 여백 */
-  width: 800px;                   /* ✅ 고정 너비 설정 */
+  width: 900px;                   /* ✅ 고정 너비 설정 */
   max-width: 90%;                 /* ✅ 작은 화면 대응 (반응형) */
   border-radius: 12px;            /* 옵션: 둥근 테두리 */
   background-color: white;        /* 옵션: 배경색 */
@@ -274,7 +274,7 @@ header {
 <body>
 
 	<div class="search-bar">
-		<form method="get" action="cardsearch">
+		<form method="get" action="search">
 			<div class="search-wrapper">
 				<select name="sort">
 					<option value="name" ${param.sort == 'name' ? 'selected' : ''}>이름순</option>
@@ -295,10 +295,9 @@ header {
 			<div class="card-image-wrapper">
 			  <img src="${card.card_image}" alt="카드 이미지" class="card-image" />
 			</div>
+			
 			<div class="card-info">
 				<div class="card-name">${card.card_name}</div>
-			
-			
 				<div class="card-company">${card.company}
 			  <span class="card-type">
 			    <c:choose>

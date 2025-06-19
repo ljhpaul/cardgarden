@@ -18,7 +18,7 @@ public class CardSearchController {
     @Autowired
     private CardSearchService cardService;
 
-    @RequestMapping("/cardsearch")
+    @RequestMapping("/search")
     public String searchCard(HttpServletRequest request) {
         String keyword = request.getParameter("keyword");
         String sort = request.getParameter("sort");

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cardgarden.cardrank">
+
+<!-- CardMapper.xml -->
+<select id="getTop10All" resultType="CardDTO">
+  SELECT * FROM card ORDER BY card_like DESC LIMIT 10
+</select>
+
+<select id="getTop10ByType" resultType="CardDTO" parameterType="String">
+  SELECT * FROM card WHERE card_type = #{type} ORDER BY card_like DESC LIMIT 10
+</select>
+
+<select id="getTop10ByCompany" resultType="CardDTO" parameterType="String">
+  SELECT * FROM card WHERE company LIKE CONCAT('%', #{company}, '%') ORDER BY card_like DESC LIMIT 10
+</select>
+
+<select id="getTop10ByBenefit" resultType="CardDTO" parameterType="String">
+  SELECT DISTINCT c.*
+  FROM Card c
+  JOIN CardBenefitDetail cbd ON c.card_id = cbd.card_id
+  JOIN BenefitDetail bd ON cbd.benefitdetail_id = bd.benefitdetail_id
+  JOIN BenefitCategory bc ON bd.benefitcategory_id = bc.benefitcategory_id
+  WHERE bc.benefitcategory_name = #{benefit}
+  ORDER BY c.card_like DESC
+  LIMIT 10
+</select>
+
+
+</mapper>
