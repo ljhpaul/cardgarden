@@ -243,7 +243,7 @@ header {
   color: var(--m3);
   border: 1px solid var(--m1);
   background-color: white;
-  background-image: url("/spring/resources/images/common/dropdown.png");
+  background-image: url("/cardgarden/resources/images/common/dropdown.png");
   background-repeat: no-repeat;
   background-position: right 10px center;
   background-size: 12px;
@@ -291,7 +291,8 @@ header {
 		<div style="text-align: center; margin: 20px;">카드가 0건 검색되었습니다.</div>
 	</c:if>
 	<c:forEach var="card" items="${cardList}">
-		<div class="card-box">
+		<div class="card-box" onclick="location.href='${pageContext.request.contextPath}/card/detail?cardid=${card.card_id}'"
+     style="cursor: pointer;">
 			<div class="card-image-wrapper">
 			  <img src="${card.card_image}" alt="카드 이미지" class="card-image" />
 			</div>
@@ -306,26 +307,10 @@ header {
 			      <c:otherwise>신용</c:otherwise>
 			    </c:choose>
 			  </span>
+			</div>	
 			</div>
-
-			
-			</div>
-			
-			
-			
-			
-			
-			<%--         <div>
-            <c:choose>
-                <c:when test="${card.likedByUser == 1}">
-                    <img src="heart_filled.png" class="like-icon" alt="좋아요" />
-                </c:when>
-                <c:otherwise>
-                    <img src="heart_empty.png" class="like-icon" alt="좋아요 안누름" />
-                </c:otherwise>
-            </c:choose>
-        </div> --%>
 		</div>
+
 	</c:forEach>
 
 	<!-- 페이징 -->

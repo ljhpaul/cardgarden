@@ -175,7 +175,8 @@ body {
 		<div class="top3">
 			<c:forEach var="card" items="${cardList}" begin="0" end="2"
 				varStatus="status">
-				<div class="card-box">
+				<div class="card-box" onclick="location.href='${pageContext.request.contextPath}/card/detail?cardid=${card.card_id}'"
+     style="cursor: pointer;">
 					<div class="medal">
 						<c:choose>
 							<c:when test="${status.index == 0}">
@@ -202,7 +203,8 @@ body {
 		<div class="others">
 			<c:forEach var="card" items="${cardList}" begin="3" end="9"
 				varStatus="status">
-				<div class="card-row">
+				<div class="card-row" onclick="location.href='${pageContext.request.contextPath}/card/detail?cardid=${card.card_id}'"
+     style="cursor: pointer;">
 					<span class="rank">TOP${status.index + 1}</span>
 					<div class="card-image-wrapper1">
 						<img src="${card.card_image}" />
