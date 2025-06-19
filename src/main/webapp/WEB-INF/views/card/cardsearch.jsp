@@ -174,7 +174,7 @@ header {
   color: #666;
 }
 .card-type {
-  background-color: #999;      /* 회색 배경 */
+  background-color: var(--m1);      
   color: white;                /* 흰색 글씨 */
   padding: 2px 8px;            /* 안쪽 여백 */
   border-radius: 8px;          /* 둥근 모서리 */
