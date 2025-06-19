@@ -138,7 +138,7 @@
       위치기반 서비스 이용약관, 광고성 정보 수신 동의를 포함합니다.
     </div>
     <div class="term-list">
-      <c:forEach var="term" items="${terms}">
+      <c:forEach var="term" items="${termList}">
         <div class="term-item">
           <input
             type="checkbox"
@@ -177,7 +177,7 @@
 <script>
 // 1. 약관 본문 매핑
 const termsText = {};
-<c:forEach var="term" items="${terms}">
+<c:forEach var="term" items="${termList}">
   termsText["${term.term_id}"] = `<c:out value="${term.term_content}" escapeXml="false"/>`;
 </c:forEach>
 
