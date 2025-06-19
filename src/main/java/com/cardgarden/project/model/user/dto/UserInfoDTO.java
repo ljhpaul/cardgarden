@@ -1,4 +1,4 @@
-package com.cardgarden.project.model.user;
+package com.cardgarden.project.model.user.dto;
 
 import java.sql.Date;
 
