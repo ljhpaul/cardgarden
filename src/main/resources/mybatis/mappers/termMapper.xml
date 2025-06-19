@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- model이 달라고 동일한 id로 사용시 중복될 수 있으므로 namespace로 명칭 구별 -->
+<mapper namespace="com.cardgarden.term">
+
+  <!-- 이 부분은 칼럼 이름과 DTO field 이름이 다른 경우 resultMap 정의 -->
+  <resultMap id="termResult" type="termDTO">
+    <result property="id" column="id" />
+    <result property="name" column="name" />
+  </resultMap>
+
+  <!-- 원래는 typeAliases 대신 "com.shinhan.spring.model.dept.DeptDTO 써줘야 함 -->
+  <!-- MyBatis가 select 결과를 읽어서 resultType 객체를 생성 : 기본 생성자가 없으면 오류~! -->
+  <select id="selectAll" resultType="sampleDTO">
+    select * from term
+  </select>
+  
+  <select id="selectById" parameterType="int" resultType="sampleDTO">
+    select * from term 
+    where term_id = #{term_id}
+  </select>
+  
+  <insert id="insert" parameterType="sampleDTO">
+    insert into term(term_id, term_name, term_content, is_required, created_at) 
+    values(#{term_id}, #{term_name}, #{term_content}, #{is_required}, #{created_at})
+  </insert>
+  
+  <update id="update" parameterType="sampleDTO">
+    update term set 
+    	term_name = #{term_name} 
+    	term_content = #{term_content} 
+    	is_required = #{is_required} 
+    	created_at = #{created_at} 
+    where term_id = #{term_id}
+  </update>
+  
+  <delete id="delete" parameterType="int">
+    delete from term 
+    where term_id = #{term_id}
+  </delete>
+  
+</mapper>

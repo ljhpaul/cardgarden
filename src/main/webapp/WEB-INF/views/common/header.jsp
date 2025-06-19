@@ -33,7 +33,7 @@
         </c:otherwise>
       </c:choose>-->
     <div class="header-left">
-      <a href="${cpath}/auth/signup.do">회원가입</a>
+      <a href="${cpath}/join/method">회원가입</a>
       <a href="${cpath}/auth/login.do">로그인</a>
     </div>
 
