@@ -22,10 +22,9 @@ public class CardDetailController {
     @Autowired
     private CardService cardService;
 
-    @GetMapping("/carddetail")
+    @RequestMapping("/detail")
     public String cardDetail(@RequestParam("cardid") int cardid, Model model) {
         model.addAttribute("cardList", cardService.selectById(cardid));
-
         List<CardDetailDTO> detailList = cardService.selectDetailByID(cardid);
         Map<String, List<CardDetailDTO>> mapData = new LinkedHashMap<>();
 
