@@ -33,7 +33,7 @@
         </c:otherwise>
       </c:choose>-->
     <div class="header-left">
-      <a href="${cpath}/auth/signup.do">회원가입</a>
+      <a href="${cpath}/user/join/method">회원가입</a>
       <a href="${cpath}/auth/login.do">로그인</a>
     </div>
 
@@ -50,20 +50,29 @@
       <form action="${cpath}/card/cardsearch"" method="get">
         <input type="text" name="keyword" class="text1" placeholder="검색어를 입력하세요">
       </form>
-      <a href="${cpath}/mypage/likes.do"><i class="fa-regular fa-heart"></i></a>
+      <a href="${cpath}/mypage/likes.do">
+        <img class="mascot" src="${cpath}/resources/images/common/like.png" width="27">
+      </a>
     </div>
   </div>
 
   <!-- 하단 메뉴 -->
   <div class="header-bottom">
-    <a href="${cpath}/card/list.do">카드&nbsp;&nbsp;<i class="fa fa-caret-down"></i></a>
-    <a href="${cpath}/recommend/ai.do">AI 카드추천</a>
-    <a href="${cpath}/customizing.do">카드 커스터마이징&nbsp;&nbsp;<i class="fa fa-caret-down"></i></a>
-    <a href="${cpath}/event/list.do">이벤트&nbsp;&nbsp;<i class="fa fa-caret-down"></i></a>
+    <a href="${cpath}/card/list">카드&nbsp;
+      <img class="mascot" src="${cpath}/resources/images/common/caretDown.png" width="15">
+    </a>
+    <a href="${cpath}/recommend/ai">AI 카드추천</a>
+    <a href="${cpath}/custom">카드 커스터마이징&nbsp;
+	  <img class="mascot" src="${cpath}/resources/images/common/caretDown.png" width="15">
+	</a>
+    <a href="${cpath}/event/list">이벤트&nbsp;
+      <img class="mascot" src="${cpath}/resources/images/common/caretDown.png" width="15">
+	</a>
   </div>
 </header>
 </div>
 
+<%-- 
 <!-- sticky -->
 <nav class="sticky-menu">
   <div class="menu-inner">
@@ -78,19 +87,22 @@
 
     <!-- 가운데 메뉴 -->
     <div class="menu-center">
-      <a href="${cpath}/card/list.do">카드</a>
-      <a href="${cpath}/recommend/ai.do">AI 추천</a>
-      <a href="${cpath}/customizing.do">커스터마이징</a>
-      <a href="${cpath}/event/list.do">이벤트</a>
+      <a href="${cpath}/card/list">카드</a>
+      <a href="${cpath}/recommend/ai">AI 추천</a>
+      <a href="${cpath}/custome/main">커스터마이징</a>
+      <a href="${cpath}/event/list">이벤트</a>
     </div>
 
     <!-- 오른쪽 검색 + 하트 -->
     <div class="menu-right">
-      <form action="${cpath}/search.do" method="get">
-        <input type="text" name="question" placeholder="검색어">
+      <form action="${cpath}/card/search" method="get">
+        <input type="text" name="keyword" placeholder="검색어">
       </form>
-      <a href="${cpath}/mypage/likes.do"><i class="fa-regular fa-heart"></i></a>
+      <a href="${cpath}/mypage/likes.do">
+        <img class="mascot" src="${cpath}/resources/images/common/like.png" width="27">
+      </a>
     </div>
 
   </div>
 </nav>
+ --%>
