@@ -25,6 +25,7 @@
 		<param-value>
 			/WEB-INF/spring/root-context.xml
 			/WEB-INF/spring/root-context-mysql.xml
+			/WEB-INF/spring/application-context-email.xml
 		</param-value>
 	</context-param>
 
@@ -60,7 +61,5 @@
 		<servlet-name>appServlet</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
-
- 
-
+	
 </web-app>
