@@ -1,6 +1,8 @@
 package com.cardgarden.project.controller.user;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -11,9 +13,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cardgarden.project.model.term.dto.TermDTO;
 import com.cardgarden.project.model.term.service.TermService;
+import com.cardgarden.project.model.user.service.UserInfoService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -24,6 +28,8 @@ public class JoinController {
 	
 	@Autowired
 	TermService termService;
+	@Autowired
+	UserInfoService userInfoSerivce;
 	
 	//0.회원가입 방법 선택
 	@GetMapping("/method")
@@ -65,6 +71,9 @@ public class JoinController {
 	public String verifyEmailView() {
 	    return "join/verifyEmail";
 	}
+	
+
+
 	
 }
 
