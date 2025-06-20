@@ -1,0 +1,58 @@
+/* join.css: 공통적인 색상, 그림자, 테두리 등 최소 공통규격만 */
+.join-bg {
+  background: #f9faf9 !important;
+  min-height: 100vh;
+}
+
+.join-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font);
+}
+
+.join-box {
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 2px 16px rgba(100,130,120,0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.join-btn {
+  border-radius: 6px;
+  box-shadow: 0 2px 16px rgba(100,130,120,0.08);
+  background: var(--m1);
+  color: #fff;
+  border: none;
+  transition: background 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.join-btn:hover {
+  background: var(--m3);
+  box-shadow: 0 3px 24px rgba(84, 118, 106, 0.142);
+}
+
+.social-btn { 
+  box-shadow: 0 2px 16px rgba(100,130,120,0.08);
+  border-radius: 10%;
+  overflow: hidden;
+}
+.social-btn:hover { box-shadow: 0 3px 24px rgba(84, 118, 106, 0.142); }
+.social-btn.google:hover { border: 2px; border-color: #e5482e; color: #e5482e; }
+.social-btn.naver:hover { border: 2px; border-color: #03c75a; color: #03c75a; }
+.social-btn.kakao:hover { border: 2px; border-color: #fee500; color: #fee500; }
+
+.join-text-hover {
+  color: var(--m1);
+  font-weight: 600;
+  text-decoration: underline;
+}
+.join-text-hover:hover {
+  color: var(--m3);
+}

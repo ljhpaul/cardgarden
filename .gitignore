@@ -199,3 +199,6 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.toptal.com/developers/gitignore/api/java,maven,eclipse,visualstudiocode,dbeaver,windows,macos
+
+# Email Security Info
+application-context-email.xml
