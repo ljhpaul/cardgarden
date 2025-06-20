@@ -16,7 +16,7 @@
     <div class="join-box">
       <h2 class="join-title">이메일 인증</h2>
       
-      <form id="email-form" action="${cpath}/user/email/request" method="POST" autocomplete="off" style="width:100%;">
+      <form id="email-form" action="${cpath}/user/join/email" method="POST" autocomplete="off" style="width:100%;">
         <div style="width:100%; margin-bottom:16px;">
           <label for="email" class="email-form-label">이메일 입력</label>
           <div class="email-input-row">
