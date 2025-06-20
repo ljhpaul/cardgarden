@@ -95,7 +95,7 @@
 
     <!-- 오른쪽 검색 + 하트 -->
     <div class="menu-right">
-      <form action="${cpath}/card/cardsearch" method="get">
+      <form action="${cpath}/card/search" method="get">
         <input type="text" name="keyword" placeholder="검색어">
       </form>
       <a href="${cpath}/mypage/likes.do">

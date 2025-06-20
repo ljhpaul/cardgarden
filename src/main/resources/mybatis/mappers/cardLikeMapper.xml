@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<!--
+이부분은 칼럼이름과 DTO field 이름이 다른 경우 resultMap 정의 
+<resultMap id="deptResult" type="deptDTO">
+	<result property="department_id" column="department_id" />
+	<result property="department_name" column="department_name" />
+	<result property="manager_id" column="manager_id" />
+	<result property="location_id" column="location_id" />
+</resultMap>
+ -->
+
+<mapper namespace="com.firstzone.cardLike">
+	<insert id="cardLikeInsert" parameterType="map">
+	    INSERT INTO LikeCard (card_id, user_id)
+	    VALUES (#{card_id}, #{user_id})
+	</insert>
+	
+	<delete id="cardLikeDelete" parameterType="map">
+	    DELETE FROM LikeCard
+	    WHERE card_id = #{card_id} AND user_id = #{user_id}
+	</delete>
+</mapper> 
+
+	
+
