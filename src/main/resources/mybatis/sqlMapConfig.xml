@@ -14,11 +14,16 @@
 		sqlMap.config에서 지정한 별칭이 Mapper.xml에서 resultType으로 사용
      <typeAlias type="com.shinhan.spring.model.emp.EmpDTO" alias="empDTO"/> -->
      <typeAlias type="com.cardgarden.project.model.sample.SampleDTO" alias="sampleDTO"/>
+
+     <typeAlias type="com.cardgarden.project.model.cardDetail.CardDTO" alias="cardDTO" />
+     <typeAlias type="com.cardgarden.project.model.cardDetail.CardDetailDTO" alias="cardDetailDTO" />
+
      <typeAlias type="com.cardgarden.project.model.user.dto.UserInfoDTO" alias="userInfoDTO"/>
      <typeAlias type="com.cardgarden.project.model.term.dto.TermDTO" alias="termDTO"/>
      <typeAlias type="com.cardgarden.project.model.benefitCategory.benefitCategoryDTO" alias="benefitCategoryDTO"/>
      <typeAlias type="com.cardgarden.project.model.userConsumptionPattern.UserConsumptionPatternDTO" alias="UserConsumptionPatternDTO"/>
      <typeAlias type="com.cardgarden.project.model.userConsumptionPatternDetail.UserConsumptionPatternDetailDTO" alias="UserConsumptionPatternDetailDTO"/>
+
      <typeAlias type="com.cardgarden.project.model.userPatternBenefit.UserPatternBenefitDTO" alias="userPatternBenefitDTO"/>
   </typeAliases>
   
