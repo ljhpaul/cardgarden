@@ -41,23 +41,54 @@ body {
 .pink-box1 {
   background-color: var(--s1);
   border-radius: 12px;
-  padding: 20px;
-  height: 200px;
-  width: 1000px;
-  text-align: center;
+  padding: 20px 40px;
+  height: 300px;
+  width: 960px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
   transition: transform 0.2s ease;
+}
+.pink-box1:hover {
+  transform: translateY(-5px);
+}
+
+.pink-box1-text {
+  color: white;
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 1.6;
+  text-align: left;
+  margin-left: 10px;
+}
+
+.pink-box1 img {
+  width: 200px;
+  height: 200px;
+  object-fit: contain;
+  margin-right: 10px;
 }
 
 .pink-box {
   background-color: var(--s1);
   border-radius: 12px;
   padding: 20px;
-  height: 170px;
+  height: 200px;
   width: 460px;
-  text-align: center;
+  text-align: left; 
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
   transition: transform 0.2s ease;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.pink-box-text {
+  color: white;
+  font-weight: 700;
+  font-size: 33px;
+  line-height: 1.6;
+  margin-left: 30px;
 }
 
 .pink-box:hover {
@@ -65,9 +96,10 @@ body {
 }
 
 .pink-box img {
-  width: 80px;
-  height: 80px;
-  margin-top: 15px;
+  width: 160px;  
+  height: 160px;
+  object-fit: contain;
+  margin-right: 10px;
 }
 
 /* TOP5 섹션 공통 */
@@ -113,6 +145,7 @@ body {
   align-items: center;
   height: 32px;
   box-sizing: border-box;
+  margin-right:-4px;
 }
 
 .top5-header .more:hover {

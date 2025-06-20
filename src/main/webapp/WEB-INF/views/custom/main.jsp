@@ -15,27 +15,34 @@
 	<div class="top-buttons">
 	    <a href="${cpath}/custom/make" class="btn-custom-make">
 	        <div class="pink-box1">
-	            <p>나만의 커스텀 카드<br>만들러 가기</p>
-	            <img src="${cpath}/resources/images/custom/makecard.png" alt="만들기 예시">
-	        </div>
+			  <div class="pink-box1-text">
+			    나만의 커스텀 카드<br>만들러 가기
+			  </div>
+			  <img src="${cpath}/resources/images/custom/makecard.png" alt="추후 넣을예정">
+			</div>
 	    </a>
 	</div>
 
 	<!-- 상단 2단 버튼 -->
 	<div class="bottom-buttons">
-	    <a href="${cpath}/card/discount" class="btn-discount">
-	        <div class="pink-box">
-	            <p>오늘의 할인품목<br>보러가기</p>
-	            <img src="${cpath}/resources/images/custom/discount.png">
-	        </div>
-	    </a>
-	    <a href="${cpath}/card/free" class="btn-free">
-	        <div class="pink-box">
-	            <p>오늘의 무료 스티커<br>받아가기</p>
-	            <img src="${cpath}/resources/images/custom/gift.png">
-	        </div>
-	    </a>
+	  <a href="${cpath}/card/discount" class="btn-discount">
+	    <div class="pink-box">
+	      <div class="pink-box-text">
+	        오늘의 할인품목<br>보러가기
+	      </div>
+	      <img src="${cpath}/resources/images/custom/discount.png" alt="할인">
+	    </div>
+	  </a>
+	  <a href="${cpath}/card/free" class="btn-free">
+	    <div class="pink-box">
+	      <div class="pink-box-text">
+	        오늘의 무료 스티커<br>받아가기
+	      </div>
+	      <img src="${cpath}/resources/images/custom/gift.png" alt="무료">
+	    </div>
+	  </a>
 	</div>
+
 
 	<!-- 전체 TOP5 -->
 	<div class="section-wide-wrapper">
