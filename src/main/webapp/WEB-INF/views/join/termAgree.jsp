@@ -6,20 +6,93 @@
 <link rel="stylesheet" href="${cpath}/resources/css/common.css">
 <link rel="stylesheet" href="${cpath}/resources/css/header.css">
 <link rel="stylesheet" href="${cpath}/resources/css/font-awesome.min.css">
+<link rel="stylesheet" href="${cpath}/resources/css/join.css">
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="${cpath}/resources/js/header.js"></script>
 
+<head>
+    <title>카드가든 : 회원가입</title>
+</head>
+
+
+
+
+<body class="join-bg">
+<div class="join-container">
+<div class="join-box">
+  <h2 class="join-title">약관 동의</h2>
+<!--   <div class="term-step-nav">
+    <span class="step current">약관 동의</span>
+    <span class="step">&nbsp;|&nbsp;이메일 인증</span>
+    <span class="step">&nbsp;|&nbsp;회원 정보 입력</span>
+    <span class="step">&nbsp;|&nbsp;회원가입 완료</span>
+  </div> -->
+  <form id="termForm" action="${cpath}/user/join/term" method="post">
+    <label class="term-all-check">
+      <input type="checkbox" id="all-agree">
+      전체 동의하기
+    </label>
+    <div class="term-desc">
+      위치기반 서비스 이용약관, 광고성 정보 수신 동의를 포함합니다.
+    </div>
+    <div class="term-list">
+      <c:forEach var="term" items="${termList}">
+        <div class="term-item">
+          <input
+            type="checkbox"
+            id="term${term.term_id}"
+            name="checkedTermList"
+            value="${term.term_id}"
+            class="term-chk ${term.is_required == 'Y' ? 'required' : 'optional'}">
+          <span class="term-label">
+            <span class="${term.is_required == 'Y' ? 'essential' : 'optional'}">
+              [${term.is_required == 'Y' ? '필수' : '선택'}]
+            </span>
+            ${term.term_name}
+          </span>
+          <c:if test="${not empty term.term_content}">
+            <button type="button" class="term-detail-btn" data-term-id="${term.term_id}">자세히 &gt;</button>
+          </c:if>
+        </div>
+      </c:forEach>
+    </div>
+    <button type="submit" id="next-btn" class="join-btn" disabled>다음</button>
+  </form>
+</div>
+</div>
+
+<!-- 약관 모달 -->
+<div class="term-modal-bg" id="termModalBg">
+  <div class="term-modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="term-modal-title" id="modalTitle">약관 제목</div>
+    <div class="term-modal-content" id="modalContent" style="white-space: pre-wrap;"></div>
+    <div class="term-modal-btns">
+      <button type="button" class="join-btn term-modal-btn" id="agreeBtn">동의</button>
+      <button type="button" class="join-btn term-modal-btn" id="closeBtn">닫기</button>
+    </div>
+  </div>
+</div>
+
 <style>
-.term-container {
+.join-box {
   max-width: 520px;
   margin: 70px auto 80px;
   background: #fff;
   border-radius: 24px;
-  box-shadow: 0 8px 40px 0 rgba(40,70,56,0.15);
-  padding: 44px 40px 32px;
+  box-shadow: 0 2px 16px rgba(100,130,120,0.08);
+  padding: 44px 50px 32px;
   font-family: var(--font);
 }
+
+.join-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--m1);
+  margin-top: 10px;
+  margin-bottom: 45px;
+}
+
 .term-step-nav {
   display: flex;
   justify-content: center;
@@ -51,7 +124,7 @@
   color: #888;
   font-size: 14px;
   margin-bottom: 19px;
-  margin-left: 32px;
+  margin-left: 26px;
 }
 .term-list { margin-bottom: 38px; }
 .term-item {
@@ -85,8 +158,13 @@
   font-weight: 700; margin-top: 20px;
   transition: background 0.2s;
   cursor: pointer;
+  box-shadow: 0 2px 16px rgba(100,130,120,0.08);
 }
-#next-btn:disabled { background: #eee; color: #aaa; cursor: not-allowed; }
+#next-btn:disabled, #next-btn:disabled:hover { background: #eee; color: #aaa; cursor: not-allowed; }
+#next-btn:hover { 
+  background-color: var(--m3);
+  box-shadow: 0 3px 24px rgba(84, 118, 106, 0.142);
+}
 
 .term-modal-bg {
   position: fixed; left: 0; top: 0; width: 100vw; height: 100vh;
@@ -119,62 +197,11 @@
   background: #eee; color: #aaa; cursor: not-allowed;
 }
 @media (max-width: 600px) {
-  .term-container { padding: 24px 7vw 20px; }
+  .join-box { padding: 24px 7vw 20px; }
   .term-modal { padding: 19px 5vw 17px; }
 }
 </style>
 
-<div class="term-container">
-  <div class="term-step-nav">
-    <span class="step current">약관 동의</span>
-    <span class="step">&nbsp;|&nbsp;이메일 인증</span>
-    <span class="step">&nbsp;|&nbsp;회원 정보 입력</span>
-    <span class="step">&nbsp;|&nbsp;회원가입 완료</span>
-  </div>
-  <form id="termForm" action="${cpath}/user/join/term" method="post">
-    <label class="term-all-check">
-      <input type="checkbox" id="all-agree">
-      전체 동의하기
-    </label>
-    <div class="term-desc">
-      위치기반 서비스 이용약관, 광고성 정보 수신 동의를 포함합니다.
-    </div>
-    <div class="term-list">
-      <c:forEach var="term" items="${termList}">
-        <div class="term-item">
-          <input
-            type="checkbox"
-            id="term${term.term_id}"
-            name="terms"
-            value="${term.term_id}"
-            class="term-chk ${term.is_required == 'Y' ? 'required' : 'optional'}">
-          <span class="term-label">
-            <span class="${term.is_required == 'Y' ? 'essential' : 'optional'}">
-              [${term.is_required == 'Y' ? '필수' : '선택'}]
-            </span>
-            ${term.term_name}
-          </span>
-          <c:if test="${not empty term.term_content}">
-            <button type="button" class="term-detail-btn" data-term-id="${term.term_id}">자세히 &gt;</button>
-          </c:if>
-        </div>
-      </c:forEach>
-    </div>
-    <button type="submit" id="next-btn" disabled>다음</button>
-  </form>
-</div>
-
-<!-- 약관 모달 -->
-<div class="term-modal-bg" id="termModalBg">
-  <div class="term-modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-    <div class="term-modal-title" id="modalTitle">약관 제목</div>
-    <div class="term-modal-content" id="modalContent" style="white-space: pre-wrap;"></div>
-    <div class="term-modal-btns">
-      <button type="button" class="term-modal-btn" id="agreeBtn">동의</button>
-      <button type="button" class="term-modal-btn" id="closeBtn">닫기</button>
-    </div>
-  </div>
-</div>
 
 <script>
 // 1. 약관 본문 매핑
