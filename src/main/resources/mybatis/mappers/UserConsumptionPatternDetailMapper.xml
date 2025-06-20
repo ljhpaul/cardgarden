@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.cardgarden.UserConsumptionPatternDetail">
+  
+   <insert id="insertUserConsumptionPatternDetail" parameterType="UserConsumptionPatternDetailDTO">
+    	insert into UserConsumptionPatternDetail(
+    	pattern_id,
+    	benefitcategory_id,
+    	amount
+    	)
+    	values(
+    	#{pattern_id},
+    	#{benefitcategory_id},
+    	#{amount}
+    	)
+  </insert>
+  
+ </mapper>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<!--
+이부분은 칼럼이름과 DTO field 이름이 다른 경우 resultMap 정의 
+<resultMap id="deptResult" type="deptDTO">
+	<result property="department_id" column="department_id" />
+	<result property="department_name" column="department_name" />
+	<result property="manager_id" column="manager_id" />
+	<result property="location_id" column="location_id" />
+</resultMap>
+ -->
+
+<mapper namespace="com.firstzone.card">
+	<select id="selectById" parameterType="int" resultType="cardDTO">
+		select *
+		from Card
+		where card_id = #{cardid}
+	</select>
+	
+	<select id="selectDetailByID" parameterType="int" resultType="cardDetailDTO">
+		select *
+		from CardBenefitDetail cbd
+			inner join BenefitDetail bd
+				on cbd.benefitdetail_id = bd.benefitcategory_id
+		where card_id = #{cardid};
+	</select>	
+</mapper>
+
+	
+
