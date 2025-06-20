@@ -28,13 +28,13 @@ public class JoinController {
 	@Autowired
 	UserInfoService userInfoSerivce;
 	
-	//0.회원가입 방법 선택
+	//0. 회원가입 방법 선택
 	@GetMapping("/method")
 	public String joinMethodView() {
 		return "join/joinMethod";
 	}
 	
-	//1-1.약관 동의
+	//1-1. 약관 동의
 	@GetMapping("/term")
 	public String termAgreeView(Model model) {
 		List<TermDTO> termList = termService.selectAll();
@@ -42,7 +42,7 @@ public class JoinController {
 		return "join/termAgree";
 	}
 	
-	//1-2.약관 동의 여부 확인
+	//1-2. 약관 동의 여부 확인
 	@PostMapping("/term")
 	public String termAgreeCheck(
 			@RequestParam List<Integer> checkedTermList, 
@@ -64,10 +64,32 @@ public class JoinController {
 		}
 	}
 	
+	//2-1. 이메일 인증
 	@GetMapping("/email")
 	public String verifyEmailView() {
 	    return "join/verifyEmail";
 	}
+	
+	//2-2. 이메일 인증 성공
+	@PostMapping("/email")
+	public String verifyEmailRequest() {
+	    return "join/inputInfo";
+	}
+	
+	//3-1. 회원정보 입력
+	@GetMapping("/info")
+	public String inputInfoView() {
+		
+		
+	    return "join/inputInfo";
+	}
+	
+	//3-2. 회원정보 입력 완료
+	@PostMapping("/info")
+	public String inputInfoRequest() {
+	    return "join/inputInfo";
+	}
+	
 	
 }
 
