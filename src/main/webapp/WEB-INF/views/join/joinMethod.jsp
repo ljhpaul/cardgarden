@@ -5,17 +5,23 @@
 <!-- 헤더와 공통 스타일/스크립트 -->
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
 <link rel="stylesheet" href="${cpath}/resources/css/common.css">
-<link rel="stylesheet" href="${cpath}/resources/css/header.css">
 <link rel="stylesheet" href="${cpath}/resources/css/font-awesome.min.css">
+<link rel="stylesheet" href="${cpath}/resources/css/header.css">
+<link rel="stylesheet" href="${cpath}/resources/css/join.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="${cpath}/resources/js/header.js"></script>
 
-<div class="join-method-section">
-  <div class="join-method-box">
-    <h2 class="join-method-title">카드가든 회원가입</h2>
+<head>
+    <title>카드가든 : 회원가입</title>
+</head>
+
+<body class="join-bg">
+<div class="join-container">
+  <div class="join-box">
+    <h2 class="join-title">카드가든 회원가입</h2>
 
     <!-- 일반 회원가입 버튼 -->
-    <a href="${cpath}/user/join/term" class="join-method-btn">
+    <a href="${cpath}/user/join/term" class="join-btn">
  	  <img src="${cpath}/resources/images/auth/joinUser.png" width="18"/> 일반 회원가입
 	</a>
 
@@ -44,61 +50,36 @@
     </div>
     <div class="join-method-login">
       이미 계정이 있으신가요?
-      <a href="${cpath}/auth/login.do" class="login-link">로그인</a>
+      <a href="${cpath}/auth/login.do" class="join-text-hover">로그인</a>
     </div>
   </div>
 </div>
+</body>
 
 <style>
-.join-method-section {
-  width: 100%;
-  min-height: 600px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #f9faf9;
-  padding-top: 10px;
-  font-family: var(--font);
+.join-container {
+  padding-top: 120px;
 }
-.join-method-box {
-  background: #fff;
+.join-box {
   padding: 40px 36px 36px 36px;
-  border-radius: 20px;
-  box-shadow: 0 2px 16px rgba(100,130,120,0.08);
   min-width: 340px;
   max-width: 360px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+
 }
-.join-method-title {
+.join-title {
   font-size: 2.0rem;
   font-weight: 700;
   color: var(--m1);
-  margin-bottom: 45px;
+  margin-bottom: 35px;
 }
-.join-method-btn {
+.join-btn {
   width: 80%;
   height: 52px;
-  border-radius: 6px;
-  border-bottom: 16px;
-  box-shadow: 0 2px 16px rgba(100,130,120,0.08);
-  background: var(--m1);
-  color: #fff;
   font-size: 1.18rem;
   font-weight: 600;
-  border: none;
   margin-top: 18px;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   gap: 12px;
-  transition: background 0.2s;
-}
-.join-method-btn:hover {
-  background: var(--m3);
+  margin: 0 auto;
 }
 .join-method-divider {
   color: #999;
@@ -113,30 +94,11 @@
   justify-content: center;
   margin-bottom: 18px;
 }
-.social-btn { 
-  box-shadow: 0 2px 16px rgba(100,130,120,0.08);
-  border-radius: 10%;     /* ← 꼭 추가! */
-  overflow: hidden;       /* ← 꼭 추가! */
- }
-.social-btn:hover { box-shadow: 0 3px 24px rgba(84, 118, 106, 0.142); }
-.social-btn.google:hover { border: 2px; border-color: #e5482e; color: #e5482e; }
-.social-btn.naver:hover { border: 2px; border-color: #03c75a; color: #03c75a; }
-.social-btn.kakao:hover { border: 2px; border-color: #fee500; color: #fee500; }
-.social-btn .fa { font-size: 1.2em; }
 .join-method-login {
   margin-top: 24px;
   font-size: 0.97rem;
   color: #666;
   text-align: center;
-}
-.login-link {
-  color: var(--m1);
-  font-weight: 600;
-  margin-left: 5px;
-  text-decoration: underline;
-}
-.login-link:hover {
-  color: var(--m3);
 }
 </style>
 
