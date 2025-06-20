@@ -36,7 +36,7 @@ public class UserConsumptionPatternController {
 		System.out.println(benefitCategorylist.size());
 		model.addAttribute("benefitCategorylist", benefitCategorylist);
 
-		return "cardSelect/insertUserConsumptionPattern";
+		return "cardSearchcondition/insertUserConsumptionPattern";
 
 	}
 
