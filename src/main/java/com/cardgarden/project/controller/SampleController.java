@@ -16,7 +16,7 @@ public class SampleController {
     @Autowired
     SampleService sampleService;
     
-    // 0. 레이이웃 테스트
+    // 0. 레이아웃 테스트
     @GetMapping("/testPage")
     public String testPage(Model model) {
         List<SampleDTO> list = sampleService.selectAll();

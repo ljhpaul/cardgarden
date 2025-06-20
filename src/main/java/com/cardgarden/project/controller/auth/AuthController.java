@@ -1,4 +1,4 @@
-package com.cardgarden.project.controller;
+package com.cardgarden.project.controller.auth;
 
 import com.cardgarden.project.model.sample.SampleDTO;
 import com.cardgarden.project.model.sample.SampleService;
