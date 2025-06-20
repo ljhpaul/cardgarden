@@ -1,75 +1,120 @@
-.custom-main {
+/* customMain.css */
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Noto Sans KR', sans-serif;
+  background-color: #fdfdfd;
+}
+
+/* 상단 배너 */
+.special-banner img {
   width: 100%;
-  padding: 40px 20px;
-  box-sizing: border-box;
-  font-family: var(--font);
+  height: auto;
+  display: block;
 }
 
-.section-title {
-  font-size: 22px;
-  font-weight: bold;
-  margin-bottom: 20px;
-  padding-left: 10px;
-}
-
-.powered {
-  font-size: 14px;
-  color: #999;
-  margin-left: 10px;
-}
-
-.top5-section {
-  margin-bottom: 60px;
-}
-
-.top5-list {
+/* 버튼 영역 공통 */
+.top-buttons,
+.bottom-buttons {
   display: flex;
-  gap: 16px;
-  flex-wrap: wrap;
+  justify-content: center;
+  gap: 40px;
+  margin: 40px 0;
 }
 
-.top5-item {
-  width: 140px;
+.pink-box {
+  background-color: #ffe6ec;
+  border-radius: 20px;
+  padding: 20px;
+  width: 250px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(255, 192, 203, 0.2);
+  transition: transform 0.2s ease;
+}
+
+.pink-box:hover {
+  transform: translateY(-5px);
+}
+
+.pink-box img {
+  width: 80px;
+  height: 80px;
+  margin-top: 15px;
+}
+
+/* top5 섹션 */
+.section-top5 {
+  margin: 60px auto;
+  max-width: 1200px;
+  padding: 0 20px;
+}
+
+.section-top5 h3 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* 어두운 배경용 */
+.section-top5.dark {
+  background-color: #fafafa;
+  padding: 40px 20px;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+}
+
+/* 섹션 제목과 링크 나란히 */
+.top5-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.top5-header .more {
+  font-size: 14px;
+  color: #ff6493;
+  text-decoration: none;
+}
+
+.top5-header .more:hover {
+  text-decoration: underline;
+}
+
+/* 아이템 리스트 */
+.asset-list {
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.asset-item {
+  width: 160px;
+  height: 200px;
+  padding: 10px;
   text-align: center;
 }
 
-.top5-item img {
+.asset-item img {
   width: 100%;
+  max-width: 150px;
   height: auto;
-  border-radius: 12px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  object-fit: contain;
+  background: transparent;
+  display: block;
+  margin: 0 auto;
 }
 
-.item-name {
+
+.asset-item p {
   margin-top: 10px;
-  font-weight: 600;
-  font-size: 14px;
-}
-
-.item-brand {
-  font-size: 13px;
-  color: #777;
-}
-
-.dark {
-  background: #222;
-  padding: 30px;
-  border-radius: 12px;
-  color: white;
-}
-
-.dark-box {
-  background: #333;
-  border-radius: 12px;
-  padding: 12px;
-}
-
-.dark-box .item-name {
-  color: #fff;
-}
-
-.rank {
   font-size: 16px;
-  font-weight: bold;
-  color: #f65;
+  font-weight: 600;
+  color: #444;
+}
+
+.asset-item small {
+  font-size: 13px;
+  color: #999;
 }

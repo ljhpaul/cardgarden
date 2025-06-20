@@ -1,52 +1,86 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="../common/header.jsp" %>
 
-<div class="custom-main">
+<c:set var="cpath" value="${pageContext.servletContext.contextPath}" />
 
+<link rel="stylesheet" href="${cpath}/resources/css/customMain.css?after">
 
+<!-- 스페셜 콜라보 이미지 -->
+<div class="special-banner">
+    <img src="${cpath}/resources/images/custom/special_banner.png" alt="스페셜 콜라보 배너" style="width:100%; height:auto;">
+</div>
 
-
-  <!-- 전체 TOP5 -->
-  <section class="top5-section">
-    <h2 class="section-title">전체 TOP5</h2>
-    <div class="top5-list">
-      <c:forEach var="item" items="${allTop5}">
-        <div class="top5-item">
-          <img src="/assets/${item.asset_type}_${item.asset_brand}_${item.asset_no}_${item.asset_name}.png" alt="top image">
-          <p class="item-name">${item.asset_name}</p>
-          <p class="item-brand">${item.asset_brand}</p>
+<!-- 상단 1단 버튼 -->
+<div class="top-buttons">
+    <a href="${cpath}/custom/make" class="btn-custom-make">
+        <div class="pink-box">
+            <p>나만의 커스텀 카드<br>만들러 가기</p>
+            <img src="${cpath}/resources/images/custom/makecard.png" alt="만들기 예시">
         </div>
-      </c:forEach>
-    </div>
-  </section>
+    </a>
+</div>
 
-  <!-- 스티커 TOP5 -->
-  <section class="top5-section dark">
-    <h2 class="section-title">스티커 TOP5 <span class="powered">Powered by Gufi</span></h2>
-    <div class="top5-list">
-      <c:forEach var="item" items="${stickerTop5}">
-        <div class="top5-item dark-box">
-          <div class="rank"> ${item.rank} </div>
-          <img src="/assets/${item.asset_type}_${item.asset_brand}_${item.asset_no}_${item.asset_name}.png" alt="sticker image">
-          <p class="item-name">${item.asset_name}</p>
+<!-- 상단 2단 버튼 -->
+<div class="bottom-buttons">
+    <a href="${cpath}/card/discount" class="btn-discount">
+        <div class="pink-box">
+            <p>오늘의 할인품목<br>보러가기</p>
+            <img src="${cpath}/resources/images/custom/discount.png">
         </div>
-      </c:forEach>
-    </div>
-  </section>
-
-  <!-- 배경 TOP5 -->
-  <section class="top5-section dark">
-    <h2 class="section-title">배경 TOP5 <span class="powered">Powered by Gufi</span></h2>
-    <div class="top5-list">
-      <c:forEach var="item" items="${backgroundTop5}">
-        <div class="top5-item dark-box">
-          <div class="rank"> ${item.rank} </div>
-          <img src="/assets/${item.asset_type}_${item.asset_brand}_${item.asset_no}_${item.asset_name}.png" alt="background image">
-          <p class="item-name">${item.asset_name}</p>
+    </a>
+    <a href="${cpath}/card/free" class="btn-free">
+        <div class="pink-box">
+            <p>오늘의 무료 스티커<br>받아가기</p>
+            <img src="${cpath}/resources/images/custom/gift.png">
         </div>
-      </c:forEach>
-    </div>
-  </section>
+    </a>
+</div>
 
+<!-- 전체 TOP5 -->
+<div class="section-top5">
+    <h3>전체 TOP5</h3>
+    <div class="asset-list">
+        <c:forEach var="item" items="${topAllList}">
+            <div class="asset-item">
+                <img src="${cpath}/resources/images/asset/${item.asset_type}/${item.asset_brand}/${item.asset_type}_${item.asset_brand}_${item.asset_no}_${item.asset_name}.png">
+                <p>${item.asset_name}</p>
+                <small>${item.asset_brand}</small>
+            </div>
+        </c:forEach>
+    </div>
+</div>
+
+<!-- 스티커 TOP5 -->
+<div class="section-top5 dark">
+    <div class="top5-header">
+        <h3>스티커 TOP5</h3>
+        <a href="${cpath}/custom/top?type=sticker" class="more">스티커 홈</a>
+    </div>
+    <div class="asset-list">
+        <c:forEach var="item" items="${topStickerList}">
+            <div class="asset-item">
+                <img src="${cpath}/resources/images/asset/${item.asset_type}/${item.asset_brand}/${item.asset_type}_${item.asset_brand}_${item.asset_no}_${item.asset_name}.png">
+                <p>${item.asset_name}</p>
+                <small>${item.asset_brand}</small>
+            </div>
+        </c:forEach>
+    </div>
+</div>
+
+<!-- 배경 TOP5 -->
+<div class="section-top5 dark">
+    <div class="top5-header">
+        <h3>배경 TOP5</h3>
+        <a href="${cpath}/images/custom/top?type=background" class="more">스티커 홈</a>
+    </div>
+    <div class="asset-list">
+        <c:forEach var="item" items="${topBgList}">
+            <div class="asset-item">
+                <img src="${cpath}/resources/images/asset/${item.asset_type}/${item.asset_brand}/${item.asset_type}_${item.asset_brand}_${item.asset_no}_${item.asset_name}.png">
+                <p>${item.asset_name}</p>
+                <small>${item.asset_brand}</small>
+            </div>
+        </c:forEach>
+    </div>
 </div>

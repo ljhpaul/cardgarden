@@ -1,5 +1,6 @@
 package com.cardgarden.project.model.custom.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,7 +16,9 @@ public class CustomAssetService {
     @Autowired
     private CustomAssetDAOInterface dao;
 
-    public List<CustomAssetDTO> getTopAssets(String assetType, String sortBy) {
+    public List<CustomAssetDTO> getTopAssets(Map<String, Object> param) {
+        String assetType = (String) param.get("asset_type");
+        String sortBy = (String) param.get("sortBy");
         return dao.selectTopAssets(assetType, sortBy);
     }
 

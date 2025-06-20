@@ -8,10 +8,11 @@ import com.cardgarden.project.model.custom.dto.CustomAssetDTO;
 import com.cardgarden.project.model.custom.service.CustomAssetService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
+@Controller
 @RequestMapping("/custom")
 public class CustomAssetController {
 
@@ -19,15 +20,49 @@ public class CustomAssetController {
     CustomAssetService service;
 
     @GetMapping("/main")
-    public String customMain(Model model) {
-        List<CustomAssetDTO> topStickers = service.getTopAssets("sticker", "like").subList(0, 5);
-        List<CustomAssetDTO> topBackgrounds = service.getTopAssets("background", "like").subList(0, 5);
+    public String showCustomMain(Model model) {
+        Map<String, Object> allParam = new HashMap<>();
+        allParam.put("asset_type", "");
+        allParam.put("sortBy", "used");
+        List<CustomAssetDTO> topAll = service.getTopAssets(allParam);
 
-        model.addAttribute("topStickers", topStickers);
-        model.addAttribute("topBackgrounds", topBackgrounds);
+        Map<String, Object> stickerParam = new HashMap<>();
+        stickerParam.put("asset_type", "sticker");
+        stickerParam.put("sortBy", "used");
+        List<CustomAssetDTO> topSticker = service.getTopAssets(stickerParam);
 
-        return "custom/main"; // /WEB-INF/views/custom/main.jsp
+        Map<String, Object> bgParam = new HashMap<>();
+        bgParam.put("asset_type", "background");
+        bgParam.put("sortBy", "used");
+        List<CustomAssetDTO> topBackground = service.getTopAssets(bgParam);
+
+        List<CustomAssetDTO> discountList = service.getDailyDiscountAssets();
+        List<CustomAssetDTO> freeList = service.getDailyFreeAssets();
+
+        model.addAttribute("topAllList", topAll.subList(0, Math.min(5, topAll.size())));      
+        model.addAttribute("topStickerList", topSticker.subList(0, Math.min(5, topSticker.size())));   
+        model.addAttribute("topBgList", topBackground.subList(0, Math.min(5, topBackground.size())));   
+        model.addAttribute("discountList", discountList);
+        model.addAttribute("freeList", freeList);
+
+        return "custom/main";
     }
+
+
+
+    @GetMapping("/top")
+    public String showTopPage(@RequestParam("type") String type, Model model) {
+        Map<String, Object> param = new HashMap<>();
+        param.put("asset_type", type);
+        param.put("sortBy", "used");
+
+        List<CustomAssetDTO> topAssets = service.getTopAssets(param);
+        model.addAttribute("topAssets", topAssets);
+        model.addAttribute("type", type);
+        
+        return "custom/top";  // /WEB-INF/views/custom/top.jsp
+    }
+
 
 
     @GetMapping("/discount")

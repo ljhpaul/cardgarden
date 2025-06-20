@@ -5,19 +5,32 @@
 
 <mapper namespace="com.cardgarden.customasset">
 
-  <!-- 통합: 탑 랭킹 (좋아요순, 사용순, 전체순 등) -->
-  <select id="selectTopAssets" resultType="CustomAssetDTO">
-    SELECT asset_id, asset_brand, asset_type, asset_no, asset_name
-    FROM CustomAsset
-    WHERE asset_type = #{asset_type}
-      <choose>
-        <when test="sortBy == 'like'">asset_like</when>
-        <when test="sortBy == 'used'">used</when>
-        <when test="sortBy == 'all'">asset_like DESC, asset_brand ASC, asset_no ASC</when>
-        <otherwise>asset_id</otherwise>
-      </choose>
-    DESC
-  </select>
+  <!--탑 랭킹 (좋아요순, 사용순, 전체순 등) -->
+	  
+	 <select id="selectTopAssets" resultType="CustomAssetDTO">
+	  SELECT asset_id, asset_brand, asset_type, asset_no, asset_name
+	  FROM CustomAsset
+	  <where>
+         <if test="asset_type != null and asset_type != ''">
+		   asset_type = #{asset_type}
+		 </if>
+	  </where>
+	  <choose>
+	    <when test="sortBy == 'like'">
+	      ORDER BY asset_like DESC
+	    </when>
+	    <when test="sortBy == 'used'">
+	      ORDER BY used DESC
+	    </when>
+	    <when test="sortBy == 'all'">
+	      ORDER BY asset_like DESC, asset_brand ASC, asset_no ASC
+	    </when>
+	    <otherwise>
+	      ORDER BY asset_id DESC
+	    </otherwise>
+	  </choose>
+	</select>
+ 
 
   <!-- 오늘의 할인 -->
   <select id="selectDailyDiscount" resultType="CustomAssetDTO">
