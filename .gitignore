@@ -199,3 +199,4 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.toptal.com/developers/gitignore/api/java,maven,eclipse,visualstudiocode,dbeaver,windows,macos
+src/main/webapp/WEB-INF/spring/applicationContext.xml
