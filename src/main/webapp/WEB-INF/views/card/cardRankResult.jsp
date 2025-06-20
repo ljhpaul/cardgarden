@@ -47,6 +47,10 @@ body {
 	border: 1px solid #ccc;
 	border-radius: 16px;
 	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+	transition: background-color 0.3s ease;
+}
+.card-box:hover {
+	background-color: var(--s2);
 }
 
 .medal {
@@ -109,6 +113,10 @@ body {
 	max-width: 90%;
 	margin: 0 auto;
 	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+	transition: background-color 0.3s ease;
+}
+.card-row:hover {
+	background-color: var(--s2);
 }
 
 .card-image-wrapper1 {

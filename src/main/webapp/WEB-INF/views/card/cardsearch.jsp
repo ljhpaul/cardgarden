@@ -130,7 +130,13 @@ header {
   border-radius: 12px;            /* 옵션: 둥근 테두리 */
   background-color: white;        /* 옵션: 배경색 */
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); /* 옵션: 그림자 */
+  transition: background-color 0.3s ease;
 }
+
+.card-box:hover {
+	background-color: var(--s2);
+}
+
 
 .card-image-wrapper {
   width: 120px;
@@ -269,6 +275,12 @@ header {
 .search-bar button:hover {
 	background-color: var(--m2); /* hover 시 색상 변경 */
 }
+
+.right-cursor img {
+	width: 40px;
+	height: 40px;
+	overflow: visible;
+}
 </style>
 </head>
 <body>
@@ -309,6 +321,7 @@ header {
 			  </span>
 			</div>	
 			</div>
+			<div class="right-cursor"><img src="${pageContext.request.contextPath}/resources/images/right.png" alt="오른쪽커서" class="right-cursor" /></div>
 		</div>
 
 	</c:forEach>
