@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.cardgarden.UserPatternBenefit">
+
+    <resultMap id="UserPatternBenefitMap" type="userPatternBenefitDTO">
+	    <association property="pattern" javaType="UserConsumptionPatternDTO">
+	        <result property="pattern_id" column="pattern_id"/>
+	    </association>
+	    <association property="category" javaType="benefitCategoryDTO">
+	        <result property="benefitCategory_name" column="benefitCategory_name"/>
+	    </association>
+	    <association property="detail" javaType="UserConsumptionPatternDetailDTO">
+	        <result property="amount" column="amount"/>
+	    </association>
+	</resultMap>
+
+
+    <select id="selectUserConsumptionPattern"
+            parameterType="int"
+            resultMap="UserPatternBenefitMap">
+	        SELECT usp.pattern_id, bc.benefitCategory_name, uspd.amount
+	        FROM UserConsumptionPattern usp
+	        INNER JOIN UserConsumptionPatternDetail uspd
+	            ON usp.pattern_id = uspd.pattern_id
+	        INNER JOIN BenefitCategory bc
+	            ON bc.benefitcategory_id = uspd.benefitcategory_id
+	        WHERE usp.user_id = #{user_id}
+    </select>
+</mapper>

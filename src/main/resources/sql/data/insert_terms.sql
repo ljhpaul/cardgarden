@@ -41,3 +41,6 @@ INSERT INTO term (term_name, term_content, is_required, created_at) VALUES (
 commit;
 
 SELECT * FROM term;
+DELETE FROM term;
+ALTER TABLE term AUTO_INCREMENT = 1;
+
