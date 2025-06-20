@@ -19,7 +19,8 @@ public class CustomAssetService {
     public List<CustomAssetDTO> getTopAssets(Map<String, Object> param) {
         String assetType = (String) param.get("asset_type");
         String sortBy = (String) param.get("sortBy");
-        return dao.selectTopAssets(assetType, sortBy);
+        String brand = (String) param.get("brand");
+        return dao.selectTopAssets(assetType, sortBy, brand);
     }
 
     public List<CustomAssetDTO> getDailyDiscountAssets() {

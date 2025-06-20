@@ -246,7 +246,7 @@ body {
 
 .section-top5 h3 {
   font-size: 24px;
-  color: black;
+  color: white;
   font-weight: 1000;
   margin: 0;
   line-height: 1.2;
@@ -329,7 +329,7 @@ body {
 }
 
 .rank-card {
-  background-color: var(--m2);
+  background-color: white;
   border-radius: 12px;
   padding: 20px 10px 10px;
   width: 160px;

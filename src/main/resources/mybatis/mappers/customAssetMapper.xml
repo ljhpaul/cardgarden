@@ -11,9 +11,12 @@
 	  SELECT asset_id, asset_brand, asset_type, asset_no, asset_name
 	  FROM CustomAsset
 	  <where>
-         <if test="asset_type != null and asset_type != ''">
+        <if test="asset_type != null and asset_type != ''">
 		   asset_type = #{asset_type}
-		 </if>
+		</if>
+		<if test="asset_brand != null and asset_brand != ''">
+	      AND asset_brand = #{asset_brand}
+	    </if>
 	  </where>
 	  <choose>
 	    <when test="sortBy == 'like'">

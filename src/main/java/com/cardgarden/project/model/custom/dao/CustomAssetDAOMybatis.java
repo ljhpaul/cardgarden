@@ -18,12 +18,15 @@ public class CustomAssetDAOMybatis implements CustomAssetDAOInterface {
 
     private final String namespace = "com.cardgarden.customasset";
 
+
     @Override
-    public List<CustomAssetDTO> selectTopAssets(String assetType, String sortBy) {
-        Map<String, Object> params = new HashMap<>();
-        params.put("asset_type", assetType);
-        params.put("sortBy", sortBy);
-        return sqlSession.selectList(namespace + ".selectTopAssets", params);
+    public List<CustomAssetDTO> selectTopAssets(String assetType, String sortBy, String brand) {
+        Map<String, Object> param = new HashMap<>();
+        param.put("asset_type", assetType);
+        param.put("sortBy", sortBy);
+        param.put("asset_brand", brand);
+
+        return sqlSession.selectList(namespace + ".selectTopAssets", param);
     }
 
     @Override

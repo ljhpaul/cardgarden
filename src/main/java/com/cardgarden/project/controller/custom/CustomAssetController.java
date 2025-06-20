@@ -1,5 +1,6 @@
 package com.cardgarden.project.controller.custom;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,16 +25,19 @@ public class CustomAssetController {
         Map<String, Object> allParam = new HashMap<>();
         allParam.put("asset_type", "");
         allParam.put("sortBy", "used");
+        allParam.put("brand","");
         List<CustomAssetDTO> topAll = service.getTopAssets(allParam);
 
         Map<String, Object> stickerParam = new HashMap<>();
         stickerParam.put("asset_type", "sticker");
         stickerParam.put("sortBy", "used");
+        stickerParam.put("brand","");
         List<CustomAssetDTO> topSticker = service.getTopAssets(stickerParam);
 
         Map<String, Object> bgParam = new HashMap<>();
         bgParam.put("asset_type", "background");
         bgParam.put("sortBy", "used");
+        stickerParam.put("brand","");
         List<CustomAssetDTO> topBackground = service.getTopAssets(bgParam);
 
         List<CustomAssetDTO> discountList = service.getDailyDiscountAssets();
@@ -51,17 +55,33 @@ public class CustomAssetController {
 
 
     @GetMapping("/top")
-    public String showTopPage(@RequestParam("type") String type, Model model) {
+    public String showTopPage(
+        @RequestParam("type") String type,
+        @RequestParam(value = "sortBy", defaultValue = "used") String sortBy,
+        @RequestParam(value = "brand", defaultValue = "") String brand,
+        Model model
+    ) {
         Map<String, Object> param = new HashMap<>();
         param.put("asset_type", type);
-        param.put("sortBy", "used");
+        param.put("sortBy", sortBy);
+        param.put("brand", brand);
 
         List<CustomAssetDTO> topAssets = service.getTopAssets(param);
-        model.addAttribute("topAssets", topAssets);
+
+        List<CustomAssetDTO> top5List = topAssets.subList(0, Math.min(5, topAssets.size()));
+        List<CustomAssetDTO> rankedList = topAssets.size() > 5
+            ? topAssets.subList(5, Math.min(100, topAssets.size()))
+            : Collections.emptyList();
+
+        model.addAttribute("top5List", top5List);
+        model.addAttribute("rankedList", rankedList);
         model.addAttribute("type", type);
-        
-        return "custom/top";  // /WEB-INF/views/custom/top.jsp
+        model.addAttribute("sortBy", sortBy);
+        model.addAttribute("brand", brand);
+
+        return "custom/top";
     }
+
 
 
 

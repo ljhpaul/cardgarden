@@ -7,7 +7,7 @@ import com.cardgarden.project.model.custom.dto.CustomAssetDTO;
 
 public interface CustomAssetDAOInterface {
 
-    List<CustomAssetDTO> selectTopAssets(String assetType, String sortBy);
+    List<CustomAssetDTO> selectTopAssets(String assetType, String sortBy, String brand);
 
     List<CustomAssetDTO> selectDailyDiscount();
 
