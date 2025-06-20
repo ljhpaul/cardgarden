@@ -34,7 +34,7 @@
 		  </if>
 		</select>
 		
-		<resultMap id="CardWithBenefitsMap" type="CardDTO">
+		<resultMap id="CardWithBenefitsMap" type="CardConditionDTO">
 		  <id property="card_id" column="card_id"/>
 		  <result property="card_name" column="card_name"/>
 		  <result property="company" column="company"/>

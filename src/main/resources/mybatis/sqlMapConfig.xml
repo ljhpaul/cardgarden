@@ -16,9 +16,9 @@
      <typeAlias type="com.cardgarden.project.model.sample.SampleDTO" alias="sampleDTO"/>
 
     <typeAlias type="com.cardgarden.project.model.benefitDetail.BenefitDetailDTO" alias="BenefitDetailDTO"/>
-    <typeAlias type="com.cardgarden.project.model.CardSearchCondition.CardDTO" alias="CardDTO"/>
+    <typeAlias type="com.cardgarden.project.model.CardSearchCondition.CardDTO" alias="CardConditionDTO"/>
 
-     <typeAlias type="com.cardgarden.project.model.cardDetail.CardDTO" alias="cardDTO" />
+     <typeAlias type="com.cardgarden.project.model.cardDetail.CardDTO" alias="DetailcardDTO" />
      <typeAlias type="com.cardgarden.project.model.cardDetail.CardDetailDTO" alias="cardDetailDTO" />
 
      <typeAlias type="com.cardgarden.project.model.user.dto.UserInfoDTO" alias="userInfoDTO"/>
