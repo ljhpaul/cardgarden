@@ -8,9 +8,27 @@
 
 <!-- 스페셜 콜라보 이미지 -->
 <div class="special-banner">
-    <img src="${cpath}/resources/images/custom/special_banner1.png" alt="스페셜 콜라보 배너" style="width:100%;">
+  <img class="banner-bg" src="${cpath}/resources/images/custom/special_banner1.png" alt="배경 배너">
+  <div class="wp1">
+  <div class="banner-content">
+    <div class="banner-head">
+      <h1>스페셜 콜라보</h1>
+      <a href="${cpath}/custom/main" class="btn-top">← 콜라보 홈</a>
+    </div>
+    
+    <div class="banner-body">
+      <img class="banner-card" src="${cpath}/resources/images/asset/background/지브리/background_지브리_5_토토로배경.png" alt="카드 이미지">
+      <div class="banner-text">
+        <h2>카드가든<br>X 지브리</h2>
+        <p class="p1">대폭 할인중</p>
+        <p>6/20 ~ 7/20</p>
+      </div>
+    </div>
+    <a href="${cpath}/custom/detail?id=123" class="btn-bottom">보러가기</a>
+    </div>
+  </div>
 </div>
-	
+
 	<!-- 상단 1단 버튼 -->
 	<div class="top-buttons">
 	    <a href="${cpath}/custom/make" class="btn-custom-make">
@@ -18,14 +36,14 @@
 			  <div class="pink-box1-text">
 			    나만의 커스텀 카드<br>만들러 가기
 			  </div>
-			  <img src="${cpath}/resources/images/custom/makecard.png" alt="추후 넣을예정">
+			  <img src="${cpath}/resources/images/custom/makecard/main.png" alt="추후 넣을예정">
 			</div>
 	    </a>
 	</div>
 
 	<!-- 상단 2단 버튼 -->
 	<div class="bottom-buttons">
-	  <a href="${cpath}/card/discount" class="btn-discount">
+	  <a href="${cpath}/custom/discount" class="btn-discount">
 	    <div class="pink-box">
 	      <div class="pink-box-text">
 	        오늘의 할인품목<br>보러가기
@@ -33,7 +51,7 @@
 	      <img src="${cpath}/resources/images/custom/discount.png" alt="할인">
 	    </div>
 	  </a>
-	  <a href="${cpath}/card/free" class="btn-free">
+	  <a href="${cpath}/custom/detail" class="btn-free">
 	    <div class="pink-box">
 	      <div class="pink-box-text">
 	        오늘의 무료 스티커<br>받아가기
