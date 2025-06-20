@@ -81,11 +81,11 @@ body {
 	max-width: 100%;
 	max-height: 100%;
 	object-fit: contain;
-	transition: transform 0.3s;
+	transition: transform 1s;
 }
 
 .card-image-wrapper img:hover {
-	transform: scale(1.3);
+	transform: scale(2);
 }
 
 /* 카드 이름 텍스트 */
@@ -102,7 +102,7 @@ body {
 	gap: 16px;
 }
 
-.card-row {
+.card-row {   /*  카드 들어가는곳, 클릭하면 상세로    */
 	display: flex;
 	align-items: center;
 	background-color: white;
@@ -119,7 +119,7 @@ body {
 	background-color: var(--s2);
 }
 
-.card-image-wrapper1 {
+.card-image-wrapper1 {   
 	width: 120px;
 	height: 120px;
 	background-color: #f5f5f5;
@@ -135,11 +135,11 @@ body {
 	max-width: 100%;
 	max-height: 100%;
 	object-fit: contain;
-	transition: transform 0.3s;
+	transition: transform 0.5s;
 }
 
 .card-image-wrapper1 img:hover {
-	transform: scale(1.3);
+	transform: scale(1.5);
 }
 
 /* 랭킹 번호 */
@@ -172,6 +172,11 @@ body {
   font-size: 12px;
   margin-left: 8px;            /* 회사명과 간격 */
   display: inline-block;
+}
+.right-cursor img {
+	width: 40px;
+	height: 40px;
+	overflow: visible;
 }
 </style>
 </head>
@@ -221,6 +226,7 @@ body {
 					<div class="card-info">
 						<div class="card-name">${card.card_name}</div>
 						<div class="card-company">${card.company}
+							<!-- 신용카드면 [신용]만 뜨게함 -->
 							<span class="card-type"> <c:choose>
 									<c:when test="${card.card_type == '신용카드'}">신용</c:when>
 									<c:when test="${card.card_type == '체크카드'}">체크</c:when>
@@ -229,8 +235,10 @@ body {
 							</span>
 						</div>
 					</div>
+					<div class="right-cursor"><img src="${pageContext.request.contextPath}/resources/images/right.png" alt="오른쪽커서" class="right-cursor" /></div>
 				</div>
 			</c:forEach>
 		</div>
+	</div>
 </body>
 </html>
