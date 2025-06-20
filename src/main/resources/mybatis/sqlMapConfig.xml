@@ -17,6 +17,8 @@
     <typeAlias type="com.cardgarden.project.model.benefitCategory.benefitCategoryDTO" alias="benefitCategoryDTO"/>
     <typeAlias type="com.cardgarden.project.model.userConsumptionPattern.UserConsumptionPatternDTO" alias="UserConsumptionPatternDTO"/>
     <typeAlias type="com.cardgarden.project.model.userConsumptionPatternDetail.UserConsumptionPatternDetailDTO" alias="UserConsumptionPatternDetailDTO"/>
+    <typeAlias type="com.cardgarden.project.model.benefitDetail.BenefitDetailDTO" alias="BenefitDetailDTO"/>
+    <typeAlias type="com.cardgarden.project.model.CardSearchCondition.CardDTO" alias="CardDTO"/>
   </typeAliases>
   
 </configuration>

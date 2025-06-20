@@ -1,4 +1,4 @@
-package com.cardgarden.project.model.cardSelect;
+package com.cardgarden.project.model.benefitDetail;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,9 +9,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 @Data
-public class UserConsumptionPatternDTO {
-	
+public class BenefitDetailDTO {
+	private int benefitdetail_id;
 	private int benefitcategory_id;
-	private String benefitCategory_name;
+	private String benefitdetail_name;
+	private String benefitdetail_image;
 
 }
