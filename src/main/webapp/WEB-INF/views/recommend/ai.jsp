@@ -57,7 +57,6 @@
  <!-- 로딩 화면 -->
 	<div class="mask">
 	  <img class="loadingImg" src='https://i.ibb.co/20zw80q/1487.gif'>
-	  <div class="loading-text">AI 측정 중입니다...</div>
 	</div>
 <!-- 로딩화면 끝 -->
   <form method="get" action="${cpath}/recommend/aiResult" onsubmit="event.preventDefault(); showMaskAndSubmit(this);">
@@ -80,5 +79,14 @@
         선택한 패턴으로 카드 추천받기
     </button>
   </form>
+  <!-- 모달/팝업 영역 추가 -->
+<div class="popup-mask" style="display:none; position:fixed; left:0; top:0; width:100vw; height:100vh; background:rgba(0,0,0,0.5); z-index:9999;">
+  <div style="position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); background:white; border-radius:20px; padding:30px 40px; box-shadow:0 2px 16px rgba(0,0,0,0.2); text-align:center;">
+    <img src="https://i.ibb.co/20zw80q/1487.gif" alt="로딩중" style="width:64px; display:block; margin:0 auto 20px;">
+    <div style="font-size:1.2em; color:#333;">AI 측정 중입니다...</div>
+  </div>
+</div>
+
+  
 </body>
 </html>
