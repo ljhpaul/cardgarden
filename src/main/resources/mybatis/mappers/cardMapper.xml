@@ -25,7 +25,7 @@
 		select *
 		from CardBenefitDetail cbd
 			inner join BenefitDetail bd
-				on cbd.benefitdetail_id = bd.benefitcategory_id
+				on cbd.benefitdetail_id = bd.benefitdetail_id
 		where card_id = #{cardid};
 	</select>	
 </mapper>
