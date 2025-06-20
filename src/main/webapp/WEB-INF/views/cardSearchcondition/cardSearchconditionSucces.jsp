@@ -123,7 +123,7 @@
 			    <p>전월실적: ${card.prev_month_cost} 만원</p>
 	        </div>
 	        <div>
-	        	<a href="?card_id=${card.card_id}" class=card-btn>카드 보러가기</a>
+	        	<a href="${cpath}/card/detail?cardid=${card.card_id}" class=card-btn>카드 보러가기</a>
 	        </div>
    		</div>
    	</c:forEach>
