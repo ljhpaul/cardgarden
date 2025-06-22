@@ -25,7 +25,7 @@
               id="email"
               name="email"
               required
-              class="form-control"
+              class="input-form"
               placeholder="cardgarden@email.com"
               oninput="resetStatus();"
             />
@@ -47,7 +47,7 @@
               id="code"
               name="code"
               maxlength="6"
-              class="form-control code-input"
+              class="input-form code-input"
               placeholder="6자리"
               autocomplete="off"
             />
@@ -110,15 +110,6 @@
     gap: 8px;
     margin-top: 10px;
     width: 100%;
-  }
-  .form-control {
-    flex: 1;
-    border: 1px solid var(--m1);
-    border-radius: 8px;
-    padding: 12px;
-    font-size: 16px;
-    font-family: var(--font);
-    box-sizing: border-box;
   }
   .code-input {
     letter-spacing: 2px;
