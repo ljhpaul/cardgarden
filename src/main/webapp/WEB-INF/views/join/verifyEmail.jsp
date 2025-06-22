@@ -29,7 +29,7 @@
               placeholder="cardgarden@email.com"
               oninput="resetStatus();"
             />
-            <button type="button" id="email-request-btn" class="join-btn" style="min-width:96px; font-size:15px; height:44px;">
+            <button type="button" id="email-request-btn" class="join-btn btn-sub">
               인증요청
             </button>
           </div>
@@ -51,7 +51,7 @@
               placeholder="6자리"
               autocomplete="off"
             />
-            <button type="button" id="code-check-btn" class="join-btn" style="min-width:80px; font-size:15px; height:44px;">
+            <button type="button" id="code-check-btn" class="join-btn btn-sub">
               인증확인
             </button>
           </div>
@@ -63,12 +63,7 @@
           <i class="fa fa-check-circle"></i> 인증성공
         </div>
         
-        <button
-          type="submit"
-          id="next-btn"
-          class="join-btn"
-          disabled
-        >
+        <button type="submit" id="next-btn" class="join-btn" disabled >
           다음
         </button>
       </form>
@@ -80,25 +75,11 @@
   .join-container {
     padding-top: 135px;
   }
-  .join-title {
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: var(--m1);
-    margin-top: 10px;
-    margin-bottom: 45px;
-  }
   .join-box {
     max-width: 440px;
     width: 100%;
     padding: 40px 32px;
     box-sizing: border-box;
-    background: #fff;
-    border-radius: 20px;
-    box-shadow: 0 2px 16px rgba(100,130,120,0.08);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
   }
   .email-form-label {
     font-weight: 600;
@@ -131,6 +112,11 @@
     font-weight: 600;
     display: none;
     text-align: center;
+  }
+  .btn-sub {
+    min-width:96px;
+    font-size:15px;
+    height:44px;
   }
   #next-btn {
     width: 100%;
@@ -228,9 +214,16 @@
     clearInterval(timer);
     $('#code-timer').hide();
   }
+  
   // 이메일 형식 검증
   function validateEmail(email) {
 	  const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 	  return re.test(email);
+  }
+  
+  // 인증번호 형식 검증
+  function validateCode(code) {
+	  const re = /^\d{6}$/;
+	  return re.test(code);
   }
 </script>
