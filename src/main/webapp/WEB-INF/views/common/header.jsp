@@ -68,7 +68,6 @@
     <a href="${cpath}/event/list">이벤트&nbsp;
       <img class="mascot" src="${cpath}/resources/images/common/caretDown.png" width="15">
 	</a>
->>>>>>> origin/develop
   </div>
 </header>
 </div>
