@@ -24,6 +24,7 @@ public class CustomAssetController {
 
     @GetMapping("/main")
     public String showCustomMain(Model model) {
+        Integer loginId=2;
         Map<String, Object> allParam = new HashMap<>();
         allParam.put("asset_type", "");
         allParam.put("sortBy", "used");
@@ -183,6 +184,25 @@ public class CustomAssetController {
         model.addAttribute("discountList", discountList);
         return "custom/discount";
     }
+    
+    //무료 모달
+    @GetMapping("/free")
+    public String showFreeStickerPage(Model model) {
+
+        List<CustomAssetDTO> freeList = service.getDailyFreeAssets();
+
+        if (freeList.isEmpty()) {
+            model.addAttribute("error", "오늘의 무료 스티커가 없습니다.");
+            return "custom/main";
+        }
+
+        CustomAssetDTO freeAsset = freeList.get(0);
+        model.addAttribute("freeAsset", freeAsset);
+
+        return "custom/free";
+    }
+
+
 
     
     
