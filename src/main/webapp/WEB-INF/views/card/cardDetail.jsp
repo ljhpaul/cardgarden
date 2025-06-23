@@ -589,8 +589,24 @@ $(function(){
 					</div>
 					<a href="${card.card_url}" class="company-button">카드사 바로가기</a>
 				</div>
-</div>
+		</div>
 		</c:forEach>
+		
+		<c:choose>
+		  <c:when test="${not empty aiDetailResult}">
+		    <ul>
+		      <c:forEach items="${aiDetailResult}" var="result">
+		        <li>
+		          예상 매칭률: <b><fmt:formatNumber value="${result.resultValue * 100}" pattern="#.0"/>%</b><br>
+		          ${result.message}
+		        </li>
+		      </c:forEach>
+		    </ul>
+		  </c:when>
+		  <c:otherwise>
+		    <div>추천 결과가 없습니다.</div>
+		  </c:otherwise>
+		</c:choose>
 
 	</div>
 	<div class="card-benefit-section">

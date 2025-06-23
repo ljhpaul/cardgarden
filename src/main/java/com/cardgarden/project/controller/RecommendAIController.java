@@ -5,6 +5,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,8 +39,6 @@ public class RecommendAIController {
 	        mapData.computeIfAbsent(groupKey, k -> new ArrayList<>())
 	               .addAll(cardService.selectById(groupKey));
 	    }
-
-
 	    try {
 	        System.out.println(dataList);
 	        model.addAttribute("aiList", dataList);    // 추천 리스트
@@ -48,5 +48,6 @@ public class RecommendAIController {
 	    }
 	    return "recommend/aiResult";
 	}
+	
 	
 }
