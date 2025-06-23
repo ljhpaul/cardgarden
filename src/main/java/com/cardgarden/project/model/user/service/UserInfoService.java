@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import com.cardgarden.project.model.user.dao.UserInfoDAOInterface;
+import com.cardgarden.project.model.user.dao.UserInfoDAO;
 import com.cardgarden.project.model.user.dto.UserInfoDTO;
 
 import lombok.extern.java.Log;
@@ -17,7 +17,7 @@ public class UserInfoService {
 
     @Autowired
     @Qualifier("userInfoDAO")
-    UserInfoDAOInterface userInfoDAO;
+    UserInfoDAO userInfoDAO;
 
     // 전체 조회
     public List<UserInfoDTO> selectAll() {
@@ -45,6 +45,13 @@ public class UserInfoService {
     	int user_id = userInfoDAO.getUserIdByLoginId(user_name);
     	log.info("UserInfoService에서 로그출력: getUserIdByLoginId -> user_id = " + user_id);
     	return user_id;
+    }
+    
+    // 로그인 아이디로 비밀번호 조회
+    public String getPasswordByLoginId(String user_name) {
+    	String user_password = userInfoDAO.getPasswordByLoginId(user_name);
+    	log.info("UserInfoService에서 로그출력: getPasswordByLoginId -> user_password = " + user_password);
+    	return user_password;
     }
 
     // 회원 등록
