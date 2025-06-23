@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cardgarden.customasset">
+
+  <!--탑 랭킹 (좋아요순, 사용순, 전체순 등) -->
+	  
+	 <select id="selectTopAssets" resultType="CustomAssetDTO">
+	  SELECT asset_id, asset_brand, asset_type, asset_no, asset_name
+	  FROM CustomAsset
+	  <where>
+        <if test="asset_type != null and asset_type != ''">
+		   asset_type = #{asset_type}
+		</if>
+		<if test="asset_brand != null and asset_brand != ''">
+	      AND asset_brand = #{asset_brand}
+	    </if>
+	  </where>
+	  <choose>
+	    <when test="sortBy == 'like'">
+	      ORDER BY asset_like DESC
+	    </when>
+	    <when test="sortBy == 'used'">
+	      ORDER BY used DESC
+	    </when>
+	    <when test="sortBy == 'all'">
+	      ORDER BY asset_like DESC, asset_brand ASC, asset_no ASC
+	    </when>
+	    <otherwise>
+	      ORDER BY asset_id DESC
+	    </otherwise>
+	  </choose>
+	</select>
+ 
+  <!-- 오늘의 할인 -->
+  <select id="selectDailyDiscount" resultType="CustomAssetDTO">
+    SELECT ca.asset_id, ca.asset_brand, ca.asset_type, ca.asset_no, ca.point_needed, ca.discount, ca.asset_name
+    FROM DailyDiscount dd
+    JOIN CustomAsset ca ON dd.asset_id = ca.asset_id
+    WHERE dd.date = CURDATE()
+  </select>
+
+  <!-- 오늘의 무료 스티커 -->
+  <select id="selectDailyFree" resultType="CustomAssetDTO">
+    SELECT ca.asset_id, ca.asset_brand, ca.asset_type, ca.asset_no, ca.point_needed,ca.asset_name
+    FROM DailyFree df
+    JOIN CustomAsset ca ON df.asset_id = ca.asset_id
+    WHERE df.date = CURDATE()
+  </select>
+
+  <!-- 상세조회 (할인 반영된 가격: point_needed) -->
+	<select id="selectAssetDetail" resultType="CustomAssetDTO">
+	  SELECT 
+	    ca.asset_id, ca.asset_brand, ca.asset_type, ca.asset_no, ca.asset_like, ca.used, ca.point_needed, ca.discount,ca.asset_name, 
+	    CASE 
+	      WHEN dd.asset_id IS NOT NULL THEN ca.discount
+	      ELSE ca.point_needed
+	    END AS final_price
+	  FROM CustomAsset ca
+	  LEFT JOIN DailyDiscount dd 
+	    ON ca.asset_id = dd.asset_id AND dd.date = CURDATE()
+	  WHERE ca.asset_id = #{asset_id}
+	</select>
+
+
+  <!-- 좋아요 삽입 -->
+	<insert id="insertLikeAsset">
+	  INSERT INTO LikeAsset (user_id, asset_id) VALUES (#{user_id}, #{asset_id});
+	</insert>
+	
+	<update id="increaseAssetLike">
+	  UPDATE CustomAsset SET asset_like = asset_like + 1 WHERE asset_id = #{asset_id};
+	</update>
+
+
+  <!-- 좋아요 취소 -->
+	<delete id="deleteLikeAsset">
+	  DELETE FROM LikeAsset WHERE user_id = #{user_id} AND asset_id = #{asset_id};
+	</delete>
+	
+	<update id="decreaseAssetLike">
+	  UPDATE CustomAsset SET asset_like = asset_like - 1 WHERE asset_id = #{asset_id};
+	</update>
+
+
+  <!-- 좋아요 여부 확인 -->
+  <select id="isLiked" resultType="int">
+    SELECT COUNT(*) FROM LikeAsset WHERE user_id = #{user_id} AND asset_id = #{asset_id}
+  </select>
+  <!-- 실시간 좋아요 처리 -->
+  <select id="selectAssetLikeCount" resultType="int">
+    SELECT asset_like FROM CustomAsset WHERE asset_id = #{asset_id}
+  </select>
+  
+
+  <!-- 보유 여부 확인 -->
+  <select id="isOwned" resultType="int">
+    SELECT COUNT(*) FROM OwnedAsset WHERE user_id = #{user_id} AND asset_id = #{asset_id}
+  </select>
+
+  <!-- 태그(브랜드) 기반 관련 제품 리스트 -->
+  <select id="selectSameBrand" resultType="CustomAssetDTO">
+    SELECT *
+    FROM CustomAsset
+    WHERE asset_brand = #{asset_brand}
+      AND asset_type = #{asset_type}
+  </select>
+
+  <!-- 유저 포인트 조회 -->
+  <select id="selectUserPoint" resultType="int">
+    SELECT point FROM UserInfo WHERE user_id = #{user_id}
+  </select>
+
+  <!-- 유저 포인트 차감 -->
+  <update id="updateUserPoint">
+    UPDATE UserInfo SET point = point - #{point} WHERE user_id = #{user_id}
+  </update>
+
+  <!-- 보유 처리 -->
+  <insert id="insertOwnedAsset">
+    INSERT INTO OwnedAsset (user_id, asset_id) VALUES (#{user_id}, #{asset_id})
+  </insert>
+
+</mapper>
