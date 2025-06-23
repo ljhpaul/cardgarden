@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class CardRecommendationDTO {
 	
-	public int card_id;
-    public double expected_match;
-
+	private int card_id;
+	private double expected_match;
+     
 }
