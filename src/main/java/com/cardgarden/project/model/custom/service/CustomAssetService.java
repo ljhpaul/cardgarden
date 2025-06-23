@@ -51,11 +51,11 @@ public class CustomAssetService {
         return dao.selectUserPoint(userId);
     }
 
-    public void deductUserPoint(Map<String, Object> param) {
+    public void updateUserPoint(Map<String, Object> param) {
         dao.updateUserPoint(param);
     }
 
-    public void registerOwnership(Map<String, Object> param) {
+    public void insertOwnedAsset(Map<String, Object> param) {
         dao.insertOwnedAsset(param);
     }
 
@@ -68,4 +68,8 @@ public class CustomAssetService {
         dao.deleteLikeAsset(param);
         dao.decreaseAssetLike((int) param.get("asset_id"));
     }
+    public int getUserAssetLike(int assetId) {
+        return dao.selectAssetLikeCount(assetId);
+    }
+    
 }

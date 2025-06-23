@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import com.cardgarden.project.model.custom.dto.CustomAssetDTO;
 import com.cardgarden.project.model.custom.service.CustomAssetService;
 
@@ -81,22 +83,153 @@ public class CustomAssetController {
 
         return "custom/top";
     }
-
-
-
-
-    @GetMapping("/discount")
-    public List<CustomAssetDTO> dailyDiscount() {
-        return service.getDailyDiscountAssets();
-    }
-
-    @GetMapping("/free")
-    public List<CustomAssetDTO> dailyFree() {
-        return service.getDailyFreeAssets();
-    }
-
+    
     @GetMapping("/detail")
-    public CustomAssetDTO detail(@RequestParam int asset_id) {
-        return service.getAssetDetail(asset_id);
+    public String showDetail(
+        @RequestParam("asset_id") int assetId,
+        HttpSession session,
+        Model model
+    ) {
+        CustomAssetDTO asset = service.getAssetDetail(assetId);
+
+        //Integer userId = (Integer) session.getAttribute("loginId");
+        Integer userId=2;
+        int liked = -1;
+        int owned = -1;
+        int userPoint = 0;
+
+        if (userId != null) {
+            liked = service.checkLiked(userId, assetId);
+            owned = service.checkOwned(userId, assetId);
+            userPoint = service.getUserPoint(userId);
+        }
+
+        List<CustomAssetDTO> relatedList = service.getSameBrandAssets(asset.getAsset_brand(), asset.getAsset_type());
+
+        model.addAttribute("asset", asset);
+        model.addAttribute("liked", liked);
+        model.addAttribute("owned", owned);
+        model.addAttribute("userPoint", userPoint);
+        model.addAttribute("relatedList", relatedList);
+
+        return "custom/detail";
     }
+    @GetMapping("/buy")
+    public String buyConfirm(@RequestParam("asset_id") int assetId, HttpSession session, Model model) {
+        
+        //Integer userId = (Integer) session.getAttribute("loginId");
+        Integer userId=2;
+        if (userId == null) {
+            return "redirect:/login";
+        }
+        
+        CustomAssetDTO asset = service.getAssetDetail(assetId);
+        int userPoint = service.getUserPoint(userId);
+
+        model.addAttribute("asset", asset);
+        model.addAttribute("userPoint", userPoint);
+
+        return "custom/buy";
+    }
+
+    // 구매 처리
+    @PostMapping("/buy")
+    public String buyAsset(@RequestParam("asset_id") int assetId, HttpSession session, Model model) {
+
+        //Integer userId = (Integer) session.getAttribute("loginId");
+        Integer userId=2;
+        if (userId == null) {
+            return "redirect:/login";
+        }
+
+        int userPoint = service.getUserPoint(userId);
+        CustomAssetDTO asset = service.getAssetDetail(assetId);
+
+        int price = asset.getPoint_needed();
+        if (asset.getDiscount() > 0) {
+            price = asset.getDiscount();
+        }
+
+        if (userPoint < price) {
+            model.addAttribute("asset", asset);
+            model.addAttribute("userPoint", userPoint);
+            model.addAttribute("error", "포인트가 부족합니다.");
+            return "custom/buy";
+        }
+
+        Map<String, Object> param = new HashMap<>();
+        param.put("user_id", userId);
+        param.put("point", price);
+        service.updateUserPoint(param);
+
+        Map<String, Object> ownParam = new HashMap<>();
+        ownParam.put("user_id", userId);
+        ownParam.put("asset_id", assetId);
+        service.insertOwnedAsset(ownParam);
+
+        int updatedPoint = service.getUserPoint(userId);
+        List<CustomAssetDTO> relatedList = service.getSameBrandAssets(asset.getAsset_brand(), asset.getAsset_type());
+
+        model.addAttribute("asset", asset);
+        model.addAttribute("userPoint", updatedPoint);
+        model.addAttribute("relatedList", relatedList);
+
+        return "custom/result";
+    }
+    //할인
+    @GetMapping("/discount")
+    public String showDiscountPage(Model model) {
+        List<CustomAssetDTO> discountList = service.getDailyDiscountAssets();
+        model.addAttribute("discountList", discountList);
+        return "custom/discount";
+    }
+
+    
+    
+    //좋아요
+    @PostMapping("/like")
+    @ResponseBody
+    public Map<String, Object> likeAsset(@RequestParam int asset_id, HttpSession session) {
+
+        int userId = (int) session.getAttribute("loginId");
+
+        Map<String, Object> param = new HashMap<>();
+        param.put("user_id", userId);
+        param.put("asset_id", asset_id);
+
+        service.likeAsset(param);
+
+        int updatedLikeCount = service.getUserAssetLike(asset_id);
+
+        Map<String, Object> result = new HashMap<>();
+        result.put("asset_like", updatedLikeCount);
+        result.put("liked", 1);
+
+        return result;
+    }
+
+    @PostMapping("/unlike")
+    @ResponseBody
+    public Map<String, Object> unlikeAsset(@RequestParam int asset_id, HttpSession session) {
+
+        int userId = (int) session.getAttribute("loginId");
+
+        Map<String, Object> param = new HashMap<>();
+        param.put("user_id", userId);
+        param.put("asset_id", asset_id);
+
+        service.unlikeAsset(param);
+
+        int updatedLikeCount = service.getUserAssetLike(asset_id);
+
+        Map<String, Object> result = new HashMap<>();
+        result.put("asset_like", updatedLikeCount);
+        result.put("liked", 0);
+
+        return result;
+    }
+
+
+
+    
 }

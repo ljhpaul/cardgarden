@@ -34,10 +34,9 @@
 	  </choose>
 	</select>
  
-
   <!-- 오늘의 할인 -->
   <select id="selectDailyDiscount" resultType="CustomAssetDTO">
-    SELECT ca.asset_brand, ca.asset_type, ca.asset_no, ca.point_needed, ca.discount, ca.asset_name
+    SELECT ca.asset_id, ca.asset_brand, ca.asset_type, ca.asset_no, ca.point_needed, ca.discount, ca.asset_name
     FROM DailyDiscount dd
     JOIN CustomAsset ca ON dd.asset_id = ca.asset_id
     WHERE dd.date = CURDATE()
@@ -45,7 +44,7 @@
 
   <!-- 오늘의 무료 스티커 -->
   <select id="selectDailyFree" resultType="CustomAssetDTO">
-    SELECT ca.asset_brand, ca.asset_type, ca.asset_no, ca.point_needed,ca.asset_name
+    SELECT ca.asset_id, ca.asset_brand, ca.asset_type, ca.asset_no, ca.point_needed,ca.asset_name
     FROM DailyFree df
     JOIN CustomAsset ca ON df.asset_id = ca.asset_id
     WHERE df.date = CURDATE()
@@ -90,6 +89,11 @@
   <select id="isLiked" resultType="int">
     SELECT COUNT(*) FROM LikeAsset WHERE user_id = #{user_id} AND asset_id = #{asset_id}
   </select>
+  <!-- 실시간 좋아요 처리 -->
+  <select id="selectAssetLikeCount" resultType="int">
+    SELECT asset_like FROM CustomAsset WHERE asset_id = #{asset_id}
+  </select>
+  
 
   <!-- 보유 여부 확인 -->
   <select id="isOwned" resultType="int">
