@@ -17,20 +17,20 @@ import com.cardgarden.project.model.userPatternBenefit.UserPatternBenefitService
 @Controller
 @RequestMapping("/recommend")
 public class UserPatternBenefitController {
-	@Autowired
-	private UserPatternBenefitService userPatternBenefitService;
-	
-	@RequestMapping("/ai")
-	public String patternAI(@RequestParam("userId") int userId, Model model) {
-		List<UserPatternBenefitDTO> dataList = userPatternBenefitService.selectByIdConsumPattern(userId);
-		Map<Integer, List<UserPatternBenefitDTO>> mapData = new LinkedHashMap<>();
-		for (UserPatternBenefitDTO dto:dataList) {
-			 int groupKey = dto.getPattern().getPattern_id();
-	            mapData.computeIfAbsent(groupKey, k -> new ArrayList<>()).add(dto);
-		}
-		
-		model.addAttribute("patternList",mapData);
-		return "recommend/ai";
-	}
+    @Autowired
+    private UserPatternBenefitService userPatternBenefitService;
+
+    @RequestMapping("/ai")
+    public String patternAI(@RequestParam("userId") int userId, Model model) {
+        List<UserPatternBenefitDTO> dataList = userPatternBenefitService.selectByIdConsumPattern(userId);
+
+        Map<Integer, List<UserPatternBenefitDTO>> mapData = new LinkedHashMap<>();
+        for (UserPatternBenefitDTO dto : dataList) {
+            int groupKey = dto.getPattern().getPattern_id();
+            mapData.computeIfAbsent(groupKey, k -> new ArrayList<>()).add(dto);
+        }
+        model.addAttribute("patternList", mapData);
+        return "recommend/ai"; // recommend/ai.jsp
+    }
 
 }

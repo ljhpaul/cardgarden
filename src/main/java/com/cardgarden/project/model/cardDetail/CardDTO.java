@@ -23,4 +23,7 @@ public class CardDTO {
 	private int prev_month_cost;	
 	private int card_like;	
 	private int card_views;
+	private boolean liked;
+
+	
 }
