@@ -68,6 +68,7 @@
     <a href="${cpath}/event/list">이벤트&nbsp;
       <img class="mascot" src="${cpath}/resources/images/common/caretDown.png" width="15">
 	</a>
+>>>>>>> origin/develop
   </div>
 </header>
 </div>
@@ -89,7 +90,7 @@
     <div class="menu-center">
       <a href="${cpath}/card/list">카드</a>
       <a href="${cpath}/recommend/ai">AI 추천</a>
-      <a href="${cpath}/custome/main">커스터마이징</a>
+      <a href="${cpath}/custom/main">커스터마이징</a>
       <a href="${cpath}/event/list">이벤트</a>
     </div>
 
