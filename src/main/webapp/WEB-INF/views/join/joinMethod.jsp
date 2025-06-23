@@ -68,8 +68,7 @@
 }
 .join-title {
   font-size: 2.0rem;
-  font-weight: 700;
-  color: var(--m1);
+  margin-top: 20px;
   margin-bottom: 35px;
 }
 .join-btn {

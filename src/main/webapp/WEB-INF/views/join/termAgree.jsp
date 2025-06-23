@@ -15,9 +15,6 @@
     <title>카드가든 : 회원가입</title>
 </head>
 
-
-
-
 <body class="join-bg">
 <div class="join-container">
 <div class="join-box">
@@ -78,19 +75,7 @@
 .join-box {
   max-width: 520px;
   margin: 70px auto 80px;
-  background: #fff;
-  border-radius: 24px;
-  box-shadow: 0 2px 16px rgba(100,130,120,0.08);
   padding: 44px 50px 32px;
-  font-family: var(--font);
-}
-
-.join-title {
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: var(--m1);
-  margin-top: 10px;
-  margin-bottom: 45px;
 }
 
 .term-step-nav {
