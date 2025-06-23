@@ -15,9 +15,6 @@
     <title>카드가든 : 회원가입</title>
 </head>
 
-
-
-
 <body class="join-bg">
 <div class="join-container">
 <div class="join-box">
