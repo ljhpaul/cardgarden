@@ -19,59 +19,73 @@ public class UserInfoService {
     @Qualifier("userInfoDAO")
     UserInfoDAOInterface userInfoDAO;
 
-    // 1. 전체 조회
+    // 전체 조회
     public List<UserInfoDTO> selectAll() {
         List<UserInfoDTO> dtolist = userInfoDAO.selectAll();
         log.info("UserInfoService에서 로그출력:" + dtolist.size() + "건");
         return dtolist;
     }
 
-    // 2. user_id로 단일 조회
+    // user_id로 단일 조회
     public UserInfoDTO selectById(int user_id) {
         UserInfoDTO dto = userInfoDAO.selectById(user_id);
         log.info("UserInfoService에서 로그출력:" + (dto != null ? dto.toString() : "null"));
         return dto;
     }
 
-    // 3. email로 단일 조회 (아이디/비밀번호 찾기, 로그인 등)
+    // email로 단일 조회 (아이디/비밀번호 찾기, 로그인 등)
     public UserInfoDTO selectByEmail(String email) {
         UserInfoDTO dto = userInfoDAO.selectByEmail(email);
         log.info("UserInfoService에서 로그출력: selectByEmail -> " + (dto != null ? dto.toString() : "null"));
         return dto;
     }
+    
+    // 로그인 아이디로 user_id 찾기
+    public int getUserIdByLoginId(String user_name) {
+    	int user_id = userInfoDAO.getUserIdByLoginId(user_name);
+    	log.info("UserInfoService에서 로그출력: getUserIdByLoginId -> user_id = " + user_id);
+    	return user_id;
+    }
 
-    // 4. 회원 등록
+    // 회원 등록
     public int insert(UserInfoDTO dto) {
         int result = userInfoDAO.insert(dto);
         log.info("UserInfoService에서 로그출력:" + result + "건 insert");
         return result;
     }
+    
+    // 신규 회원 등록
+    public int createUser(UserInfoDTO dto) {
+    	int result = userInfoDAO.createUser(dto);
+    	log.info("UserInfoService에서 로그출력:" + result + "건 insert");
+    	return result;
+    }
 
-    // 5. 회원 정보 수정
+    // 회원 정보 수정
     public int update(UserInfoDTO dto) {
         int result = userInfoDAO.update(dto);
         log.info("UserInfoService에서 로그출력:" + result + "건 update");
         return result;
     }
 
-    // 6. 회원 탈퇴/삭제
+    // 회원 탈퇴/삭제
     public int delete(int user_id) {
         int result = userInfoDAO.delete(user_id);
         log.info("UserInfoService에서 로그출력:" + result + "건 delete");
         return result;
     }
 
-    // 7. 아이디(로그인ID) 중복 여부
+    // 아이디(로그인ID) 중복 여부
     public boolean existsByLoginId(String login_id) {
         return userInfoDAO.countByLoginId(login_id) > 0;
     }
 
-    // 8. 닉네임 중복 여부
+    // 닉네임 중복 여부
     public boolean existsByNickname(String nickname) {
         return userInfoDAO.countByNickname(nickname) > 0;
     }
 
-    // 9. 이메일 중복 여부
+    // 이메일 중복 여부
     public boolean existsByEmail(String email) {
         return userInfoDAO.countByEmail(email) > 0;
     }

@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.cardgarden.project.model.term.dto.TermDTO;
 import com.cardgarden.project.model.term.service.TermService;
+import com.cardgarden.project.model.user.dto.UserAgreementDTO;
+import com.cardgarden.project.model.user.dto.UserInfoDTO;
+import com.cardgarden.project.model.user.service.UserAgreementService;
 import com.cardgarden.project.model.user.service.UserInfoService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -27,9 +30,11 @@ public class JoinController {
 	TermService termService;
 	@Autowired
 	UserInfoService userInfoSerivce;
+	@Autowired
+	UserAgreementService userAgreementService;
 	
 	//0. 회원가입 방법 선택
-	@GetMapping("/method")
+	@GetMapping("")
 	public String joinMethodView() {
 		return "join/joinMethod";
 	}
@@ -86,25 +91,52 @@ public class JoinController {
 	
 	//3-2. 회원정보 입력 완료
 	@PostMapping("/info")
-	public String inputInfoRequest() {
-	    return "join/inputInfo";
+	public String inputInfoRequest(HttpSession session, UserInfoDTO userInfo, Model model) {
+		log.info(userInfo.toString());
+
+		int result = userInfoSerivce.createUser(userInfo);
+		int user_id = userInfoSerivce.getUserIdByLoginId(userInfo.getUser_name());
+		
+		String joinResult = "회원가입 " + ((result>0)?"성공 (아이디: " + user_id + "번)":"실패");
+		log.info(joinResult);
+		
+		List<TermDTO> termList = termService.selectAll();
+		List<Integer> checkedTermList = (List<Integer>) session.getAttribute("checkedTermList");
+		
+		for (TermDTO term : termList) {
+			int term_id = term.getTerm_id();
+			String is_agreed = checkedTermList.contains(term_id) ? "Y" : "N";
+			
+			UserAgreementDTO userAgreementDTO = new UserAgreementDTO();
+			userAgreementDTO.setUser_id(user_id);
+			userAgreementDTO.setTerm_id(term_id);
+			userAgreementDTO.setIs_agreed(is_agreed);
+			
+			userAgreementService.insert(userAgreementDTO);
+		}
+		
+		if(result > 0 && checkedTermList != null) {
+			//약관동의 세션 저장값 초기화
+			session.removeAttribute("checkedTermList");
+			
+			//이메일 세션 저장값 초기화
+			session.removeAttribute("emailCode");
+			session.removeAttribute("emailExpire");
+			session.removeAttribute("emailToVerify");
+			session.removeAttribute("emailVerified");
+			session.removeAttribute("verifiedEmail");
+			
+		    return "redirect:/user/join/complete";
+		} else {
+			model.addAttribute("msg", "회원가입에 실패했습니다. 다시 시도해 주세요.");
+			return "join/info";
+		}
 	}
 	
+	//4. 회원가입 완료
+	@GetMapping("/complete")
+	public String joinComplete() {
+	    return "join/joinComplete";
+	}
 	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

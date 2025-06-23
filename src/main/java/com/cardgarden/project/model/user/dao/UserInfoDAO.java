@@ -34,10 +34,15 @@ public class UserInfoDAO implements UserInfoDAOInterface {
     public UserInfoDTO selectByEmail(String email) {
         return sqlSession.selectOne(namespace + "selectByEmail", email);
     }
+    
+    @Override
+    public int getUserIdByLoginId(String user_name) {
+    	return sqlSession.selectOne(namespace + "getUserIdByLoginId", user_name);
+    }
 
     @Override
-    public int countByLoginId(String login_id) {
-        return sqlSession.selectOne(namespace + "countByLoginId", login_id);
+    public int countByLoginId(String user_name) {
+        return sqlSession.selectOne(namespace + "countByLoginId", user_name);
     }
 
     @Override
@@ -56,6 +61,13 @@ public class UserInfoDAO implements UserInfoDAOInterface {
         log.info(result + "건 입력됨(lombok_Slf4j)");
         return result;
     }
+
+	@Override
+	public int createUser(UserInfoDTO dto) {
+        int result = sqlSession.insert(namespace + "createUser", dto);
+        log.info(result + "건 입력됨(lombok_Slf4j)");
+		return result;
+	}
 
     @Override
     public int update(UserInfoDTO dto) {

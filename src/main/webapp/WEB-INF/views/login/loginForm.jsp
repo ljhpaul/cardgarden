@@ -12,17 +12,17 @@
 <script src="${cpath}/resources/js/header.js"></script>
 
 <head>
-    <title>카드가든 : 회원가입</title>
+    <title>카드가든 : 로그인</title>
 </head>
 
 <body class="bg-main">
 <div class="container">
   <div class="box">
-    <h2 class="title-lg">카드가든 회원가입</h2>
+    <h2 class="title-lg">카드가든 로그인</h2>
 
     <!-- 일반 회원가입 버튼 -->
     <a href="${cpath}/user/join/term" class="btn">
- 	  <img src="${cpath}/resources/images/auth/joinUser.png" width="18"/> 일반 회원가입
+ 	  <img src="${cpath}/resources/images/auth/joinUser.png" width="18"/> 카드가든 로그인
 	</a>
 
     <div class="join-method-divider">또는</div>
