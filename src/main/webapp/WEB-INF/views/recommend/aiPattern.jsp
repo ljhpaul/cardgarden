@@ -4,7 +4,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="cpath" value="${pageContext.servletContext.contextPath}" />
 
-
+<!--  -->
 <script>
  
 	function openPatternModal() {
