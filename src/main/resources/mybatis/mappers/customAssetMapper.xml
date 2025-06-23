@@ -90,6 +90,11 @@
   <select id="isLiked" resultType="int">
     SELECT COUNT(*) FROM LikeAsset WHERE user_id = #{user_id} AND asset_id = #{asset_id}
   </select>
+  <!-- 실시간 좋아요 처리 -->
+  <select id="selectAssetLikeCount" resultType="int">
+    SELECT asset_like FROM CustomAsset WHERE asset_id = #{asset_id}
+  </select>
+  
 
   <!-- 보유 여부 확인 -->
   <select id="isOwned" resultType="int">

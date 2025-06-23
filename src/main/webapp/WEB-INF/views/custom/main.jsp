@@ -72,7 +72,8 @@
 	                <img src="${cpath}/resources/images/asset/${item.asset_type}/${item.asset_brand}/${item.asset_type}_${item.asset_brand}_${item.asset_no}_${item.asset_name}.png">
 	                <p class="rank-name">${item.asset_name}</p>
 	                <p class="rank-brand">${item.asset_brand}</p>
-	            </div>
+	                <a href="${cpath}/custom/detail?asset_id=${item.asset_id}" class="link-layer"></a>
+	            </div>   
 	        </c:forEach>
 	    </div>
 	</div>
@@ -92,6 +93,7 @@
 	             src="${cpath}/resources/images/asset/${item.asset_type}/${item.asset_brand}/${item.asset_type}_${item.asset_brand}_${item.asset_no}_${item.asset_name}.png" />
 	        <div class="rank-name">${item.asset_name}</div>
 	        <div class="rank-brand">${item.asset_brand}</div>
+	        <a href="${cpath}/custom/detail?asset_id=${item.asset_id}" class="link-layer"></a>
 	      </div>
 	    </c:forEach>
 	  </div>
@@ -111,6 +113,7 @@
 	             src="${cpath}/resources/images/asset/${item.asset_type}/${item.asset_brand}/${item.asset_type}_${item.asset_brand}_${item.asset_no}_${item.asset_name}.png" />
 	        <div class="rank-name">${item.asset_name}</div>
 	        <div class="rank-brand">${item.asset_brand}</div>
+	        <a href="${cpath}/custom/detail?asset_id=${item.asset_id}" class="link-layer"></a>
 	      </div>
 	    </c:forEach>
 	  </div>

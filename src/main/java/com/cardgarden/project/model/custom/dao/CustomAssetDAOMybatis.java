@@ -102,4 +102,9 @@ public class CustomAssetDAOMybatis implements CustomAssetDAOInterface {
     public void decreaseAssetLike(int assetId) {
         sqlSession.update(namespace + ".decreaseAssetLike", assetId);
     }
+    @Override
+    public int selectAssetLikeCount(int assetId) {
+        return sqlSession.selectOne(namespace + ".selectAssetLikeCount", assetId);
+    }
+
 }

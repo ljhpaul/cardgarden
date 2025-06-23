@@ -62,18 +62,17 @@
       <img class="mascot" src="${cpath}/resources/images/common/caretDown.png" width="15">
     </a>
     <a href="${cpath}/recommend/ai">AI 카드추천</a>
-    <a href="${cpath}/custom">카드 커스터마이징&nbsp;
+    <a href="${cpath}/custom/main">카드 커스터마이징&nbsp;
 	  <img class="mascot" src="${cpath}/resources/images/common/caretDown.png" width="15">
 	</a>
     <a href="${cpath}/event/list">이벤트&nbsp;
       <img class="mascot" src="${cpath}/resources/images/common/caretDown.png" width="15">
 	</a>
->>>>>>> origin/develop
   </div>
 </header>
 </div>
 
-<%-- 
+
 <!-- sticky -->
 <nav class="sticky-menu">
   <div class="menu-inner">
@@ -106,4 +105,3 @@
 
   </div>
 </nav>
- --%>
