@@ -58,6 +58,7 @@ def get_recommend_result(pattern_id):
     
     conn = pymysql.connect(
         host='192.168.0.13',
+        # host='localhost',
         user='cardgarden',
         password='1234',
         db='cardgarden',

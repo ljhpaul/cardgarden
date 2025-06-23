@@ -8,6 +8,7 @@
     <resultMap id="UserPatternBenefitMap" type="userPatternBenefitDTO">
 	    <association property="pattern" javaType="UserConsumptionPatternDTO">
 	        <result property="pattern_id" column="pattern_id"/>
+	        <result property="pattern_name" column="pattern_name"/>
 	    </association>
 	    <association property="category" javaType="benefitCategoryDTO">
 	        <result property="benefitCategory_name" column="benefitCategory_name"/>
@@ -21,7 +22,7 @@
     <select id="selectUserConsumptionPattern"
             parameterType="int"
             resultMap="UserPatternBenefitMap">
-	        SELECT usp.pattern_id, bc.benefitCategory_name, uspd.amount
+	        SELECT usp.pattern_id, bc.benefitCategory_name, uspd.amount, usp.pattern_name
 	        FROM UserConsumptionPattern usp
 	        INNER JOIN UserConsumptionPatternDetail uspd
 	            ON usp.pattern_id = uspd.pattern_id

@@ -1,6 +1,5 @@
 package com.cardgarden.project.controller;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -29,7 +28,7 @@ public class RecommendAIController {
 	
 	@RequestMapping("/aiResult")
 	public String cardDetail(@RequestParam("patternId") int patternId, Model model) throws Exception {
-	    System.out.println("현재 작업 디렉토리: " + new File(".").getAbsolutePath());
+//	    System.out.println("현재 작업 디렉토리: " + new File(".").getAbsolutePath());
 	    List<CardRecommendationDTO> dataList = cardRecommendationService.getRecommendResult(patternId);
 
 	    Map<Integer, List<CardDTO>> mapData = new LinkedHashMap<>();

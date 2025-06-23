@@ -21,21 +21,11 @@ public class CardLikeController {
     @Autowired
     private CardLikeService cardLikeService;
     
-    
-//    @PostMapping("/cardLike")
-//    public Map<String, Object> cardLikeInsert(@RequestParam("card_id") int cardId, HttpSession session) {
-//        System.out.println("cardLikeInsert 호출됨, card_id=" + cardId); // 로그 추가
-//        Map<String, Object> result = new HashMap<>();
-//        result.put("result", "success"); // 임시 고정값
-//        return result;
-//    }
-
-    
-    
     // 좋아요 추가 (POST)
     @SuppressWarnings("unused")
 	@PostMapping("/cardLike")
-    public Map<String, Object> cardLikeInsert(@RequestParam("card_id") int cardId, HttpSession session) {
+    public Map<String, Object> cardLikeInsert(@RequestParam("card_id")int cardId,
+    		HttpSession session) {
 //        Integer userId = (Integer) session.getAttribute("userid");
     	Integer userId = 1;
     	if (userId == null) {
