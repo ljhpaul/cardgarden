@@ -1,6 +1,4 @@
-package com.cardgarden.project.model.auth.dto;
-
-import java.sql.Date;
+package com.cardgarden.project.model.user.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

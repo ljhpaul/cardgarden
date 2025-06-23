@@ -20,22 +20,23 @@
 <header class="main-header">
   <div class="header-container">
 
-    <!-- 로그인/회원가입 -->
-      <!--  로그인세션후에 만질예정   
+    <!-- 로그인/회원가입 -->  
+    <div class="header-left">
       <c:choose>
-        <c:when test="${not empty loginEmp}">
-          <a href="${cpath}/mypage/main.do">마이페이지</a>
-          <a href="${cpath}/auth/logout.do">로그아웃</a>
+        <c:when test="${not empty loginUserId}">
+          <a href="${cpath}/user/mypage">마이페이지</a>
+          <a href="${cpath}/user/logout">로그아웃</a>
         </c:when>
         <c:otherwise>
-          <a href="${cpath}/auth/signup.do">회원가입</a>
-          <a href="${cpath}/auth/login.do">로그인</a>
+          <a href="${cpath}/user/join">회원가입</a>
+          <a href="${cpath}/user/login">로그인</a>
         </c:otherwise>
-      </c:choose>-->
-    <div class="header-left">
+      </c:choose>
+    </div>
+<%--     <div class="header-left">
       <a href="${cpath}/user/join">회원가입</a>
       <a href="${cpath}/user/login">로그인</a>
-    </div>
+    </div> --%>
 
     <!--로고 -->
     <div class="header-logo">
@@ -74,7 +75,7 @@
 
 
 <!-- sticky -->
-<nav class="sticky-menu">
+<%-- <nav class="sticky-menu">
   <div class="menu-inner">
     
     <!-- 왼쪽 로고 -->
@@ -104,4 +105,4 @@
     </div>
 
   </div>
-</nav>
+</nav> --%>
