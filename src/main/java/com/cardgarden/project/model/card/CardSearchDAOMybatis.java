@@ -14,7 +14,7 @@ public class CardSearchDAOMybatis implements CardSearchDAOInterface {
     @Autowired
     private SqlSessionTemplate sqlSession;
 
-    private final String namespace = "com.firstzone.card";
+    private final String namespace = "com.cardgarden.cardsearch";
 
     @Override
     public List<CardDTO> searchCards(String keyword, String sort, int page, int pageSize) {
