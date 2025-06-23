@@ -176,6 +176,16 @@ public class CustomAssetController {
 
         return "custom/result";
     }
+    //할인
+    @GetMapping("/discount")
+    public String showDiscountPage(Model model) {
+        List<CustomAssetDTO> discountList = service.getDailyDiscountAssets();
+        model.addAttribute("discountList", discountList);
+        return "custom/discount";
+    }
+
+    
+    
     //좋아요
     @PostMapping("/like")
     @ResponseBody

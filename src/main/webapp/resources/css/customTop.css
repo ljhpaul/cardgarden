@@ -236,3 +236,18 @@ body {
   text-decoration: none;
   z-index: 10;
 }
+.discount-info {
+  font-size: 14px;
+  margin-top: 6px;
+}
+
+.discount-info del {
+  color: #999;
+  margin-right: 4px;
+}
+
+.discount-point {
+  color: var(--s1);
+  font-weight: bold;
+}
+
