@@ -12,6 +12,15 @@ import lombok.NoArgsConstructor;
 public class CardRecommendationDTO {
 	
 	private int card_id;
-	private double expected_match;
-     
+	private Double expected_match;
+	private Double resultValue;
+    private String message;
+    public CardRecommendationDTO(int card_id, double resultValue, String message) {
+    	this.card_id = card_id;
+    	this.resultValue = resultValue;
+    	this.message = message;
+    }
+
+    
+    
 }
