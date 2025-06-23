@@ -8,59 +8,122 @@
 <meta charset="UTF-8">
 <title>추천 카드 리스트</title>
 <style>
-    .recommend-list {
-        max-width: 430px;
-        margin: 40px auto;
-        padding: 20px 30px;
-        background: #f7fbfd;
-        border-radius: 14px;
-        box-shadow: 0 4px 14px rgba(80,163,247,0.12);
-    }
-    .card-item {
-        padding: 16px 0 12px 0;
-        border-bottom: 1px solid #e1eaf0;
-        font-size: 17px;
-        font-weight: 500;
-        color: #3a3c42;
-        letter-spacing: 0.5px;
-        display: flex;
-        align-items: center;
-    }
-    .card-item:last-child {
-        border-bottom: none;
-    }
-    .card-id {
-        color: #50a3f7;
-        font-weight: bold;
-        margin-right: 10px;
-    }
-    /* 향후 카드 이름/점수용 스타일 미리 준비 */
-    .card-name {
-        margin-left: 6px;
-        color: #293746;
-        font-size: 16px;
-    }
-    
-   
-</style>
+    body {
+	    font-family: var(--font);
+	    background-color: var(--main);
+	}
+	.recommend-list {
+	    max-width: 480px;
+	    margin: 40px auto;
+	    padding: 32px 32px 28px 32px;
+	    background: #fff;
+	    border-radius: 16px;
+	    box-shadow: 0 2px 12px rgba(143,176,152,0.08);
+	    border: 2px solid var(--m2);
+	}
+	.recommend-list h2 {
+	    margin-bottom: 22px;
+	    color: var(--m3);
+	    font-size: 23px;
+	    font-weight: bold;
+	    letter-spacing: -1px;
+	    text-align: center;
+	}
+	.card-item {
+	    padding: 20px 0 14px 0;
+	    border-bottom: 1.5px solid var(--m2);
+	    font-size: 17px;
+	    font-weight: 500;
+	    color: var(--m3);
+	    display: flex;
+	    flex-direction: column;
+	    background: var(--s2);
+	    border-radius: 10px;
+	    margin-bottom: 16px;
+	    box-shadow: 0 2px 6px rgba(143,176,152,0.06);
+	    transition: box-shadow 0.15s, background 0.2s;
+	}
+	.card-item:last-child {
+	    border-bottom: none;
+	    margin-bottom: 0;
+	}
+	.benefit-list {
+	    margin: 0 0 0 10px;
+	    padding-left: 0;
+	    font-size: 15px;
+	    color: var(--m3);
+	}
+	.benefit-item {
+	    list-style: none;
+	    margin-bottom: 8px;
+	    display: flex;
+	    align-items: center;
+	    gap: 18px;
+	}
+	.card-id {
+	    color: var(--m1);
+	    font-weight: bold;
+	    margin-right: 12px;
+	    font-size: 16px;
+	    text-decoration: underline;
+	    transition: color 0.2s;
+	}
+	.card-id:hover {
+	    background-color: #FFE0A3;
+	}
+	.card-name {
+	    margin-left: 4px;
+	    color: var(--m3);
+	    font-size: 16px;
+	    font-weight: bold;
+	}
+	.card-img {
+	    margin: 10px 0 0 0;
+	    border-radius: 8px;
+	    border: 1px solid var(--m2);
+	    background: var(--main);
+	    width: 130px;
+	    height: 80px;
+	    object-fit: cover;
+	    box-shadow: 0 1px 4px rgba(143,176,152,0.07);
+	}
+	.no-recommend {
+	    color: #bbb;
+	    text-align: center;
+	    margin-top: 30px;
+	    background: var(--s2);
+	    border-radius: 12px;
+	    padding: 32px 0;
+	    border: 1.5px solid var(--m2);
+	    font-size: 18px;
+	}
+	a { text-decoration: none; color: var(--m3);}
 
+</style>
 </head>
 <body>
 	
     <div class="recommend-list">
-        <h2 style="margin-bottom:18px; color:#3887d2;">추천 카드 리스트</h2>
-        <c:forEach var="dto" items="${aiList}">
-            <div class="card-item">
-                <span class="card-id">${dto.card_id}</span>
-                <!-- 추후에 카드 이름 들어갈 자리 -->
-                <span class="card-name">(카드명 자리)</span>
-            </div>
-        </c:forEach>
-        <c:if test="${empty aiList}">
-            <div style="color:#bbb; text-align:center; margin-top:25px;">추천 카드가 없습니다.</div>
-        </c:if>
-    </div>
-    
-    
+	    <h2>추천 카드 상세 리스트</h2>
+	    <c:forEach var="entry" items="${cardDetailMap}">
+	        <div class="card-item">
+	            <ul class="benefit-list">
+	                <c:forEach var="detail" items="${entry.value}">
+	                    <li class="benefit-item">
+	                        <a class="card-id" href="${cpath}/card/detail?cardid=${entry.key}">
+	                          ${detail.card_name}
+	                        </a>
+	                        <img class="card-img" src="${detail.card_image}" alt="카드 이미지"/>
+	                        <!-- 추가 정보도 여기서 자유롭게! -->
+	                    </li>
+	                </c:forEach>
+	            </ul>
+	        </div>
+	    </c:forEach>
+	    <c:if test="${empty cardDetailMap}">
+	        <div class="no-recommend">추천 카드가 없습니다.</div>
+	    </c:if>
+	</div>
+
 </body>
 </html>

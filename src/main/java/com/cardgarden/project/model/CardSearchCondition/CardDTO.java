@@ -1,11 +1,11 @@
-package com.cardgarden.project.model.cardDetail;
+package com.cardgarden.project.model.CardSearchCondition;
 
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -23,7 +23,6 @@ public class CardDTO {
 	private int prev_month_cost;	
 	private int card_like;	
 	private int card_views;
-	private boolean liked;
-
-	
+	// 혜택 담기
+	private List<String> benefits;
 }

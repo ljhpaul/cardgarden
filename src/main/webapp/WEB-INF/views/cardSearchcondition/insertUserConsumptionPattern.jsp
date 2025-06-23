@@ -138,9 +138,9 @@ input[type="reset"]:hover,
         <div class="form-group" id="container">
           <label>소비영역</label>
           <select name="benefitcategory_id" required>
-        				<c:forEach items="${benefitCategorylist}" var="benefit">
+        		<c:forEach items="${benefitCategorylist}" var="benefit">
 					<option value="${benefit.benefitcategory_id}">${benefit.benefitCategory_name}</option>
-						</c:forEach>
+				</c:forEach>
           </select>
           <label>소비금액</label>
           <input type="number" name="amount" placeholder="금액을 입력하세요" min="0" max="">

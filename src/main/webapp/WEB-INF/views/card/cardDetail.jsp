@@ -2,6 +2,7 @@
 <%@ include file="../common/header.jsp"%>
 <c:set var="cpath" value="${pageContext.servletContext.contextPath}" />
 
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -44,6 +45,9 @@ body {
 }
 
 .card-image img {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 	width: 100%;
 	max-width: 220px;
 	height: auto;
@@ -157,6 +161,109 @@ body {
 	margin: 4px 0;
 	line-height: 1.5;
 }
+.benefit-icon-list {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(3, 60px);
+    gap: 16px;
+    max-width: 280px;
+}
+.benefit-icon-list img {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
+}
+.modal{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    z-index: 9999; /* 추가! */
+}
+.modal_body {
+    background: #fff;
+    padding: 30px 40px;
+    border-radius: 14px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.15);
+    min-width: 300px;
+    min-height: 120px;
+    /* 아래 2줄 추가!! */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.benefit-icon-list .img{
+	width: 60px;
+	height: 60px;
+	padding: 10px;
+
+}
+.card-benefit-section {
+	margin-top: 40px;
+}
+
+.card-benefit-box {
+	max-width: 1200px; /* ✅ 중앙 정렬 + 폭 제한 */
+	cursor: pointer;
+	margin: auto;
+	margin-bottom: 40px;
+	padding: 20px;
+	border: 1px solid #ddd;
+	border-radius: 16px;
+	background-color: white;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.toggle-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.toggle-header > div:first-child {
+    flex: 0 0 50px;
+}
+.toggle-header > div:nth-child(2) {
+    flex: 1;
+    font-weight: bold;
+    font-size: 18px;
+}
+.toggle-header > div:nth-child(3) {
+    flex: 2;
+    font-size: 14px;
+    color: #555;
+}
+
+.card-benefit-box:hover {
+	background-color: var(- -m2);
+}
+
+.card-benefit-box table {
+	width: 100%;
+	border-collapse: collapse;
+	margin-bottom: 20px;
+}
+
+.card-benefit-box table td {
+	padding: 10px;
+	font-size: 15px;
+	vertical-align: top;
+}
+
+.card-benefit-box p {
+	margin: 4px 0;
+	line-height: 1.5;
+}
 }
 </style>
 <!-- 반드시 jQuery 포함! -->
@@ -172,9 +279,10 @@ $(function(){
     });
 });
 </script> -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <script>
-	// 상세설명 펼치기
+	
+    
 	function toggleDetail(wrapper) {
 		const detail = wrapper.querySelector(".toggle-detail");
 		if (detail.style.display === "none" || detail.style.display === "") {
@@ -183,59 +291,91 @@ $(function(){
 			detail.style.display = "none";
 		}
 	}
+	
+	function scrollToTarget(targetId) {
+	    const target = document.getElementById(targetId);
+	    if (target) {
+	        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+	        const detail = target.querySelector(".toggle-detail");
+	        if (detail && (detail.style.display === "none" || detail.style.display === "")) {
+	            detail.style.display = "block";
+	        }
+	    }
+	}
 
+	
 	$(function() {
-		// 좋아요 클릭
-		$(document).on("click", ".go-button", function() {
-			var cardId = $(this).data("cardid");
-			var $btn = $(this);
-			var $count = $btn.find(".rec_count");
+		  $(document).on("click", ".go-button", function() {
+		    var cardId = $(this).data("cardid");
+		    var $btn = $(this);
+		    var $count = $btn.find(".rec_count");
+		    var $icon = $btn.find(".like-icon");
+		    var liked = $btn.data("liked");
 
-			alert("테스트용: 버튼 클릭됨, 카드번호=" + cardId);
-
-			// AJAX
-			$.ajax({
-				url : "${cpath}/card/cardLike",
-				type : "POST",
-				data : {
-					card_id : cardId
-				},
-				/* dataType: "json", */
-				success : function(res) {
-					if (res.result === "success") {
-						// 서버에서 정상 처리됐을 때만 개수 증가!
-						$count.text(Number($count.text()) + 1);
-					} else if (res.result === "login_required") {
-						alert("로그인 후 이용 가능합니다.");
-					} else {
-						alert("실패");
-					}
-				},
-				error : function(xhr, status, error) {
-					alert("서버 에러: " + error);
-				}
-			});
+		    if(liked) {
+		      $.ajax({
+		        url: "${cpath}/card/cardUnlike",
+		        type: "POST",
+		        data: { card_id: cardId },
+		        success: function(res) {
+		          if(res === "success") {
+		            $btn.data("liked", false);
+		            $icon.attr("src", "${cpath}/resources/images/cardlikeImage/unlike.png");
+		            $count.text(Number($count.text()) - 1);
+		          } else {
+		            alert("좋아요 취소 실패!");
+		          }
+		        },
+		        error: function() { alert("서버 에러"); }
+		      });
+		    } else {
+		      $.ajax({
+		        url: "${cpath}/card/cardLike",
+		        type: "POST",
+		        data: { card_id: cardId },
+		        success: function(res) {
+		          if(res.result === "success") {
+		            $btn.data("liked", true);
+		            $icon.attr("src", "${cpath}/resources/images/cardlikeImage/like.png");
+		            $count.text(Number($count.text()) + 1);
+		          } else if(res.result === "login_required" || res.result === "need_login") {
+		            alert("로그인 후 이용 가능합니다.");
+		          } else {
+		            alert("좋아요 실패!");
+		          }
+		        },
+		        error: function() { alert("서버 에러"); }
+		      });
+		    }
+		  });
 		});
-	});
+
+
 </script>
 
 </head>
 <body>
 	<div class="card-rep">
-		<!-- 카드 대표 정보 출력 -->
 		<c:forEach items="${cardList}" var="card">
 			<div class="card-container">
 				<div class="card-image">
 					<img src="${card.card_image}" alt="카드 이미지" />
-					<button class="go-button" data-cardid="${card.card_id}">
-						<i class="fa fa-heart" style="font-size: 16px; color: red"></i> <span
-							class="rec_count">${card.card_like}</span>
+    
+				    <button class="go-button" data-cardid="${card.card_id}" data-liked="${card.liked ? 'true' : 'false'}">
+					  <img class="like-icon" 
+					       src="${cpath}/resources/images/cardlikeImage/${card.liked ? 'like.png' : 'unlike.png'}" 
+					       alt="like" 
+					       style="width:28px;vertical-align:middle;" />
+					  <span class="rec_count">${card.card_like}</span>
 					</button>
-					<div>
+
+
+
+					<%-- <div>
 
 						<div>
 							<div class="w3-border w3-center w3-padding">
-								<%-- <c:choose>
+								<c:choose>
 				                    <c:when test="${userid == null}">
 				                        <i class="fa fa-heart" style="font-size:16px;color:red"></i>
 				                        <span class="rec_count">${card.card_like}</span>
@@ -247,20 +387,22 @@ $(function(){
 				                        <span class="rec_count">${card.card_like}</span>
 				                        <button class="go-button" id="rec_update_${card.card_id}" data-cardid="${card.card_id}">좋아요</button>
 				                    </c:otherwise>
-				                </c:choose> --%>
+				                </c:choose>
 
 							</div>
-						</div>
-					</div>
+						</div> 
+					</div> --%>
 				</div>
 				<div class="card-info">
 					<p class="benefit-title">${card.card_name}</p>
 					<!-- 카드 혜택 아이콘 (각 그룹의 첫 번째 아이콘) -->
 					<div class="benefit-icon-list">
-						<c:forEach items="${cardDetail}" var="group">
+						<c:forEach items="${cardDetail}" var="group" varStatus="status">
 							<c:set var="firstDetail" value="${group.value[0]}" />
-							<img src="${cpath}${firstDetail.benefitdetail_image}"
-								alt="${group.key}" />
+							<div onclick="scrollToTarget('targetDiv${status.index}')">
+								<img src="${cpath}${firstDetail.benefitdetail_image}"
+									alt="${group.key}" />
+							</div>
 						</c:forEach>
 					</div>
 					<div class="card-tags">
@@ -271,6 +413,9 @@ $(function(){
 							${card.fee_foreign}원</span> <span>전월실적: ${card.prev_month_cost}만원</span>
 					</div>
 					<a href="${card.card_url}" class="go-button">카드사 바로가기</a>
+					
+					<button class="btn-open-modal">Modal열기</button>
+
 				</div>
 			</div>
 		</c:forEach>
@@ -278,8 +423,9 @@ $(function(){
 	</div>
 	<div class="card-benefit-section">
 		<c:forEach items="${cardDetail}" var="cardDetail" varStatus="status">
-		<c:set var="firstItem" value="${cardDetail.value[0]}" />
-			<div class="card-benefit-box" onclick="toggleDetail(this)">
+			<c:set var="firstItem" value="${cardDetail.value[0]}" />
+			<div class="card-benefit-box" onclick="toggleDetail(this)"
+				id="targetDiv${status.index}">
 				<div class="toggle-header"
 					style="display: flex; align-items: center; gap: 12px;">
 					<div style="flex: 0 0 50px;">
@@ -306,5 +452,26 @@ $(function(){
 
 		</c:forEach>
 	</div>
+
+<div class="modal" id="patternModal" style="display: none;">
+    <div class="modal_body">
+        <jsp:include page="../recommend/aiPattern.jsp" />
+    </div>
+</div>
+
+<script>
+    $(function() {
+        $(document).on("click", ".btn-open-modal", function() {
+            $("#patternModal").css("display", "flex");
+        });
+        $(document).on("click", ".modal", function(e) {
+            if (e.target === this) {
+                $(this).hide();
+            }
+        });
+    });
+</script>
+
 </body>
 </html>
+
