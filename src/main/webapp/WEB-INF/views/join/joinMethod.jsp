@@ -50,7 +50,7 @@
     </div>
     <div class="join-method-login">
       이미 계정이 있으신가요?
-      <a href="${cpath}/auth/login.do" class="text-link">로그인</a>
+      <a href="${cpath}/user/login" class="text-link">&nbsp;로그인</a>
     </div>
   </div>
 </div>

@@ -73,7 +73,7 @@
 
 <style>
   .container {
-    padding-top: 135px;
+    padding-top: 110px;
   }
   .box {
     max-width: 440px;
