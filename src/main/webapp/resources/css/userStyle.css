@@ -4,6 +4,7 @@
 }
 
 .container {
+  margin-top: -60px;
   width: 100%;
   display: flex;
   align-items: center;
@@ -60,8 +61,15 @@
   box-sizing: border-box;
 }
 
+.input:focus {
+  outline: 0.5px solid var(--m1);
+  box-shadow: 0 1px 8px rgba(100,130,120,0.08);
+}
+
 input[type=checkbox] {
-  width: 18px; height: 18px; accent-color: var(--m1);
+  width: 18px;
+  height: 18px;
+  accent-color: var(--m1);
 }
 
 .social-btn { 

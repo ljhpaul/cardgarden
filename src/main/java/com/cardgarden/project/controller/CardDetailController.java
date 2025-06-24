@@ -42,8 +42,8 @@ public class CardDetailController {
     	    @RequestParam(value="patternId", required=false) Integer patternId,
     	    Model model,
     	    HttpSession session) {
-    	int userid1 = 1;
-    	CardDTO card = cardLkieService.selectByIdWithLike(cardid, userid1);
+    	int userId = (int) session.getAttribute("loginUserId"); // 세션에서 꺼냄
+    	CardDTO card = cardLkieService.selectByIdWithLike(cardid, userId);
     	List<CardDTO> cardList = new ArrayList<>();
     	cardList.add(card);
     	model.addAttribute("cardList", cardList);
@@ -56,8 +56,7 @@ public class CardDetailController {
         }
         model.addAttribute("cardDetail", mapData);
         
-//        int userId1=1;
-        List<UserPatternBenefitDTO> dataList = userPatternBenefitService.selectByIdConsumPattern(userid1);
+        List<UserPatternBenefitDTO> dataList = userPatternBenefitService.selectByIdConsumPattern(userId);
 
         Map<Integer, List<UserPatternBenefitDTO>> mapPattern = new LinkedHashMap<>();
         for (UserPatternBenefitDTO dto : dataList) {

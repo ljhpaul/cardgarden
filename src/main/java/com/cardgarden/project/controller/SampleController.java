@@ -16,14 +16,6 @@ public class SampleController {
     @Autowired
     SampleService sampleService;
     
-    // 0. 레이아웃 테스트
-    @GetMapping("/testPage")
-    public String testPage(Model model) {
-        List<SampleDTO> list = sampleService.selectAll();
-        model.addAttribute("list", list);
-        return "";  // /WEB-INF/views/sample/list.jsp
-    }
-    
     // 1. 전체 리스트
     @GetMapping("/list")
     public String list(Model model) {
@@ -75,3 +67,4 @@ public class SampleController {
         return "redirect:/sample/list";
     }
 }
+

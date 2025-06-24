@@ -4,7 +4,7 @@
 
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
 <link rel="stylesheet" href="${cpath}/resources/css/common.css">
-<link rel="stylesheet" href="${cpath}/resources/css/style.css">
+<link rel="stylesheet" href="${cpath}/resources/css/userStyle.css">
 <link rel="stylesheet" href="${cpath}/resources/css/font-awesome.min.css">
 
 <head>
