@@ -48,7 +48,8 @@
 				<!-- 안내 메시지 출력 -->
 				<div class="msg-area">
 					<!-- <span style="color: #E44E37;">존재하지 않는 아이디입니다.</span> -->
-					<span style="color: #E44E37;">비밀번호가 일치하지 않습니다.</span>
+					<!-- <span id="login-msg" style="color: #E44E37;">비밀번호가 일치하지 않습니다.</span> -->
+					<span id="login-msg"></span>
 				</div>
 			</div>
 			<div class="login-find">
@@ -91,7 +92,7 @@
 
 <style>
 .container {
-	padding-top: 40px;
+	padding-top: 60px;
 }
 
 .box {
@@ -143,6 +144,7 @@
 
 .msg-area {
 	text-align: center;
+	font-style: 
 }
 
 .login-find {
@@ -172,6 +174,18 @@
 
 <script>
 	$(function() {
+		/* 쿠키에서 저장된 아이디 불러오기 및 체크 유지 */
+		var savedLoginId = getCookie("savedLoginId");
+		if(savedLoginId) {
+			$("#user_name").css("background-color", "#f8fbf8").val(savedLoginId);
+			$("#remember").prop("checked", true);
+		}
+		
+		$("#user_name").on("focus", function() {
+			$("#user_name").css("background-color", "");
+		});
+		
+		/* 소셜 로그인 버튼 hover 이미지 변경 */
 		$(".social-btn").hover(function() {
 			// 소셜 로그인 버튼에 마우스 올릴 때
 			var img = $(this).find("img");
@@ -181,5 +195,91 @@
 			var img = $(this).find("img");
 			img.attr("src", img.data("default"));
 		});
+		
+		/* 로그인 검증(Ajax) */
+		$("#login-form").on("submit", function(e) {
+			e.preventDefault();	// submit 기본동작 막기
+			
+			var formData = $(this).serialize();
+			console.log(formData);
+			
+			/* 아이디 저장 체크 여부 */
+			var isRememberChecked = $("#remember").is(":checked");
+			if(isRememberChecked) {
+				setCookie("savedLoginId", $("#user_name").val(), 30);
+			} else {
+				setCookie("savedLoginId", "", -1);
+			}
+			
+			/* 서버에 AJAX로 갔다오기 : $.ajax({ url, method, data, success }); */
+			$.ajax({
+				url: '${cpath}/user/login',
+				method: 'POST',
+				data: formData,
+				success: function(res) {
+					if(res.success) {
+						$("#user_name").css("background-color", "var(--m2)");
+						$("#user_password").css("background-color", "var(--m2)");
+						$("#login-msg").css("color", "#27AE60").text(res.message);
+						window.location.href = '${cpath}/main';
+					} else {
+						$("#login-msg").css("color", "#E44E37").text(res.message);
+					}
+				}
+			});
+		});
+		
 	});
+	
+	// 쿠키 저장 함수
+	function setCookie(name, value, days) {
+	    var expires = "";
+	    if(days) {
+	        var date = new Date();
+	        date.setTime(date.getTime() + (days*24*60*60*1000));
+	        expires = "; expires=" + date.toUTCString();
+	    }
+	    document.cookie = name + "=" + encodeURIComponent(value) + expires + "; path=/";
+	}
+
+	// 쿠키 읽기 함수
+	function getCookie(name) {
+	    var nameEQ = name + "=";
+	    var ca = document.cookie.split(';');
+	    for(var i=0;i<ca.length;i++) {
+	        var c = ca[i];
+	        while(c.charAt(0)==' ') c = c.substring(1,c.length);
+	        if(c.indexOf(nameEQ) == 0) return decodeURIComponent(c.substring(nameEQ.length,c.length));
+	    }
+	    return null;
+	}
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

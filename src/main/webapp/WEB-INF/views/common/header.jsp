@@ -69,7 +69,7 @@
 </header>
 </div>
 
-
+<%-- 
 <!-- sticky -->
  <nav class="sticky-menu">
   <div class="menu-inner">
@@ -101,4 +101,4 @@
     </div>
 
   </div>
-</nav>
+</nav> --%>
