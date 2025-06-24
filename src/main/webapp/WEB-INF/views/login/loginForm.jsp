@@ -28,9 +28,9 @@
 					<!-- 아이디/비밀번호 입력창 -->
 					<div class="input-area">
 						<input type="text" id="user_name" name="user_name"
-							class="input" required placeholder="아이디" />
+							class="input" placeholder="아이디" />
 						<input type="password" id="user_password" name="user_password" 
-							class="input" required placeholder="비밀번호" />
+							class="input" placeholder="비밀번호" />
 					</div>
 					
 					<!-- 아이디 저장 체크박스 -->
@@ -47,8 +47,6 @@
 				
 				<!-- 안내 메시지 출력 -->
 				<div class="msg-area">
-					<!-- <span style="color: #E44E37;">존재하지 않는 아이디입니다.</span> -->
-					<!-- <span id="login-msg" style="color: #E44E37;">비밀번호가 일치하지 않습니다.</span> -->
 					<span id="login-msg"></span>
 				</div>
 			</div>
@@ -143,6 +141,7 @@
 }
 
 .msg-area {
+	display: none;
 	text-align: center;
 	font-style: 
 }
@@ -200,16 +199,11 @@
 		$("#login-form").on("submit", function(e) {
 			e.preventDefault();	// submit 기본동작 막기
 			
-			var formData = $(this).serialize();
-			console.log(formData);
+			/* 아이디 및 비밀번호 입력 여부 */
+			if(!isInputData()) return;
 			
-			/* 아이디 저장 체크 여부 */
-			var isRememberChecked = $("#remember").is(":checked");
-			if(isRememberChecked) {
-				setCookie("savedLoginId", $("#user_name").val(), 30);
-			} else {
-				setCookie("savedLoginId", "", -1);
-			}
+			/* 입력데이터 String으로 받기 : serialize() */
+			var formData = $(this).serialize();
 			
 			/* 서버에 AJAX로 갔다오기 : $.ajax({ url, method, data, success }); */
 			$.ajax({
@@ -217,9 +211,13 @@
 				method: 'POST',
 				data: formData,
 				success: function(res) {
+					$(".msg-area").show();
 					if(res.success) {
-						$("#user_name").css("background-color", "var(--m2)");
-						$("#user_password").css("background-color", "var(--m2)");
+						/* 아이디 저장 체크 여부 */
+						isRemeberChecked();
+						
+						$("#user_name").css("background-color", "#f8fbf8");
+						$("#user_password").css("background-color", "#f8fbf8");
 						$("#login-msg").css("color", "#27AE60").text(res.message);
 						window.location.href = '${cpath}/main';
 					} else {
@@ -230,6 +228,37 @@
 		});
 		
 	});
+	
+	// 아이디 및 비밀번호 입력 여부 확인
+	function isInputData() {
+		var id = $("#user_name").val().trim();
+		var pw = $("#user_password").val().trim();
+		if(!id) {
+			$(".msg-area").show();
+			$("#login-msg").css("color", "#E44E37").text("아이디를 입력하세요.");
+	        $("#user_name").focus();
+	        return false;
+		}
+		if(!pw) {
+	        $(".msg-area").show();
+	        $("#login-msg").css("color", "#E44E37").text("비밀번호를 입력하세요.");
+	        $("#user_password").focus();
+	        return false;
+	    }
+		return true;
+	}
+	
+	// 아이디 저장 체크 여부
+	function isRemeberChecked() {
+		var checked = $("#remember").is(":checked");
+		if(checked) {
+			setCookie("savedLoginId", $("#user_name").val(), 30);
+			return true;
+		} else {
+			setCookie("savedLoginId", "", -1);
+			return false;
+		}
+	}
 	
 	// 쿠키 저장 함수
 	function setCookie(name, value, days) {
