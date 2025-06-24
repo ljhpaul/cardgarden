@@ -20,21 +20,18 @@
 <header class="main-header">
   <div class="header-container">
 
-    <!-- 로그인/회원가입 -->
-      <!--  로그인세션후에 만질예정   
+    <!-- 로그인/회원가입 -->  
+    <div class="header-left">
       <c:choose>
-        <c:when test="${not empty loginEmp}">
-          <a href="${cpath}/mypage/main.do">마이페이지</a>
-          <a href="${cpath}/auth/logout.do">로그아웃</a>
+        <c:when test="${not empty loginUserId}">
+          <a href="${cpath}/user/mypage">마이페이지</a>
+          <a href="${cpath}/user/logout">로그아웃</a>
         </c:when>
         <c:otherwise>
-          <a href="${cpath}/auth/signup.do">회원가입</a>
-          <a href="${cpath}/auth/login.do">로그인</a>
+          <a href="${cpath}/user/join">회원가입</a>
+          <a href="${cpath}/user/login">로그인</a>
         </c:otherwise>
-      </c:choose>-->
-    <div class="header-left">
-      <a href="${cpath}/user/join/method">회원가입</a>
-      <a href="${cpath}/auth/login.do">로그인</a>
+      </c:choose>
     </div>
 
     <!--로고 -->
@@ -47,7 +44,7 @@
 
     <!--검색 -->
     <div class="header-right">
-      <form action="${cpath}/card/cardsearch"" method="get">
+      <form action="${cpath}/card/search" method="get">
         <input type="text" name="keyword" class="text1" placeholder="검색어를 입력하세요">
       </form>
       <a href="${cpath}/mypage/likes.do">
@@ -58,24 +55,22 @@
 
   <!-- 하단 메뉴 -->
   <div class="header-bottom">
-    <a href="${cpath}/card/list">카드&nbsp;
+    <a href="${cpath}/card/rank">카드&nbsp;
       <img class="mascot" src="${cpath}/resources/images/common/caretDown.png" width="15">
     </a>
     <a href="${cpath}/recommend/ai">AI 카드추천</a>
-    <a href="${cpath}/custom">카드 커스터마이징&nbsp;
+    <a href="${cpath}/custom/main">카드 커스터마이징&nbsp;
 	  <img class="mascot" src="${cpath}/resources/images/common/caretDown.png" width="15">
 	</a>
     <a href="${cpath}/event/list">이벤트&nbsp;
       <img class="mascot" src="${cpath}/resources/images/common/caretDown.png" width="15">
 	</a>
->>>>>>> origin/develop
   </div>
 </header>
 </div>
 
-<%-- 
 <!-- sticky -->
-<nav class="sticky-menu">
+ <nav class="sticky-menu">
   <div class="menu-inner">
     
     <!-- 왼쪽 로고 -->
@@ -106,4 +101,3 @@
 
   </div>
 </nav>
- --%>

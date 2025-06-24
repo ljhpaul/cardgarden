@@ -34,4 +34,6 @@ public interface CustomAssetDAOInterface {
     void increaseAssetLike(int assetId);
 
     void decreaseAssetLike(int assetId);
+
+    int selectAssetLikeCount(int assetId);
 }

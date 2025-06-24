@@ -19,4 +19,8 @@ public class CustomAssetDTO {
     private int point_needed;
     private int discount;
     private String asset_name; 
+    
+    private int final_price; 
+    
+    
 }

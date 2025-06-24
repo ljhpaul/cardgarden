@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="${cpath}/resources/css/common.css">
 <link rel="stylesheet" href="${cpath}/resources/css/font-awesome.min.css">
 <link rel="stylesheet" href="${cpath}/resources/css/header.css">
-<link rel="stylesheet" href="${cpath}/resources/css/join.css">
+<link rel="stylesheet" href="${cpath}/resources/css/userStyle.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="${cpath}/resources/js/header.js"></script>
 
@@ -15,13 +15,13 @@
     <title>카드가든 : 회원가입</title>
 </head>
 
-<body class="join-bg">
-<div class="join-container">
-  <div class="join-box">
-    <h2 class="join-title">카드가든 회원가입</h2>
+<body class="bg-main">
+<div class="container">
+  <div class="box">
+    <h2 class="title-lg">카드가든 회원가입</h2>
 
     <!-- 일반 회원가입 버튼 -->
-    <a href="${cpath}/user/join/term" class="join-btn">
+    <a href="${cpath}/user/join/term" class="btn">
  	  <img src="${cpath}/resources/images/auth/joinUser.png" width="18"/> 일반 회원가입
 	</a>
 
@@ -50,28 +50,28 @@
     </div>
     <div class="join-method-login">
       이미 계정이 있으신가요?
-      <a href="${cpath}/auth/login.do" class="join-text-hover">로그인</a>
+      <a href="${cpath}/user/login" class="text-link">&nbsp;로그인</a>
     </div>
   </div>
 </div>
 </body>
 
 <style>
-.join-container {
+.container {
   padding-top: 120px;
 }
-.join-box {
+.box {
   padding: 40px 36px 36px 36px;
   min-width: 340px;
   max-width: 360px;
 
 }
-.join-title {
+.title-lg {
   font-size: 2.0rem;
   margin-top: 20px;
   margin-bottom: 35px;
 }
-.join-btn {
+.btn {
   width: 80%;
   height: 52px;
   font-size: 1.18rem;

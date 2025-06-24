@@ -1,9 +1,12 @@
 <%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="../common/header.jsp" %>
+<c:set var="loginId" value="${sessionScope.loginId}" />
+<script>const loginId = '${loginId}';</script>
+
 
 <c:set var="cpath" value="${pageContext.servletContext.contextPath}" />
-
+<script src="${cpath}/resources/js/freeasset.js"></script> 
 <link rel="stylesheet" href="${cpath}/resources/css/customMain.css?after">
 
 <!-- 스페셜 콜라보 이미지 -->
@@ -31,7 +34,7 @@
 
 	<!-- 상단 1단 버튼 -->
 	<div class="top-buttons">
-	    <a href="${cpath}/custom/make" class="btn-custom-make">
+	    <a href="${cpath}/make/frame" class="btn-custom-make">
 	        <div class="pink-box1">
 			  <div class="pink-box1-text">
 			    나만의 커스텀 카드<br>만들러 가기
@@ -51,7 +54,7 @@
 	      <img src="${cpath}/resources/images/custom/discount.png" alt="할인">
 	    </div>
 	  </a>
-	  <a href="${cpath}/custom/detail" class="btn-free">
+	  <a href="${cpath}/custom/free" class="btn-free">
 	    <div class="pink-box">
 	      <div class="pink-box-text">
 	        오늘의 무료 스티커<br>받아가기
@@ -60,7 +63,6 @@
 	    </div>
 	  </a>
 	</div>
-
 
 	<!-- 전체 TOP5 -->
 	<div class="section-wide-wrapper">
@@ -72,11 +74,12 @@
 	                <img src="${cpath}/resources/images/asset/${item.asset_type}/${item.asset_brand}/${item.asset_type}_${item.asset_brand}_${item.asset_no}_${item.asset_name}.png">
 	                <p class="rank-name">${item.asset_name}</p>
 	                <p class="rank-brand">${item.asset_brand}</p>
-	            </div>
+	                <a href="${cpath}/custom/detail?asset_id=${item.asset_id}" class="link-layer"></a>
+	            </div>   
 	        </c:forEach>
 	    </div>
 	</div>
- </div>
+ </div>s
 
 	<!-- 스티커 TOP5 -->
 	<div class="section-top5 dark">
@@ -92,6 +95,7 @@
 	             src="${cpath}/resources/images/asset/${item.asset_type}/${item.asset_brand}/${item.asset_type}_${item.asset_brand}_${item.asset_no}_${item.asset_name}.png" />
 	        <div class="rank-name">${item.asset_name}</div>
 	        <div class="rank-brand">${item.asset_brand}</div>
+	        <a href="${cpath}/custom/detail?asset_id=${item.asset_id}" class="link-layer"></a>
 	      </div>
 	    </c:forEach>
 	  </div>
@@ -111,7 +115,14 @@
 	             src="${cpath}/resources/images/asset/${item.asset_type}/${item.asset_brand}/${item.asset_type}_${item.asset_brand}_${item.asset_no}_${item.asset_name}.png" />
 	        <div class="rank-name">${item.asset_name}</div>
 	        <div class="rank-brand">${item.asset_brand}</div>
+	        <a href="${cpath}/custom/detail?asset_id=${item.asset_id}" class="link-layer"></a>
 	      </div>
 	    </c:forEach>
 	  </div>
 	</div>
+<script>
+  const loginUserId = "${sessionScope.loginUserId}";
+  const cpath = "${pageContext.request.contextPath}";
+</script>
+
+	

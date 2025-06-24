@@ -1,6 +1,4 @@
-package com.cardgarden.project.model.auth.dto;
-
-import java.sql.Date;
+package com.cardgarden.project.model.user.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,7 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 @Data
-public class LoginResponseDTO {
-    private String user_name;
-    private String user_password;
+public class UserAgreementDTO {
+	private int user_id;
+	private int term_id;
+	private String is_agreed;
 }
