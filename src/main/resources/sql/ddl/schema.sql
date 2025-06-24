@@ -39,10 +39,12 @@ CREATE TABLE UserInfo (
   birth DATE DEFAULT NULL COMMENT '생년월일',
   phone VARCHAR(20) NOT NULL UNIQUE COMMENT '전화번호',
   address VARCHAR(200) DEFAULT NULL COMMENT '주소',
-  created_at DATE NOT NULL COMMENT '가입일',
+  created_at DATE NOT NULL DEFAULT (CURDATE()) COMMENT '가입일',
   point INT DEFAULT 0 COMMENT '보유 포인트 수',
   is_admin VARCHAR(2) DEFAULT 'N' COMMENT '관리자 여부(Y/N-기본값)'
 );
+
+alter table userInfo modify column created_at DATE NOT NULL DEFAULT (CURDATE()) COMMENT '가입일';
 
 CREATE TABLE Card (
   card_id INT PRIMARY KEY AUTO_INCREMENT COMMENT '카드 번호',
@@ -155,12 +157,21 @@ CREATE TABLE CardBenefitDetail (
 CREATE TABLE UserAgreement (
   user_id INT NOT NULL COMMENT '회원 ID',
   term_id INT NOT NULL COMMENT '약관 ID',
-  is_agreed VARCHAR(2) NOT NULL DEFAULT 'N' COMMENT '동의 여부(Y/N)',
-  agreed_at DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '동의 시각',
+  is_agreed VARCHAR(2) NOT NULL DEFAULT 'N' COMMENT '동의 여부(Y/N)'
   PRIMARY KEY (user_id, term_id),
-  FOREIGN KEY (user_id) REFERENCES UserInfo(user_id),
+  FOREIGN KEY (user_id) REFERENCES UserInfo(user_id) ON DELETE CASCADE,
   FOREIGN KEY (term_id) REFERENCES Term(term_id)
 );
+
+select * from UserAgreement ua ;
+alter TABLE UserAgreement drop agreed_at;
+alter table UserAgreement DROP agreed_at;
+ALTER TABLE UserAgreement
+  ADD CONSTRAINT useragreement_ibfk_1
+  FOREIGN KEY (user_id) REFERENCES UserInfo(user_id) ON DELETE CASCADE;
+
+ALTER TABLE UserAgreement DROP FOREIGN KEY useragreement_ibfk_1;
+
 
 CREATE TABLE LikeCard (
   card_id INT NOT NULL COMMENT '좋아요 한 카드 번호',
