@@ -53,16 +53,16 @@
   <!-- 상세조회 (할인 반영된 가격: point_needed) -->
 	<select id="selectAssetDetail" resultType="CustomAssetDTO">
 	  SELECT 
-	    ca.asset_id, ca.asset_brand, ca.asset_type, ca.asset_no, ca.asset_like, ca.used, ca.point_needed, ca.discount,ca.asset_name, 
+	    ca.asset_id, ca.asset_brand, ca.asset_type, ca.asset_no, ca.asset_like, ca.used, ca.point_needed, ca.discount, ca.asset_name,
 	    CASE 
 	      WHEN dd.asset_id IS NOT NULL THEN ca.discount
 	      ELSE ca.point_needed
 	    END AS final_price
 	  FROM CustomAsset ca
-	  LEFT JOIN DailyDiscount dd 
-	    ON ca.asset_id = dd.asset_id AND dd.date = CURDATE()
+	  LEFT JOIN DailyDiscount dd ON ca.asset_id = dd.asset_id AND dd.date = CURDATE()
 	  WHERE ca.asset_id = #{asset_id}
 	</select>
+
 
 
   <!-- 좋아요 삽입 -->

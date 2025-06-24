@@ -39,14 +39,15 @@
 
         <div class="price-heart-box">
           
-          <c:choose>
-            <c:when test="${isDiscounted > 0}">
-              <p><del>${asset.point_needed}Point</del> → <span class="discount-point">${asset.discount}Point</span></p>
-            </c:when>
-            <c:otherwise>
-              <p>${asset.point_needed}Point</p>
-            </c:otherwise>
-          </c:choose>
+		<c:choose>
+		  <c:when test="${asset.final_price < asset.point_needed}">
+		    <p><del>${asset.point_needed}Point</del> → <span class="discount-point">${asset.final_price}Point</span></p>
+		  </c:when>
+		  <c:otherwise>
+		    <p>${asset.point_needed}Point</p>
+		  </c:otherwise>
+		</c:choose>
+
 
           <div class="like-section">
             <c:choose>
@@ -75,8 +76,8 @@
         <div class="btn-group">
           <c:choose>
             <c:when test="${owned == -1}">
-              <a href="${cpath}/login" class="buy-btn">구매하기</a>
-            </c:when>
+		      <button type="button" class="buy-btn" onclick="alertAndGoLogin()">구매하기</button>
+		    </c:when>
             <c:when test="${owned == 1}">
               <span class="owned-text">이미 보유중</span>
             </c:when>
@@ -92,7 +93,7 @@
             </c:when>
           </c:choose>
           
-          <a href="${cpath}/custom/make" class="make-btn">제작하러 가기</a>
+          <a href="${cpath}/make/frame" class="make-btn">제작하러 가기</a>
         </div>
 
       </div>
@@ -114,7 +115,11 @@
 	    </div>
 	  </div>
 	</div>
-
-
   </div>
 </div>
+<script>
+function alertAndGoLogin() {
+  alert("로그인 후 이용 가능합니다.");
+  location.href = "${cpath}/login";
+}
+</script>
