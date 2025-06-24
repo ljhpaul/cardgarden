@@ -60,8 +60,8 @@
     margin-bottom: 4px;
 }
 </style>
-
-<form method="get" action="${cpath}/recommend/aiDetailResult">
+<form method="get" action="${cpath}/card/detail">
+  <input type="hidden" name="cardid" value="${cardid}" />
   <c:forEach var="entry" items="${patternList}">
     <div class="pattern-group">
       <div class="pattern-title">

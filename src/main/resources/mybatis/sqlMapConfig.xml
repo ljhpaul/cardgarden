@@ -23,7 +23,9 @@
      <typeAlias type="com.cardgarden.project.model.cardDetail.CardDetailDTO" alias="cardDetailDTO" />
 
      <typeAlias type="com.cardgarden.project.model.user.dto.UserInfoDTO" alias="userInfoDTO"/>
+     <typeAlias type="com.cardgarden.project.model.user.dto.UserAgreementDTO" alias="userAgreementDTO"/>
      <typeAlias type="com.cardgarden.project.model.term.dto.TermDTO" alias="termDTO"/>
+     
      <typeAlias type="com.cardgarden.project.model.benefitCategory.benefitCategoryDTO" alias="benefitCategoryDTO"/>
      <typeAlias type="com.cardgarden.project.model.userConsumptionPattern.UserConsumptionPatternDTO" alias="UserConsumptionPatternDTO"/>
      <typeAlias type="com.cardgarden.project.model.userConsumptionPatternDetail.UserConsumptionPatternDetailDTO" alias="UserConsumptionPatternDetailDTO"/>

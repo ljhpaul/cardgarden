@@ -4,17 +4,17 @@
 
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
 <link rel="stylesheet" href="${cpath}/resources/css/common.css">
-<link rel="stylesheet" href="${cpath}/resources/css/join.css">
+<link rel="stylesheet" href="${cpath}/resources/css/style.css">
 <link rel="stylesheet" href="${cpath}/resources/css/font-awesome.min.css">
 
 <head>
     <title>카드가든 : 회원가입</title>
 </head>
 
-<div class="join-bg">
-  <div class="join-container">
-    <div class="join-box">
-      <h2 class="join-title">이메일 인증</h2>
+<div class="bg-main">
+  <div class="container">
+    <div class="box">
+      <h2 class="title-lg">이메일 인증</h2>
       
       <form id="email-form" action="${cpath}/user/join/email" method="POST" autocomplete="off" style="width:100%;">
         <div style="width:100%; margin-bottom:16px;">
@@ -25,11 +25,11 @@
               id="email"
               name="email"
               required
-              class="input-form"
+              class="input"
               placeholder="cardgarden@email.com"
               oninput="resetStatus();"
             />
-            <button type="button" id="email-request-btn" class="join-btn btn-sub">
+            <button type="button" id="email-request-btn" class="btn btn-sub">
               인증요청
             </button>
           </div>
@@ -47,11 +47,11 @@
               id="code"
               name="code"
               maxlength="6"
-              class="input-form code-input"
+              class="input code-input"
               placeholder="6자리"
               autocomplete="off"
             />
-            <button type="button" id="code-check-btn" class="join-btn btn-sub">
+            <button type="button" id="code-check-btn" class="btn btn-sub">
               인증확인
             </button>
           </div>
@@ -63,7 +63,7 @@
           <i class="fa fa-check-circle"></i> 인증성공
         </div>
         
-        <button type="submit" id="next-btn" class="join-btn" disabled >
+        <button type="submit" id="next-btn" class="btn" disabled >
           다음
         </button>
       </form>
@@ -72,10 +72,10 @@
 </div>
 
 <style>
-  .join-container {
+  .container {
     padding-top: 135px;
   }
-  .join-box {
+  .box {
     max-width: 440px;
     width: 100%;
     padding: 40px 32px;
@@ -180,6 +180,8 @@
           $('#success-msg').show();
           $('#next-btn').prop('disabled', false);
           $('#code-timer').hide();
+          $("#code").prop("readonly", true);
+          $("#code").css("background-color", "var(--main)");
         } else {
           $('#code-timer').css('color','#E44E37').text('・ 인증번호가 올바르지 않거나 만료되었습니다.');
         }
