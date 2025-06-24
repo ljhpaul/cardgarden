@@ -11,22 +11,22 @@
 
   <div class="make-frame-box">
     
-    <!-- 카드 미리보기 -->
+    <!-- 좌측 카드 미리보기 -->
     <div class="card-preview">
-      <div id="card-frame" class="card-frame largechip" style="background-image: url('${cpath}/resources/images/cardsize/b1.png');">
-        <div class="chip"></div>
+      <div class="card-bg">
+        <img id="card-preview-img" src="${cpath}/resources/images/cardsize/b1.png" alt="카드 미리보기">
       </div>
     </div>
 
-    <!-- 옵션 영역 -->
+    <!-- 우측 옵션 영역 -->
     <div class="frame-options">
       <p class="option-title">사이즈 선택</p>
       <div class="size-btn-group">
-        <button class="size-btn" data-type="largechip" style="">Large Chip</button>
-        <button class="size-btn" data-type="smallchip">Small Chip</button>
-        <button class="size-btn" data-type="largechipwide">Large Chip Wide</button>
-        <button class="size-btn" data-type="smallchipwide">Small Chip Wide</button>
-        <button class="size-btn" data-type="withoutchip">Without Chip</button>
+        <button class="size-btn" data-img="largechip.png">Large Chip</button>
+        <button class="size-btn" data-img="smallchip.png">Small Chip</button>
+        <button class="size-btn" data-img="largechip-wide.png">Large Chip Wide</button>
+        <button class="size-btn" data-img="smallchipwide.png">Small Chip Wide</button>
+        <button class="size-btn" data-img="withoutchip.png">Without Chip</button>
       </div>
 
       <p class="option-title">보기 방향 선택</p>
@@ -38,6 +38,7 @@
 
   </div>
 
+  <!-- 하단 넓은 큰 버튼 영역 -->
   <div class="bottom-btn-area">
     <a href="${cpath}/custom/main" class="big-btn back-btn">← 커스텀 홈으로</a>
     <button id="next-btn" class="big-btn next-btn">다음 단계로</button>
@@ -46,36 +47,47 @@
 </div>
 
 <script>
+let selectedType = "largechip";
+let selectedDirection = "portrait";
+
+// 사이즈 버튼 클릭
 document.querySelectorAll(".size-btn").forEach(btn => {
     btn.addEventListener("click", () => {
-        const type = btn.dataset.type;
-        const frame = document.getElementById("card-frame");
+        selectedType = btn.dataset.img;
 
-        // 기존 사이즈 관련 클래스만 제거
-        frame.classList.remove("largechip", "smallchip", "largechipwide", "smallchipwide", "withoutchip");
+        // 모든 버튼 active 제거
+        document.querySelectorAll(".size-btn").forEach(b => b.classList.remove("active"));
+        
+        // 선택 버튼만 active 부여
+        btn.classList.add("active");
 
-        // 새 클래스 추가
-        frame.classList.add(type);
-
-        // 배경 이미지 유지
-        frame.style.backgroundImage = `url('${cpath}/resources/images/cardsize/b1.png')`;
+        // 이미지 변경
+        document.getElementById("card-preview-img").src = `${cpath}/resources/images/custom/${selectedType}`;
     });
 });
 
+// 방향 버튼 클릭
 document.querySelectorAll(".view-btn").forEach(btn => {
     btn.addEventListener("click", () => {
-        const direction = btn.dataset.direction;
-        const frame = document.getElementById("card-frame");
+        selectedDirection = btn.dataset.direction;
 
-        if (direction === "portrait") {
-            frame.classList.remove("landscape");
+        // 모든 버튼 active 제거
+        document.querySelectorAll(".view-btn").forEach(b => b.classList.remove("active"));
+        
+        // 선택 버튼만 active 부여
+        btn.classList.add("active");
+
+        const preview = document.querySelector(".card-bg");
+        if (selectedDirection === "portrait") {
+            preview.classList.remove("landscape");
         } else {
-            frame.classList.add("landscape");
+            preview.classList.add("landscape");
         }
     });
 });
 
 document.getElementById("next-btn").addEventListener("click", () => {
-    location.href = `${cpath}/make/image`;
+    location.href = `${cpath}/make/image?img=${selectedType}&direction=${selectedDirection}`;
 });
+
 </script>
