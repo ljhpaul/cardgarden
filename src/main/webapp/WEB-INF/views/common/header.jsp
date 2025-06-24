@@ -44,7 +44,7 @@
 
     <!--검색 -->
     <div class="header-right">
-      <form action="${cpath}/card/cardsearch"" method="get">
+      <form action="${cpath}/card/search" method="get">
         <input type="text" name="keyword" class="text1" placeholder="검색어를 입력하세요">
       </form>
       <a href="${cpath}/mypage/likes.do">
@@ -55,7 +55,7 @@
 
   <!-- 하단 메뉴 -->
   <div class="header-bottom">
-    <a href="${cpath}/card/list">카드&nbsp;
+    <a href="${cpath}/card/rank">카드&nbsp;
       <img class="mascot" src="${cpath}/resources/images/common/caretDown.png" width="15">
     </a>
     <a href="${cpath}/recommend/ai">AI 카드추천</a>
