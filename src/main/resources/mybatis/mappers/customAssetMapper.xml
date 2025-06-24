@@ -43,7 +43,7 @@
 
   <!-- 오늘의 무료 스티커 -->
   <select id="selectDailyFree" resultType="CustomAssetDTO">
-    SELECT ca.asset_id, ca.asset_brand, ca.asset_type, ca.asset_no, ca.point_needed,ca.asset_name
+    SELECT ca.asset_id, ca.asset_brand, ca.asset_type, ca.asset_no, ca.point_needed,ca.asset_name, asset_like, used
     FROM DailyFree df
     JOIN CustomAsset ca ON df.asset_id = ca.asset_id
     WHERE df.date = CURDATE()

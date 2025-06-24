@@ -54,7 +54,7 @@
 	      <img src="${cpath}/resources/images/custom/discount.png" alt="할인">
 	    </div>
 	  </a>
-	  <a href=# id="free-sticker-btn" class="btn-free">
+	  <a href="${cpath}/custom/free" class="btn-free">
 	    <div class="pink-box">
 	      <div class="pink-box-text">
 	        오늘의 무료 스티커<br>받아가기
@@ -62,20 +62,6 @@
 	      <img src="${cpath}/resources/images/custom/gift.png" alt="무료">
 	    </div>
 	  </a>
-	</div>
-	<!-- 모달 추가 -->
-	<div id="free-sticker-modal" class="modal-overlay" style="display:none;">
-	  <div class="modal-content">
-	    <h3 id="modal-title">선물상자를 여세요!</h3>
-	    <div id="gift-box-area">
-	      <img src="${cpath}/resources/images/common/giftbox_closed.png" id="gift-box-img" style="width:150px;">
-	    </div>
-	    <div id="reward-area" style="display:none;">
-	      <p id="reward-text"></p>
-	      <img id="reward-img" style="width:100px;">
-	    </div>
-	    <button id="modal-close-btn" style="display:none;">확인</button>
-	  </div>
 	</div>
 
 	<!-- 전체 TOP5 -->
@@ -93,7 +79,7 @@
 	        </c:forEach>
 	    </div>
 	</div>
- </div>
+ </div>s
 
 	<!-- 스티커 TOP5 -->
 	<div class="section-top5 dark">
@@ -135,6 +121,8 @@
 	  </div>
 	</div>
 <script>
-const cpath = '${cpath}';
+  const loginUserId = "${sessionScope.loginUserId}";
+  const cpath = "${pageContext.request.contextPath}";
 </script>
+
 	
