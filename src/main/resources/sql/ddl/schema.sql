@@ -170,6 +170,9 @@ ALTER TABLE UserAgreement
   ADD CONSTRAINT useragreement_ibfk_1
   FOREIGN KEY (user_id) REFERENCES UserInfo(user_id) ON DELETE CASCADE;
 
+ALTER TABLE UserAgreement DROP FOREIGN KEY useragreement_ibfk_1;
+
+
 CREATE TABLE LikeCard (
   card_id INT NOT NULL COMMENT '좋아요 한 카드 번호',
   user_id INT NOT NULL COMMENT '회원 고유 ID',
