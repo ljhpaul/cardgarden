@@ -1,7 +1,7 @@
 package com.cardgarden.project.controller;
 
 import java.util.List;
-
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ public class CardSearchController {
     private CardSearchService cardService;
 
     @RequestMapping("/search")
-    public String searchCard(HttpServletRequest request) {
+    public String searchCard(HttpServletRequest request, HttpSession session) {
         String keyword = request.getParameter("keyword");
         String sort = request.getParameter("sort");
 
@@ -31,12 +31,14 @@ public class CardSearchController {
             try {
                 page = Integer.parseInt(pageParam);
             } catch (NumberFormatException e) {
-                page = 1; // 기본값
+                page = 1;
             }
         }
 
         int totalCount = cardService.countCards(keyword);
-        List<CardDTO> results = cardService.searchCards(keyword, sort, page, pageSize);
+        Integer userId = (Integer) session.getAttribute("loginUserId"); 
+
+        List<CardDTO> results = cardService.searchCards(keyword, sort, page, pageSize, userId);
         int totalPages = (int) Math.ceil((double) totalCount / pageSize);
 
         int startPage = Math.max(1, page - 5);
@@ -49,7 +51,6 @@ public class CardSearchController {
         request.setAttribute("endPage", endPage);
         return "card/cardsearch";
     }
-
 
 
 

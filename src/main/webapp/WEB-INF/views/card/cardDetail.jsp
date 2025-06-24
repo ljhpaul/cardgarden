@@ -24,6 +24,8 @@
 body {
 	font-family: 'NanumSquareRound', sans-serif;
 	background-color: #f7f7f7;
+	margin : 0;
+	padding : 0;
 }
 
 .card-rep {
@@ -482,72 +484,66 @@ function scrollToTarget(targetId) {
 	}
 }
 
-	$(function() {
-		$(document)
-				.on(
-						"click",
-						".go-button",
-						function() {
-							var cardId = $(this).data("cardid");
-							var $btn = $(this);
-							var $count = $btn.find(".rec_count");
-							var $icon = $btn.find(".like-icon");
-							var liked = $btn.data("liked");
+$(function() {
+	$(document).on("click", ".go-button", function () {
+		var cardId = $(this).data("cardid");
+		var $btn = $(this);
+		var $count = $btn.siblings(".rec_count");
+		var $icon = $btn.find(".like-icon");
+		var liked = $btn.data("liked");
 
-							if (liked) {
-								$
-										.ajax({
-											url : "${cpath}/card/cardUnlike",
-											type : "POST",
-											data : {
-												card_id : cardId
-											},
-											success : function(res) {
-												if (res === "success") {
-													$btn.data("liked", false);
-													$icon
-															.attr("src",
-																	"${cpath}/resources/images/cardlikeImage/unlike.png");
-													$count.text(Number($count
-															.text()) - 1);
-												} else {
-													alert("좋아요 취소 실패!");
-												}
-											},
-											error : function() {
-												alert("서버 에러");
-											}
-										});
-							} else {
-								$
-										.ajax({
-											url : "${cpath}/card/cardLike",
-											type : "POST",
-											data : {
-												card_id : cardId
-											},
-											success : function(res) {
-												if (res.result === "success") {
-													$btn.data("liked", true);
-													$icon
-															.attr("src",
-																	"${cpath}/resources/images/cardlikeImage/like.png");
-													$count.text(Number($count
-															.text()) + 1);
-												} else if (res.result === "login_required"
-														|| res.result === "need_login") {
-													alert("로그인 후 이용 가능합니다.");
-												} else {
-													alert("좋아요 실패!");
-												}
-											},
-											error : function() {
-												alert("서버 에러");
-											}
-										});
-							}
-						});
+		console.log("Clicked cardId:", cardId);
+		console.log("Liked status before click:", liked);
+
+		if (liked) {
+			// 좋아요 취소
+			$.ajax({
+				url: "${cpath}/card/cardUnlike",
+				type: "POST",
+				data: { card_id: cardId },
+				success: function (res) {
+					console.log("서버 응답 (unlike):", res);
+					if (res === "success") {
+						$btn.data("liked", false);
+						$icon.attr("src", "${cpath}/resources/images/cardlikeImage/unlike.png");
+						$count.text(Number($count.text()) - 1);
+					} else {
+						alert("좋아요 취소 실패!");
+					}
+				},
+				error: function (xhr, status, error) {
+					console.error("서버 에러:", error);
+					console.error("응답 내용:", xhr.responseText);
+					alert("서버 에러");
+				}
+			});
+		} else {
+			// 좋아요
+			$.ajax({
+				url: "${cpath}/card/cardLike",
+				type: "POST",
+				data: { card_id: cardId },
+				success: function (res) {
+					console.log("서버 응답 (like):", res);
+					if (res.result === "success") {
+						$btn.data("liked", true);
+						$icon.attr("src", "${cpath}/resources/images/cardlikeImage/like.png");
+						$count.text(Number($count.text()) + 1);
+					} else if (res.result === "login_required" || res.result === "need_login") {
+						alert("로그인 후 이용 가능합니다.");
+					} else {
+						alert("좋아요 실패!");
+					}
+				},
+				error: function (xhr, status, error) {
+					console.error("서버 에러:", error);
+					console.error("응답 내용:", xhr.responseText);
+					alert("서버 에러");
+				}
+			});
+		}
 	});
+});
 
 </script>
 
@@ -561,6 +557,7 @@ function scrollToTarget(targetId) {
 			<div class="card-image-wrapper">
 				<img src="${card.card_image}" alt="카드 이미지" />
 			</div>
+			<!-- 좋아요 버튼 -->
 				<div class="like-section">
 					<button class="go-button" data-cardid="${card.card_id}" data-liked="${card.liked ? 'true' : 'false'}">
 						<img class="like-icon"

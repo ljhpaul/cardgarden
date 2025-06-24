@@ -191,11 +191,7 @@ header {
 
 
 
-.like-icon {
-	width: 32px;
-	height: 32px;
-	cursor: pointer;
-}
+
 
 .liked {
 	fill: #f88;
@@ -277,11 +273,76 @@ header {
 }
 
 .right-cursor img {
+  width: 40px;
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+}
+
+.like-icon {
 	width: 40px;
-	height: 40px;
-	overflow: visible;
+    position: absolute;
+    top: 53px;
+    right: 80px;
+    z-index: 10;
+    height: 40px;
 }
 </style>
+<script>
+$(function () {
+	  $(document).on("click", ".go-button", function () {
+		  e.stopPropagation(); // 💥 클릭 이벤트가 부모(card-box)로 전달되지 않게 막음
+	    const cardId = $(this).data("cardid");
+	    const $icon = $(this);
+	    let liked = $icon.data("liked");
+
+	    console.log("Clicked cardId:", cardId);
+	    console.log("Liked status before click:", liked);
+
+	    if (liked) {
+	      $.ajax({
+	        url: "${cpath}/card/cardUnlike",
+	        type: "POST",
+	        data: { card_id: cardId },
+	        success: function (res) {
+	          if (res === "success") {
+	            $icon.attr("src", "${cpath}/resources/images/cardlikeImage/unlike.png");
+	            $icon.data("liked", false);
+	            console.log("좋아요 취소 완료");
+	          } else {
+	            alert("좋아요 취소 실패!");
+	          }
+	        },
+	        error: function () {
+	          alert("서버 에러");
+	        }
+	      });
+	    } else {
+	      $.ajax({
+	        url: "${cpath}/card/cardLike",
+	        type: "POST",
+	        data: { card_id: cardId },
+	        success: function (res) {
+	          if (res.result === "success") {
+	            $icon.attr("src", "${cpath}/resources/images/cardlikeImage/like.png");
+	            $icon.data("liked", true);
+	            console.log("좋아요 추가 완료");
+	          } else if (res.result === "login_required" || res.result === "need_login") {
+	            alert("로그인 후 이용 가능합니다.");
+	          } else {
+	            alert("좋아요 실패!");
+	          }
+	        },
+	        error: function () {
+	          alert("서버 에러");
+	        }
+	      });
+	    }
+	  });
+	});
+</script>
+
 </head>
 <body>
 
@@ -303,27 +364,41 @@ header {
 		<div style="text-align: center; margin: 20px;">카드가 0건 검색되었습니다.</div>
 	</c:if>
 	<c:forEach var="card" items="${cardList}">
-		<div class="card-box" onclick="location.href='${pageContext.request.contextPath}/card/detail?cardid=${card.card_id}'"
-     style="cursor: pointer;">
-			<div class="card-image-wrapper">
-			  <img src="${card.card_image}" alt="카드 이미지" class="card-image" />
-			</div>
-			
-			<div class="card-info">
-				<div class="card-name">${card.card_name}</div>
-				<div class="card-company">${card.company}
-			  <span class="card-type">
-			    <c:choose>
-			      <c:when test="${card.card_type == '신용카드'}">신용</c:when>
-			      <c:when test="${card.card_type == '체크카드'}">체크</c:when>
-			      <c:otherwise>신용</c:otherwise>
-			    </c:choose>
-			  </span>
-			</div>	
-			</div>
-			<div class="right-cursor"><img src="${pageContext.request.contextPath}/resources/images/right.png" alt="오른쪽커서" class="right-cursor" /></div>
-		</div>
+<div class="card-box" onclick="location.href='${pageContext.request.contextPath}/card/detail?cardid=${card.card_id}'"
+     style="cursor: pointer; position: relative;">
+  
+  <div class="card-image-wrapper">
+    <img src="${card.card_image}" alt="카드 이미지" class="card-image" />
+  </div>
 
+  <div class="card-info">
+    <div class="card-name">${card.card_name}</div>
+    <div class="card-company">
+      ${card.company}
+      <span class="card-type">
+        <c:choose>
+          <c:when test="${card.card_type == '신용카드'}">신용</c:when>
+          <c:when test="${card.card_type == '체크카드'}">체크</c:when>
+          <c:otherwise>신용</c:otherwise>
+        </c:choose>
+      </span>
+    </div>
+  </div>
+
+  <!-- 좋아요 아이콘 -->
+<div class="like-wrapper" data-cardid="${card.card_id}" data-liked="${card.liked ? 'true' : 'false'}">
+  <img 
+    class="like-icon"
+    src="${cpath}/resources/images/cardlikeImage/${card.liked ? 'like.png' : 'unlike.png'}"
+    alt="like" />
+</div>
+
+  <!-- 오른쪽 커서 -->
+  <div class="right-cursor">
+    <img src="${pageContext.request.contextPath}/resources/images/right.png" alt="오른쪽커서" class="right-cursor" />
+  </div>
+
+</div>
 	</c:forEach>
 
 	<!-- 페이징 -->
@@ -350,4 +425,7 @@ header {
 
 
 </body>
+
+
+
 </html>

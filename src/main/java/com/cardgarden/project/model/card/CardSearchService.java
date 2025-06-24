@@ -10,10 +10,10 @@ public class CardSearchService {
 
     @Autowired
     private CardSearchDAOInterface cardDAO;
-
     
-    public List<CardDTO> searchCards(String keyword, String sort, int page, int pageSize) {
-        return cardDAO.searchCards(keyword, sort, page, pageSize);
+    
+    public List<CardDTO> searchCards(String keyword, String sort, int page, int pageSize, Integer userId) {
+        return cardDAO.searchCards(keyword, sort, page, pageSize,userId);
     }
 
 
