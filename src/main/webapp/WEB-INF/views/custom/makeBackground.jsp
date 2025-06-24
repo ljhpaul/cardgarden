@@ -30,15 +30,15 @@
       </div>
 
       <div class="bg-list">
-        <c:forEach var="item" items="${backgroundList}">
-          <img 
-            src="${cpath}/resources/images/asset/${item.asset_type}/${item.asset_brand}/${item.asset_type}_${item.asset_brand}_${item.asset_no}_${item.asset_name}.png" 
-            alt="${item.asset_name}" 
-            class="bg-option" 
-            data-img="${item.asset_type}/${item.asset_brand}/${item.asset_type}_${item.asset_brand}_${item.asset_no}_${item.asset_name}.png" 
-            data-brand="${item.asset_brand}">
-        </c:forEach>
-      </div>
+		<c:forEach var="item" items="${backgroundList}">
+		  <img 
+		    src="${cpath}/resources/images/asset/${item.asset_type}/${item.asset_brand}/${item.asset_type}_${item.asset_brand}_${item.asset_no}_${item.asset_name}.png" 
+		    alt="${item.asset_name}" 
+		    class="bg-option" 
+		    data-img="${cpath}/resources/images/asset/${item.asset_type}/${item.asset_brand}/${item.asset_type}_${item.asset_brand}_${item.asset_no}_${item.asset_name}.png" 
+		    data-brand="${item.asset_brand}">
+		</c:forEach>
+     </div>
     </div>
 
   </div>
@@ -56,11 +56,13 @@ const type = '${type}';
 const direction = '${direction}';
 
 document.querySelectorAll(".bg-option").forEach(img => {
-  img.addEventListener("click", () => {
-    const cardFrame = document.getElementById("cardFrame");
-    cardFrame.style.backgroundImage = `url('${cpath}/resources/images/asset/${img.dataset.img}')`;
-  });
-});
+	 console.log(img.dataset.img);
+	  img.addEventListener("click", () => {
+	    const cardFrame = document.getElementById("cardFrame");
+	    cardFrame.style.backgroundImage = `url('${img.dataset.img}')`;
+	  });
+	});
+
 
 document.querySelectorAll(".brand-btn").forEach(btn => {
   btn.addEventListener("click", () => {

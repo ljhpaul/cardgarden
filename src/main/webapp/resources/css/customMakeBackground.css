@@ -5,7 +5,6 @@ body {
 }
 
 .background-page-container {
-	  background-color: var(--main);
   width: 100%;
   min-height: 100vh;
   background-color: white;
@@ -37,7 +36,6 @@ body {
   flex: none;
   width: 800px;
   height: 800px;
-  background-color: #f7f7f7;
   position: relative;
   display: flex;
   justify-content: center;
@@ -131,10 +129,6 @@ body {
   cursor: pointer;
   font-weight: 600;
   transition: background-color 0.2s ease;
-}
-.brand-btn:hover{
-	  background-color: var(--m2);
-  color: var(--m3);
 }
 
 .brand-btn.active {
