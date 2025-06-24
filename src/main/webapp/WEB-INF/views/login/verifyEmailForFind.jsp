@@ -8,13 +8,13 @@
 <link rel="stylesheet" href="${cpath}/resources/css/font-awesome.min.css">
 
 <head>
-    <title>카드가든 : 회원가입</title>
+    <title>카드가든 : 아이디 찾기</title>
 </head>
 
 <div class="bg-main">
   <div class="container">
     <div class="box">
-      <h2 class="title-lg">이메일 인증</h2>
+      <h2 class="title-lg">아이디 찾기</h2>
       
       <form id="email-form" action="${cpath}/user/join/email" method="POST" autocomplete="off" style="width:100%;">
         <div style="width:100%; margin-bottom:16px;">
