@@ -39,7 +39,6 @@
     SELECT ca.asset_id, ca.asset_brand, ca.asset_type, ca.asset_no, ca.point_needed, ca.discount, ca.asset_name
     FROM DailyDiscount dd
     JOIN CustomAsset ca ON dd.asset_id = ca.asset_id
-    WHERE dd.date = CURDATE()
   </select>
 
   <!-- 오늘의 무료 스티커 -->

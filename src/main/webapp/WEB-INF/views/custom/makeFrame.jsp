@@ -11,22 +11,22 @@
 
   <div class="make-frame-box">
     
-    <!-- 좌측 카드 미리보기 -->
+    <!-- 카드 미리보기 -->
     <div class="card-preview">
-      <div class="card-bg">
-        <img id="card-preview-img" src="${cpath}/resources/images/cardsize/b1.png" alt="카드 미리보기">
+      <div id="card-frame" class="card-frame largechip" style="background-image: url('${cpath}/resources/images/cardsize/b1.png');">
+        <div class="chip"></div>
       </div>
     </div>
 
-    <!-- 우측 옵션 영역 -->
+    <!-- 옵션 영역 -->
     <div class="frame-options">
       <p class="option-title">사이즈 선택</p>
       <div class="size-btn-group">
-        <button class="size-btn" data-img="largechip.png">Large Chip</button>
-        <button class="size-btn" data-img="smallchip.png">Small Chip</button>
-        <button class="size-btn" data-img="largechip-wide.png">Large Chip Wide</button>
-        <button class="size-btn" data-img="smallchipwide.png">Small Chip Wide</button>
-        <button class="size-btn" data-img="withoutchip.png">Without Chip</button>
+        <button class="size-btn" data-type="largechip" style="">Large Chip</button>
+        <button class="size-btn" data-type="smallchip">Small Chip</button>
+        <button class="size-btn" data-type="largechipwide">Large Chip Wide</button>
+        <button class="size-btn" data-type="smallchipwide">Small Chip Wide</button>
+        <button class="size-btn" data-type="withoutchip">Without Chip</button>
       </div>
 
       <p class="option-title">보기 방향 선택</p>
@@ -38,7 +38,6 @@
 
   </div>
 
-  <!-- 하단 넓은 큰 버튼 영역 -->
   <div class="bottom-btn-area">
     <a href="${cpath}/custom/main" class="big-btn back-btn">← 커스텀 홈으로</a>
     <button id="next-btn" class="big-btn next-btn">다음 단계로</button>
@@ -49,20 +48,29 @@
 <script>
 document.querySelectorAll(".size-btn").forEach(btn => {
     btn.addEventListener("click", () => {
-        const imgName = btn.dataset.img;
-        document.getElementById("card-preview-img").src = `${cpath}/resources/images/custom/${imgName}`;
+        const type = btn.dataset.type;
+        const frame = document.getElementById("card-frame");
+
+        // 기존 사이즈 관련 클래스만 제거
+        frame.classList.remove("largechip", "smallchip", "largechipwide", "smallchipwide", "withoutchip");
+
+        // 새 클래스 추가
+        frame.classList.add(type);
+
+        // 배경 이미지 유지
+        frame.style.backgroundImage = `url('${cpath}/resources/images/cardsize/b1.png')`;
     });
 });
 
 document.querySelectorAll(".view-btn").forEach(btn => {
     btn.addEventListener("click", () => {
         const direction = btn.dataset.direction;
-        const preview = document.querySelector(".card-bg");
-        
+        const frame = document.getElementById("card-frame");
+
         if (direction === "portrait") {
-            preview.classList.remove("landscape");
+            frame.classList.remove("landscape");
         } else {
-            preview.classList.add("landscape");
+            frame.classList.add("landscape");
         }
     });
 });
