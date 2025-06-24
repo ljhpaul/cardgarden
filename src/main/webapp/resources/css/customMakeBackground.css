@@ -5,6 +5,7 @@ body {
 }
 
 .background-page-container {
+	  background-color: var(--main);
   width: 100%;
   min-height: 100vh;
   background-color: white;
@@ -32,11 +33,10 @@ body {
   flex-wrap: wrap;
 }
 
-
 .preview-area {
   flex: none;
-  width: 950px;
-  height: 950px;
+  width: 800px;
+  height: 800px;
   background-color: #f7f7f7;
   position: relative;
   display: flex;
@@ -107,10 +107,12 @@ body {
 
 .bg-select-area {
   width: 400px;
+  height: 800px;
   display: flex;
   flex-direction: column;
   gap: 20px;
-  max-height: 100%;
+  box-sizing: border-box;
+  padding: 0 20px;
 }
 
 .brand-filter {
@@ -130,6 +132,10 @@ body {
   font-weight: 600;
   transition: background-color 0.2s ease;
 }
+.brand-btn:hover{
+	  background-color: var(--m2);
+  color: var(--m3);
+}
 
 .brand-btn.active {
   background-color: var(--s1);
@@ -137,15 +143,31 @@ body {
 }
 
 .bg-list {
-  display: flex;
-  flex-wrap: wrap;
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 10px;
   overflow-y: auto;
+  scrollbar-gutter: stable both-edges;
+}
+
+.bg-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.bg-list::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+.bg-list::-webkit-scrollbar-track {
+  background: transparent;
 }
 
 .bg-option {
-  width: 120px;
-  height: 80px;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 2;
   object-fit: cover;
   cursor: pointer;
   border-radius: 6px;

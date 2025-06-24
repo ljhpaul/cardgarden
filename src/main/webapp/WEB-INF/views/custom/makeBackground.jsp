@@ -2,7 +2,7 @@
 <%@ include file="../common/header.jsp" %>
 <c:set var="cpath" value="${pageContext.servletContext.contextPath}" />
 
-<link rel="stylesheet" href="${cpath}/resources/css/customMakeBackground.css?ver=3">
+<link rel="stylesheet" href="${cpath}/resources/css/customMakeBackground.css?ver=2">
 
 <div class="background-page-container">
 
