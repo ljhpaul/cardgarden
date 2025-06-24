@@ -38,8 +38,8 @@ const isLogin = ${isLogin ? 'true' : 'false'};
 
       <p class="option-title">보기 방향 선택</p>
       <div class="view-btn-group">
-        <button type="button" class="view-btn ${selectedDirection eq 'portrait' ? 'active' : ''}" data-direction="portrait">세로보기</button>
-        <button type="button" class="view-btn ${selectedDirection eq 'landscape' ? 'active' : ''}" data-direction="landscape">가로보기</button>
+        <button type="button" class="view-btn ${selectedDirection eq 'portrait' ? 'active' : ''}" data-direction="portrait">가로보기</button>
+        <button type="button" class="view-btn ${selectedDirection eq 'landscape' ? 'active' : ''}" data-direction="landscape">세로보기</button>
       </div>
     </div>
 
