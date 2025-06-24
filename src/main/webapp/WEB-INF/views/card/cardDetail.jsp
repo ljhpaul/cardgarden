@@ -48,7 +48,7 @@ body {
 .card-image {
 	padding-left : 80px;
 	padding-top: 100px;
-	padding-right: 40px;
+	padding-right: 20px;
 	object-fit: contain;
 }
 
@@ -77,6 +77,8 @@ body {
   position: relative; /* z-index 기준용 */
 }
 
+
+
 .card-info {
   margin-left: 30px;
   flex: 1;
@@ -88,7 +90,14 @@ body {
 	margin: 6px 0;
 }
 
+.card-title {
+	font-size: 30px;
+	font-weight: bold;
+	font-family: 'NanumSquareRound';
+}
+
 .benefit-title {
+	font-family: 'NanumSquareRound';
 	font-size: 36px;
 	font-weight: bold;
 	padding-bottom: 50px;
@@ -150,11 +159,15 @@ body {
 
 .like-section {
 	display: flex;
-	align-items: center;
-	gap: 8px;
-	margin-top: 10px;
-	width: 100%;
-	max-width: 220px;
+    align-items: center;
+    gap: 8px;
+    margin-top: 10px;
+    width: 100%;
+    margin-left: 30;
+    max-width: 220px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #fff;
 }
 
 .go-button:hover {
@@ -410,12 +423,23 @@ body {
   padding: 10px;
 }
 .ai-recommendation {
-  word-wrap: break-word; /* 단어가 길어도 줄바꿈 처리 */
-  white-space: normal; /* 줄바꿈 허용 */
-  font-size: 14px;
-  color: #444;
-  line-height: 1.4;
+  margin: 15px 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  text-align: center;
 }
+.ai-recommendation ul {
+  list-style: none;
+  padding: 0;
+}
+.ai-recommendation li {
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+
+
 </style>
 <!-- 반드시 jQuery 포함! -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -547,45 +571,45 @@ function scrollToTarget(targetId) {
 				</div>
 			</div>
 			<!-- 오른쪽 카드 정보 -->
-			<div class="card-info">
-				<!-- 카드명 + 버튼 -->
-				<div class="card-header">
-					<h2 class="card-title">${card.card_name}</h2>
-					<button class="btn-open-modal">
-						<img src="${cpath}/resources/images/button/aibutton.png" alt="aibutton" />
-					</button>
-				</div>
-
+			<!-- 오른쪽 카드 정보 -->
+		<div class="card-info">
+			<!-- 카드명 + 버튼 -->
+			<div class="card-header">
+				<div class="card-title"> <p> ${card.card_name}</p></div>
+				<button class="btn-open-modal">
+					<img src="${cpath}/resources/images/button/aibutton.png" alt="aibutton" />
+				</button>
+			</div>
 		
-				<!-- 혜택 아이콘 -->
-				<div class="benefit-icon-list">
-					<c:forEach items="${cardDetail}" var="group" varStatus="status">
-						<c:set var="firstDetail" value="${group.value[0]}" />
-						<div onclick="scrollToTarget('targetDiv${status.index}')">
-							<img src="${cpath}${firstDetail.benefitdetail_image}" alt="${group.key}" />
-						</div>
-					</c:forEach>
-				</div>
+			<!-- 혜택 아이콘 -->
+			<div class="benefit-icon-list">
+				<c:forEach items="${cardDetail}" var="group" varStatus="status">
+					<c:set var="firstDetail" value="${group.value[0]}" />
+					<div onclick="scrollToTarget('targetDiv${status.index}')">
+						<img src="${cpath}${firstDetail.benefitdetail_image}" alt="${group.key}" />
+					</div>
+				</c:forEach>
+			</div>
 		</div>
-	<c:choose>
-	  <c:when test="${not empty aiDetailResult}">
-	    <div class="ai-recommendation">
-	      <ul>
-	        <c:forEach items="${aiDetailResult}" var="result">
-	          <li>
-	            예상 매칭률: <b><fmt:formatNumber value="${result.resultValue * 100}" pattern="#.0"/>%</b><br>
-	            ${result.message}
-	          </li>
-	        </c:forEach>
-	      </ul>
-	    </div>
-	  </c:when>
-	  <c:otherwise>
-	    <div class="ai-recommendation">
-	      추천 결과가 없습니다.
-	    </div>
-	  </c:otherwise>
-	</c:choose>
+		
+		<!-- ✅ AI 추천 결과: card-info 아래, card-bottom-center 위로 이동 -->
+		<div class="ai-recommendation">
+			<c:choose>
+				<c:when test="${not empty aiDetailResult}">
+					<ul>
+						<c:forEach items="${aiDetailResult}" var="result">
+							<li>
+								예상 매칭률: <b><fmt:formatNumber value="${result.resultValue * 100}" pattern="#.0" />%</b><br>
+								${result.message}
+							</li>
+						</c:forEach>
+					</ul>
+				</c:when>
+				<c:otherwise>
+					추천 결과가 없습니다. AI 버튼을 눌러보세요!
+				</c:otherwise>
+			</c:choose>
+		</div>
 		<!-- 카드 타입/브랜드/연회비 등 -->
 				<div class="card-bottom-center">
 					<div class="card-tags">
