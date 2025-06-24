@@ -26,8 +26,7 @@ public class CardLikeController {
 	@PostMapping("/cardLike")
     public Map<String, Object> cardLikeInsert(@RequestParam("card_id")int cardId,
     		HttpSession session) {
-//        Integer userId = (Integer) session.getAttribute("userid");
-    	Integer userId = 1;
+        Integer userId = (Integer) session.getAttribute("loginUserId");
     	if (userId == null) {
             Map<String, Object> loginResult = new HashMap<>();
             loginResult.put("result", "need_login");
@@ -51,8 +50,8 @@ public class CardLikeController {
     @SuppressWarnings("unused")
 	@PostMapping("/cardUnlike")
     public String cardLikeDelete(@RequestParam("card_id") int cardId, HttpSession session) {
-//        Integer userId = (Integer) session.getAttribute("userid");
-    	Integer userId = 1;
+        Integer userId = (Integer) session.getAttribute("loginUserId");
+//    	Integer userId = 1;
         if (userId == null) {
             return "로그인 필요";
         }

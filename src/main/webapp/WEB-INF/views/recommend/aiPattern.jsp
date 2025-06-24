@@ -59,22 +59,169 @@
     margin-left: 14px;
     margin-bottom: 4px;
 }
+
+
+.pattern-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'NanumSquareRound', sans-serif;
+  margin-top: 24px;
+  font-size: 15px;
+}
+
+.pattern-table th,
+.pattern-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+}
+
+.pattern-table thead {
+  background-color: #f3f3f3;
+}
+
+.pattern-group {
+  background-color: #fafafa;
+  border-top: 4px solid #ddd; /* 패턴별 시각적 구분 */
+}
+
+.pattern-group tr:first-child {
+  border-top: 2px solid #ccc;
+}
+
+.checkbox-cell {
+  vertical-align: middle;
+}
+
+.pattern-id-cell {
+  font-weight: bold;
+  background-color: #f9f9ff;
+}
+
+.category-cell {
+  text-align: left;
+  padding-left: 14px;
+}
+
+.amount-cell {
+  text-align: right;
+  padding-right: 14px;
+}
+
+.pattern-submit-container {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.pattern-submit-button {
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  background-color: #007BFF;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.pattern-submit-button:hover {
+  background-color: #0056b3;
+}
+
+/* ✅ 반응형 대응 */
+@media screen and (max-width: 768px) {
+  .pattern-table, .pattern-table thead, .pattern-table tbody, .pattern-table th, .pattern-table td, .pattern-table tr {
+    display: block;
+  }
+
+  .pattern-table thead {
+    display: none;
+  }
+
+  .pattern-table tr {
+    margin-bottom: 16px;
+    border-bottom: 1px solid #ccc;
+    background: #fff;
+    padding: 10px;
+    border-radius: 8px;
+  }
+
+  .pattern-table td {
+    text-align: left;
+    padding: 8px 12px;
+    position: relative;
+  }
+
+  .pattern-table td::before {
+    content: attr(data-label);
+    font-weight: bold;
+    position: absolute;
+    left: 12px;
+    top: 8px;
+    color: #555;
+    display: block;
+  }
+
+  .pattern-submit-button {
+    width: 100%;
+    font-size: 18px;
+  }
+}
+.pattern-close-button {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  background: none;
+  border: none;
+  font-size: 26px;
+  color: #333;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.pattern-close-button:hover {
+  color: #d33;
+}
+
+
 </style>
+<button type="button" class="pattern-close-button" onclick="closePatternModal()">×</button>
 <form method="get" action="${cpath}/card/detail">
   <input type="hidden" name="cardid" value="${cardid}" />
-  <c:forEach var="entry" items="${patternList}">
-    <div class="pattern-group">
-      <div class="pattern-title">
-        <input type="checkbox" class="pattern-checkbox" name="patternId" value="${entry.key}" id="pattern_${entry.key}"
-               onclick="checkOnlyOne(this)">
-        <label for="pattern_${entry.key}">패턴 ID: ${entry.key}</label>
-      </div>
-      <c:forEach var="dto" items="${entry.value}">
-        <div class="benefit-row">
-          ${dto.category.benefitCategory_name} : <b>${dto.detail.amount}</b> 원
-        </div>
-      </c:forEach>
-    </div>
-  </c:forEach>
-  <input type="submit" value="제출하기">
+
+  <table class="pattern-table">
+    <thead>
+      <tr>
+        <th>선택</th>
+        <th>패턴 ID</th>
+        <th>카테고리</th>
+        <th>금액</th>
+      </tr>
+    </thead>
+
+    <c:forEach var="entry" items="${patternList}">
+      <tbody class="pattern-group">
+        <c:set var="patternId" value="${entry.key}" />
+        <c:forEach var="dto" items="${entry.value}" varStatus="status">
+          <tr>
+            <c:if test="${status.index == 0}">
+              <td rowspan="${fn:length(entry.value)}" class="checkbox-cell">
+                <input type="checkbox" name="patternId" value="${patternId}" onclick="checkOnlyOne(this)">
+              </td>
+              <td rowspan="${fn:length(entry.value)}" class="pattern-id-cell">${patternId}</td>
+            </c:if>
+            <td class="category-cell">${dto.category.benefitCategory_name}</td>
+            <td class="amount-cell">
+              <fmt:formatNumber value="${dto.detail.amount}" type="number" /> 원
+            </td>
+          </tr>
+        </c:forEach>
+      </tbody>
+    </c:forEach>
+  </table>
+
+  <div class="pattern-submit-container">
+    <input type="submit" value="제출하기" class="pattern-submit-button">
+  </div>
 </form>
