@@ -22,7 +22,7 @@
 	<div class="container">
 		<div class="box">
 			<h2 class="title-lg">카드가든 로그인</h2>
-			<div class="login-area">
+			<div class="inner-box">
 				<form id="login-form" action="${cpath}/user/login" 
 					method="POST" autocomplete="off">
 					<!-- 아이디/비밀번호 입력창 -->
@@ -105,15 +105,9 @@
 	margin-bottom: 35px;
 }
 
-.login-area {
-	flex: 1;
-	border: 1px solid #eee;
-	border-radius: 16px;
+.inner-box {
 	padding: 36px 30px 20px;
 	font-size: 16px;
-	font-family: var(--font);
-	box-sizing: border-box;
-	box-shadow: 0 1.5px 12px rgba(100,130,120,0.08);
 }
 
 .input {
