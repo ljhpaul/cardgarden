@@ -36,6 +36,7 @@
 
         <div class="btn-group">
           <a href="${cpath}/custom/top?type=sticker" class="buy-btn">다른 꾸미기템 보러가기</a>
+          <a href="${cpath}/make/frame" class="make-btn">제작하러 가기</a>        
         </div>
       </div>
     </div>
