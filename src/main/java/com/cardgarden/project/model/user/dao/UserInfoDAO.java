@@ -6,7 +6,11 @@ import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import com.cardgarden.project.model.user.dto.UserConsumptionPatternResponseDTO;
 import com.cardgarden.project.model.user.dto.UserInfoDTO;
+import com.cardgarden.project.model.user.dto.UserUpdateInfoDTO;
+
 import lombok.extern.slf4j.Slf4j;
 
 @Repository
@@ -80,7 +84,8 @@ public class UserInfoDAO {
 		return result;
 	}
 
-    public int update(UserInfoDTO dto) {
+
+    public int update(UserUpdateInfoDTO dto) {
         int result = sqlSession.update(namespace + "update", dto);
         log.info(result + "건 수정됨(lombok_Slf4j)");
         return result;
@@ -92,4 +97,7 @@ public class UserInfoDAO {
         return result;
     }
 
+    public List<UserConsumptionPatternResponseDTO> selectMyConsumptionPattern(int userId) {
+        return sqlSession.selectList(namespace + "selectMyConsumptionPattern", userId);
+    }
 }

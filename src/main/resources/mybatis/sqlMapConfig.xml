@@ -34,7 +34,7 @@
      <typeAlias type="com.cardgarden.project.model.userPatternBenefit.UserPatternBenefitDTO" alias="userPatternBenefitDTO"/>
 
      <typeAlias type="com.cardgarden.project.model.custom.dto.CustomAssetDTO" alias="CustomAssetDTO"/>
-
+     
   </typeAliases>
   
   

@@ -133,6 +133,18 @@
 	<update id="update" parameterType="userInfoDTO">
 		UPDATE userInfo
 		SET
+		nickname = #{nickname},
+		name = #{name},
+		gender = #{gender},
+		phone = #{phone},
+		address = #{address}
+		WHERE user_id = #{user_id}
+	</update>
+	
+		<!-- 관리자가 회원정보 수정 -->
+		<update id="updateUserAdmin" parameterType="userInfoDTO">
+		UPDATE userInfo
+		SET
 		user_password = #{user_password},
 		nickname = #{nickname},
 		name = #{name},
@@ -142,7 +154,7 @@
 		address = #{address},
 		point = #{point}
 		WHERE user_id = #{user_id}
-	</update>
+		</update>
 
 	<!-- 회원 탈퇴/삭제 -->
 	<delete id="delete" parameterType="int">
@@ -150,5 +162,35 @@
 		WHERE
 		user_id = #{user_id}
 	</delete>
-
+	
+	
+	<!-- 내 소비패턴 조회 	-->
+	<select id="selectMyConsumptionPattern" parameterType="int" resultMap="userConsumptionPatternMap">
+	    SELECT 
+	        p.pattern_id AS p_pattern_id,
+	        p.user_id,
+	        p.pattern_name,
+	        p.created_at,
+	        d.pattern_id AS d_pattern_id,
+	        d.benefitcategory_id,
+	        d.amount
+	    FROM UserConsumptionPattern p
+	    JOIN UserConsumptionPatternDetail d ON p.pattern_id = d.pattern_id
+	    WHERE p.user_id = #{user_id}
+	</select>
+	
+	<!-- 기존의  UserConsumptionPatternDTO에 UserConsumptionPatternDetailDTO'자체'를 필드에 추가-->
+	<resultMap id="userConsumptionPatternMap" type="UserConsumptionPatternDTO">
+	    <id property="pattern_id" column="p_pattern_id"/>
+	    <result property="user_id" column="user_id"/>
+	    <result property="pattern_name" column="pattern_name"/>
+	    <result property="created_at" column="created_at"/>
+	
+	    <collection property="details" ofType="UserConsumptionPatternDetailDTO">
+	        <result property="pattern_id" column="d_pattern_id"/>
+	        <result property="benefitcategory_id" column="benefitcategory_id"/>
+	        <result property="amount" column="amount"/>
+	    </collection>
+	</resultMap>
+	<!-- 내 소비패턴 조회 끝 -->
 </mapper>

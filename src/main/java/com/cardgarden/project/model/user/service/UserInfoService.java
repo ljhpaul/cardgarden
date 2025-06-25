@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.cardgarden.project.model.user.dao.UserInfoDAO;
+import com.cardgarden.project.model.user.dto.UserConsumptionPatternResponseDTO;
 import com.cardgarden.project.model.user.dto.UserInfoDTO;
+import com.cardgarden.project.model.user.dto.UserUpdateInfoDTO;
 
 import lombok.extern.java.Log;
 
@@ -84,7 +86,7 @@ public class UserInfoService {
     }
 
     // 회원 정보 수정
-    public int update(UserInfoDTO dto) {
+    public int update(UserUpdateInfoDTO dto) {
         int result = userInfoDAO.update(dto);
         log.info("UserInfoService에서 로그출력:" + result + "건 update");
         return result;
@@ -117,4 +119,10 @@ public class UserInfoService {
         return userInfoDAO.countByEmail(email) > 0;
     }
 
+    // 내 소비패턴 조회
+	public List<UserConsumptionPatternResponseDTO> selectMyonsumptionPattern(int userId) {
+		
+		return userInfoDAO.selectMyConsumptionPattern(userId);
+		
+	}
 }
