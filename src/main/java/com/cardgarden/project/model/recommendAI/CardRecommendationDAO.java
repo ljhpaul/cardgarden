@@ -26,11 +26,14 @@ public class CardRecommendationDAO implements CardRecommendationDAOInterface {
 
     @Override
     public List<CardRecommendationDTO> getRecommendDetailResult(int patternId, int cardId) {
+    	System.out.println(patternId);
+    	System.out.println(cardId);
         String url = recommendDetailUrl + "?pattern_id=" + patternId + "&card_id=" + cardId;
         RestTemplate restTemplate = new RestTemplate();
         ResultWrapper response = restTemplate.getForObject(url, ResultWrapper.class);
 
-        Double resultValue = response.getResult();
+        // 여기서부터 아래로는 중복 없이!
+        Double resultValue = response != null ? response.getResult() : null;
         String message = "";
 
         if (resultValue != null) {
@@ -45,8 +48,10 @@ public class CardRecommendationDAO implements CardRecommendationDAOInterface {
             message = "결과를 찾을 수 없습니다.";
         }
 
-        System.out.println("예상 매칭률: " + resultValue);
+        System.out.println("API 응답값: " + response); 
+        System.out.println("결과값: " + resultValue);
         System.out.println("메시지: " + message);
+
         CardRecommendationDTO result = CardRecommendationDTO.builder()
                 .card_id(cardId)
                 .resultValue(resultValue)
