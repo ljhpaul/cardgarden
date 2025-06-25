@@ -1,74 +1,48 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="cpath" value="${pageContext.servletContext.contextPath}" />
 
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
 <link rel="stylesheet" href="${cpath}/resources/css/common.css">
 <link rel="stylesheet" href="${cpath}/resources/css/userStyle.css">
-<link rel="stylesheet" href="${cpath}/resources/css/font-awesome.min.css">
+<link rel="stylesheet"
+	href="${cpath}/resources/css/font-awesome.min.css">
 
 <head>
-    <title>카드가든 : 회원가입</title>
+<title>카드가든 : 비밀번호 찾기</title>
 </head>
 
 <div class="bg-main">
-  <div class="container">
-    <div class="box">
-      <h2 class="title-lg">이메일 인증</h2>
-      
-      <form id="email-form" action="${cpath}/user/join/email" method="POST" autocomplete="off" style="width:100%;">
-        <div style="width:100%; margin-bottom:16px;">
-          <label for="email" class="email-form-label">이메일 입력</label>
-          <div class="email-input-row">
-            <input
-              type="email"
-              id="email"
-              name="email"
-              required
-              class="input"
-              placeholder="cardgarden@email.com"
-              oninput="resetStatus();"
-            />
-            <button type="button" id="email-request-btn" class="btn btn-sub">
-              인증요청
-            </button>
-          </div>
-          <div id="email-msg" class="email-msg">
-            ・ 입력할 이메일로 인증번호가 발송됩니다.<br>・ 인증메일을 받을 수 있도록 자주 쓰는 이메일을 입력해 주세요.
-          </div>
-        </div>
-        
-        <!-- 인증번호 입력란(인증요청 후에만 보이도록) -->
-        <div id="code-area">
-          <label for="code" class="email-form-label">인증번호</label>
-          <div class="email-input-row">
-            <input
-              type="text"
-              id="code"
-              name="code"
-              maxlength="6"
-              class="input code-input"
-              placeholder="6자리"
-              autocomplete="off"
-            />
-            <button type="button" id="code-check-btn" class="btn btn-sub">
-              인증확인
-            </button>
-          </div>
-          <div id="code-timer" class="code-timer"></div>
-        </div>
-        
-        <!-- 인증성공 메시지 -->
-        <div id="success-msg" class="success-msg">
-          <i class="fa fa-check-circle"></i> 인증성공
-        </div>
-        
-        <button type="submit" id="next-btn" class="btn" disabled >
-          다음
-        </button>
-      </form>
-    </div>
-  </div>
+	<div class="container">
+		<div class="box">
+			<h2 class="title-lg">비밀번호 찾기</h2>
+
+			<div class="inner-box">
+				<form id="find-form" action="${cpath}/user/find-password" method="POST"
+					autocomplete="off" style="width: 100%;">
+					<div>
+						<!-- 이름 입력 -->
+						<label for="loginId" class="form-label">아이디 입력</label>
+						<div class="input-row">
+							<input type="text" id="loginId" name="loginId" class="input" />
+							<button type="button" id="loginId-check-btn" class="btn btn-sub">
+              					확인
+            				</button>
+						</div>
+						
+						<!-- 안내 메시지 출력 -->
+						<div id="msg-area" class="msg-area">・ </div>
+						
+						<!-- 다음 버튼 -->
+						<button type="submit" id="next-btn" class="btn" disabled>
+							다음
+						</button>	
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
 </div>
 
 <style>
@@ -81,151 +55,85 @@
     padding: 40px 32px;
     box-sizing: border-box;
   }
-  .email-form-label {
+  .inner-box {
+    min-width: 380px;
+	padding: 36px 30px 20px;
+	font-size: 16px;
+  }
+  .form-label {
     font-weight: 600;
     color: var(--m1);
     font-size: 16px;
   }
-  .email-input-row {
+  .input-row {
     display: flex;
     gap: 8px;
     margin-top: 10px;
     width: 100%;
   }
-  .code-input {
-    letter-spacing: 2px;
+  .btn-sub {
+    min-width:80px;
+    font-size:16px;
+    height:44px;
   }
-  .email-msg {
-    min-height: 35px;
+  .msg-area {
     margin-top: 8px;
     color: #999;
     font-size: 14px;
-  }
-  .code-timer {
-    margin-top: 8px;
-    color: #E44E37;
-    font-size: 14px;
-  }
-  .success-msg {
-    margin-bottom: 12px;
-    color: var(--m1);
-    font-weight: 600;
-    display: none;
-    text-align: center;
-  }
-  .btn-sub {
-    min-width:96px;
-    font-size:15px;
-    height:44px;
   }
   #next-btn {
     width: 100%;
     height: 48px;
     font-size: 18px;
-    margin-top: 40px;
-  }
-  #code-area {
-    width: 100%;
-    margin-bottom: 16px;
-    display: none;
+    margin-top: 25px;
   }
 </style>
 
 <script>
+  $(function() {
+	var msg = "${alertMsg}";
+    if(msg) { alert(msg); }
+  });
+
+  // 기본 안내 메시지 출력
+  $(function() { resetMessage(); });
+  $("#loginId").on("input", resetMessage);
+
   // 중복체크 및 인증메일 요청
-  $('#email-request-btn').on('click', function() {
-    const email = $('#email').val().trim();
-    if (!email) {
-      $('#email-msg').css('color','#E44E37').text('・ 이메일을 입력하세요.');
+  $('#loginId-check-btn').on('click', function() {
+    const loginId = $("#loginId").val();
+    
+    if (!loginId) {
+      $('#msg-area').html('・ 아이디를 입력하세요.')
+      $("#msg-area").css('color','#E44E37');
       return;
-    } else if (!validateEmail(email)) {
-    	  $('#email-msg').css('color', '#E44E37').text('・ 올바르지 않은 이메일 형식입니다.');
-    	  return;
     }
-    // 이메일 중복여부 및 유효성 검사
+    
     $.ajax({
-      url: '${cpath}/auth/email/check',
+      url: '${cpath}/auth/loginId/check',
       type: 'POST',
-      data: {email: email},
+      data: {loginId: loginId},
       success: function(res) {
-        if(res.duplicate) {
-          $('#email-msg').css('color','#E44E37').text('・ 이미 사용 중인 이메일입니다.');
-        } else {
-          // 인증코드 발송
-          $.ajax({
-            url: '${cpath}/auth/email/send',
-            type: 'POST',
-            data: {email: email},
-            success: function() {
-              $('#email-msg').css('color','#8FB098').text('・ 인증번호가 발송되었습니다. (유효시간 3분)');
-              $('#code-area').show();
-              startTimer(180);
-            }
-          });
-        }
+    	if(res.duplicate) {
+      	  /* $("#loginId").prop("readonly", true); */
+          $("#loginId").css("background-color", "var(--main)");
+    	  $('#msg-area').html('<i class="fa fa-check-circle"></i> 확인완료')
+      	  $("#msg-area").css('color','var(--m1)').css('text-align', 'center');
+    	  $('#next-btn').prop('disabled', false);
+    	} else {
+    	  $('#msg-area').html('・ 존재하지 않는 아이디입니다.')
+    	  $("#msg-area").css('color','#E44E37');
+    	}
       }
     });
   });
-
-  // 인증번호 확인
-  $('#code-check-btn').on('click', function() {
-    const code = $('#code').val().trim();
-    if (!code) return;
-    $.ajax({
-      url: '${cpath}/auth/email/verify',
-      type: 'POST',
-      data: {code: code},
-      success: function(res) {
-        if(res.valid) {
-          $('#success-msg').show();
-          $('#next-btn').prop('disabled', false);
-          $('#code-timer').hide();
-          $("#code").prop("readonly", true);
-          $("#code").css("background-color", "var(--main)");
-        } else {
-          $('#code-timer').css('color','#E44E37').text('・ 인증번호가 올바르지 않거나 만료되었습니다.');
-        }
-      }
-    });
-  });
-
-  // 타이머
-  let timer = null, remain = 0;
-  function startTimer(sec) {
-    clearInterval(timer);
-    remain = sec;
-    $('#code-timer').show();
-    timer = setInterval(function() {
-      if(remain > 0) {
-        let m = Math.floor(remain/60), s = remain%60;
-        $('#code-timer').css('color','#8FB098').text('・ 남은 시간: '+m+'분 '+s+'초');
-        remain--;
-      } else {
-        clearInterval(timer);
-        $('#code-timer').css('color','#E44E37').text('・ 인증번호가 만료되었습니다.');
-      }
-    },1000);
-  }
-
-  // 상태 초기화
-  function resetStatus() {
-    $('#email-msg').css('color','#999').html('・ 입력할 이메일로 인증번호가 발송됩니다.<br>・ 인증메일을 받을 수 있도록 자주 쓰는 이메일을 입력해 주세요.');
-    $('#code-area').hide();
-    $('#success-msg').hide();
-    $('#next-btn').prop('disabled', true);
-    clearInterval(timer);
-    $('#code-timer').hide();
-  }
   
-  // 이메일 형식 검증
-  function validateEmail(email) {
-	  const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-	  return re.test(email);
-  }
-  
-  // 인증번호 형식 검증
-  function validateCode(code) {
-	  const re = /^\d{6}$/;
-	  return re.test(code);
+  // 안내 메시지 초기화
+  function resetMessage() {
+	const message = "・ 회원정보에 등록한 아이디와 입력한 아이디가 같아야,<br>&nbsp;&nbsp;&nbsp;비밀번호 찾기를 진행할 수 있습니다.";
+	$("#msg-area").html(message);
+	$("#msg-area").css('color','#999').css('text-align', '');
+	$("#loginId").css('background-color', '');
+	$('#next-btn').prop('disabled', true);
   }
 </script>

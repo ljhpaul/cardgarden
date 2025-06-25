@@ -69,22 +69,27 @@ public class JoinController {
 		}
 	}
 	
-	//2-1. 이메일 인증
+	//2-1. 이메일 입력
 	@GetMapping("/email")
-	public String verifyEmailView() {
-	    return "join/verifyEmail";
+	public String verifyEmailView(Model model) {
+		
+		model.addAttribute("isJoin", true);
+		model.addAttribute("title", "이메일 인증");
+		model.addAttribute("actionLink", "join/email");
+		
+		return "auth/verifyEmail";
 	}
 	
 	//2-2. 이메일 인증 성공
 	@PostMapping("/email")
 	public String verifyEmailRequest() {
-	    return "join/inputInfo";
+		return "redirect:/user/join/info";
 	}
 	
 	//3-1. 회원정보 입력
 	@GetMapping("/info")
 	public String inputInfoView() {
-		
+		/* 소셜 인증일 경우 자동완성 추가 */
 		
 	    return "join/inputInfo";
 	}
