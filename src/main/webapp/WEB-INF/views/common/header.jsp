@@ -140,72 +140,64 @@
 <canvas id="effectCanvas"></canvas>
 
 <script>
-  const canvas = document.getElementById("effectCanvas");
-  const ctx = canvas.getContext("2d");
+const canvas = document.getElementById("effectCanvas");
+const ctx = canvas.getContext("2d");
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
 
-  const flowerImg = new Image();
-  flowerImg.src = "${cpath}/resources/images/common/sakuraleaf.png";
+let particles = [];
 
-  const leafImg = new Image();
-  leafImg.src = "${cpath}/resources/images/common/leaf2.png";
+// 파티클 생성 함수
+function createParticle() {
+  const isFlower = Math.random() < 0.5;
+  return {
+    x: Math.random() * canvas.width,
+    y: -20,
+    speedY: 1 + Math.random() * 1,
+    speedX: Math.random() * 1 - 0.5,
+    size: 20 + Math.random() * 30,
+    angle: Math.random() * Math.PI * 2,
+    rotateSpeed: Math.random() * 0.02,
+    type: isFlower ? "flower" : "leaf"
+  };
+}
 
-  const particles = [];
+// flower와 leaf 이미지
+const flowerImg = new Image();
+flowerImg.src = `${cpath}/resources/images/common/sakuraleaf.png`;
+const leafImg = new Image();
+leafImg.src = `${cpath}/resources/images/common/leaf2.png`;
 
-  function resizeCanvas() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-  }
+// 매 프레임마다 그리기
+function drawParticles() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  particles.forEach(p => {
+    ctx.save();
+    ctx.translate(p.x, p.y);
+    ctx.rotate(p.angle);
+    const img = p.type === "flower" ? flowerImg : leafImg;
+    ctx.drawImage(img, -p.size / 2, -p.size / 2, p.size, p.size);
+    ctx.restore();
 
-  function createParticle() {
-    const isFlower = Math.random() < 0.5; // 50% 확률
-    return {
-      x: Math.random() * canvas.width,
-      y: -20,
-      speedY: 1 + Math.random() * 2,
-      speedX: Math.random() * 1 - 0.5,
-      size: 20 + Math.random() * 30,
-      angle: Math.random() * Math.PI * 2,
-      rotateSpeed: Math.random() * 0.02,
-      type: isFlower ? "flower" : "leaf"
-    };
-  }
-
-  function animate() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    for (let p of particles) {
-      p.y += p.speedY;
-      p.x += p.speedX;
-      p.angle += p.rotateSpeed;
-
-      ctx.save();
-      ctx.translate(p.x, p.y);
-      ctx.rotate(p.angle);
-      const img = (p.type === "flower") ? flowerImg : leafImg;
-      ctx.drawImage(img, -p.size / 2, -p.size / 2, p.size, p.size);
-      ctx.restore();
-    }
-
-    // 제거된 후 다시 생성
-    while (particles.length < 20) {
-      particles.push(createParticle());
-    }
-
-    for (let i = particles.length - 1; i >= 0; i--) {
-      if (particles[i].y > canvas.height + 50) {
-        particles.splice(i, 1);
-      }
-    }
-
-    requestAnimationFrame(animate);
-  }
-
-  window.addEventListener("resize", resizeCanvas);
-  Promise.all([
-    new Promise(res => flowerImg.onload = res),
-    new Promise(res => leafImg.onload = res)
-  ]).then(() => {
-    resizeCanvas();
-    animate();
+    // 업데이트
+    p.y += p.speedY;
+    p.x += p.speedX;
+    p.angle += p.rotateSpeed;
   });
+
+  // 화면 밖으로 나간 파티클 제거
+  particles = particles.filter(p => p.y < canvas.height + 50);
+
+  requestAnimationFrame(drawParticles);
+}
+
+// 일정 간격으로 새 파티클 추가 (랜덤하게)
+setInterval(() => {
+  if (Math.random() < 0.2) { // 생성 확률 조절 가능
+    particles.push(createParticle());
+  }
+}, 200); // 200ms마다 생성 시도 (느리게 흩날리도록)
+
+// 시작
+drawParticles();
 </script>
