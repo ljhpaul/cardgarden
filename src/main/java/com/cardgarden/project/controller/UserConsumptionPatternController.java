@@ -87,7 +87,7 @@ public class UserConsumptionPatternController {
 		
 		redirectAttr.addFlashAttribute("msg", "등록이 완료되었습니다!");
 		
-		return "redirect:/inCon";
+		return "redirect:/ConsumptionPattern/inCon";
 		
 	}
 	
