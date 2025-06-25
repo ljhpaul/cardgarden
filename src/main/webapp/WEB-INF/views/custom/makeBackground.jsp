@@ -31,13 +31,24 @@
 
       <div class="bg-list">
 		<c:forEach var="item" items="${backgroundList}">
-		  <img 
-		    src="${cpath}/resources/images/asset/${item.asset_type}/${item.asset_brand}/${item.asset_type}_${item.asset_brand}_${item.asset_no}_${item.asset_name}.png" 
-		    alt="${item.asset_name}" 
-		    class="bg-option" 
-		    data-img="${cpath}/resources/images/asset/${item.asset_type}/${item.asset_brand}/${item.asset_type}_${item.asset_brand}_${item.asset_no}_${item.asset_name}.png" 
-		    data-brand="${item.asset_brand}">
+		  <div class="bg-item">
+		    <img 
+		      src="${cpath}/resources/images/asset/${item.asset_type}/${item.asset_brand}/${item.asset_type}_${item.asset_brand}_${item.asset_no}_${item.asset_name}.png" 
+		      alt="${item.asset_name}" 
+		      class="bg-option ${item.own ? '' : 'locked-img'}" 
+		      data-img="${cpath}/resources/images/asset/${item.asset_type}/${item.asset_brand}/${item.asset_type}_${item.asset_brand}_${item.asset_no}_${item.asset_name}.png" 
+		      data-brand="${item.asset_brand}"
+		      data-id="${item.asset_id}"
+		      ${item.own ? '' : 'data-locked="true"'}>
+		
+		    <c:if test="${!item.own}">
+		      <i class="fa fa-lock lock-icon" aria-hidden="true"></i>
+		    </c:if>
+		  </div>
 		</c:forEach>
+
+
+
      </div>
     </div>
 
@@ -60,32 +71,33 @@ document.querySelectorAll(".bg-option").forEach(img => {
 	  img.addEventListener("click", () => {
 	    const cardFrame = document.getElementById("cardFrame");
 	    const url = img.dataset.img;
-	    console.log("원본:", url);
+	    const assetId = img.dataset.id;
+		
+	    if (img.dataset.locked) {
+	        alert("이 아이템이 없습니다. 상점으로 이동합니다.");
+	        window.location.href = "/cardgarden/custom/detail?asset_id=" + assetId;
+	        return;
+	      }
 	    cardFrame.style.backgroundImage = `url("\${url}")`;
-	    console.log(cardFrame.style.backgroundImage);
-
 	  });
 	});
 
-
-
-
-
-
 document.querySelectorAll(".brand-btn").forEach(btn => {
-  btn.addEventListener("click", () => {
-    const selectedBrand = btn.dataset.brand;
+	  btn.addEventListener("click", () => {
+	    const selectedBrand = btn.dataset.brand;
 
-    document.querySelectorAll(".brand-btn").forEach(b => b.classList.remove("active"));
-    btn.classList.add("active");
+	    document.querySelectorAll(".brand-btn").forEach(b => b.classList.remove("active"));
+	    btn.classList.add("active");
 
-    document.querySelectorAll(".bg-option").forEach(img => {
-      if (selectedBrand === "all" || img.dataset.brand === selectedBrand) {
-        img.style.display = "block";
-      } else {
-        img.style.display = "none";
-      }
-    });
-  });
-});
+	    document.querySelectorAll(".bg-item").forEach(item => {
+	      const img = item.querySelector(".bg-option");
+	      if (selectedBrand === "all" || img.dataset.brand === selectedBrand) {
+	        item.style.display = "block";
+	      } else {
+	        item.style.display = "none";
+	      }
+	    });
+	  });
+	});
+
 </script>

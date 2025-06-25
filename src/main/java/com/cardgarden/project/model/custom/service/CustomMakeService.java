@@ -15,4 +15,7 @@ public class CustomMakeService {
     public List<CustomAssetDTO> getBackgroundList() {
         return dao.selectBackgroundList();
     }
+    public List<Integer> getOwnedBackgroundList(int userId) {
+        return dao.selectOwnedBackgroundList(userId);
+    }
 }

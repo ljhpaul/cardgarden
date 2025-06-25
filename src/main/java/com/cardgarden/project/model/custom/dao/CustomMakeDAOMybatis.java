@@ -17,4 +17,8 @@ public class CustomMakeDAOMybatis implements CustomMakeDAOInterface {
     public List<CustomAssetDTO> selectBackgroundList() {
         return sqlSession.selectList(namespace + ".selectBackgroundList");
     }
+    public List<Integer> selectOwnedBackgroundList(int userId) {
+        return sqlSession.selectList(namespace + ".selectOwnedBackgroundList", userId);
+    }
+
 }

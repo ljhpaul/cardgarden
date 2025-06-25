@@ -37,12 +37,13 @@ public class CustomMakeController {
 
     @GetMapping("/background")
     public String makeBackground(
-            @RequestParam String type,
-            @RequestParam String direction,
+            @RequestParam(name = "type") String type,
+            @RequestParam(name = "direction") String direction,
             HttpSession session,
             Model model) {
 
-        if (session.getAttribute("loginUserId") == null) {
+        Integer loginUserId = (Integer) session.getAttribute("loginUserId");
+        if (loginUserId == null) {
             return "redirect:/user/login";
         }
 
@@ -50,10 +51,18 @@ public class CustomMakeController {
         model.addAttribute("direction", direction);
 
         List<CustomAssetDTO> backgroundList = service.getBackgroundList();
+
+        List<Integer> ownedList = service.getOwnedBackgroundList(loginUserId);
+
+        for (CustomAssetDTO bg : backgroundList) {
+            bg.setOwn(ownedList.contains(bg.getAsset_id()));
+        }
+
         model.addAttribute("backgroundList", backgroundList);
 
         return "custom/makeBackground";
     }
+
 
     
 

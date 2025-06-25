@@ -11,5 +11,11 @@
     FROM CustomAsset
     WHERE asset_type = 'background'
   </select>
+<!-- 내가 가진 것들 -->
+	<select id="selectOwnedBackgroundList" parameterType="int" resultType="int">
+	    SELECT asset_id
+	    FROM OwnedAsset
+	    WHERE user_id = #{userId}
+	</select>
 
 </mapper>
