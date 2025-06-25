@@ -7,14 +7,14 @@
 <link rel="stylesheet" href="${cpath}/resources/css/common.css">
 <link rel="stylesheet" href="${cpath}/resources/css/header.css">
 <link rel="stylesheet" href="${cpath}/resources/css/font-awesome.min.css">
-<link rel="stylesheet" href="${cpath}/resources/css/style.css">
+<link rel="stylesheet" href="${cpath}/resources/css/userStyle.css">">
 
 <head>
     <title>카드가든 : 회원가입</title>
 </head>
 
 <body class="bg-main">
-  <div class="container" style="min-height: 80vh;">
+  <div class="container" style="padding-top: 100px;">
     <div class="box" style="max-width: 480px; width: 100%; padding: 48px 36px; box-sizing: border-box;">
       <i class="fa fa-check-circle" style="font-size: 60px; color: var(--m1); margin-bottom: 18px;"></i>
       <div class="title-lg" style="margin-bottom: 18px;">회원가입 완료</div>

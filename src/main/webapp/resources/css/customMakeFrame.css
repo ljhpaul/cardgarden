@@ -1,5 +1,6 @@
 body {
   background-color: var(--main);
+  font-family: var(--font);
 }
 
 .custom-main-container {
@@ -7,9 +8,9 @@ body {
   padding: 100px;
   border-radius: 20px;
   margin: 40px auto;
-  margin-top:-10px;
+  margin-top: -10px;
   max-width: 1100px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .make-title {
@@ -17,7 +18,7 @@ body {
   font-weight: 700;
   color: var(--m3);
   text-align: center;
-  margin-top:-60px;
+  margin-top: -60px;
   margin-bottom: 30px;
 }
 
@@ -35,27 +36,69 @@ body {
   height: 500px;
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 
 .card-bg {
-  width: 500px;
-  height: 500px;
-  border-radius: 12px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
   transition: all 0.3s ease;
-}
-
-.card-bg img {
-  max-width: 90%;
-  height: auto;
-  object-fit: contain;
 }
 
 .card-bg.landscape {
   transform: rotate(90deg);
+}
+
+.card-frame {
+  width: 500px;
+  height: 315px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 12px;
+  position: relative;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.card-frame .chip {
+  position: absolute;
+  background-color: silver;
+  border-radius: 8px;
+}
+
+.card-frame.largechip .chip,
+.card-frame.largechipwide .chip {
+  height: 67px;
+  width: 73px;
+  top: 107px;
+  left: 50px;
+}
+
+.card-frame.smallchip .chip,
+.card-frame.smallchipwide .chip {
+  height: 50px;
+  width: 64px;
+  top: 107px;
+  left: 50px;
+}
+
+.card-frame.withoutchip .chip {
+  display: none;
+}
+
+.wide-overlay {
+  position: absolute;
+  left: 30px;
+  right: 30px;
+  bottom: 30px;
+  height: 111px;
+  background-color: silver;
+  border-radius: 6px;
+  display: none;
+  border: black;
+}
+
+.card-frame.largechipwide .wide-overlay,
+.card-frame.smallchipwide .wide-overlay {
+  display: block;
 }
 
 .frame-options {
@@ -68,7 +111,7 @@ body {
 .option-title {
   font-size: 18px;
   font-weight: 600;
-  color: #333;
+  color: var(--m3);
 }
 
 .size-btn-group,
@@ -83,8 +126,8 @@ body {
   padding: 10px;
   border: none;
   border-radius: 8px;
-  background-color: var(--s1);
-  color: white;
+  background-color: var(--main);
+  color: black;
   font-weight: 600;
   cursor: pointer;
   transition: background-color 0.2s ease;
@@ -93,6 +136,13 @@ body {
 .size-btn:hover,
 .view-btn:hover {
   background-color: var(--m2);
+  color: var(--m3);
+}
+
+.size-btn.active,
+.view-btn.active {
+  background-color: var(--s1);
+  color: white;
 }
 
 .bottom-btn-area {
@@ -102,12 +152,19 @@ body {
   gap: 20px;
 }
 
-.big-btn {
+.btnn {
   flex: 1;
+  display: flex;
+}
+
+.btnn a,
+.btnn button {
+  font-family: var(--font);
+  width: 100%;
   text-align: center;
-  padding: 15px;
-  font-size: 18px;
-  background-color: var(--m3);
+  padding: 30px;
+  font-size: 25px;
+  background-color: var(--m1);
   color: white;
   border: none;
   border-radius: 12px;
@@ -115,8 +172,17 @@ body {
   text-decoration: none;
   cursor: pointer;
   transition: background-color 0.2s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  appearance: none;
+  line-height: 1;
+  box-sizing: border-box;
 }
 
-.big-btn:hover {
+
+.btnn a:hover,
+.btnn button:hover {
   background-color: var(--m2);
+  color: var(--m3);
 }

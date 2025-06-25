@@ -13,7 +13,7 @@ public class CardRecommendationDAO implements CardRecommendationDAOInterface{
 	
 	@Override
     public List<CardRecommendationDTO> getRecommendResult(int patternId) {
-        String url = "http://192.168.0.13:5001/recommend?pattern_id=" + patternId;
+        String url = "http://192.168.0.9:5001/recommend?pattern_id=" + patternId;
         RestTemplate restTemplate = new RestTemplate();
         CardRecommendationDTO[] response = restTemplate.getForObject(url, CardRecommendationDTO[].class);
         return Arrays.asList(response);
@@ -21,7 +21,7 @@ public class CardRecommendationDAO implements CardRecommendationDAOInterface{
 	
 	@Override
     public List<CardRecommendationDTO> getRecommendDetailResult(int patternId, int cardId) {
-		String url = "http://192.168.0.13:5002/recommendDetail?pattern_id=" + patternId + "&card_id=" + cardId;
+		String url = "http://192.168.0.9:5002/recommendDetail?pattern_id=" + patternId + "&card_id=" + cardId;
 	    RestTemplate restTemplate = new RestTemplate();
 	    ResultWrapper response = restTemplate.getForObject(url, ResultWrapper.class);
 

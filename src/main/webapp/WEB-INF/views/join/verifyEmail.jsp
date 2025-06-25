@@ -4,7 +4,7 @@
 
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
 <link rel="stylesheet" href="${cpath}/resources/css/common.css">
-<link rel="stylesheet" href="${cpath}/resources/css/style.css">
+<link rel="stylesheet" href="${cpath}/resources/css/userStyle.css">
 <link rel="stylesheet" href="${cpath}/resources/css/font-awesome.min.css">
 
 <head>
@@ -34,7 +34,7 @@
             </button>
           </div>
           <div id="email-msg" class="email-msg">
-            ・ 입력할 이메일로 인증번호가 발송됩니다.<br>・ 인증메일을 받을 수 있도록 자주 쓰는 이메일을 입력해 주세요.
+            ・ 입력한 이메일로 인증번호가 발송됩니다.<br>・ 인증메일을 받을 수 있도록 자주 쓰는 이메일을 입력해 주세요.
           </div>
         </div>
         
@@ -73,7 +73,7 @@
 
 <style>
   .container {
-    padding-top: 135px;
+    padding-top: 110px;
   }
   .box {
     max-width: 440px;
@@ -209,7 +209,7 @@
 
   // 상태 초기화
   function resetStatus() {
-    $('#email-msg').css('color','#999').html('・ 입력할 이메일로 인증번호가 발송됩니다.<br>・ 인증메일을 받을 수 있도록 자주 쓰는 이메일을 입력해 주세요.');
+    $('#email-msg').css('color','#999').html('・ 입력한 이메일로 인증번호가 발송됩니다.<br>・ 인증메일을 받을 수 있도록 자주 쓰는 이메일을 입력해 주세요.');
     $('#code-area').hide();
     $('#success-msg').hide();
     $('#next-btn').prop('disabled', true);

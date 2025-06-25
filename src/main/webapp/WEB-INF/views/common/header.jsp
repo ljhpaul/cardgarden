@@ -33,10 +33,6 @@
         </c:otherwise>
       </c:choose>
     </div>
-<%--     <div class="header-left">
-      <a href="${cpath}/user/join">회원가입</a>
-      <a href="${cpath}/user/login">로그인</a>
-    </div> --%>
 
     <!--로고 -->
     <div class="header-logo">
@@ -48,7 +44,7 @@
 
     <!--검색 -->
     <div class="header-right">
-      <form action="${cpath}/card/cardsearch"" method="get">
+      <form action="${cpath}/card/search" method="get">
         <input type="text" name="keyword" class="text1" placeholder="검색어를 입력하세요">
       </form>
       <a href="${cpath}/mypage/likes.do">
@@ -59,7 +55,7 @@
 
   <!-- 하단 메뉴 -->
   <div class="header-bottom">
-    <a href="${cpath}/card/list">카드&nbsp;
+    <a href="${cpath}/card/rank">카드&nbsp;
       <img class="mascot" src="${cpath}/resources/images/common/caretDown.png" width="15">
     </a>
     <a href="${cpath}/recommend/ai">AI 카드추천</a>
@@ -73,9 +69,8 @@
 </header>
 </div>
 
-
 <!-- sticky -->
-<%-- <nav class="sticky-menu">
+ <nav class="sticky-menu">
   <div class="menu-inner">
     
     <!-- 왼쪽 로고 -->
@@ -105,4 +100,4 @@
     </div>
 
   </div>
-</nav> --%>
+</nav>
