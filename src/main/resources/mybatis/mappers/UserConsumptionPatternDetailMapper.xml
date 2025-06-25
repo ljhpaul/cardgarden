@@ -17,4 +17,10 @@
     	)
   </insert>
   
+ 	<!-- 기존 데이터 삭제 후 isnert하기 -->
+	 <delete id="deleteDetailsByPatternId" parameterType="int">
+	  DELETE FROM UserConsumptionPatternDetail
+	  WHERE pattern_id = #{pattern_id}
+	</delete>
+  
  </mapper>

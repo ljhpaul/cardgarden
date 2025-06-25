@@ -2,7 +2,7 @@
 <%@ include file="../common/header.jsp" %>
 <c:set var="cpath" value="${pageContext.servletContext.contextPath}" />
 
-<link rel="stylesheet" href="${cpath}/resources/css/customMakeBackground.css?ver=3">
+<link rel="stylesheet" href="${cpath}/resources/css/customMakeBackground.css?ver=2">
 
 <div class="background-page-container">
 
@@ -12,7 +12,7 @@
     
     <!-- 왼쪽 카드 미리보기 -->
     <div class="preview-area">
-      <div class="card-bg ${direction}">
+      <div class="card-bg">
         <div id="cardFrame" class="card-frame ${type}">
           <div class="chip"></div>
           <div class="wide-overlay"></div>
@@ -30,22 +30,31 @@
       </div>
 
       <div class="bg-list">
-        <c:forEach var="item" items="${backgroundList}">
-          <img 
-            src="${cpath}/resources/images/asset/${item.asset_type}/${item.asset_brand}/${item.asset_type}_${item.asset_brand}_${item.asset_no}_${item.asset_name}.png" 
-            alt="${item.asset_name}" 
-            class="bg-option" 
-            data-img="${item.asset_type}/${item.asset_brand}/${item.asset_type}_${item.asset_brand}_${item.asset_no}_${item.asset_name}.png" 
-            data-brand="${item.asset_brand}">
-        </c:forEach>
+		<c:forEach var="item" items="${backgroundList}">
+		  <div class="bg-item">
+		    <div class="img-wrap">
+		      <img 
+		        src="${cpath}/resources/images/asset/${item.asset_type}/${item.asset_brand}/${item.asset_type}_${item.asset_brand}_${item.asset_no}_${item.asset_name}.png" 
+		        alt="${item.asset_name}" 
+		        class="bg-option ${item.own ? '' : 'locked-img'}" 
+		        data-img="${cpath}/resources/images/asset/${item.asset_type}/${item.asset_brand}/${item.asset_type}_${item.asset_brand}_${item.asset_no}_${item.asset_name}.png" 
+		        data-brand="${item.asset_brand}"
+		        data-id="${item.asset_id}"
+		        ${item.own ? '' : 'data-locked="true"'} >
+		    </div>
+		    
+		    <c:if test="${!item.own}">
+		      <i class="fa fa-lock lock-icon" aria-hidden="true"></i>
+		    </c:if>
+		  </div>
+		</c:forEach>
       </div>
     </div>
-
   </div>
 
   <div class="bottom-btn-area">
-    <a href="${cpath}/make/frame" class="big-btn back-btn">카드 세팅 변경하기</a>
-    <a href="${cpath}/make/sticker?type=${type}&direction=${direction}" class="big-btn next-btn">스티커 붙이러 가기</a>
+    <button id="backBtn" class="big-btn back-btn">카드 세팅 변경하기</button>
+    <button id="nextBtn" class="big-btn next-btn">스티커 붙이러 가기</button>
   </div>
 
 </div>
@@ -53,12 +62,21 @@
 <script>
 const cpath = '${cpath}';
 const type = '${type}';
-const direction = '${direction}';
+
+let selectedBackgroundId = null;
+let selectedBackgroundLocked = false;
 
 document.querySelectorAll(".bg-option").forEach(img => {
   img.addEventListener("click", () => {
     const cardFrame = document.getElementById("cardFrame");
-    cardFrame.style.backgroundImage = `url('${cpath}/resources/images/asset/${img.dataset.img}')`;
+    const url = img.dataset.img;
+    const assetId = img.dataset.id;
+    const isLocked = img.dataset.locked ? true : false;
+
+    selectedBackgroundId = assetId;
+    selectedBackgroundLocked = isLocked;
+
+    cardFrame.style.backgroundImage = `url("\${url}")`;
   });
 });
 
@@ -69,13 +87,37 @@ document.querySelectorAll(".brand-btn").forEach(btn => {
     document.querySelectorAll(".brand-btn").forEach(b => b.classList.remove("active"));
     btn.classList.add("active");
 
-    document.querySelectorAll(".bg-option").forEach(img => {
+    document.querySelectorAll(".bg-item").forEach(item => {
+      const img = item.querySelector(".bg-option");
       if (selectedBrand === "all" || img.dataset.brand === selectedBrand) {
-        img.style.display = "block";
+        item.style.display = "block";
       } else {
-        img.style.display = "none";
+        item.style.display = "none";
       }
     });
   });
+});
+
+document.getElementById("backBtn").addEventListener("click", () => {
+  window.location.href = `${cpath}/make/frame`;
+});
+
+document.getElementById("nextBtn").addEventListener("click", () => {
+  if (selectedBackgroundLocked) {
+    alert("이 아이템이 없습니다. 상점으로 이동합니다.");
+    window.location.href = `${cpath}/custom/detail?asset_id=${selectedBackgroundId}`;
+    return;
+  }
+  const cardFrame = document.getElementById("cardFrame");
+  const backgroundImage = cardFrame.style.backgroundImage;
+
+  if (!backgroundImage || backgroundImage === "none") {
+    alert("배경을 선택하세요.");
+    return;
+  }
+
+  const url = backgroundImage.slice(5, -2);
+
+  window.location.href = "${cpath}/make/sticker?type=" + type + "&background=" + encodeURIComponent(url);
 });
 </script>
