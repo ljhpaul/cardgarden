@@ -5,7 +5,7 @@
   <script>alert('${msg}');</script>
 </c:if>
 
-<jsp:include page="/WEB-INF/views/common/mypageheader.jsp" />
+<jsp:include page="/WEB-INF/views/common/header.jsp" />
 <link rel="stylesheet" href="${cpath}/resources/css/common.css">
 <link rel="stylesheet" href="${cpath}/resources/css/header.css">
 <link rel="stylesheet" href="${cpath}/resources/css/font-awesome.min.css">
@@ -13,7 +13,9 @@
 <script src="${cpath}/resources/js/header.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
-<title>회원정보수정</title>
+<head>
+  <title> 카드가든 : 회원정보수정</title>
+<head>
 
 <style>
 * {
@@ -21,29 +23,88 @@
   margin: 0;
   padding: 0;
 }
-.wrap {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 90vh;
-  background-color: #f0f3f1;
+
+body {
+  font-family: 'NanumSquareRound', sans-serif;
+  background-color: #F0F3F1;
+  padding: 0;
+  margin: 0;
 }
 
 .container {
   width: 100%;
-  max-width: 900px;
+  max-width: 1000px;
   display: flex;
   justify-content: center;
+  align-items: flex-start;
   border-radius: 24px;
-  margin-top: 80px;
+  margin: 0 auto;
+  gap: 28px;
 }
 
-.box {
+.sidebar {display: flex;
+  flex-direction: column;
+  gap: 40px;
+  min-width: 240px;
+  max-width: 280px;
+  margin-top: 40px;
+}
+
+.box-nav {
+  width: 220px; /* 왼쪽 메뉴 폭 고정 */
+  min-width: 180px;
+  max-width: 240px;
+  border-radius: 24px;
+  padding: 20px 20px;
+  box-sizing: border-box;
+}
+
+.box-content {
   width: 70%;
-  background: #fff;
   border-radius: 24px;
   padding: 44px 50px 32px;
-  font-family: var(--font);
+  margin-right: 50px;
+}
+
+.title-lg-nav {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.title-lg-content {
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 30px;
+}
+
+.inner-box-nav {
+  width: 100%;
+  padding: 25px 30px;
+  font-size: 12px;
+  margin-top: 10px;
+}
+
+.inner-box-nav a {
+  display: block;
+  color: #3e4e42;
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 16px;
+  transition: color 0.2s;
+}
+.inner-box-nav a:last-child {
+  margin-bottom: 0;
+}
+.inner-box-nav a:hover {
+  color: var(--m1);
+}
+
+.inner-box-content {
+  padding: 25px 25px;
+  font-size: 20px;
+  gap: 5px;
+  margin-bottom: 20px;
 }
 
 .form-group {
@@ -51,10 +112,14 @@
   display: flex;
   align-items: center;
 }
+.form-group-end {
+  margin-bottom: 0px;
+}
+
 
 label {
   display: inline-block;
-  width: 120px;
+  width: 90px;
   margin-right: 10px;
   font-weight: bold;
   font-size: 16px;
@@ -65,94 +130,116 @@ label {
   flex: 1;
   min-width: 150px;
 }
+#user-name, #email, #birth {
+  background-color: #f8fbf8;
+}
 
 .btn {
   min-width: 110px;
   height: 40px;
-  margin-left: 10px;
+  margin-left: 12px;
   cursor: pointer;
 }
-
-.title-lg {
-  font-size: 22px;
-  font-weight: bold;
-  margin-bottom: 20px;
+#enrollBtn {
+  width:90%; 
+  height:50px; 
+  font-size:19px;
+  margin: 30px auto 0 auto;
+  display: block;
 }
 
 #enroll-form{
-padding-left: 20px;
-padding-right: 20px;
+  padding: 0px 12px;
 }
 </style>
 
-<body>
-<div class="wrap">
+<body class="bg-main">
   <div class="container">
-    <div class="box">
-      <h2 class="title-lg">${user.name}님의 회원정보</h2>
+    <div class="sidebar">
+  	  <!-- 마이페이지 네비게이터 -->
+      <div class="box box-nav">
+        <h2 class="title-lg title-lg-nav">마이페이지</h2>
+        <div class="inner-box inner-box-nav">
+    	  <a href="${cpath}/user/mypage">내 정보관리</a><br>
+    	  <a href="${cpath}/user/point">포인트관리</a><br>
+    	  <a href="${cpath}/user/card">내 카드관리</a><br>
+    	  <a href="${cpath}/user/consumptionPattern">소비패턴관리</a>
+        </div>
+      </div>
+    
+      <!-- 관리자페이지 네비게이터 -->
+      <div class="box box-nav">
+        <h2 class="title-lg title-lg-nav">관리자페이지</h2>
+        <div class="inner-box inner-box-nav">
+    	  <a href="${cpath}/user/mypage">내 정보관리</a><br>
+    	  <a href="${cpath}/user/point">포인트관리</a><br>
+    	  <a href="${cpath}/user/card">내 카드관리</a><br>
+    	  <a href="${cpath}/user/consumptionPattern">소비패턴관리</a>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 회원정보 -->
+    <div class="box box-content">
+      <h2 class="title-lg title-lg-content">${user.name}님의 회원정보</h2>
       <form id="enroll-form" action="${cpath}/user/mypage" method="post" onsubmit="combineAddress();" autocomplete="off">
         <input type="hidden" name="user_id" value="${user.user_id}">
-
-        <div class="form-group">
-          <label for="user_name">아이디</label>
-          <input type="text" id="user_name" name="user_name" class="input" readonly placeholder="${user.user_name}">
+        <input type="hidden" name="user_password" value="${user.user_password}">
+		
+		<div class="inner-box inner-box-content">
+	        <div class="form-group">
+	          <label for="user_name">아이디</label>
+	          <input type="text" id="user_name" name="user_name" class="input" readonly value="${user.user_name}">
+	        </div>
+	
+	        <div class="form-group">
+	          <label for="nickname">닉네임</label>
+	          <input type="text" id="nickname" name="nickname" class="input" value="${user.nickname}">
+	          <button type="button" class="btn" onclick="nicknameCheck();">중복확인</button>
+	        </div>
+	
+	        <div class="form-group form-group-end">
+	          <label for="email">이메일</label>
+	          <input type="email" id="email" name="email" value="${user.email}" class="input" readonly>
+	        </div>
         </div>
+        
+		<div class="inner-box inner-box-content">
+	        <div class="form-group">
+	          <label for="name">이름</label>
+	          <input type="text" id="name" name="name" class="input" value="${user.name}" maxlength="5">
+	        </div>
+	
+	        <div class="form-group">
+	          <label for="gender">성별</label>
+	          <select name="gender" class="input">
+	            <option value="M" ${user.gender == 'M' ? 'selected' : ''}>남</option>
+	            <option value="F" ${user.gender == 'F' ? 'selected' : ''}>여</option>
+	          </select>
+	        </div>
+	
+	        <div class="form-group">
+	          <label for="birth">생년월일</label>
+	          <input type="text" id="birth" name="birth" class="input" value="${user.birth}" readonly maxlength="10" readonly>
+	        </div>
+	
+	        <div class="form-group">
+	          <label for="phone">휴대폰번호</label>
+	          <input type="text" id="phone" name="phone" class="input" value="${user.phone}" maxlength="13">
+	        </div>
+	        
+	        <div class="form-group form-group-end">
+	          <label>주소</label>
+	          <input type="hidden" id="address" name="address">
+	          <input type="text" id="detailAddress" name="detailAddress" class="input" style="width: 350px;" value="${user.address}" readonly>
+	          <button type="button" id="addressbtn" class="btn" onclick="execDaumPostcode();">주소 변경하기</button>
+	        </div>
+		</div>
 
-        <div class="form-group">
-          <label for="user_password">비밀번호</label>
-          <input type="password" id="user_password" readonly name="user_password" class="input" value="${user.user_password}">
-          <button type="button" class="btn" onclick="nicknameCheck();">비밀번호 재설정</button>
-        </div>
-
-        <div class="form-group">
-          <label for="nickname">닉네임</label>
-          <input type="text" id="nickname" name="nickname" class="input" value="${user.nickname}">
-          <button type="button" class="btn" onclick="nicknameCheck();">중복확인</button>
-        </div>
-
-        <div class="form-group">
-          <label for="email">이메일</label>
-          <input type="email" id="email" name="email" value="${user.email}" class="input">
-        </div>
-
-        <div class="form-group">
-          <label for="name">이름</label>
-          <input type="text" id="name" name="name" class="input" value="${user.name}" maxlength="5">
-        </div>
-
-        <div class="form-group">
-          <label for="gender">성별</label>
-          <select name="gender" class="input">
-            <option value="M" ${user.gender == 'M' ? 'selected' : ''}>남</option>
-            <option value="F" ${user.gender == 'F' ? 'selected' : ''}>여</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label for="birth">생년월일</label>
-          <input type="text" id="birth" name="birth" class="input" placeholder="${user.birth}" readonly maxlength="10">
-        </div>
-
-        <div class="form-group">
-          <label for="phone">휴대폰번호</label>
-          <input type="text" id="phone" name="phone" class="input" value="${user.phone}" maxlength="13">
-        </div>
-
-        <div class="form-group">
-          <label>주소</label>
-          <input type="hidden" id="address" name="address">
-          <input type="text" id="detailAddress" name="detailAddress" class="input" style="width: 350px;" value="${user.address}">
-          <button type="button" id="addressbtn" class="btn" onclick="execDaumPostcode();">주소 변경하기</button>
-        </div>
-
-        <button id="enrollBtn" type="submit" class="btn" style="width:100%; height:50px; font-size:19px; margin-top:10px;">수정하기</button>
+        <button id="enrollBtn" type="submit" class="btn">수정하기</button>
       </form>
     </div>
   </div>
-</div>
-
-<script>
-</script>
 </body>
 
 <script>

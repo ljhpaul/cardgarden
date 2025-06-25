@@ -107,6 +107,7 @@ header.main-header {
   padding: 10px 0;
   border-top: 1px solid var(--m1);
   border-bottom: 1px solid var(--m1);
+  box-shadow: 0 0 6px rgba(100,130,120,0.08);
   position: relative;
 }
 
