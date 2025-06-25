@@ -4,12 +4,12 @@
 }
 
 .container {
-  margin-top: -60px;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: var(--font);
+  padding-top: 60px;
 }
 
 .box {

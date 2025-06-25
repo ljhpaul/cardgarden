@@ -80,8 +80,11 @@ body {
 }
 .box {
   max-width: 520px;
-  margin: 70px auto 80px;
+  margin: 10px auto 80px;
   padding: 44px 50px 32px;
+}
+.container {
+  padding-top: 10px;
 }
 
 .term-step-nav {

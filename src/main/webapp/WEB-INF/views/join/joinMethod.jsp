@@ -64,7 +64,7 @@ body {
 	margin: 0;
 }
 .container {
-  padding-top: 120px;
+  padding-top: 80px;
 }
 .box {
   padding: 40px 36px 36px 36px;
