@@ -33,8 +33,11 @@
 	box-sizing: border-box;
 }
 
-div, form {
-	
+body {
+	font-family: 'NanumSquareRound', sans-serif;
+	background-color: #F0F3F1;
+	margin : 0;
+	padding : 0;
 }
 
 /* 전체 화면 영역 지정 및 분할 스타일 */
@@ -49,12 +52,7 @@ div, form {
 	justify-content: center; /* 수평 가운데 정렬 */
 }
 
-header {
-	width: 100%;
-	height: 200px;
-	margin: 0 auto;
-	background-color: blue;
-}
+
 
 #content {
 	margin-top: 30px;
@@ -295,17 +293,17 @@ header {
 <body>
 
 	<div class="search-bar">
-		<form method="get" action="search">
-			<div class="search-wrapper">
-				<select name="sort">
-					<option value="name" ${param.sort == 'name' ? 'selected' : ''}>이름순</option>
-					<option value="views" ${param.sort == 'views' ? 'selected' : ''}>조회수순</option>
-					<option value="likes" ${param.sort == 'likes' ? 'selected' : ''}>좋아요순</option>
-				</select> <input type="text" name="keyword" value="${param.keyword}"
-					placeholder="카드 이름, 회사 등 검색" />
-				<button type="submit">🔍</button>
-			</div>
-		</form>
+	  <form method="get" action="search" id="searchForm">
+	    <div class="search-wrapper">
+	      <select name="sort" onchange="document.getElementById('searchForm').submit();">
+	        <option value="name" ${param.sort == 'name' ? 'selected' : ''}>이름순</option>
+	        <option value="views" ${param.sort == 'views' ? 'selected' : ''}>조회수순</option>
+	        <option value="likes" ${param.sort == 'likes' ? 'selected' : ''}>좋아요순</option>
+	      </select>
+	      <input type="text" name="keyword" value="${param.keyword}" placeholder="카드 이름, 회사 등 검색" />
+	      <button type="submit">🔍</button>
+	    </div>
+	  </form>
 	</div>
 
 	<c:if test="${empty cardList}">

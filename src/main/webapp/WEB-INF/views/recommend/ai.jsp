@@ -154,7 +154,7 @@
 	    <c:when test="${empty patternList}">
 	      <div class="pattern-container" style="display:block;">
 	        <p style="font-size:20px; font-weight:bold; margin-bottom: 22px;">등록된 소비패턴이 없습니다.</p>
-	        <form action="${cpath}/inCon" method="get">
+	        <form action="${cpath}/ConsumptionPattern/inCon" method="get">
 	          <button type="submit" class="button-primary">소비패턴 입력하러 가기</button>
 	        </form>
 	      </div>
