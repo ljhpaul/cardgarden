@@ -36,6 +36,12 @@
 </body>
 
 <style>
+body {
+	font-family: 'NanumSquareRound', sans-serif;
+	background-color: #F0F3F1;
+	padding: 0;
+	margin: 0;
+}
 .container {
   padding-top: 100px;
 }
