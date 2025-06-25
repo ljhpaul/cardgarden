@@ -24,6 +24,8 @@
 body {
 	font-family: 'NanumSquareRound', sans-serif;
 	background-color: #f7f7f7;
+	padding: 0;
+	margin: 0;
 }
 
 .card-container {

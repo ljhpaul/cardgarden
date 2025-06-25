@@ -295,17 +295,17 @@ header {
 <body>
 
 	<div class="search-bar">
-		<form method="get" action="search">
-			<div class="search-wrapper">
-				<select name="sort">
-					<option value="name" ${param.sort == 'name' ? 'selected' : ''}>이름순</option>
-					<option value="views" ${param.sort == 'views' ? 'selected' : ''}>조회수순</option>
-					<option value="likes" ${param.sort == 'likes' ? 'selected' : ''}>좋아요순</option>
-				</select> <input type="text" name="keyword" value="${param.keyword}"
-					placeholder="카드 이름, 회사 등 검색" />
-				<button type="submit">🔍</button>
-			</div>
-		</form>
+	  <form method="get" action="search" id="searchForm">
+	    <div class="search-wrapper">
+	      <select name="sort" onchange="document.getElementById('searchForm').submit();">
+	        <option value="name" ${param.sort == 'name' ? 'selected' : ''}>이름순</option>
+	        <option value="views" ${param.sort == 'views' ? 'selected' : ''}>조회수순</option>
+	        <option value="likes" ${param.sort == 'likes' ? 'selected' : ''}>좋아요순</option>
+	      </select>
+	      <input type="text" name="keyword" value="${param.keyword}" placeholder="카드 이름, 회사 등 검색" />
+	      <button type="submit">🔍</button>
+	    </div>
+	  </form>
 	</div>
 
 	<c:if test="${empty cardList}">

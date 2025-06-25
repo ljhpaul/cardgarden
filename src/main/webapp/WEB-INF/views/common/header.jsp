@@ -59,17 +59,41 @@
 
   <!-- 하단 메뉴 -->
   <div class="header-bottom">
-    <a href="${cpath}/card/rank">카드&nbsp;
+  <div class="menu-item">
+    <a href="${cpath}/card/rank">카드
       <img class="mascot" src="${cpath}/resources/images/common/caretDown.png" width="15">
     </a>
-    <a href="${cpath}/recommend/ai">AI 카드추천</a>
-    <a href="${cpath}/custom/main">카드 커스터마이징&nbsp;
-	  <img class="mascot" src="${cpath}/resources/images/common/caretDown.png" width="15">
-	</a>
-    <a href="${cpath}/event/list">이벤트&nbsp;
-      <img class="mascot" src="${cpath}/resources/images/common/caretDown.png" width="15">
-	</a>
+    <div class="submenu">
+      <a href="${cpath}/cardSearchcondition">카드 조회</a>
+      <a href="${cpath}/card/rank">카드 랭킹</a>
+      <a href="${cpath}/card/search">카드 검색</a>
+    </div>
   </div>
+
+  <div class="menu-item">
+    <a href="${cpath}/recommend/ai">AI 카드추천</a>
+  </div>
+
+  <div class="menu-item">
+    <a href="${cpath}/custom/main">카드 커스터마이징
+      <img class="mascot" src="${cpath}/resources/images/common/caretDown.png" width="15">
+    </a>
+    <div class="submenu">
+      <a href="${cpath}/make/frame">나만의 디자인</a>
+      <a href="${cpath}/custom/design">콜라보</a>
+      <a href="${cpath}/custom/top?type=sticker">인기 아이템 랭킹</a>
+    </div>
+  </div>
+
+  <div class="menu-item">
+    <a href="${cpath}/event/list">이벤트
+      <img class="mascot" src="${cpath}/resources/images/common/caretDown.png" width="15">
+    </a>
+    <div class="submenu">
+      <a href="${cpath}/event/attendance">출석체크</a>
+    </div>
+  </div>
+</div>
 </header>
 </div>
 
