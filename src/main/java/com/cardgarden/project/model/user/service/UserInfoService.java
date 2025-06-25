@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import com.cardgarden.project.model.CardSearchCondition.CardDTO;
 import com.cardgarden.project.model.user.dao.UserInfoDAO;
 import com.cardgarden.project.model.user.dto.UserConsumptionPatternResponseDTO;
 import com.cardgarden.project.model.user.dto.UserInfoDTO;
@@ -104,5 +105,10 @@ public class UserInfoService {
 		
 		return userInfoDAO.selectMyConsumptionPattern(userId);
 		
+	}
+	
+	// 내가 좋아요한 카드 조회
+	public List<CardDTO> myLikeCardList(int userId){
+		return userInfoDAO.myLikeCardList(userId);
 	}
 }

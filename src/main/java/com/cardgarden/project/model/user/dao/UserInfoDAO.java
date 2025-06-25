@@ -5,6 +5,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.cardgarden.project.model.CardSearchCondition.CardDTO;
 import com.cardgarden.project.model.user.dto.UserConsumptionPatternResponseDTO;
 import com.cardgarden.project.model.user.dto.UserInfoDTO;
 import com.cardgarden.project.model.user.dto.UserUpdateInfoDTO;
@@ -95,4 +96,9 @@ public class UserInfoDAO {
     public List<UserConsumptionPatternResponseDTO> selectMyConsumptionPattern(int userId) {
         return sqlSession.selectList(namespace + "selectMyConsumptionPattern", userId);
     }
+
+
+	public List<CardDTO> myLikeCardList(int userId) {
+		return sqlSession.selectList(namespace + "userLikeCard", userId);
+	}
 }

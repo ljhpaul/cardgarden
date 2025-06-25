@@ -102,38 +102,5 @@ public class CardSearchconditionController {
 	    List<CardDTO> cardList = cscService.cardSearchcondition(param);
 	    return cardList.size(); // ← 개수만 리턴
 	}
-	
-	
-	@GetMapping("/cardSelectByCompany")
-	@ResponseBody
-	public List<CardDTO> getCardsByCompany(@RequestParam String company) {
-	    System.out.println("선택된 회사: " + company);
-	    
-	    List<CardDTO> cardList =  cscService.selectByCompany(company);
-	    
-	    System.out.println(company + "로 검색된 카드들의 갯수 " + cardList.size());
-	    return cardList;
-	}
-	
-	@GetMapping("/cardSortByViews")
-	@ResponseBody
-	public List<CardDTO> getCardsByViews() {
-		
-		 List<CardDTO> cardList = cscService.selectByViews();
-		 
-		 return cardList;
-		
-	}
-	@GetMapping("/cardSortByLike")
-	@ResponseBody
-	public void getCardsByLike() {
-		
-	}
-	@GetMapping("/cardSortByFeedomestic")
-	@ResponseBody
-	public void getCardsByFeedomestic() {
-		
-	}
-	
 
 }

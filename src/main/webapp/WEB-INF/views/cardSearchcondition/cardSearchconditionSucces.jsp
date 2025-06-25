@@ -51,25 +51,6 @@ body {
 	gap: 20px;
 }
 
-#condition {
-	display: flex;
-	flex-wrap: wrap;
-	gap: 16px;
-	margin-bottom : 5px;
-	margin-top : 30px;
-	justify-content: center;
-}
-
-#condition > div {
-	padding: 10px 16px;
-	background-color: #DFEED8;
-	border-radius: 12px;
-	font-weight: bold;
-	text-align: center;
-	min-width: 120px;
-	flex: 1 1 200px;
-}
-
 .card-btn {
 	width: 100%;
 	background-color: #8FB098;
@@ -174,34 +155,55 @@ input[type="submit"]:hover {
 
 /* 반응형 규조 */
 @media (min-width: 768px) {
-	.tab {
-		flex-direction: row;
-		align-items: center;
-	}
-	.card_content {
-		flex-direction: row;
-		justify-content: space-between;
-		align-items: flex-start;
-		gap: 20px;
-	}
-	.left {
-		width: 70%;
-	}
+.tab {
+	flex-direction: row;
+	align-items: center;
+}
+.card_content {
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: flex-start;
+	gap: 20px;
+}
+.left {
+	width: 70%;
+}
 
-	.right {
-		width: 30%;
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: flex-end;
-		gap: 10px;
-	}
+.right {
+	width: 30%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: flex-end;
+	gap: 10px;
+}
 
-	.card-thumbnail {
-		width: 100%;
-		height: 180px;
-	}
-	/* 조건 선택 영역 스타일 개선 */
+.card-thumbnail {
+	width: 100%;
+	height: 180px;
+}
+
+/* 조건 선택 영역 스타일 개선 */
+
+#condition {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 16px;
+	margin-bottom : 5px;
+	margin-top : 30px;
+	justify-content: center;
+}
+
+#condition > div {
+	padding: 10px 16px;
+	background-color: #DFEED8;
+	border-radius: 12px;
+	font-weight: bold;
+	text-align: center;
+	min-width: 120px;
+	flex: 1 1 200px;
+}
+
 .condition-section {
   display: flex;
   flex-wrap: wrap;
