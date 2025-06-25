@@ -13,10 +13,24 @@ public class CardSearchConditionService {
 	CardSearchConditionDAO cacDAO;
 
 	public List<CardDTO> cardSearchcondition(Map<String, Object> param) {
-	List<CardDTO> CardList = cacDAO.cardSearchcondition(param);
+		List<CardDTO> CardList = cacDAO.cardSearchcondition(param);
 		
 		return CardList;
 		
+	}
+
+	//카드 회사별 조회
+	public List<CardDTO> selectByCompany(String company) {
+		
+		List<CardDTO> CardList = cacDAO.cardSelectByCompany(company);
+		
+		return CardList;
+	}
+
+	public List<CardDTO> selectByViews() {
+		
+		List<CardDTO> CardList = cacDAO.selectByViews();
+		return CardList;
 	}
 
 }

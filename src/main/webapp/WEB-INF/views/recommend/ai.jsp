@@ -160,17 +160,15 @@
 	      </div>
 	    </c:when>
 	    <c:otherwise>
-	      <form method="get" action="${cpath}/recommend/aiResult" onsubmit="event.preventDefault(); showMaskAndSubmit(this);">
+	      <form method="post" action="${cpath}/recommend/selectPattern" onsubmit="event.preventDefault(); showMaskAndSubmit(this);">
 	        <div class="pattern-container">
 	          <c:forEach var="entry" items="${patternList}">
 	            <div class="pattern-group" onclick="document.getElementById('pattern_${entry.key}').click();">
 	              <div class="pattern-title">
-	                <input type="checkbox" class="pattern-checkbox" name="patternId"
-	                       value="${entry.key}" id="pattern_${entry.key}"
-	                       onclick="checkOnlyOne(this); event.stopPropagation();">
-	                <label for="pattern_${entry.key}">
-	                  ${entry.value[0].pattern.pattern_name}
-	                </label>
+	               <input type="radio" class="pattern-radio" name="patternId"
+					       value="${entry.key}" id="pattern_${entry.key}">
+					<label for="pattern_${entry.key}">${entry.value[0].pattern.pattern_name}</label>
+
 	              </div>
 	              <c:forEach var="dto" items="${entry.value}">
 	                <div class="benefit-row">

@@ -33,10 +33,6 @@
         </c:otherwise>
       </c:choose>
     </div>
-<%--     <div class="header-left">
-      <a href="${cpath}/user/join">회원가입</a>
-      <a href="${cpath}/user/login">로그인</a>
-    </div> --%>
 
     <!--로고 -->
     <div class="header-logo">
@@ -97,9 +93,8 @@
 </header>
 </div>
 
-
 <!-- sticky -->
-<%-- <nav class="sticky-menu">
+ <nav class="sticky-menu">
   <div class="menu-inner">
     
     <!-- 왼쪽 로고 -->
@@ -129,4 +124,4 @@
     </div>
 
   </div>
-</nav> --%>
+</nav>

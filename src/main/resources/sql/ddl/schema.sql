@@ -37,13 +37,14 @@ CREATE TABLE UserInfo (
   name VARCHAR(30) DEFAULT NULL COMMENT '이름',
   gender VARCHAR(10) DEFAULT NULL COMMENT '성별',
   birth DATE DEFAULT NULL COMMENT '생년월일',
-  phone VARCHAR(20) NOT NULL UNIQUE COMMENT '전화번호',
+  phone VARCHAR(20) NOT NULL COMMENT '전화번호',
   address VARCHAR(200) DEFAULT NULL COMMENT '주소',
   created_at DATE NOT NULL DEFAULT (CURDATE()) COMMENT '가입일',
   point INT DEFAULT 0 COMMENT '보유 포인트 수',
   is_admin VARCHAR(2) DEFAULT 'N' COMMENT '관리자 여부(Y/N-기본값)'
 );
 
+alter table userInfo modify column phone VARCHAR(20) NOT NULL COMMENT '전화번호';
 alter table userInfo modify column created_at DATE NOT NULL DEFAULT (CURDATE()) COMMENT '가입일';
 
 CREATE TABLE Card (
