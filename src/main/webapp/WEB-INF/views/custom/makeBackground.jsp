@@ -55,13 +55,21 @@ const cpath = '${cpath}';
 const type = '${type}';
 const direction = '${direction}';
 
+
 document.querySelectorAll(".bg-option").forEach(img => {
-	 console.log(img.dataset.img);
 	  img.addEventListener("click", () => {
 	    const cardFrame = document.getElementById("cardFrame");
-	    cardFrame.style.backgroundImage = `url('${img.dataset.img}')`;
+	    const url = img.dataset.img;
+	    console.log("원본:", url);
+	    cardFrame.style.backgroundImage = `url("\${url}")`;
+	    console.log(cardFrame.style.backgroundImage);
+
 	  });
 	});
+
+
+
+
 
 
 document.querySelectorAll(".brand-btn").forEach(btn => {
