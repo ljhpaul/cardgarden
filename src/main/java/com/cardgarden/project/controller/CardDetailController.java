@@ -42,11 +42,26 @@ public class CardDetailController {
     	    @RequestParam(value="patternId", required=false) Integer patternId,
     	    Model model,
     	    HttpSession session) {
-    	int userId = (int) session.getAttribute("loginUserId"); // 세션에서 꺼냄
-    	CardDTO card = cardLkieService.selectByIdWithLike(cardid, userId);
-    	List<CardDTO> cardList = new ArrayList<>();
-    	cardList.add(card);
+    	Integer userId = (Integer) session.getAttribute("loginUserId");
+    	if (userId!=null) {
+    		CardDTO card = cardLkieService.selectByIdWithLike(cardid, userId);
+    		List<CardDTO> cardList = new ArrayList<>();
+        	cardList.add(card);
+        	model.addAttribute("cardList", cardList);
+        	List<UserPatternBenefitDTO> dataList = userPatternBenefitService.selectByIdConsumPattern(userId);
+
+            Map<Integer, List<UserPatternBenefitDTO>> mapPattern = new LinkedHashMap<>();
+            for (UserPatternBenefitDTO dto : dataList) {
+                int groupKey = dto.getPattern().getPattern_id();
+                mapPattern.computeIfAbsent(groupKey, k -> new ArrayList<>()).add(dto);
+            }
+            model.addAttribute("patternList", mapPattern);
+
+    	}
+    	
+    	List<CardDTO> cardList = cardService.selectById(cardid);
     	model.addAttribute("cardList", cardList);
+    	
         List<CardDetailDTO> detailList = cardService.selectDetailByID(cardid);
         Map<String, List<CardDetailDTO>> mapData = new LinkedHashMap<>();
 
@@ -56,15 +71,7 @@ public class CardDetailController {
         }
         model.addAttribute("cardDetail", mapData);
         
-        List<UserPatternBenefitDTO> dataList = userPatternBenefitService.selectByIdConsumPattern(userId);
-
-        Map<Integer, List<UserPatternBenefitDTO>> mapPattern = new LinkedHashMap<>();
-        for (UserPatternBenefitDTO dto : dataList) {
-            int groupKey = dto.getPattern().getPattern_id();
-            mapPattern.computeIfAbsent(groupKey, k -> new ArrayList<>()).add(dto);
-        }
-        model.addAttribute("patternList", mapPattern);
-        
+                
         session.setAttribute("cardid", cardid);
         
         System.out.println("patternId: " + patternId + ", cardid: " + cardid);
