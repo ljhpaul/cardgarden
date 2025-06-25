@@ -30,33 +30,28 @@
       </div>
 
       <div class="bg-list">
-		<c:forEach var="item" items="${backgroundList}">
-		  <div class="bg-item">
-		    <img 
-		      src="${cpath}/resources/images/asset/${item.asset_type}/${item.asset_brand}/${item.asset_type}_${item.asset_brand}_${item.asset_no}_${item.asset_name}.png" 
-		      alt="${item.asset_name}" 
-		      class="bg-option ${item.own ? '' : 'locked-img'}" 
-		      data-img="${cpath}/resources/images/asset/${item.asset_type}/${item.asset_brand}/${item.asset_type}_${item.asset_brand}_${item.asset_no}_${item.asset_name}.png" 
-		      data-brand="${item.asset_brand}"
-		      data-id="${item.asset_id}"
-		      ${item.own ? '' : 'data-locked="true"'}>
-		
-		    <c:if test="${!item.own}">
-		      <i class="fa fa-lock lock-icon" aria-hidden="true"></i>
-		    </c:if>
-		  </div>
-		</c:forEach>
-
-
-
-     </div>
+        <c:forEach var="item" items="${backgroundList}">
+          <div class="bg-item">
+            <img 
+              src="${cpath}/resources/images/asset/${item.asset_type}/${item.asset_brand}/${item.asset_type}_${item.asset_brand}_${item.asset_no}_${item.asset_name}.png" 
+              alt="${item.asset_name}" 
+              class="bg-option ${item.own ? '' : 'locked-img'}" 
+              data-img="${cpath}/resources/images/asset/${item.asset_type}/${item.asset_brand}/${item.asset_type}_${item.asset_brand}_${item.asset_no}_${item.asset_name}.png" 
+              data-brand="${item.asset_brand}"
+              data-id="${item.asset_id}"
+              ${item.own ? '' : 'data-locked="true"'}>
+            <c:if test="${!item.own}">
+              <i class="fa fa-lock lock-icon" aria-hidden="true"></i>
+            </c:if>
+          </div>
+        </c:forEach>
+      </div>
     </div>
-
   </div>
 
   <div class="bottom-btn-area">
-    <a href="${cpath}/make/frame" class="big-btn back-btn">카드 세팅 변경하기</a>
-    <a href="${cpath}/make/sticker?type=${type}&direction=${direction}" class="big-btn next-btn">스티커 붙이러 가기</a>
+    <button id="backBtn" class="big-btn back-btn">카드 세팅 변경하기</button>
+    <button id="nextBtn" class="big-btn next-btn">스티커 붙이러 가기</button>
   </div>
 
 </div>
@@ -66,38 +61,52 @@ const cpath = '${cpath}';
 const type = '${type}';
 const direction = '${direction}';
 
+let selectedBackgroundId = null;
+let selectedBackgroundLocked = false;
 
 document.querySelectorAll(".bg-option").forEach(img => {
-	  img.addEventListener("click", () => {
-	    const cardFrame = document.getElementById("cardFrame");
-	    const url = img.dataset.img;
-	    const assetId = img.dataset.id;
-		
-	    if (img.dataset.locked) {
-	        alert("이 아이템이 없습니다. 상점으로 이동합니다.");
-	        window.location.href = "/cardgarden/custom/detail?asset_id=" + assetId;
-	        return;
-	      }
-	    cardFrame.style.backgroundImage = `url("\${url}")`;
-	  });
-	});
+  img.addEventListener("click", () => {
+    const cardFrame = document.getElementById("cardFrame");
+    const url = img.dataset.img;
+    const assetId = img.dataset.id;
+    const isLocked = img.dataset.locked ? true : false;
+
+    selectedBackgroundId = assetId;
+    selectedBackgroundLocked = isLocked;
+
+    cardFrame.style.backgroundImage = `url("\${url}")`;
+  });
+});
 
 document.querySelectorAll(".brand-btn").forEach(btn => {
-	  btn.addEventListener("click", () => {
-	    const selectedBrand = btn.dataset.brand;
+  btn.addEventListener("click", () => {
+    const selectedBrand = btn.dataset.brand;
 
-	    document.querySelectorAll(".brand-btn").forEach(b => b.classList.remove("active"));
-	    btn.classList.add("active");
+    document.querySelectorAll(".brand-btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
 
-	    document.querySelectorAll(".bg-item").forEach(item => {
-	      const img = item.querySelector(".bg-option");
-	      if (selectedBrand === "all" || img.dataset.brand === selectedBrand) {
-	        item.style.display = "block";
-	      } else {
-	        item.style.display = "none";
-	      }
-	    });
-	  });
-	});
+    document.querySelectorAll(".bg-item").forEach(item => {
+      const img = item.querySelector(".bg-option");
+      if (selectedBrand === "all" || img.dataset.brand === selectedBrand) {
+        item.style.display = "block";
+      } else {
+        item.style.display = "none";
+      }
+    });
+  });
+});
 
+document.getElementById("backBtn").addEventListener("click", () => {
+  window.location.href = "\${cpath}/make/frame";
+});
+
+document.getElementById("nextBtn").addEventListener("click", () => {
+  if (selectedBackgroundLocked) {
+    alert("이 아이템이 없습니다. 상점으로 이동합니다.");
+    window.location.href = "/cardgarden/custom/detail?asset_id=" + selectedBackgroundId;
+    return;
+  }
+
+  window.location.href = "\${cpath}/make/sticker?type=\${type}&direction=\${direction}";
+});
 </script>
