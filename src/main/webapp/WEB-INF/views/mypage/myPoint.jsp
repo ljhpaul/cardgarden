@@ -84,7 +84,7 @@ h1 {
 }
 
 .form-container {
-  width:730px;
+  width: 800px;
   background-color: #ffffff;
   padding: 40px;
   border-radius: 20px;
@@ -144,8 +144,7 @@ span.remove:hover {
 
 input[type="submit"],
 input[type="reset"],
-.deleteBtn,
-#inCon {
+#btnpuls {
   background-color: #8FB098;
   color: white;
   font-size: 16px;
@@ -166,116 +165,38 @@ input[type="reset"]:hover,
 	  width: 800px;
 
 }
-
 </style>
 </head>
 <body>
-<div class="wrap2">
-<!-- 패턴 선택 드롭다운 -->
-    <div class="form-container">
-      <label for="patternSelect">소비패턴 선택</label>
-      <select id="patternSelect">
-        <option value="">-- 소비패턴 선택 --</option>
-        <c:forEach var="pattern" items="${myConsumptionPatternList}">
-          <option value="${pattern.pattern_id}">${pattern.pattern_name}</option>
-        </c:forEach>
-      </select>
-          <button id="inCon" style="float: right;">소비패턴 입력</button>
-    </div>
-
-     
-</div>
 <div class="wrap">
 <!-- 패턴 상세보기 -->
-<c:forEach var="pattern" items="${myConsumptionPatternList}">
-  <div class="wrap pattern-form" id="pattern_${pattern.pattern_id}" style="display:none;">
+  <div class="wrap pattern-form" id="pattern_${pattern.pattern_id}" style="display:flex;">
     <div class="form-container">
-      <form id="patternForm_${pattern.pattern_id}"  action="${cpath}/ConsumptionPattern/updateCon" method="post">
+      <form id="myfrm" action="${cpath}/ConsumptionPattern/updateCon" method="post">
         <input type="hidden" name="pattern_id" value="${pattern.pattern_id}">
+        <input type="hidden" name="job" value="insert">
 
         <div class="form-group">
           <label style="font-weight:1000; font-size: 25px;">소비패턴 이름</label>
-          <input type="text" name="pattern_name" value="${pattern.pattern_name}">
+          <input type="text" name="pattern_name" value="">
 		  <span style="display:inline-block; margin-top:10px;">
-		  	 생성일자 : <fmt:formatDate value="${pattern.created_at}" pattern="yyyy-MM-dd" />
+		  	 생성일자 : <fmt:formatDate value="" pattern="yyyy-MM-dd" />
 		  </span>
         </div>
-
-        <c:forEach var="detail" items="${pattern.details}">
           <div class="form-group">
-            <label>소비영역</label>
-            <select name="benefitcategory_id">
-              <c:forEach items="${benefitCategorylist}" var="benefit">
-                <option value="${benefit.benefitcategory_id}"
-                  <c:if test="${benefit.benefitcategory_id == detail.benefitcategory_id}">selected</c:if>>
-                  ${benefit.benefitCategory_name}
-                </option>
-              </c:forEach>
-            </select>
-            <br><br>
-            <label>소비금액</label>
-            <input type="number" name="amount" value="${detail.amount}" min="0">
+            <label>사용내역</label>
+            <input type="text" name="description">
           </div>
-        </c:forEach>
 
         <div class="button-group">
           <input type="submit" value="수정">
-          <button type="button" class="deleteBtn" data-pattern-id="${pattern.pattern_id}">삭제</button>
         </div>
       </form>
     </div>
   </div>
-</c:forEach>
 </div>
 
 <script>
-const cpath = "${cpath}";
-
-document.getElementById("patternSelect").addEventListener("change", function() {
-  const selectedId = this.value;
-  document.querySelectorAll(".pattern-form").forEach(form => {
-    form.style.display = "none";
-  });
-  if (selectedId) {
-    const target = document.getElementById("pattern_" + selectedId);
-    if (target) target.style.display = "flex";
-  }
-});
-
-
-
-
-document.getElementById("inCon").addEventListener("click", function() {
-	
-	  location.href = cpath + "/ConsumptionPattern/inCon"; 
-
-});
-
-
-//삭제 버튼 전체에 이벤트 바인딩
-document.querySelectorAll(".deleteBtn").forEach(btn => {
-  btn.addEventListener("click", function () {
-    const patternId = this.dataset.patternId;
-    if (confirm("정말 삭제하시겠습니까?")) {
-    	   fetch(`${cpath}/ConsumptionPattern/deleteCon`, {
-    	        method: "POST",
-    	        headers: {
-    	          "Content-Type": "application/x-www-form-urlencoded"
-    	        },
-    	        body: "pattern_id=" + encodeURIComponent(patternId)
-    	      }).then(response => response.text()) // 결과값에 담긴 text 꺼내기
-    	      .then(result => {
-    	    	  if (result.trim() === "ok") {
-    	    		    alert("삭제가 완료되었습니다.");
-    	    		    location.href = cpath + "/user/consumptionPattern"; 
-    	    		  } else {
-    	    		    alert("삭제에 실패했습니다.");
-    	    		  }
-    	    })
-    }
-  });
-});
-
 </script>
 
 </body>

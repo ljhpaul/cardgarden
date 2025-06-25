@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.cardgarden.project.model.benefitCategory.benefitCategoryDTO;
@@ -91,46 +92,57 @@ public class UserConsumptionPatternController {
 	}
 	
 	//소비패턴 수정
+	// 패턴 아이디, 패턴 제목, 선택된 카테고리, 작성한 금액
 	@PostMapping("/updateCon")
 	public String updateConsumPattern(@RequestParam("benefitcategory_id") int[] selectedCategories,
-			@RequestParam("amount") int[] amount, @RequestParam("pattern_name") String pattern_name,
+			@RequestParam("amount") int[] amount, @RequestParam("pattern_name") String pattern_name,int pattern_id,
 			RedirectAttributes redirectAttr,HttpServletRequest request) {
 
 		// 요청값 체크
 		System.out.println(pattern_name);
+		System.out.println("패턴 아이디 : " + pattern_id);
 		System.out.println(selectedCategories.length);
 		System.out.println(Arrays.toString(selectedCategories));
 		System.out.println(amount.length);
 		
-		// 날짜 가공하기
+		// 수정하는 날짜 가공하기
 		LocalDateTime now = LocalDateTime.now();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		String nowStr = now.format(formatter);
 		
 		Timestamp created_at = Timestamp.valueOf(nowStr);
 		
-		System.out.println(created_at);
+		System.out.println("수정하는 날짜 : " + created_at);
 		
-		//로그인 기능 구현 후 로그인 사용자 객체에서 user_id 가져오는 로직 추가
-		//세션에서 사용자 ID 꺼내기
-	    HttpSession mySession = request.getSession();
-	    int userId = (Integer)mySession.getAttribute("loginUserId");
-	    System.out.println("로그인한 사용자 ID: " + userId);
 		
 		// 요청값 가공
-		// UserConsumptionPattern에 먼저 insert
-		// pattern_id는 DB에서 자동으로 생성
+		// UserConsumptionPattern에 먼저 update
 		UserConsumptionPatternDTO ucp = UserConsumptionPatternDTO.builder()
 				.created_at(created_at)
 				.pattern_name(pattern_name)
-				.user_id(userId).build();
+				.pattern_id(pattern_id).build();
 		
-		// UserConsumptionPattern 먼저 insert 
-		ucpService.insertUserConsumptionPatternWithDetails(ucp,selectedCategories,amount);
+		ucpService.updatetUserConsumptionPatternWithDetails(ucp,selectedCategories,amount);
 		
-		redirectAttr.addFlashAttribute("msg", "등록이 완료되었습니다!");
+		redirectAttr.addFlashAttribute("msg", "수정이 완료되었습니다!");
 		
-		return "redirect:/inCon";
+		return "redirect:/user/consumptionPattern";
+		
+	}
+	
+	// 소비패턴 삭제
+	@PostMapping("/deleteCon")
+	@ResponseBody
+	public String deleteConsumPattern(int pattern_id,
+			RedirectAttributes redirectAttr,HttpServletRequest request) {
+
+		// 요청값 체크
+		System.out.println("패턴 아이디 : " + pattern_id);	
+
+		int result = ucpService.deleteConsumPattern(pattern_id);
+	
+		
+		return (result == 2) ? "ok" : "fail";
 		
 	}
 }

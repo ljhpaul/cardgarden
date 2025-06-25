@@ -1,6 +1,5 @@
 package com.cardgarden.project.controller.user;
 
-import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.cardgarden.project.model.CardSearchCondition.CardDTO;
 import com.cardgarden.project.model.benefitCategory.benefitCategoryDTO;
 import com.cardgarden.project.model.benefitCategory.benefitCategoryService;
 import com.cardgarden.project.model.user.dto.UserConsumptionPatternResponseDTO;
@@ -30,23 +30,8 @@ public class UserController {
 	
 	@Autowired
 	UserInfoService userInfoSerivce;
-	
-    // 세션에서 loginUserId 가져오기
-	public static int getLoginUserIdOrThrow(HttpServletRequest request) {
-        HttpSession session = request.getSession(false);
-        if (session == null) {
-            throw new IllegalStateException("세션이 존재하지 않습니다. 로그인 필요.");
-        }
 
-        Object loginUserIdObj = session.getAttribute("loginUserId");
-        if (loginUserIdObj == null) {
-            throw new IllegalStateException("로그인된 사용자 정보가 없습니다.");
-        }
-
-        return Integer.parseInt(loginUserIdObj.toString());
-    }
 	
-    
 	@GetMapping("/mypage")
 	public String mypage(HttpServletRequest request,Model model, RedirectAttributes redirectAttr) {
 	
@@ -89,11 +74,21 @@ public class UserController {
 	    return "redirect:/user/mypage";
 	}
 	
+	// 소비패턴보기
 	@GetMapping("/consumptionPattern")
 	public String myconsumptionPattern(HttpServletRequest request,Model model, RedirectAttributes redirectAttr) {
 		
-		int userId = getLoginUserIdOrThrow(request);
-		
+	    HttpSession mySession = request.getSession();
+	    Object loginUserIdObj = mySession.getAttribute("loginUserId");
+	    
+	    // 로그인되지 않았을 경우 처리
+	    if (loginUserIdObj == null) {
+	    	redirectAttr.addFlashAttribute("msg", "로그인이 필요한 기능입니다");
+	        return "redirect:/user/login";
+	    }
+	    
+	    int userId = (Integer) loginUserIdObj; // null 아님이 확실할 때만 형변환
+
 		List<UserConsumptionPatternResponseDTO> myConsumptionPatternList  = userInfoSerivce.selectMyonsumptionPattern(userId);
         
 		List<benefitCategoryDTO> benefitCategorylist = bcService.selectAll();
@@ -104,6 +99,40 @@ public class UserController {
 		
 	    return "mypage/myconsumptionPattern";
 		
+	}
+	
+	
+	
+	
+	//포인트관리
+	@GetMapping("/point")
+	public String myPoint(){
+		
+		 return "mypage/myPoint";
+	}
+	
+	//내가 좋아요한 카드
+	@GetMapping("/card")
+	public String mmyLikeCardList(HttpServletRequest request, Model model, RedirectAttributes redirectAttr){
+		
+	    HttpSession mySession = request.getSession();
+	    Object loginUserIdObj = mySession.getAttribute("loginUserId");
+	    
+	    // 로그인되지 않았을 경우 처리
+	    if (loginUserIdObj == null) {
+	    	redirectAttr.addFlashAttribute("msg", "로그인이 필요한 기능입니다");
+	        return "redirect:/user/login";
+	    }
+	    
+	    int userId = (Integer) loginUserIdObj; // null 아님이 확실할 때만 형변환
+		
+		List<CardDTO> myLikeCardList = userInfoSerivce.myLikeCardList(userId);
+		
+		System.out.println("내가 좋아요한 카드 잘 가져오나..?" + myLikeCardList.size());
+		
+		model.addAttribute("myLikeCardList", myLikeCardList);
+		
+		 return "mypage/mycard";
 	}
 
 }
