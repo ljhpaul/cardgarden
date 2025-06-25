@@ -36,7 +36,7 @@ const isLogin = ${isLogin ? 'true' : 'false'};
         <button type="button" class="size-btn ${selectedType eq 'withoutchip' ? 'active' : ''}" data-type="withoutchip">Without Chip</button>
       </div>
 
-      <p class="option-title">보기 방향 선택</p>
+      <p class="option-title">보기 방향</p>
       <div class="view-btn-group">
         <button type="button" class="view-btn ${selectedDirection eq 'portrait' ? 'active' : ''}" data-direction="portrait">가로보기</button>
         <button type="button" class="view-btn ${selectedDirection eq 'landscape' ? 'active' : ''}" data-direction="landscape">세로보기</button>
@@ -54,13 +54,10 @@ const isLogin = ${isLogin ? 'true' : 'false'};
     <div class="btnn">
       <form id="makeForm" action="${cpath}/make/background" method="get" style="flex:1; display:flex; width:100%; height:100%;">
         <input type="hidden" name="type" id="typeInput" value="${selectedType}">
-        <input type="hidden" name="direction" id="directionInput" value="${selectedDirection}">
         <button type="submit">제작하러 가기</button>
       </form>
     </div>
-
   </div>
-
 </div>
 
 <script>
@@ -79,8 +76,6 @@ document.querySelectorAll(".size-btn").forEach(btn => {
 
 document.querySelectorAll(".view-btn").forEach(btn => {
     btn.addEventListener("click", () => {
-        document.getElementById("directionInput").value = btn.dataset.direction;
-
         const cardBg = document.querySelector(".card-bg");
         cardBg.classList.remove("portrait", "landscape");
         cardBg.classList.add(btn.dataset.direction);
@@ -97,4 +92,5 @@ document.getElementById("makeForm").addEventListener("submit", (e) => {
         location.href = `${cpath}/user/login`;
     }
 });
+
 </script>
