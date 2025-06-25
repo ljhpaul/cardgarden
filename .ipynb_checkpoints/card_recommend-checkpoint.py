@@ -15,7 +15,7 @@ def get_recommend_result(pattern_id):
     categories_small = arr_key2
     
     # DB 연결
-    engine = create_engine("mysql+pymysql://cardgarden:1234@192.168.0.13/cardgarden?charset=utf8mb4")
+    engine = create_engine("mysql+pymysql://cardgarden:1234@localhost/cardgarden?charset=utf8mb4")
     
     sql_pattern = "SELECT pattern_id, user_id FROM UserConsumptionPattern ORDER BY CREATED_AT DESC"
     sql_detail = "SELECT pattern_id, benefitcategory_id, amount FROM UserConsumptionPatternDetail"
@@ -57,7 +57,7 @@ def get_recommend_result(pattern_id):
     df_wide_list = df_wide[arr_key2].values.tolist()
     
     conn = pymysql.connect(
-        host='192.168.0.13',
+        host='localhost',
         user='cardgarden',
         password='1234',
         db='cardgarden',

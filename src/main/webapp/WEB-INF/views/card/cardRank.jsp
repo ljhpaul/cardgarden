@@ -21,7 +21,9 @@
 }
 body {
 	font-family: 'NanumSquareRound', sans-serif;
-	background-color: #f7f7f7;
+	background-color: #F0F3F1;
+	margin : 0;
+	padding : 0;
 }
 
 .section {

@@ -20,4 +20,22 @@ public class UserConsumptionPatternDAO {
 		return result;
 	}
 
+	// 패턴 제목,갱신일자 수정
+	public int updatetUserConsumptionPattern(UserConsumptionPatternDTO ucp) {
+		int result = 0;
+		
+		result = sqlSession.insert(namespace + "updatetUserConsumptionPattern",ucp);
+		
+		return result;
+		
+	}
+
+	public int deleteByPatternId(int pattern_id) {
+		int result = 0;
+		
+		result = sqlSession.delete(namespace + "deleteConsumPattern",pattern_id);
+		
+		return result;
+	}
+
 }

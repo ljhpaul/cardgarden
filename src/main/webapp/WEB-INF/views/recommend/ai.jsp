@@ -154,23 +154,21 @@
 	    <c:when test="${empty patternList}">
 	      <div class="pattern-container" style="display:block;">
 	        <p style="font-size:20px; font-weight:bold; margin-bottom: 22px;">등록된 소비패턴이 없습니다.</p>
-	        <form action="${cpath}/inCon" method="get">
+	        <form action="${cpath}/ConsumptionPattern/inCon" method="get">
 	          <button type="submit" class="button-primary">소비패턴 입력하러 가기</button>
 	        </form>
 	      </div>
 	    </c:when>
 	    <c:otherwise>
-	      <form method="get" action="${cpath}/recommend/aiResult" onsubmit="event.preventDefault(); showMaskAndSubmit(this);">
+	      <form method="post" action="${cpath}/recommend/selectPattern" onsubmit="event.preventDefault(); showMaskAndSubmit(this);">
 	        <div class="pattern-container">
 	          <c:forEach var="entry" items="${patternList}">
 	            <div class="pattern-group" onclick="document.getElementById('pattern_${entry.key}').click();">
 	              <div class="pattern-title">
-	                <input type="checkbox" class="pattern-checkbox" name="patternId"
-	                       value="${entry.key}" id="pattern_${entry.key}"
-	                       onclick="checkOnlyOne(this); event.stopPropagation();">
-	                <label for="pattern_${entry.key}">
-	                  ${entry.value[0].pattern.pattern_name}
-	                </label>
+	               <input type="radio" class="pattern-radio" name="patternId"
+					       value="${entry.key}" id="pattern_${entry.key}">
+					<label for="pattern_${entry.key}">${entry.value[0].pattern.pattern_name}</label>
+
 	              </div>
 	              <c:forEach var="dto" items="${entry.value}">
 	                <div class="benefit-row">

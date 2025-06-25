@@ -34,6 +34,14 @@
 		  </if>
 		</select>
 		
+		<select id="cardSelectByCompany" resultMap="CardWithBenefitsMap" parameterType="String">
+			SELECT c.*, cbd.cardbenefitdetail_text
+			  FROM Card c
+			  JOIN CardBenefitDetail cbd ON c.card_id = cbd.card_id
+			  where c.company =  #{company}
+		</select>
+		
+		
 		<resultMap id="CardWithBenefitsMap" type="CardConditionDTO">
 		  <id property="card_id" column="card_id"/>
 		  <result property="card_name" column="card_name"/>

@@ -21,4 +21,14 @@ public class UserConsumptionPatternDetailDAO {
 		return result;
 	}
 
+	// 선택된 카테고리, 금액 수정 
+	// 기존 데이터 삭제 후 insert 
+	public int deleteByPatternId(int pattern_id) {
+		int result = 0;
+		
+		sqlSession.delete(namespace + "deleteDetailsByPatternId", pattern_id);
+		
+		return result;
+	}
+
 }
