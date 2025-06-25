@@ -49,11 +49,27 @@
 		WHERE user_name = #{user_name}
 	</select>
 	
+	<!-- 이름과 이메일로 로그인아이디 조회 -->
+	<select id="getLoginIdByNameAndEmail" parameterType="map" resultType="string">
+		SELECT user_name
+		  FROM userInfo
+		 WHERE name = #{name}
+		   AND email = #{email}
+	</select>
+	
 	<!-- 로그인 아이디로 비밀번호 조회 -->
 	<select id="getPasswordByLoginId" parameterType="string" resultType="string">
 		SELECT user_password
-		FROM userInfo
-		WHERE user_name = #{user_name}
+		  FROM userInfo
+		 WHERE user_name = #{user_name}
+	</select>
+	
+	<!-- 로그인 아이디와 이메일로 비밀번호 조회 -->
+	<select id="getPasswordByLoginIdAndEmail" parameterType="map" resultType="string">
+		SELECT user_password
+		  FROM userInfo
+		 WHERE user_name = #{user_name}
+		   AND email = #{email}
 	</select>
 	
 	<!-- 아이디 중복체크/회원유무 확인 -->
@@ -61,6 +77,13 @@
 		SELECT COUNT(*)
 		FROM userInfo
 		WHERE user_name = #{user_name}
+	</select>
+
+	<!-- 이름존재 확인 -->
+	<select id="countByName" parameterType="String" resultType="int">
+		SELECT COUNT(*)
+		FROM userInfo
+		WHERE name = #{name}
 	</select>
 
 	<!-- 이메일 중복체크 -->
