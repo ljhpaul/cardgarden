@@ -43,6 +43,7 @@ public class CardDetailController {
     	    Model model,
     	    HttpSession session) {
     	Integer userId = (Integer) session.getAttribute("loginUserId");
+ 
     	if (userId!=null) {
     		CardDTO card = cardLkieService.selectByIdWithLike(cardid, userId);
     		List<CardDTO> cardList = new ArrayList<>();
