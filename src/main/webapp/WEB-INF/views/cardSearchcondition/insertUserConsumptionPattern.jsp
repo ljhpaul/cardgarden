@@ -153,7 +153,7 @@ input[type="reset"]:hover,
 <body>
   <div class="wrap">
     <div class="form-container">
-      <form id="myfrm" action="${cpath}/inCon" method="post">
+      <form id="myfrm" action="${cpath}/ConsumptionPattern/inCon" method="post">
         <input type="hidden" name="job" value="insert">
 
         <div class="form-group">
