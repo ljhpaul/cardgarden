@@ -22,4 +22,18 @@ public class CardSearchConditionDAO {
 		return CardList;
 	}
 
+	public List<CardDTO> cardSelectByCompany(String company) {
+		
+		List<CardDTO> CardList = sqlSession.selectList(namespace + "cardSelectByCompany",company);
+		
+		return CardList;
+	}
+
+	public List<CardDTO> selectByViews() {
+			
+		List<CardDTO> CardList = sqlSession.selectList(namespace + "selectByViews");
+		
+		return CardList;
+	}
+
 }
