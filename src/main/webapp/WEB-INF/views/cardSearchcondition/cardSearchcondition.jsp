@@ -51,6 +51,12 @@
 	  border-radius: 12px 12px 0 0;
 	  font-size: 15px;
 	  box-shadow: 0 -2px 0 rgba(0,0,0,0.1);
+	  margin-bottom: 10px;
+	  padding-left: 10px;
+	}
+	#benefitDetailListarea{
+		padding-left: 10px;
+		padding-top: 4px;
 	}
     .folder_btn {
       display: block;
@@ -180,6 +186,7 @@
             </span>
             ${category.benefitCategory_name}
           </div>
+          <div id="benefitDetailListarea">
           <c:forEach var="detail" items="${benefitDetailList}">
             <c:if test="${detail.benefitcategory_id == category.benefitcategory_id}">
               <label class="folder_btn">
@@ -188,6 +195,7 @@
               </label>
             </c:if>
           </c:forEach>
+          </div>
         </div>
       </c:forEach>
     </div>

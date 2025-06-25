@@ -1,0 +1,80 @@
+.bg-main {
+  background: #f9faf9 !important;
+  min-height: 100vh;
+}
+
+.container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font);
+}
+
+.box {
+  background: #fff;
+  border-radius: 24px;
+  box-shadow: 0 2px 16px rgba(100,130,120,0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.title-lg {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--m1);
+  margin-top: 10px;
+  margin-bottom: 45px;
+}
+
+.btn {
+  border-radius: 10px;
+  box-shadow: 0 2px 16px rgba(100,130,120,0.08);
+  background: var(--m1);
+  color: #fff;
+  border: none;
+  transition: background 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.btn:hover {
+  background: var(--m3);
+  box-shadow: 0 3px 24px rgba(84, 118, 106, 0.142);
+}
+.btn:disabled, .btn:disabled:hover {
+  background: #eee;
+  color: #aaa;
+  cursor: not-allowed;
+}
+
+.input {
+  flex: 1;
+  border: 1px solid var(--m1);
+  border-radius: 10px;
+  padding: 12px;
+  font-size: 16px;
+  font-family: var(--font);
+  box-sizing: border-box;
+}
+
+.social-btn { 
+  box-shadow: 0 2px 16px rgba(100,130,120,0.08);
+  border-radius: 10%;
+  overflow: hidden;
+}
+.social-btn:hover { box-shadow: 0 3px 24px rgba(84, 118, 106, 0.142); }
+.social-btn.google:hover { border: 2px; border-color: #e5482e; color: #e5482e; }
+.social-btn.naver:hover { border: 2px; border-color: #03c75a; color: #03c75a; }
+.social-btn.kakao:hover { border: 2px; border-color: #fee500; color: #fee500; }
+
+.text-link {
+  color: var(--m1);
+  font-weight: 600;
+  text-decoration: underline;
+}
+.text-link:hover {
+  color: var(--m3);
+}

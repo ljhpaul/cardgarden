@@ -1,6 +1,20 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ include file="../common/header.jsp" %>
+<%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" isELIgnored="false" session="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%
+    HttpSession mySession = request.getSession();
+    Object userId = mySession.getAttribute("loginUserId");
+    System.out.println("로그인한 사용자 ID: " + userId);
+    if (userId == null) {
+%>
+    <script>
+        alert("로그인이 필요한 기능입니다.");
+        location.href = "<%= request.getContextPath() %>/user/login";
+    </script>
+<%
+        return;
+    }
+%>
 <c:set var="cpath" value="${pageContext.request.contextPath}" />
 <c:if test="${not empty msg}">
     <script>alert('${msg}');</script>
@@ -11,35 +25,39 @@
 <meta charset="UTF-8">
 <title>소비패턴 등록</title>
 <style>
-  @font-face {
-    font-family: 'NanumSquareRound';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-  }
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+@font-face {
+  font-family: 'NanumSquareRound';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
 
 body {
   font-family: 'NanumSquareRound', sans-serif;
   background-color: #F0F3F1;
-  margin: 0;
-  padding: 60px 20px;
   color: #333;
 }
 
 h1 {
   text-align: center;
-  font-size: 28px;
+  font-size: 30px;
   margin-bottom: 40px;
-  color: #2e4a3d;
+  color: #646F58;
 }
 
-form {
+#myfrm {
   max-width: 700px;
   margin: auto;
-  background: #fff;
+  background: #ffffff;
   padding: 40px;
   border-radius: 20px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
 }
 
 .wrap {
@@ -47,17 +65,16 @@ form {
   min-height: 100vh;
   display: flex;
   justify-content: center;
-  gap: 40px;
   padding: 40px;
   background-color: #F0F3F1;
 }
 
 .form-container {
   width: 800px;
-  background-color: #fff;
+  background-color: #ffffff;
   padding: 40px;
   border-radius: 20px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
 }
 
 .form-group {
@@ -66,36 +83,44 @@ form {
 
 label {
   display: block;
-  margin-top : 15px;
   margin-bottom: 10px;
   font-weight: bold;
-  font-size: 15px;
+  font-size: 16px;
   color: #3e4e42;
 }
 
-input[type="text"], input[type="number"], select {
+input[type="text"],
+input[type="number"],
+select {
   width: 100%;
-  padding: 14px;
-  font-size: 14px;
+  padding: 14px 16px;
+  font-size: 15px;
   border: 1px solid #ccc;
   border-radius: 12px;
-  box-sizing: border-box;
+  background-color: #FAFAFA;
+  transition: border-color 0.3s ease;
+}
+
+input:focus,
+select:focus {
+  border-color: #8FB098;
+  outline: none;
 }
 
 span.remove {
   display: inline-block;
   margin-top: 10px;
-  background-color: #ff4d4d;
+  background-color: #ff6b6b;
   color: #fff;
-  padding: 6px 12px;
-  border-radius: 6px;
-  font-size: 12px;
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 13px;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: background-color 0.3s;
 }
 
 span.remove:hover {
-  background-color: #d93636;
+  background-color: #e84545;
 }
 
 .button-group {
@@ -103,12 +128,14 @@ span.remove:hover {
   margin-top: 40px;
 }
 
-input[type="submit"], input[type="reset"], #btnpuls {
-  background-color: #4caf50;
+input[type="submit"],
+input[type="reset"],
+#btnpuls {
+  background-color: #8FB098;
   color: white;
-  font-size: 15px;
+  font-size: 16px;
   border: none;
-  padding: 12px 24px;
+  padding: 14px 28px;
   margin: 5px;
   border-radius: 12px;
   cursor: pointer;
@@ -118,20 +145,19 @@ input[type="submit"], input[type="reset"], #btnpuls {
 input[type="submit"]:hover,
 input[type="reset"]:hover,
 #btnpuls:hover {
-  background-color: #388e3c;
+  background-color: #6B8B71;
 }
 
 </style>
 </head>
 <body>
-<h1>소비패턴 등록</h1>
   <div class="wrap">
     <div class="form-container">
       <form id="myfrm" action="${cpath}/inCon" method="post">
         <input type="hidden" name="job" value="insert">
 
         <div class="form-group">
-          <label>소비패턴 이름</label>
+          <label style="font-weight:1000; font-size: 25px;">소비패턴 이름</label>
           <input type="text" name="pattern_name" required autofocus placeholder="소비패턴 이름을 입력하세요">
         </div>
 
@@ -142,8 +168,10 @@ input[type="reset"]:hover,
 					<option value="${benefit.benefitcategory_id}">${benefit.benefitCategory_name}</option>
 				</c:forEach>
           </select>
+          <br><br>
           <label>소비금액</label>
           <input type="number" name="amount" placeholder="금액을 입력하세요" min="0" max="">
+          <br><br>
         </div>
 
         <div class="button-group">
@@ -175,6 +203,11 @@ input[type="reset"]:hover,
 					
 					const label1 = document.createElement("label"); // <label></label>
 					label1.textContent = "소비영역";
+					
+					// <br> 두 개 추가
+					const br1 = document.createElement("br");
+					const br2 = document.createElement("br");
+					
 					
 					const select = document.createElement("select"); // <select></select>
 					select.name = "benefitcategory_id"; // <select name="benefitcategory_id"> </select>
@@ -226,9 +259,10 @@ input[type="reset"]:hover,
 
 				    })
 				    
-
 					div.appendChild(label1);
 					div.appendChild(select);
+					div.appendChild(br1);
+					div.appendChild(br2);
 					div.appendChild(label2);
 					div.appendChild(input); // input을 div에 넣고
 				    div.appendChild(span);

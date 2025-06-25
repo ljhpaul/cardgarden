@@ -1,10 +1,11 @@
 package com.cardgarden.project.controller;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,7 +30,7 @@ public class RecommendAIController {
 	
 	@RequestMapping("/aiResult")
 	public String cardDetail(@RequestParam("patternId") int patternId, Model model) throws Exception {
-	    System.out.println("현재 작업 디렉토리: " + new File(".").getAbsolutePath());
+//	    System.out.println("현재 작업 디렉토리: " + new File(".").getAbsolutePath());
 	    List<CardRecommendationDTO> dataList = cardRecommendationService.getRecommendResult(patternId);
 
 	    Map<Integer, List<CardDTO>> mapData = new LinkedHashMap<>();
@@ -38,8 +39,6 @@ public class RecommendAIController {
 	        mapData.computeIfAbsent(groupKey, k -> new ArrayList<>())
 	               .addAll(cardService.selectById(groupKey));
 	    }
-
-
 	    try {
 	        System.out.println(dataList);
 	        model.addAttribute("aiList", dataList);    // 추천 리스트
@@ -49,5 +48,6 @@ public class RecommendAIController {
 	    }
 	    return "recommend/aiResult";
 	}
+	
 	
 }

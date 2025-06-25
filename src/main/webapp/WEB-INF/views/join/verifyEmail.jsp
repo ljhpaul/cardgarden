@@ -4,19 +4,19 @@
 
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
 <link rel="stylesheet" href="${cpath}/resources/css/common.css">
-<link rel="stylesheet" href="${cpath}/resources/css/join.css">
+<link rel="stylesheet" href="${cpath}/resources/css/style.css">
 <link rel="stylesheet" href="${cpath}/resources/css/font-awesome.min.css">
 
 <head>
     <title>카드가든 : 회원가입</title>
 </head>
 
-<div class="join-bg">
-  <div class="join-container">
-    <div class="join-box">
-      <h2 class="join-title">이메일 인증</h2>
+<div class="bg-main">
+  <div class="container">
+    <div class="box">
+      <h2 class="title-lg">이메일 인증</h2>
       
-      <form id="email-form" action="${cpath}/user/email/request" method="POST" autocomplete="off" style="width:100%;">
+      <form id="email-form" action="${cpath}/user/join/email" method="POST" autocomplete="off" style="width:100%;">
         <div style="width:100%; margin-bottom:16px;">
           <label for="email" class="email-form-label">이메일 입력</label>
           <div class="email-input-row">
@@ -25,11 +25,11 @@
               id="email"
               name="email"
               required
-              class="form-control"
+              class="input"
               placeholder="cardgarden@email.com"
               oninput="resetStatus();"
             />
-            <button type="button" id="email-request-btn" class="join-btn" style="min-width:96px; font-size:15px; height:44px;">
+            <button type="button" id="email-request-btn" class="btn btn-sub">
               인증요청
             </button>
           </div>
@@ -47,11 +47,11 @@
               id="code"
               name="code"
               maxlength="6"
-              class="form-control code-input"
+              class="input code-input"
               placeholder="6자리"
               autocomplete="off"
             />
-            <button type="button" id="code-check-btn" class="join-btn" style="min-width:80px; font-size:15px; height:44px;">
+            <button type="button" id="code-check-btn" class="btn btn-sub">
               인증확인
             </button>
           </div>
@@ -63,12 +63,7 @@
           <i class="fa fa-check-circle"></i> 인증성공
         </div>
         
-        <button
-          type="submit"
-          id="next-btn"
-          class="join-btn"
-          disabled
-        >
+        <button type="submit" id="next-btn" class="btn" disabled >
           다음
         </button>
       </form>
@@ -77,28 +72,14 @@
 </div>
 
 <style>
-  .join-container {
+  .container {
     padding-top: 135px;
   }
-  .join-title {
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: var(--m1);
-    margin-top: 10px;
-    margin-bottom: 45px;
-  }
-  .join-box {
+  .box {
     max-width: 440px;
     width: 100%;
     padding: 40px 32px;
     box-sizing: border-box;
-    background: #fff;
-    border-radius: 20px;
-    box-shadow: 0 2px 16px rgba(100,130,120,0.08);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
   }
   .email-form-label {
     font-weight: 600;
@@ -110,15 +91,6 @@
     gap: 8px;
     margin-top: 10px;
     width: 100%;
-  }
-  .form-control {
-    flex: 1;
-    border: 1px solid var(--m1);
-    border-radius: 8px;
-    padding: 12px;
-    font-size: 16px;
-    font-family: var(--font);
-    box-sizing: border-box;
   }
   .code-input {
     letter-spacing: 2px;
@@ -140,6 +112,11 @@
     font-weight: 600;
     display: none;
     text-align: center;
+  }
+  .btn-sub {
+    min-width:96px;
+    font-size:15px;
+    height:44px;
   }
   #next-btn {
     width: 100%;
@@ -203,6 +180,8 @@
           $('#success-msg').show();
           $('#next-btn').prop('disabled', false);
           $('#code-timer').hide();
+          $("#code").prop("readonly", true);
+          $("#code").css("background-color", "var(--main)");
         } else {
           $('#code-timer').css('color','#E44E37').text('・ 인증번호가 올바르지 않거나 만료되었습니다.');
         }
@@ -237,9 +216,16 @@
     clearInterval(timer);
     $('#code-timer').hide();
   }
+  
   // 이메일 형식 검증
   function validateEmail(email) {
 	  const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 	  return re.test(email);
+  }
+  
+  // 인증번호 형식 검증
+  function validateCode(code) {
+	  const re = /^\d{6}$/;
+	  return re.test(code);
   }
 </script>

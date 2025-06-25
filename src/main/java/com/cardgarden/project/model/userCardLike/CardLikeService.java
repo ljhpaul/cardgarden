@@ -1,15 +1,18 @@
 package com.cardgarden.project.model.userCardLike;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.cardgarden.project.model.cardDetail.CardDTO;
 
 @Service
 public class CardLikeService {
 
 	@Autowired
 	private CardLikeDAOInterface cardLikeDAO;
-	
-	private final String namespace = "com.firstzone.cardLike";
 	
 	
 	public int cardLikeInsert(CardLikeDTO cardlike) {
@@ -19,4 +22,12 @@ public class CardLikeService {
 	public int cardLikeDelete(CardLikeDTO cardlike) {
 		return cardLikeDAO.cardLikeDelete(cardlike);
 	}
+	public CardDTO selectByIdWithLike(int cardId, int userId) {
+	    Map<String, Object> params = new HashMap<>();
+	    params.put("cardId", cardId);
+	    params.put("userId", userId);
+	    return cardLikeDAO.selectByIdWithLike(params);
+	}
+
+	
 }

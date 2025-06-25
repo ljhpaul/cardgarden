@@ -15,12 +15,8 @@
 <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css" />
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css">
 <link rel="stylesheet" href="/resources/demos/style.css">
-
   <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
   <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
-  <script>
-
-  </script>
 <style>
 * {
 	box-sizing: border-box;
@@ -124,9 +120,9 @@ input[type="submit"]:hover {
   align-items: center;
   justify-content: center;
   margin: 20px auto;
-  background-color: #d3d3d3; /* light gray */
+  background-color: #F5F5F5;
   border-radius: 50%; /* 원형 */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* 부드러운 그림자 */
+/*   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* 부드러운 그림자 */ */
 }
 
 .card-thumbnail {
