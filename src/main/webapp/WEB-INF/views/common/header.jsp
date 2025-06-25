@@ -125,3 +125,87 @@
 
   </div>
 </nav>
+
+<!-- 나뭇잎,꽃잎 떨어지는 효과 -->
+<style>
+  canvas#effectCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: -1; /* 필요시 조절 */
+  }
+</style>
+
+<canvas id="effectCanvas"></canvas>
+
+<script>
+  const canvas = document.getElementById("effectCanvas");
+  const ctx = canvas.getContext("2d");
+
+  const flowerImg = new Image();
+  flowerImg.src = "${cpath}/resources/images/common/sakuraleaf.png";
+
+  const leafImg = new Image();
+  leafImg.src = "${cpath}/resources/images/common/leaf2.png";
+
+  const particles = [];
+
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+
+  function createParticle() {
+    const isFlower = Math.random() < 0.5; // 50% 확률
+    return {
+      x: Math.random() * canvas.width,
+      y: -20,
+      speedY: 1 + Math.random() * 2,
+      speedX: Math.random() * 1 - 0.5,
+      size: 20 + Math.random() * 30,
+      angle: Math.random() * Math.PI * 2,
+      rotateSpeed: Math.random() * 0.02,
+      type: isFlower ? "flower" : "leaf"
+    };
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    for (let p of particles) {
+      p.y += p.speedY;
+      p.x += p.speedX;
+      p.angle += p.rotateSpeed;
+
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.angle);
+      const img = (p.type === "flower") ? flowerImg : leafImg;
+      ctx.drawImage(img, -p.size / 2, -p.size / 2, p.size, p.size);
+      ctx.restore();
+    }
+
+    // 제거된 후 다시 생성
+    while (particles.length < 20) {
+      particles.push(createParticle());
+    }
+
+    for (let i = particles.length - 1; i >= 0; i--) {
+      if (particles[i].y > canvas.height + 50) {
+        particles.splice(i, 1);
+      }
+    }
+
+    requestAnimationFrame(animate);
+  }
+
+  window.addEventListener("resize", resizeCanvas);
+  Promise.all([
+    new Promise(res => flowerImg.onload = res),
+    new Promise(res => leafImg.onload = res)
+  ]).then(() => {
+    resizeCanvas();
+    animate();
+  });
+</script>
