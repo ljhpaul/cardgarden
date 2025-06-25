@@ -5,8 +5,8 @@
 
 <c:set var="cpath" value="${pageContext.servletContext.contextPath}" />
 
-<!-- 빈 파비콘 (브라우저 요청 방지) -->
-<link rel="icon" href="data:;base64,iVBORw0KGgo=">
+<!-- 파비콘 -->
+<link rel="icon" type="image/png" href="/cardgarden/resources/favicon.png">
 
 <!---->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
