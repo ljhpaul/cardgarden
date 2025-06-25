@@ -18,4 +18,20 @@ public class CustomMakeService {
     public List<Integer> getOwnedBackgroundList(int userId) {
         return dao.selectOwnedBackgroundList(userId);
     }
+
+    public List<CustomAssetDTO> getStickerList() {
+        return dao.selectStickerList();
+    }
+
+    public List<Integer> getOwnedStickerList(int userId) {
+        return dao.selectOwnedStickerList(userId);
+    }
+
+    public void incrementUsed(int assetId) {
+        dao.plusUsed(assetId);
+    }
+
+    public void decrementUsed(int assetId) {
+        dao.minusUsed(assetId);
+    }
 }

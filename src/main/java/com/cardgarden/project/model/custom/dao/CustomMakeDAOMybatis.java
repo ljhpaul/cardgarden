@@ -11,7 +11,7 @@ public class CustomMakeDAOMybatis implements CustomMakeDAOInterface {
 
     @Autowired
     private SqlSessionTemplate sqlSession;
-
+    // 배경
     private final String namespace = "com.cardgarden.custommake";
 
     public List<CustomAssetDTO> selectBackgroundList() {
@@ -19,6 +19,19 @@ public class CustomMakeDAOMybatis implements CustomMakeDAOInterface {
     }
     public List<Integer> selectOwnedBackgroundList(int userId) {
         return sqlSession.selectList(namespace + ".selectOwnedBackgroundList", userId);
+    }
+    // 스티커
+    public List<CustomAssetDTO> selectStickerList() {
+        return sqlSession.selectList(namespace + ".selectStickerList");
+    }
+    public List<Integer> selectOwnedStickerList(int userId) {
+        return sqlSession.selectList(namespace + ".selectOwnedStickerList", userId);
+    }
+    public void plusUsed(int assetId) {
+        sqlSession.update(namespace + ".plusUsed", assetId);
+    }
+    public void minusUsed(int assetId) {
+        sqlSession.update(namespace + ".minusUsed", assetId);
     }
 
 }

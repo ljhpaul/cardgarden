@@ -12,7 +12,7 @@
     
     <!-- 왼쪽 카드 미리보기 -->
     <div class="preview-area">
-      <div class="card-bg ${direction}">
+      <div class="card-bg">
         <div id="cardFrame" class="card-frame ${type}">
           <div class="chip"></div>
           <div class="wide-overlay"></div>
@@ -30,21 +30,24 @@
       </div>
 
       <div class="bg-list">
-        <c:forEach var="item" items="${backgroundList}">
-          <div class="bg-item">
-            <img 
-              src="${cpath}/resources/images/asset/${item.asset_type}/${item.asset_brand}/${item.asset_type}_${item.asset_brand}_${item.asset_no}_${item.asset_name}.png" 
-              alt="${item.asset_name}" 
-              class="bg-option ${item.own ? '' : 'locked-img'}" 
-              data-img="${cpath}/resources/images/asset/${item.asset_type}/${item.asset_brand}/${item.asset_type}_${item.asset_brand}_${item.asset_no}_${item.asset_name}.png" 
-              data-brand="${item.asset_brand}"
-              data-id="${item.asset_id}"
-              ${item.own ? '' : 'data-locked="true"'}>
-            <c:if test="${!item.own}">
-              <i class="fa fa-lock lock-icon" aria-hidden="true"></i>
-            </c:if>
-          </div>
-        </c:forEach>
+		<c:forEach var="item" items="${backgroundList}">
+		  <div class="bg-item">
+		    <div class="img-wrap">
+		      <img 
+		        src="${cpath}/resources/images/asset/${item.asset_type}/${item.asset_brand}/${item.asset_type}_${item.asset_brand}_${item.asset_no}_${item.asset_name}.png" 
+		        alt="${item.asset_name}" 
+		        class="bg-option ${item.own ? '' : 'locked-img'}" 
+		        data-img="${cpath}/resources/images/asset/${item.asset_type}/${item.asset_brand}/${item.asset_type}_${item.asset_brand}_${item.asset_no}_${item.asset_name}.png" 
+		        data-brand="${item.asset_brand}"
+		        data-id="${item.asset_id}"
+		        ${item.own ? '' : 'data-locked="true"'} >
+		    </div>
+		    
+		    <c:if test="${!item.own}">
+		      <i class="fa fa-lock lock-icon" aria-hidden="true"></i>
+		    </c:if>
+		  </div>
+		</c:forEach>
       </div>
     </div>
   </div>
@@ -59,7 +62,6 @@
 <script>
 const cpath = '${cpath}';
 const type = '${type}';
-const direction = '${direction}';
 
 let selectedBackgroundId = null;
 let selectedBackgroundLocked = false;
@@ -97,16 +99,25 @@ document.querySelectorAll(".brand-btn").forEach(btn => {
 });
 
 document.getElementById("backBtn").addEventListener("click", () => {
-  window.location.href = "\${cpath}/make/frame";
+  window.location.href = `${cpath}/make/frame`;
 });
 
 document.getElementById("nextBtn").addEventListener("click", () => {
   if (selectedBackgroundLocked) {
     alert("이 아이템이 없습니다. 상점으로 이동합니다.");
-    window.location.href = "/cardgarden/custom/detail?asset_id=" + selectedBackgroundId;
+    window.location.href = `${cpath}/custom/detail?asset_id=${selectedBackgroundId}`;
+    return;
+  }
+  const cardFrame = document.getElementById("cardFrame");
+  const backgroundImage = cardFrame.style.backgroundImage;
+
+  if (!backgroundImage || backgroundImage === "none") {
+    alert("배경을 선택하세요.");
     return;
   }
 
-  window.location.href = "\${cpath}/make/sticker?type=\${type}&direction=\${direction}";
+  const url = backgroundImage.slice(5, -2);
+
+  window.location.href = "${cpath}/make/sticker?type=" + type + "&background=" + encodeURIComponent(url);
 });
 </script>
