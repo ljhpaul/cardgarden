@@ -34,7 +34,7 @@
             </button>
           </div>
           <div id="email-msg" class="email-msg">
-            ・ 입력할 이메일로 인증번호가 발송됩니다.<br>・ 인증메일을 받을 수 있도록 자주 쓰는 이메일을 입력해 주세요.
+            ・ 입력한 이메일로 인증번호가 발송됩니다.<br>・ 인증메일을 받을 수 있도록 자주 쓰는 이메일을 입력해 주세요.
           </div>
         </div>
         
@@ -209,7 +209,7 @@
 
   // 상태 초기화
   function resetStatus() {
-    $('#email-msg').css('color','#999').html('・ 입력할 이메일로 인증번호가 발송됩니다.<br>・ 인증메일을 받을 수 있도록 자주 쓰는 이메일을 입력해 주세요.');
+    $('#email-msg').css('color','#999').html('・ 입력한 이메일로 인증번호가 발송됩니다.<br>・ 인증메일을 받을 수 있도록 자주 쓰는 이메일을 입력해 주세요.');
     $('#code-area').hide();
     $('#success-msg').hide();
     $('#next-btn').prop('disabled', true);

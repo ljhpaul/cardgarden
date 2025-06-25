@@ -183,45 +183,65 @@
 .pattern-close-button:hover {
   color: #d33;
 }
-
-
+.no-pattern-message p{
+padding-bottom: 25px;
+}
+.no-pattern-message a {
+  display: inline-block; /* 또는 block */
+  margin: 0 auto;
+  padding-left: 50px;
+    padding-right: 50px;
+  text-align: center;
+}
 </style>
 <button type="button" class="pattern-close-button" onclick="closePatternModal()">×</button>
-<form method="get" action="${cpath}/card/detail">
-  <input type="hidden" name="cardid" value="${cardid}" />
 
-  <table class="pattern-table">
-    <thead>
-      <tr>
-        <th>선택</th>
-        <th>패턴 ID</th>
-        <th>카테고리</th>
-        <th>금액</th>
-      </tr>
-    </thead>
+<c:choose>
+  <c:when test="${not empty patternList}">
+    <form method="get" action="${cpath}/card/detail">
+      <input type="hidden" name="cardid" value="${cardid}" />
 
-    <c:forEach var="entry" items="${patternList}">
-      <tbody class="pattern-group">
-        <c:set var="patternId" value="${entry.key}" />
-        <c:forEach var="dto" items="${entry.value}" varStatus="status">
+      <table class="pattern-table">
+        <thead>
           <tr>
-            <c:if test="${status.index == 0}">
-              <td rowspan="${fn:length(entry.value)}" class="checkbox-cell">
-                <input type="checkbox" name="patternId" value="${patternId}" onclick="checkOnlyOne(this)">
-              </td>
-              <td rowspan="${fn:length(entry.value)}" class="pattern-id-cell">${patternId}</td>
-            </c:if>
-            <td class="category-cell">${dto.category.benefitCategory_name}</td>
-            <td class="amount-cell">
-              <fmt:formatNumber value="${dto.detail.amount}" type="number" /> 원
-            </td>
+            <th>선택</th>
+            <th>패턴 ID</th>
+            <th>카테고리</th>
+            <th>금액</th>
           </tr>
-        </c:forEach>
-      </tbody>
-    </c:forEach>
-  </table>
+        </thead>
 
-  <div class="pattern-submit-container">
-    <input type="submit" value="제출하기" class="pattern-submit-button">
-  </div>
-</form>
+        <c:forEach var="entry" items="${patternList}">
+          <tbody class="pattern-group">
+            <c:set var="patternId" value="${entry.key}" />
+            <c:forEach var="dto" items="${entry.value}" varStatus="status">
+              <tr>
+                <c:if test="${status.index == 0}">
+                  <td rowspan="${fn:length(entry.value)}" class="checkbox-cell">
+                    <input type="checkbox" name="patternId" value="${patternId}" onclick="checkOnlyOne(this)">
+                  </td>
+                  <td rowspan="${fn:length(entry.value)}" class="pattern-id-cell">${patternId}</td>
+                </c:if>
+                <td class="category-cell">${dto.category.benefitCategory_name}</td>
+                <td class="amount-cell">
+                  <fmt:formatNumber value="${dto.detail.amount}" type="number" /> 원
+                </td>
+              </tr>
+            </c:forEach>
+          </tbody>
+        </c:forEach>
+      </table>
+
+      <div class="pattern-submit-container">
+        <input type="submit" value="제출하기" class="pattern-submit-button">
+      </div>
+    </form>
+  </c:when>
+
+  <c:otherwise>
+    <div class="no-pattern-message">
+      <p>아직 등록된 소비 패턴이 없습니다.</p>
+      <a href="${cpath}/ConsumptionPattern/inCon" class="pattern-submit-button">패턴 입력하러 가기</a>
+    </div>
+  </c:otherwise>
+</c:choose>

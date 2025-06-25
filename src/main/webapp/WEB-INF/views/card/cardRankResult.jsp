@@ -23,7 +23,9 @@
 
 body {
 	font-family: 'NanumSquareRound', sans-serif;
-	background-color: #f7f7f7;
+	background-color: #F0F3F1;
+	padding: 0;
+	margin: 0;
 }
 
 .card-container {
