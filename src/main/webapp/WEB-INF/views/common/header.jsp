@@ -37,7 +37,7 @@
     <!--로고 -->
     <div class="header-logo">
       <a href="${cpath}/main">
-        <img class="mascot" src="${cpath}/resources/images/mascot/flower/Mascot_flower_1.png"">
+        <img class="mascot" src="${cpath}/resources/images/mascot/flower/Mascot_flower_2.png"">
         <img class="logo" src="${cpath}/resources/images/common/logo.png" ">
       </a>
     </div>
