@@ -19,7 +19,7 @@ def get_recommend_result(pattern_id):
     arr_key2 = ['모든가맹점','모빌리티','대중교통','통신','생활','쇼핑','외식/카페','뷰티/피트니스','금융/포인트','병원/약국','문화/취미','숙박/항공']
 
     # 1. DB 연결 및 데이터 로딩 (한 번만)
-    engine = create_engine("mysql+pymysql://cardgarden:1234@192.168.0.9/cardgarden?charset=utf8mb4")
+    engine = create_engine("mysql+pymysql://cardgarden:1234@localhost/cardgarden?charset=utf8mb4")
 
     # 소비패턴 데이터
     sql_pattern = "SELECT pattern_id, user_id FROM UserConsumptionPattern ORDER BY CREATED_AT DESC"

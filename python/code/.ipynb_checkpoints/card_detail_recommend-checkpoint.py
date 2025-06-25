@@ -7,7 +7,7 @@ def get_consum_pattern_continuous(pattern_id, card_id):
     result = None
     # DB 연결
     print(pattern_id, card_id)
-    DF_PARQUET = pd.read_parquet("/Users/isanghyeon/Documents/workspace-sts-3.9.18.RELEASE/cardgarden/python/result/q_table_continuous.parquet")
+    DF_PARQUET = pd.read_parquet("/Users/isanghyeon/Documents/workspace-sts-3.9.18.RELEASE/cardgarden/python/result/q_table_continuous_normalized.parquet")
     engine = create_engine("mysql+pymysql://cardgarden:1234@localhost/cardgarden?charset=utf8mb4")
     sql_detail_patternid = f"SELECT pattern_id, benefitcategory_id, amount FROM UserConsumptionPatternDetail WHERE pattern_id = {pattern_id}"
     sql_benefitCategoryid = "SELECT * FROM BenefitCategory"
