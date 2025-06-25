@@ -208,3 +208,4 @@ mysqlDB.properties
 
 #Python
 src/main/resources/application.properties
+src/main/resources/mysqlDB.properties

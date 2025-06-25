@@ -33,8 +33,11 @@
 	box-sizing: border-box;
 }
 
-div, form {
-	
+body {
+	font-family: 'NanumSquareRound', sans-serif;
+	background-color: #F0F3F1;
+	margin : 0;
+	padding : 0;
 }
 
 /* 전체 화면 영역 지정 및 분할 스타일 */
@@ -49,12 +52,7 @@ div, form {
 	justify-content: center; /* 수평 가운데 정렬 */
 }
 
-header {
-	width: 100%;
-	height: 200px;
-	margin: 0 auto;
-	background-color: blue;
-}
+
 
 #content {
 	margin-top: 30px;
