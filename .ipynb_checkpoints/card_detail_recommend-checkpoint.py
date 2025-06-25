@@ -7,7 +7,7 @@ app = Flask(__name__)
 def get_consum_pattern(pattern_id, card_id):
     # 파케이 파일 경로와 DB 연결 설정
     df_parquet = pd.read_parquet("/Users/isanghyeon/Documents/workspace-sts-3.9.9.RELEASE/cardgarden/python/result/q_table.parquet")
-    engine = create_engine("mysql+pymysql://cardgarden:1234@192.168.0.9/cardgarden?charset=utf8mb4")
+    engine = create_engine("mysql+pymysql://cardgarden:1234@localhost/cardgarden?charset=utf8mb4")
     
     # 패턴과 카테고리 쿼리
     sql_detail_patternid = f"SELECT pattern_id, benefitcategory_id, amount FROM UserConsumptionPatternDetail WHERE pattern_id = {pattern_id}"

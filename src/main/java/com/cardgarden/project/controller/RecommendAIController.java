@@ -29,8 +29,12 @@ public class RecommendAIController {
 	private CardService cardService;
 	
 	@RequestMapping("/aiResult")
-	public String cardDetail(@RequestParam("patternId") int patternId, Model model) throws Exception {
-//	    System.out.println("현재 작업 디렉토리: " + new File(".").getAbsolutePath());
+	public String cardDetail(Model model, HttpSession session) throws Exception {
+		Integer patternId = (Integer) session.getAttribute("patternId");
+		System.out.println(patternId);
+		if (patternId == null) {
+	        return "redirect:/recommend/ai";
+	    }
 	    List<CardRecommendationDTO> dataList = cardRecommendationService.getRecommendResult(patternId);
 
 	    Map<Integer, List<CardDTO>> mapData = new LinkedHashMap<>();
@@ -46,8 +50,18 @@ public class RecommendAIController {
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	    }
+	    session.setAttribute("patternId", patternId);
 	    return "recommend/aiResult";
+
 	}
+	
+	
+	@RequestMapping("/selectPattern")
+	public String selectPattern(@RequestParam("patternId") Integer patternId, HttpSession session) {
+	    session.setAttribute("patternId", patternId);
+	    return "redirect:/recommend/aiResult";
+	}
+
 	
 	
 }
