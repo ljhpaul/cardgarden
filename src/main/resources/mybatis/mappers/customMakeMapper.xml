@@ -11,5 +11,36 @@
     FROM CustomAsset
     WHERE asset_type = 'background'
   </select>
-
+   <!--배경 가진거 -->
+  <select id="selectOwnedBackgroundList" parameterType="int" resultType="int">
+	SELECT asset_id
+	FROM OwnedAsset
+	WHERE user_id = #{userId}
+  </select>
+  <!-- 전체 스티커 리스트 조회 -->
+  <select id="selectStickerList" resultType="CustomAssetDTO">
+    SELECT asset_id, asset_brand, asset_type, asset_no, asset_name
+    FROM CustomAsset
+    WHERE asset_type = 'sticker'
+  </select>
+	<!-- 로그인 유저가 가진 스티커 조회 -->
+	<select id="selectOwnedStickerList" parameterType="int" resultType="int">
+	    SELECT asset_id
+	    FROM OwnedAsset
+	    WHERE user_id = #{userId}
+	</select>
+	<!-- used1 증가 -->
+	<update id="incrementUsed" parameterType="int">
+	    UPDATE CustomAsset
+	    SET used = used + 1
+	    WHERE asset_id = #{assetId}
+	</update>
+	
+	<!-- used -1 감소-->
+	<update id="decrementUsed" parameterType="int">
+	    UPDATE CustomAsset
+	    SET used = used - 1
+	    WHERE asset_id = #{assetId} AND used > 0
+	</update>
+	
 </mapper>

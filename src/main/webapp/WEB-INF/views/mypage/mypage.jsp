@@ -5,175 +5,156 @@
   <script>alert('${msg}');</script>
 </c:if>
 
-<!-- 공통 헤더/스타일/스크립트 -->
 <jsp:include page="/WEB-INF/views/common/mypageheader.jsp" />
 <link rel="stylesheet" href="${cpath}/resources/css/common.css">
 <link rel="stylesheet" href="${cpath}/resources/css/header.css">
 <link rel="stylesheet" href="${cpath}/resources/css/font-awesome.min.css">
-<link rel="stylesheet" href="${cpath}/resources/css/style.css">
+<link rel="stylesheet" href="${cpath}/resources/css/userStyle.css">
 <script src="${cpath}/resources/js/header.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
-
 <title>회원정보수정</title>
 
-<head>
-    
 <style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 .wrap {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh; /* 화면 전체 높이 */
-  background-color: #f0f3f1; /* 필요 시 배경색 지정 */
+  min-height: 90vh;
+  background-color: #f0f3f1;
 }
 
 .container {
-  width: 100%;       /* container 너비는 꽉 채우고 */
-  max-width: 900px;  /* 최대 너비 제한 */
-  margin-top:20px;
-  padding: 20px;
+  width: 100%;
+  max-width: 900px;
   display: flex;
   justify-content: center;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   border-radius: 24px;
+  margin-top: 80px;
 }
+
 .box {
-  width:70%;
-  margin: 70px auto 80px;
+  width: 70%;
   background: #fff;
   border-radius: 24px;
   padding: 44px 50px 32px;
   font-family: var(--font);
-
 }
 
 .form-group {
   margin-bottom: 30px;
   display: flex;
-  align-items: center;  /* label과 input 높이 정렬 */
+  align-items: center;
 }
 
 label {
   display: inline-block;
-  width: 120px;  /* label 너비 고정 */
+  width: 120px;
   margin-right: 10px;
   font-weight: bold;
   font-size: 16px;
   color: #3e4e42;
 }
 
-.input{
-  flex: 1;  /* 남은 영역을 차지하도록 */
+.input {
+  flex: 1;
   min-width: 150px;
 }
 
-.star{
- color:#dc3545;
+.btn {
+  min-width: 110px;
+  height: 40px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.title-lg {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 20px;
 }
 
 #enroll-form{
-  width : 100%;
-  margin: auto;
-  background: #ffffff;
+padding-left: 20px;
+padding-right: 20px;
 }
-
-.btn{
- min-width:110px; 
- height:40px;
- margin-left: 10px;
- cursor: pointer;
-}
-
 </style>
-</head>
-<body>
-<c:if test="${not empty msg}">
-  <script>
-    alert('${msg}');
-  </script>
-</c:if>
 
+<body>
 <div class="wrap">
   <div class="container">
     <div class="box">
       <h2 class="title-lg">${user.name}님의 회원정보</h2>
       <form id="enroll-form" action="${cpath}/user/mypage" method="post" onsubmit="combineAddress();" autocomplete="off">
         <input type="hidden" name="user_id" value="${user.user_id}">
-        <!-- 아이디 -->
+
         <div class="form-group">
           <label for="user_name">아이디</label>
-          <div>
-            <input type="text" id="user_name" name="user_name" class="input" readonly="readonly" placeholder="${user.user_name}">
-          </div>
+          <input type="text" id="user_name" name="user_name" class="input" readonly placeholder="${user.user_name}">
         </div>
 
-        <!-- 비밀번호 -->
         <div class="form-group">
           <label for="user_password">비밀번호</label>
-          <input type="password" id="user_password" readonly="readonly" name="user_password" class="input" value="${user.user_password}">
+          <input type="password" id="user_password" readonly name="user_password" class="input" value="${user.user_password}">
           <button type="button" class="btn" onclick="nicknameCheck();">비밀번호 재설정</button>
         </div>
-        
-        <!-- 닉네임 -->
+
         <div class="form-group">
           <label for="nickname">닉네임</label>
           <input type="text" id="nickname" name="nickname" class="input" value="${user.nickname}">
           <button type="button" class="btn" onclick="nicknameCheck();">중복확인</button>
         </div>
-        
-        <!-- 이메일 -->
+
         <div class="form-group">
-          <label for="email" >이메일</label>
+          <label for="email">이메일</label>
           <input type="email" id="email" name="email" value="${user.email}" class="input">
         </div>
 
-        <!-- 이름 -->
         <div class="form-group">
-          <label for="name">이름 </label>
-          <input type="text" id="name" name="name" class="input" value="${user.name}"  maxlength="5">
+          <label for="name">이름</label>
+          <input type="text" id="name" name="name" class="input" value="${user.name}" maxlength="5">
         </div>
 
-        <!-- 성별 -->
         <div class="form-group">
           <label for="gender">성별</label>
           <select name="gender" class="input">
-		    <option value="M" ${user.gender == 'M' ? 'selected' : ''}>남</option>
-		    <option value="F" ${user.gender == 'F' ? 'selected' : ''}>여</option>
+            <option value="M" ${user.gender == 'M' ? 'selected' : ''}>남</option>
+            <option value="F" ${user.gender == 'F' ? 'selected' : ''}>여</option>
           </select>
         </div>
-        
-		<!-- 생년월일 -->
+
         <div class="form-group">
-          <label for="birth">생년월일 </label>
-          <div>
-            <input type="text" id="birth" name="birth" class="input" placeholder="${user.birth}" readonly="readonly" maxlength="10">
-          </div>
+          <label for="birth">생년월일</label>
+          <input type="text" id="birth" name="birth" class="input" placeholder="${user.birth}" readonly maxlength="10">
         </div>
-        
-        <!-- 휴대폰번호 -->
+
         <div class="form-group">
           <label for="phone">휴대폰번호</label>
-          <div>
-            <input type="text" id="phone" name="phone" class="input" value="${user.phone}" maxlength="13">
-          </div>
+          <input type="text" id="phone" name="phone" class="input" value="${user.phone}" maxlength="13">
         </div>
-        
-        <!-- 주소 -->
+
         <div class="form-group">
           <label>주소</label>
           <input type="hidden" id="address" name="address">
           <input type="text" id="detailAddress" name="detailAddress" class="input" style="width: 350px;" value="${user.address}">
           <button type="button" id="addressbtn" class="btn" onclick="execDaumPostcode();">주소 변경하기</button>
         </div>
-        
-        
-        <!-- 수정 버튼 -->
+
         <button id="enrollBtn" type="submit" class="btn" style="width:100%; height:50px; font-size:19px; margin-top:10px;">수정하기</button>
       </form>
     </div>
   </div>
 </div>
+
+<script>
+</script>
+</body>
+
 <script>
 
 let prevPhone = "";

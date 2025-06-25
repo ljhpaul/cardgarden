@@ -21,6 +21,7 @@ public class CustomAssetDTO {
     private String asset_name; 
     
     private int final_price; 
+    private boolean own;
     
     
 }

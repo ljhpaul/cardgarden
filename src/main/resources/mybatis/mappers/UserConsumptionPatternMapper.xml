@@ -2,21 +2,34 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-  <mapper namespace="com.cardgarden.UserConsumptionPattern">
-  
-   <insert id="insertUserConsumptionPattern" parameterType="UserConsumptionPatternDTO"
-   	useGeneratedKeys="true" keyProperty="pattern_id">
-   	<!-- 이러면 insert 후 pattern_id가 DTO에 자동으로 들어감 -->
-    	insert into UserConsumptionPattern(
-    	user_id,
-    	pattern_name,
-    	created_at
-    	)
-    	values(
-    	#{user_id},
-    	#{pattern_name},
-    	#{created_at}
-    	)
-  </insert>
-  
- </mapper>
+<mapper namespace="com.cardgarden.UserConsumptionPattern">
+
+	<insert id="insertUserConsumptionPattern"
+		parameterType="UserConsumptionPatternDTO" useGeneratedKeys="true"
+		keyProperty="pattern_id">
+		<!-- 이러면 insert 후 pattern_id가 DTO에 자동으로 들어감 -->
+		insert into UserConsumptionPattern(
+		user_id,
+		pattern_name,
+		created_at
+		)
+		values(
+		#{user_id},
+		#{pattern_name},
+		#{created_at}
+		)
+	</insert>
+
+	<update id="updatetUserConsumptionPattern"
+		parameterType="UserConsumptionPatternDTO">
+		update UserConsumptionPattern
+		set pattern_name = #{pattern_name}, created_at = #{created_at}
+		where pattern_id = #{pattern_id}
+	</update>
+	
+	<delete id="deleteConsumPattern" parameterType="int">
+		delete from UserConsumptionPattern
+		where pattern_id = #{pattern_id}
+	</delete>
+
+</mapper>

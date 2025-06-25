@@ -49,11 +49,27 @@
 		WHERE user_name = #{user_name}
 	</select>
 	
+	<!-- 이름과 이메일로 로그인아이디 조회 -->
+	<select id="getLoginIdByNameAndEmail" parameterType="map" resultType="string">
+		SELECT user_name
+		  FROM userInfo
+		 WHERE name = #{name}
+		   AND email = #{email}
+	</select>
+	
 	<!-- 로그인 아이디로 비밀번호 조회 -->
 	<select id="getPasswordByLoginId" parameterType="string" resultType="string">
 		SELECT user_password
-		FROM userInfo
-		WHERE user_name = #{user_name}
+		  FROM userInfo
+		 WHERE user_name = #{user_name}
+	</select>
+	
+	<!-- 로그인 아이디와 이메일로 비밀번호 조회 -->
+	<select id="getPasswordByLoginIdAndEmail" parameterType="map" resultType="string">
+		SELECT user_password
+		  FROM userInfo
+		 WHERE user_name = #{user_name}
+		   AND email = #{email}
 	</select>
 	
 	<!-- 아이디 중복체크/회원유무 확인 -->
@@ -61,6 +77,13 @@
 		SELECT COUNT(*)
 		FROM userInfo
 		WHERE user_name = #{user_name}
+	</select>
+
+	<!-- 이름존재 확인 -->
+	<select id="countByName" parameterType="String" resultType="int">
+		SELECT COUNT(*)
+		FROM userInfo
+		WHERE name = #{name}
 	</select>
 
 	<!-- 이메일 중복체크 -->
@@ -170,4 +193,31 @@
 	    </collection>
 	</resultMap>
 	<!-- 내 소비패턴 조회 끝 -->
+	
+	<!-- 내가 좋아요한 카드 -->
+	<select id="userLikeCard" parameterType="int" resultMap="CardWithBenefitsMap">
+		SELECT c.*, cbd.cardbenefitdetail_text
+		FROM likecard l
+		JOIN card c ON l.card_id = c.card_id
+		JOIN CardBenefitDetail cbd ON c.card_id = cbd.card_id
+		WHERE l.user_id = #{user_id};
+	</select>
+	<resultMap id="CardWithBenefitsMap" type="CardConditionDTO">
+		  <id property="card_id" column="card_id"/>
+		  <result property="card_name" column="card_name"/>
+		  <result property="company" column="company"/>
+		  <result property="card_type" column="card_type"/>
+		  <result property="brand" column="brand"/>
+		  <result property="card_image" column="card_image"/>
+		  <result property="card_url" column="card_url"/>
+		  <result property="fee_domestic" column="fee_domestic"/>
+		  <result property="fee_foreign" column="fee_foreign"/>
+		  <result property="prev_month_cost" column="prev_month_cost"/>
+		  <result property="card_like" column="card_like"/>
+		  <result property="card_views" column="card_views"/>
+		  <collection property="benefits" ofType="string">
+		    <result column="cardbenefitdetail_text"/>
+		  </collection>
+		</resultMap>
+	<!-- 내가 좋요한 카드 끝 -->
 </mapper>

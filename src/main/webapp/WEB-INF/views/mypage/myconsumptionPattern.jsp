@@ -26,7 +26,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>소비패턴 등록</title>
+<title>내 소비패턴</title>
 <style>
 * {
   box-sizing: border-box;
@@ -84,7 +84,7 @@ h1 {
 }
 
 .form-container {
-  width: 800px;
+  width:730px;
   background-color: #ffffff;
   padding: 40px;
   border-radius: 20px;
@@ -144,7 +144,8 @@ span.remove:hover {
 
 input[type="submit"],
 input[type="reset"],
-#btnpuls {
+.deleteBtn,
+#inCon {
   background-color: #8FB098;
   color: white;
   font-size: 16px;
@@ -165,6 +166,7 @@ input[type="reset"]:hover,
 	  width: 800px;
 
 }
+
 </style>
 </head>
 <body>
@@ -178,16 +180,18 @@ input[type="reset"]:hover,
           <option value="${pattern.pattern_id}">${pattern.pattern_name}</option>
         </c:forEach>
       </select>
+          <button id="inCon" style="float: right;">소비패턴 입력</button>
     </div>
+
+     
 </div>
 <div class="wrap">
 <!-- 패턴 상세보기 -->
 <c:forEach var="pattern" items="${myConsumptionPatternList}">
   <div class="wrap pattern-form" id="pattern_${pattern.pattern_id}" style="display:none;">
     <div class="form-container">
-      <form id="myfrm" action="${cpath}/ConsumptionPattern/updateCon" method="post">
+      <form id="patternForm_${pattern.pattern_id}"  action="${cpath}/ConsumptionPattern/updateCon" method="post">
         <input type="hidden" name="pattern_id" value="${pattern.pattern_id}">
-        <input type="hidden" name="job" value="insert">
 
         <div class="form-group">
           <label style="font-weight:1000; font-size: 25px;">소비패턴 이름</label>
@@ -216,6 +220,7 @@ input[type="reset"]:hover,
 
         <div class="button-group">
           <input type="submit" value="수정">
+          <button type="button" class="deleteBtn" data-pattern-id="${pattern.pattern_id}">삭제</button>
         </div>
       </form>
     </div>
@@ -224,6 +229,8 @@ input[type="reset"]:hover,
 </div>
 
 <script>
+const cpath = "${cpath}";
+
 document.getElementById("patternSelect").addEventListener("change", function() {
   const selectedId = this.value;
   document.querySelectorAll(".pattern-form").forEach(form => {
@@ -234,6 +241,41 @@ document.getElementById("patternSelect").addEventListener("change", function() {
     if (target) target.style.display = "flex";
   }
 });
+
+
+
+
+document.getElementById("inCon").addEventListener("click", function() {
+	
+	  location.href = cpath + "/ConsumptionPattern/inCon"; 
+
+});
+
+
+//삭제 버튼 전체에 이벤트 바인딩
+document.querySelectorAll(".deleteBtn").forEach(btn => {
+  btn.addEventListener("click", function () {
+    const patternId = this.dataset.patternId;
+    if (confirm("정말 삭제하시겠습니까?")) {
+    	   fetch(`${cpath}/ConsumptionPattern/deleteCon`, {
+    	        method: "POST",
+    	        headers: {
+    	          "Content-Type": "application/x-www-form-urlencoded"
+    	        },
+    	        body: "pattern_id=" + encodeURIComponent(patternId)
+    	      }).then(response => response.text()) // 결과값에 담긴 text 꺼내기
+    	      .then(result => {
+    	    	  if (result.trim() === "ok") {
+    	    		    alert("삭제가 완료되었습니다.");
+    	    		    location.href = cpath + "/user/consumptionPattern"; 
+    	    		  } else {
+    	    		    alert("삭제에 실패했습니다.");
+    	    		  }
+    	    })
+    }
+  });
+});
+
 </script>
 
 </body>

@@ -1,11 +1,13 @@
 package com.cardgarden.project.model.user.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import com.cardgarden.project.model.CardSearchCondition.CardDTO;
 import com.cardgarden.project.model.user.dao.UserInfoDAO;
 import com.cardgarden.project.model.user.dto.UserConsumptionPatternResponseDTO;
 import com.cardgarden.project.model.user.dto.UserInfoDTO;
@@ -49,12 +51,26 @@ public class UserInfoService {
     	return user_id;
     }
     
+    // 이름과 이메일로 로그인아이디 찾기
+    public String getLoginIdByNameAndEmail(Map<String, Object> paramMap) {
+    	String user_name = userInfoDAO.getLoginIdByNameAndEmail(paramMap);
+    	log.info("UserInfoService에서 로그출력: getLoginIdByNameAndEmail -> user_name = " + user_name);
+    	return user_name;
+    }
+    
     // 로그인 아이디로 비밀번호 조회
     public String getPasswordByLoginId(String user_name) {
     	String user_password = userInfoDAO.getPasswordByLoginId(user_name);
     	log.info("UserInfoService에서 로그출력: getPasswordByLoginId -> user_password = " + user_password);
     	return user_password;
     }
+    
+    // 로그인 아이디와 이메일로 비밀번호 찾기
+	public String getPasswordByLoginIdAndEmail(Map<String, Object> paramMap) {
+		String user_password = userInfoDAO.getPasswordByLoginIdAndEmail(paramMap);
+		log.info("UserInfoService에서 로그출력: getPasswordByLoginIdAndEmail -> user_password = " + user_password);
+		return user_password;
+	}
 
     // 회원 등록
     public int insert(UserInfoDTO dto) {
@@ -88,6 +104,11 @@ public class UserInfoService {
     public boolean existsByLoginId(String login_id) {
         return userInfoDAO.countByLoginId(login_id) > 0;
     }
+    
+    // 이름 존재 확인
+    public boolean existsByName(String name) {
+    	return userInfoDAO.countByName(name) > 0;
+    }
 
     // 닉네임 중복 여부
     public boolean existsByNickname(String nickname) {
@@ -104,5 +125,10 @@ public class UserInfoService {
 		
 		return userInfoDAO.selectMyConsumptionPattern(userId);
 		
+	}
+	
+	// 내가 좋아요한 카드 조회
+	public List<CardDTO> myLikeCardList(int userId){
+		return userInfoDAO.myLikeCardList(userId);
 	}
 }
