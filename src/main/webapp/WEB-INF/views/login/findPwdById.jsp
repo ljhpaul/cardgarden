@@ -13,7 +13,7 @@
 <title>카드가든 : 비밀번호 찾기</title>
 </head>
 
-<div class="bg-main">
+<body class="bg-main">
 	<div class="container">
 		<div class="box">
 			<h2 class="title-lg">비밀번호 찾기</h2>
@@ -23,9 +23,9 @@
 					autocomplete="off" style="width: 100%;">
 					<div>
 						<!-- 이름 입력 -->
-						<label for="loginId" class="form-label">아이디 입력</label>
+						<label for="user_name" class="form-label">아이디 입력</label>
 						<div class="input-row">
-							<input type="text" id="loginId" name="loginId" class="input" />
+							<input type="text" id="user_name" name="user_name" class="input" />
 							<button type="button" id="loginId-check-btn" class="btn btn-sub">
               					확인
             				</button>
@@ -43,7 +43,7 @@
 			</div>
 		</div>
 	</div>
-</div>
+</body>
 
 <style>
   body {
@@ -53,7 +53,7 @@
 	margin: 0;
   }
   .container {
-    padding-top: 110px;
+    padding-top: 60px;
   }
   .box {
     max-width: 440px;
@@ -103,13 +103,13 @@
 
   // 기본 안내 메시지 출력
   $(function() { resetMessage(); });
-  $("#loginId").on("input", resetMessage);
+  $("#user_name").on("input", resetMessage);
 
   // 중복체크 및 인증메일 요청
   $('#loginId-check-btn').on('click', function() {
-    const loginId = $("#loginId").val();
+    const user_name = $("#user_name").val();
     
-    if (!loginId) {
+    if (!user_name) {
       $('#msg-area').html('・ 아이디를 입력하세요.')
       $("#msg-area").css('color','#E44E37');
       return;
@@ -118,11 +118,11 @@
     $.ajax({
       url: '${cpath}/auth/loginId/check',
       type: 'POST',
-      data: {loginId: loginId},
+      data: {user_name: user_name},
       success: function(res) {
     	if(res.duplicate) {
-      	  /* $("#loginId").prop("readonly", true); */
-          $("#loginId").css("background-color", "var(--main)");
+      	  /* $("#user_name").prop("readonly", true); */
+          $("#user_name").css("background-color", "var(--main)");
     	  $('#msg-area').html('<i class="fa fa-check-circle"></i> 확인완료')
       	  $("#msg-area").css('color','var(--m1)').css('text-align', 'center');
     	  $('#next-btn').prop('disabled', false);
@@ -139,7 +139,7 @@
 	const message = "・ 회원정보에 등록한 아이디와 입력한 아이디가 같아야,<br>&nbsp;&nbsp;&nbsp;비밀번호 찾기를 진행할 수 있습니다.";
 	$("#msg-area").html(message);
 	$("#msg-area").css('color','#999').css('text-align', '');
-	$("#loginId").css('background-color', '');
+	$("#user_name").css('background-color', '');
 	$('#next-btn').prop('disabled', true);
   }
 </script>

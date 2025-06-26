@@ -22,11 +22,11 @@ public class AuthController {
 	/** 아이디 중복 체크 */
 	@PostMapping("/loginId/check")
 	@ResponseBody
-	public Map<String, Object> checkLoginId(@RequestParam String loginId) {
-		boolean exists = userInfoService.existsByLoginId(loginId);
+	public Map<String, Object> checkLoginId(@RequestParam String user_name) {
+		boolean exists = userInfoService.existsByLoginId(user_name);
 		Map<String, Object> map = new HashMap<>();
 		map.put("duplicate", exists);
-		log.info(loginId + " : " + map.toString());
+		log.info(user_name + " : " + map.toString());
 		return map;
 	}
     

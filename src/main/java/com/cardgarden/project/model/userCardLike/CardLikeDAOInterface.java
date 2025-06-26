@@ -10,4 +10,5 @@ public interface CardLikeDAOInterface {
 	public int cardLikeDelete(CardLikeDTO cardlike);
 	
 	public CardDTO selectByIdWithLike(Map<String, Object> params);
+	public int cardLikeSelectCount(int userId);
 }

@@ -79,7 +79,7 @@
 	margin: 0;
   }
   .container {
-    padding-top: 70px;
+    padding-top: 60px;
   }
   .box {
     max-width: 440px;

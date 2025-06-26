@@ -269,3 +269,42 @@ header.main-header {
   outline: none; 
   color: var(--m3); 
 }
+
+
+.like-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.like-count {
+  position: absolute;
+  top: 34px;
+  right: 15px;
+  background-color: #ff0000;
+  color: white;
+  font-size: 9px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 800;
+  z-index: 10;
+}
+.like-count-sticky {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background-color: #ff0000;
+  color: white;
+  font-size: 9px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 800;
+  z-index: 10;
+}

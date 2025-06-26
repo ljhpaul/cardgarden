@@ -15,7 +15,7 @@ public class CardDAOMybatis implements CardDAOInterface {
 	@Autowired
     private SqlSessionTemplate sqlSession;
 
-    private final String namespace = "com.firstzone.card";
+    private final String namespace = "com.cardgarden.card";
 	
 	@Override
 	public List<CardDTO> selectById(int cardId){
