@@ -8,8 +8,10 @@
 <title>카드 소비패턴 혜택 리스트</title>
 <style>
 	body {
-	    font-family: var(--font);
-	    background-color: var(--main);
+		font-family: 'NanumSquareRound', sans-serif;
+		background-color: #F0F3F1;
+		padding: 0;
+		margin: 0;
 	}
 	.pattern-wrap {
 	    width: 100%;
@@ -32,6 +34,7 @@
 	    border: none;
 	    box-shadow: none;
 	    padding: 0;
+	    text-align : center;
 	}
 	.pattern-title-main {
 	    font-size: 28px;
@@ -97,6 +100,8 @@
 	    cursor: pointer;
 	    box-shadow: 0 2px 8px rgba(143,176,152,0.07);
 	    transition: background 0.15s, color 0.15s;
+	    display :inline-block;
+	    text-align: center;
 	}
 	.button-primary:hover {
 	    background-color: #FFE0A3;
@@ -125,6 +130,12 @@
 	  z-index: 9999;
 	  display: none;
 	}	
+	.non-pattern{
+		font-size:20px; 
+		font-weight:bold; 
+		/* margin-bottom: 22px */
+		text-align: center;	
+	}
 </style>
 
 <script>
@@ -153,11 +164,12 @@
 	  <c:choose>
 	    <c:when test="${empty patternList}">
 	      <div class="pattern-container" style="display:block;">
-	        <p style="font-size:20px; font-weight:bold; margin-bottom: 22px;">등록된 소비패턴이 없습니다.</p>
+	        <p class="non-pattern">등록된 소비패턴이 없습니다.</p>
 	        <form action="${cpath}/ConsumptionPattern/inCon" method="get">
 	          <button type="submit" class="button-primary">소비패턴 입력하러 가기</button>
-	        </form>
+	      	</form>
 	      </div>
+	      
 	    </c:when>
 	    <c:otherwise>
 	      <form method="post" action="${cpath}/recommend/selectPattern" onsubmit="event.preventDefault(); showMaskAndSubmit(this);">
@@ -167,7 +179,11 @@
 	              <div class="pattern-title">
 	               <input type="radio" class="pattern-radio" name="patternId"
 					       value="${entry.key}" id="pattern_${entry.key}">
-					<label for="pattern_${entry.key}">${entry.value[0].pattern.pattern_name}</label>
+					<c:if test="${not empty entry.value}">
+					    <label for="pattern_${entry.key}">
+					        ${entry.value[0].pattern.pattern_name}
+					    </label>
+					</c:if>
 
 	              </div>
 	              <c:forEach var="dto" items="${entry.value}">
@@ -181,16 +197,17 @@
 	        <button type="submit" class="button-primary" style="margin: 40px auto 0 auto; display: block;">
 	          선택한 패턴으로 카드 추천받기
 	        </button>
+	         <a class="button-primary" href="${cpath}/ConsumptionPattern/inCon">소비패턴 입력하러 가기</a>
 	      </form>
 	    </c:otherwise>
 	  </c:choose>
 	</div>
-
+	
 
 
 
 <!-- 모달/팝업 영역은 동일하게 아래에 두세요. -->
-<div class="popup-mask" style="display:none; position:fixed; left:0; top:0; width:100vw; height:100vh; background:rgba(0,0,0,0.5); z-index:9999;">
+<div class="popup-mask" style="display:none; position:fixed; left:50%; top:50%; width:100vw; height:100vh; background:rgba(0,0,0,0.5); z-index:9999;">
   <div style="position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); background:white; border-radius:20px; padding:30px 40px; box-shadow:0 2px 16px rgba(0,0,0,0.2); text-align:center;">
     <img src="https://i.ibb.co/20zw80q/1487.gif" alt="로딩중" style="width:64px; display:block; margin:0 auto 20px;">
     <div style="font-size:1.2em; color:#333;">AI 측정 중입니다...</div>
