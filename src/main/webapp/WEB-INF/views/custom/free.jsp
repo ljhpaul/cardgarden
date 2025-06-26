@@ -2,8 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <c:set var="cpath" value="${pageContext.servletContext.contextPath}" />
-
-<script src="${cpath}/resources/js/assetlike.js"></script>
 <link rel="stylesheet" href="${cpath}/resources/css/customDetail.css?ver=4">
 
 <%@ include file="../common/header.jsp" %>

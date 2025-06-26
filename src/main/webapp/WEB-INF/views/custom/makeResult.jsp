@@ -3,10 +3,21 @@
 <c:set var="cpath" value="${pageContext.servletContext.contextPath}" />
 
 <style>
+body {
+  background-color: var(--main);
+  font-family: var(--font);
+  padding: 0;
+  margin: 0;
+  background-color: #F0F3F1;
+}
+
 .result-container {
-  width: 100%;
-  height: 100vh;
-  background: white;
+  background-color: white;
+  padding: 100px;
+  border-radius: 20px;
+  margin: 20px auto;
+  max-width: 1100px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   justify-content: center;

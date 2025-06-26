@@ -34,11 +34,13 @@ body {
 .container {
   width: 100%;
   max-width: 1000px;
+  height: 120%;
   display: flex;
   justify-content: center;
   align-items: flex-start;
   border-radius: 24px;
   margin: 0 auto;
+  padding-top: 0px;
   gap: 28px;
 }
 
@@ -98,6 +100,7 @@ body {
 }
 .inner-box-nav a:hover {
   color: var(--m1);
+  text-shadow: 0 0 1px rgba(100,130,120,0.08);
 }
 
 .inner-box-content {
@@ -128,12 +131,12 @@ label {
 
 .input {
   flex: 1;
+  width: 350px;
   min-width: 150px;
 }
-#user-name, #email, #birth {
+.input-readonly {
   background-color: #f8fbf8;
 }
-
 .btn {
   min-width: 110px;
   height: 40px;
@@ -189,7 +192,7 @@ label {
 		<div class="inner-box inner-box-content">
 	        <div class="form-group">
 	          <label for="user_name">아이디</label>
-	          <input type="text" id="user_name" name="user_name" class="input" readonly value="${user.user_name}">
+	          <input type="text" id="user_name" name="user_name" class="input input-readonly" readonly value="${user.user_name}">
 	        </div>
 	
 	        <div class="form-group">
@@ -200,7 +203,7 @@ label {
 	
 	        <div class="form-group form-group-end">
 	          <label for="email">이메일</label>
-	          <input type="email" id="email" name="email" value="${user.email}" class="input" readonly>
+	          <input type="email" id="email" name="email" value="${user.email}" class="input input-readonly" readonly>
 	        </div>
         </div>
         
@@ -220,7 +223,7 @@ label {
 	
 	        <div class="form-group">
 	          <label for="birth">생년월일</label>
-	          <input type="text" id="birth" name="birth" class="input" value="${user.birth}" readonly maxlength="10" readonly>
+	          <input type="text" id="birth" name="birth" class="input input-readonly" value="${user.birth}" readonly maxlength="10" readonly>
 	        </div>
 	
 	        <div class="form-group">
@@ -231,7 +234,7 @@ label {
 	        <div class="form-group form-group-end">
 	          <label>주소</label>
 	          <input type="hidden" id="address" name="address">
-	          <input type="text" id="detailAddress" name="detailAddress" class="input" style="width: 350px;" value="${user.address}" readonly>
+	          <input type="text" id="addressView" name="addressView" class="input input-readonly" value="${user.address}" readonly>
 	          <button type="button" id="addressbtn" class="btn" onclick="execDaumPostcode();">주소 변경하기</button>
 	        </div>
 		</div>
@@ -243,6 +246,21 @@ label {
 </body>
 
 <script>
+$(function() {
+  const address = "${user.address}";
+  const addressParts = address.split("/");
+
+  const roadAddress = addressParts[1] || '';
+  const detailAddress = addressParts[3] || '';
+  
+  if(addressParts.length == 1) {
+	var addressView = addressParts[0];
+  } else {
+	var addressView = roadAddress + (detailAddress!=""?", "+detailAddress:"");  
+  }
+  
+  $("#addressView").val(addressView);
+});
 
 let prevPhone = "";
 $("#phone").on("keydown", function() {
@@ -276,6 +294,15 @@ $("#phone").on("input", function() {
 document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("addressbtn").addEventListener("click", function () {
     const formGroup = this.closest(".form-group");
+    const address = "${user.address}";
+    const addressParts = address.split('/');
+    console.log(addressParts);
+
+    const postcode = addressParts[0] || '';
+    const roadAddress = addressParts[1] || '';
+    const extraAddress = addressParts[2] || '';
+    const detailAddress = addressParts[3] || '';
+    console.log(postcode, roadAddress, extraAddress, detailAddress);
 
     formGroup.innerHTML = `
       <label>주소</label>
@@ -283,13 +310,13 @@ document.addEventListener("DOMContentLoaded", function () {
         <input type="hidden" id="address" name="address">
         
         <div class="addr-row" style="display: flex; gap: 10px;">
-          <input type="text" id="postcode" name="postcode" class="input" placeholder="우편번호" readonly>
+          <input type="text" id="postcode" name="postcode" class="input input-readonly" placeholder="우편번호" readonly value="\${postcode}">
           <button type="button" class="btn" onclick="execDaumPostcode();" style="min-width:110px; height:40px;">우편번호 찾기</button>
         </div>
         
-        <input type="text" id="roadAddress" name="roadAddress" class="input" placeholder="도로명주소" readonly>
-        <input type="text" id="extraAddress" name="extraAddress" class="input" readonly>
-        <input type="text" id="detailAddress" name="detailAddress" class="input" placeholder="상세주소">
+        <input type="text" id="roadAddress" name="roadAddress" class="input input-readonly" placeholder="도로명주소" readonly value="\${roadAddress}">
+        <input type="text" id="extraAddress" name="extraAddress" class="input input-readonly" readonly value="\${extraAddress}">
+        <input type="text" id="detailAddress" name="detailAddress" class="input" placeholder="상세주소" value="\${detailAddress}">
       </div>
     `;
   });
@@ -319,8 +346,7 @@ function execDaumPostcode() {
   }).open();
 }
 
-// 주소 결합 : address = (postcode) roadAddress (detailAddress), extraAddress
-// (03143) 서울 종로구 율곡로2길 7 (수송동), 532호
+// 주소 결합 : address = postcode/roadAddress/extraAddress/detailAddress
 function combineAddress() {
 	let postcode = $("#postcode").val();
 	let roadAddress = $("#roadAddress").val();
