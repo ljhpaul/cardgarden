@@ -221,7 +221,7 @@ $(document).ready(function () {
     const resetTimer = () => {
         lastActionTime = Date.now();
     };
-    $(document).on("click keydown", resetTimer);
+    $(document).on("click", resetTimer);
 
     setInterval(() => {
         const elapsedSec = (Date.now() - lastActionTime) / 1000;
