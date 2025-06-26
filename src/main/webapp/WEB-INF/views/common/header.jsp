@@ -55,7 +55,7 @@
 				<a href="${cpath}/user/card"> <img class="mascot"
 					src="${cpath}/resources/images/common/like.png" width="27">
 				</a>
-				<span class="like-count">+${userLike}</span>
+				<span id="userLike" class="like-count"></span>
 			</div>
 		</div>
 
@@ -210,4 +210,18 @@ setInterval(() => {
 
 // 시작
 drawParticles();
+
+// 좋아요 수 하트에 표시 및 스타일 변동
+const userLike = Number("${userLike}");
+$("#userLike").show().text(userLike<100?userLike:"99+");
+if(userLike >= 100) {
+	$(".like-count").css("top", "35px").css("right", "11px").css("font-size", "9px").css("width", "18px").css("height", "18px");
+} else if(userLike >= 10) {
+	$(".like-count").css("top", "36px").css("right", "12px").css("font-size", "10px").css("width", "16px").css("height", "16px");
+} else if(userLike >= 1) {
+	$(".like-count").css("top", "36px").css("right", "12px").css("font-size", "11px").css("width", "16px").css("height", "15px");
+} else {
+	$(".like-count").hide();
+}
+
 </script>
