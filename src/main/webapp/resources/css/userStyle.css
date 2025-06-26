@@ -77,6 +77,10 @@
   outline: 0.5px solid var(--m1);
 }
 
+.input[readonly] {
+  background-color: #f8fbf8;
+}
+
 input[type=checkbox] {
   width: 18px;
   height: 18px;

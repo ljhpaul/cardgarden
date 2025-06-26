@@ -19,146 +19,203 @@
     <title>카드가든 : 회원가입</title>
 </head>
 
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'NanumSquareRound', sans-serif;
+  background-color: #F0F3F1;
+  padding: 0;
+  margin: 0;
+}
+
+.container {
+  width: 100%;
+  max-width: 950px;
+  height: 120%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  border-radius: 24px;
+  margin: 0 auto;
+  gap: 28px;
+}
+
+.box {
+  width: 70%;
+  border-radius: 24px;
+  padding: 44px 50px 32px;
+}
+
+.title-lg {
+  margin-bottom: 30px;
+}
+
+.inner-box {
+  padding: 25px 25px;
+  font-size: 20px;
+  gap: 5px;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 22px;
+  display: flex;
+  align-items: center;
+}
+.form-group-end {
+  margin-bottom: 0px;
+}
+
+label {
+  display: inline-block;
+  width: 110px;
+  margin-right: 10px;
+  font-weight: bold;
+  font-size: 16px;
+  color: #3e4e42;
+}
+
+.input {
+  flex: 1;
+  width: 300px;
+  min-width: 150px;
+}
+.input-readonly {
+  background-color: #f8fbf8;
+}
+.btn {
+  min-width: 110px;
+  height: 44px;
+  margin-left: 12px;
+  cursor: pointer;
+}
+#enrollBtn {
+  width:90%; 
+  height:50px; 
+  font-size:19px;
+  margin: 30px auto 0 auto;
+  display: block;
+}
+
+#enroll-form{
+  padding: 0px 12px;
+}
+</style>
+
 <body class="bg-main">
   <div class="container">
+    <!-- 회원정보 -->
     <div class="box">
       <h2 class="title-lg">회원정보 입력</h2>
-      <form id="enroll-form" action="${cpath}/user/join/info" method="post" onsubmit="combineAddress();" autocomplete="off" style="width:100%;">
-        
-        <!-- 아이디 -->
-        <div class="form-group" style="margin-bottom:17px;">
-          <label for="user_name" style="font-weight:600;">아이디 <span style="color:#dc3545">*</span></label>
-          <div style="display: flex; gap: 10px;">
-            <input type="text" id="user_name" name="user_name" class="input" required placeholder="영문, 숫자 포함 4~12자" maxlength="12" style="flex:1;">
-            <button type="button" class="btn" onclick="idCheck();" style="min-width:90px; height:40px;">중복확인</button>
-          </div>
+      <form id="enroll-form" action="${cpath}/user/join/info" method="post" onsubmit="combineAddress();" autocomplete="off">
+		
+		<div class="inner-box">
+	        <div class="form-group">
+	          <label for="user_name">아이디 <span style="color:#dc3545">*</span></label>
+	          <input type="text" id="user_name" name="user_name" class="input">
+	          <button type="button" class="btn" onclick="loginIdCheck();">중복확인</button>
+	        </div>
+			
+	        <div class="form-group">
+	          <label for="user_password">비밀번호 <span style="color:#dc3545">*</span></label>
+	          <input type="password" id="user_password" name="user_password" class="input" required placeholder="영문, 숫자, 특수문자 6~15자" maxlength="15">
+	        </div>
+	        
+	        <div class="form-group">
+	          <label for="user_password_check">비밀번호 확인</label>
+	          <input type="password" id="user_password_check" class="input" required>
+	          <span id="checkPwdMsg" style="font-size:13px; font-weight:600; margin-left:5px;"></span>
+	        </div>
+	
+	        <div class="form-group">
+	          <label for="nickname">닉네임 <span style="color:#dc3545">*</span></label>
+	          <input type="text" id="nickname" name="nickname" class="input">
+	          <button type="button" class="btn" onclick="nicknameCheck();">중복확인</button>
+	        </div>
+	
+	        <div class="form-group form-group-end">
+	          <label for="email">이메일 <span style="color:#dc3545">*</span></label>
+	          <input type="email" id="email" name="email" value="${user.email}" class="input input-readonly" readonly>
+	        </div>
         </div>
+        
+		<div class="inner-box">
+	        <div class="form-group">
+	          <label for="name">이름</label>
+	          <input type="text" id="name" name="name" class="input" maxlength="5">
+	        </div>
+	
+	        <div class="form-group">
+	          <label for="gender">성별 <span style="color:#dc3545">*</span></label>
+	          <select name="gender" class="input">
+	            <option value="M" ${user.gender == 'M' ? 'selected' : ''}>남</option>
+	            <option value="F" ${user.gender == 'F' ? 'selected' : ''}>여</option>
+	          </select>
+	        </div>
+	
+	        <div class="form-group">
+	          <label for="birth">생년월일 <span style="color:#dc3545">*</span></label>
+	          <input type="text" id="birth" name="birth" class="input" placeholder="2000-01-01" maxlength="10">
+	        </div>
+	
+	        <div class="form-group">
+	          <label for="phone">휴대폰번호</label>
+	          <input type="text" id="phone" name="phone" class="input" placeholder="010-0000-0000" maxlength="13">
+	        </div>
+	        
+	        <div class="form-group form-group-end">
+	          <label>주소</label>
+	          <input type="hidden" id="address" name="address">
+		      <div class="address-fields" style="flex:1; display: flex; flex-direction: column; gap: 8px;">
+		        <div class="addr-row" style="display: flex;">
+		          <input type="text" id="postcode" name="postcode" class="input input-readonly" placeholder="우편번호">
+		          <button type="button" class="btn" onclick="execDaumPostcode();">우편번호 찾기</button>
+		        </div>
+		        
+		        <input type="text" id="roadAddress" name="roadAddress" class="input input-readonly" placeholder="도로명주소">
+		        <input type="text" id="extraAddress" name="extraAddress" class="input input-readonly" readonly>
+		        <input type="text" id="detailAddress" name="detailAddress" class="input" placeholder="상세주소">
+		      </div>
+	        </div>
+		</div>
 
-        <!-- 비밀번호 -->
-        <div class="form-group" style="margin-bottom:17px;">
-          <label for="user_password" style="font-weight:600;">비밀번호 <span style="color:#dc3545">*</span></label>
-          <input type="password" id="user_password" name="user_password" class="input" required placeholder="영문, 숫자, 특수문자 6~15자" maxlength="15">
-        </div>
-        <!-- 비밀번호 확인 -->
-        <div class="form-group" style="margin-bottom:10px;">
-          <label for="user_password_check" style="font-weight:600;">비밀번호 확인</label>
-          <input type="password" id="user_password_check" class="input" required>
-          <span id="checkPwdMsg" style="font-size:13px; font-weight:600; margin-left:5px;"></span>
-        </div>
-        
-        <!-- 닉네임 -->
-        <div class="form-group" style="margin-bottom:17px;">
-          <label for="nickname" style="font-weight:600;">닉네임</label>
-          <input type="text" id="nickname" name="nickname" class="input" required placeholder="총 8글자" maxlength="8" style="flex:1;">
-          <button type="button" class="btn" onclick="nicknameCheck();" style="min-width:90px; height:40px;">중복확인</button>
-        </div>
-        
-        <!-- 이메일 -->
-        <div class="form-group" style="margin-bottom:25px;">
-          <label for="email" style="font-weight:600;">이메일 <span style="color:#dc3545">*</span></label>
-          <div style="display: flex; gap: 10px;">
-            <input type="email" id="email" name="email" class="input" required placeholder="${verifiedEmail}" readonly style="flex:1;">
-          </div>
-        </div>
-
-        <!-- 이름 -->
-        <div class="form-group" style="margin-bottom:17px;">
-          <label for="name" style="font-weight:600;">이름 <span style="color:#dc3545">*</span></label>
-          <input type="text" id="name" name="name" class="input" required placeholder="한글 2~5글자" maxlength="5">
-        </div>
-
-        <!-- 성별 -->
-        <div class="form-group" style="margin-bottom:17px;">
-          <label for="gender" style="font-weight:600;">성별</label>
-          <select name="gender" class="input" required>
-            <option value="M">남</option>
-            <option value="F">여</option>
-          </select>
-        </div>
-        
-		<!-- 생년월일 -->
-        <div class="form-group" style="margin-bottom:17px;">
-          <label for="birth" style="font-weight:600;">생년월일 </label>
-          <div style="display: flex; gap: 10px;">
-            <input type="text" id="birth" name="birth" class="input" required placeholder="2000-01-01" maxlength="10" style="flex:1;">
-          </div>
-        </div>
-        
-        <!-- 휴대폰번호 -->
-        <div class="form-group" style="margin-bottom:17px;">
-          <label for="phone" style="font-weight:600;">휴대폰번호 <span style="color:#dc3545">*</span></label>
-          <div style="display: flex; gap: 10px;">
-            <input type="text" id="phone" name="phone" class="input" required placeholder="010-0000-0000" maxlength="13" style="flex:1;">
-          </div>
-        </div>
-        
-        <!-- 주소 -->
-        <div class="form-group" style="margin-bottom:10px;">
-          <label style="font-weight:600;">주소</label>
-          <input type="hidden" id="address" name="address">
-          <div style="display:flex; gap:10px; margin-bottom:8px;">
-            <input type="text" id="postcode" name="postcode" class="input" placeholder="우편번호" readonly style="flex:1;">
-            <button type="button" class="btn" onclick="execDaumPostcode();" style="min-width:110px; height:40px;">우편번호 찾기</button>
-          </div>
-          <input type="text" id="roadAddress" name="roadAddress" class="input" placeholder="도로명주소" readonly style="margin-bottom:8px;">
-          <input type="text" id="extraAddress" name="extraAddress" class="input" readonly style="margin-bottom:8px;">
-          <div style="display:flex; gap:10px;">
-            <input type="text" id="detailAddress" name="detailAddress" class="input" placeholder="상세주소" style="flex:1;">
-          </div>
-        </div>
-
-        <!-- 가입 버튼 -->
-        <button id="enrollBtn" type="submit" class="btn" style="width:100%; height:50px; font-size:19px; margin-top:10px;">가입하기</button>
+        <button id="enrollBtn" type="submit" class="btn">가입하기</button>
       </form>
     </div>
   </div>
 </body>
 
-<style>
-body {
-	font-family: 'NanumSquareRound', sans-serif;
-	background-color: #F0F3F1;
-	padding: 0;
-	margin: 0;
-}
-.box {
-  max-width: 520px;
-  margin: 70px auto 80px;
-  background: #fff;
-  border-radius: 24px;
-  padding: 44px 50px 32px;
-  font-family: var(--font);
-}
-
-</style>
-
 <script>
-  // 이메일 자동 완성
-  let verifiedEmail = "${sessionScope.verifiedEmail}";
-  if(verifiedEmail == "") {
+// 이메일 자동 완성
+let verifiedEmail = "${sessionScope.verifiedEmail}";
+if(verifiedEmail == "") {
 	  alert("세션이 만료되었습니다.")
-  } else {
+} else {
 	  $("#email").val(verifiedEmail);
 	  $("#email").css("background-color", "var(--main)");
-  }
-  
-  
-  // [생년월일, 휴대폰번호] 백스페이스시 이전값 저장
-  let prevBirth = "";
-  $("#birth").on("keydown", function() {
+}
+
+// [생년월일, 휴대폰번호] 백스페이스시 이전값 저장
+let prevBirth = "";
+$("#birth").on("keydown", function() {
 	  prevBirth = $(this).val();
-  });
-  let prevPhone = "";
-  $("#phone").on("keydown", function() {
+});
+let prevPhone = "";
+$("#phone").on("keydown", function() {
 	  prevPhone = $(this).val();
-  });
-  
-  // 생년월일 입력 검증
-  $("#birth").on("input", function() {
+});
+
+// 생년월일 입력 검증
+$("#birth").on("input", function() {
 	// 입력값 숫자만 남기기
-    let birth = $(this).val();
-    let birthNums = birth.replace(/\D/g, '');
-    
+  let birth = $(this).val();
+  let birthNums = birth.replace(/\D/g, '');
+  
 	// 숫자 사이에 바(-) 삽입
 	if(birth + "-" == prevBirth) {
 		birth = birth.slice(0, -1);
@@ -166,22 +223,22 @@ body {
 		birth = birthNums.slice(0, 4) + "-";
 	} else if(birth.length > 4 && birth.length < 6) {
 		birth = birthNums.slice(0, 4) + "-" + birthNums.slice(4);
-    } else if(birth.length == 6) {
-    	birth = birthNums.slice(0, 4) + "-" + birthNums.slice(4, 6) + "-";
-    } else if(birth.length > 6) {
-    	birth = birthNums.slice(0, 4) + "-" + birthNums.slice(4, 6) + "-" + birthNums.slice(6);
-    }
-    
+  } else if(birth.length == 6) {
+  	birth = birthNums.slice(0, 4) + "-" + birthNums.slice(4, 6) + "-";
+  } else if(birth.length > 6) {
+  	birth = birthNums.slice(0, 4) + "-" + birthNums.slice(4, 6) + "-" + birthNums.slice(6);
+  }
+  
 	// 입력창에 최신화
 	$(this).val(birth);
-  });
-  
-  // 휴대폰번호 입력 검증
-  $("#phone").on("input", function() {
+});
+
+// 휴대폰번호 입력 검증
+$("#phone").on("input", function() {
 	// 입력값 숫자만 남기기
-    let phone = $(this).val();
-    let phoneNums = phone.replace(/\D/g, '');
-    
+  let phone = $(this).val();
+  let phoneNums = phone.replace(/\D/g, '');
+  
 	// 숫자 사이에 바(-) 삽입
 	if(phone + "-" == prevPhone) {
 		phone = phone.slice(0, -1);
@@ -189,143 +246,120 @@ body {
 		phone = phoneNums.slice(0, 3) + "-";
 	} else if(phoneNums.length > 3 && phoneNums.length < 7) {
 		phone = phoneNums.slice(0, 3) + "-" + phoneNums.slice(3);
-    } else if(phoneNums.length == 7) {
-    	phone = phoneNums.slice(0, 3) + "-" + phoneNums.slice(3, 7) + "-";
-    } else if(phoneNums.length > 7) {
-    	phone = phoneNums.slice(0, 3) + "-" + phoneNums.slice(3, 7) + "-" + phoneNums.slice(7);
-    }
-    
-	// 입력창에 최신화
-	$(this).val(phone);
-  });
-  
-  
-  // 주소 찾기(Daum)
-  function execDaumPostcode() {
-    new daum.Postcode({
-      oncomplete: function(data) {
-        var roadAddr = data.roadAddress;
-        var extraRoadAddr = '';
-        if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
-          extraRoadAddr += data.bname;
-        }
-        if (data.buildingName !== '' && data.apartment === 'Y') {
-          extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-        }
-        if (extraRoadAddr !== '') {
-          extraRoadAddr = ' (' + extraRoadAddr + ')';
-        }
-        $('#postcode').val(data.zonecode);
-        $('#roadAddress').val(roadAddr);
-        $('#extraAddress').val(data.buildingName);
-/*         $('#extraAddress').val(roadAddr !== '' ? extraRoadAddr : ''); */
-        $('#detailAddress').focus();
-      }
-    }).open();
+  } else if(phoneNums.length == 7) {
+  	phone = phoneNums.slice(0, 3) + "-" + phoneNums.slice(3, 7) + "-";
+  } else if(phoneNums.length > 7) {
+  	phone = phoneNums.slice(0, 3) + "-" + phoneNums.slice(3, 7) + "-" + phoneNums.slice(7);
   }
   
-  // 주소 결합 : address = (postcode) roadAddress (detailAddress), extraAddress
-  // (03143) 서울 종로구 율곡로2길 7 (수송동), 532호
-  function combineAddress() {
+	// 입력창에 최신화
+	$(this).val(phone);
+});
+
+// 주소 찾기(Daum)
+function execDaumPostcode() {
+  new daum.Postcode({
+    oncomplete: function(data) {
+      var roadAddr = data.roadAddress;
+      var extraRoadAddr = '';
+      if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
+        extraRoadAddr += data.bname;
+      }
+      if (data.buildingName !== '' && data.apartment === 'Y') {
+        extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+      }
+      if (extraRoadAddr !== '') {
+        extraRoadAddr = ' (' + extraRoadAddr + ')';
+      }
+      $('#postcode').val(data.zonecode);
+      $('#roadAddress').val(roadAddr);
+      $('#extraAddress').val(data.buildingName);
+      $('#detailAddress').focus();
+    }
+  }).open();
+}
+
+// 주소 결합 : address = postcode/roadAddress/extraAddress/detailAddress
+function combineAddress() {
 	let postcode = $("#postcode").val();
 	let roadAddress = $("#roadAddress").val();
 	let detailAddress = $("#detailAddress").val();
 	let extraAddress = $("#extraAddress").val();
 	let address = postcode + "/" +  roadAddress + "/" + (extraAddress ? extraAddress : " ") + "/" + detailAddress;
 	$("#address").val(address);
+}
+
+// 비밀번호 일치 체크
+$('#user_password, #user_password_check').keyup(function() {
+  let a = $("#user_password").val();
+  let b = $("#user_password_check").val();
+  let msg = $("#checkPwdMsg");
+  if (a === b) {
+    msg.text("일치").css("color", "#46b36c");
+  } else {
+    msg.text("불일치").css("color", "#b24444");
   }
+});
 
-  // 비밀번호 일치 체크
-  $('#user_password, #user_password_check').keyup(function() {
-    let a = $("#user_password").val();
-    let b = $("#user_password_check").val();
-    let msg = $("#checkPwdMsg");
-    if (a === b) {
-      msg.text("일치").css("color", "#46b36c");
-    } else {
-      msg.text("불일치").css("color", "#b24444");
-    }
-  });
+// 중복확인 로직
+let checkId = false, checkNickname = false;
 
-  // 중복확인 로직 (실제 서버 주소/파라미터 맞게 수정)
-  let checkId = false, checkNickname = false;
-
-  function idCheck() {
-    let $user_name = $("#user_name");
-    $.ajax({
-      url: "${cpath}/user/checkId",
-      type: "post",
-      data: { user_name: $user_name.val() },
-      success: function(result) {
-        if (result > 0) {
-          alert("이미 사용중인 아이디입니다.");
-          $user_name.focus();
+function loginIdCheck() {
+  let user_name = $("#user_name").val();
+  $.ajax({
+    url: "${cpath}/auth/loginId/check",
+    type: "POST",
+    data: { user_name: user_name },
+    success: function(res) {
+      if (res.duplicate) {
+        alert("이미 사용중인 아이디입니다.");
+        $("#user_name").focus();
+      } else {
+        if (confirm("사용 가능한 아이디입니다. 사용하시겠습니까?")) {
+      	  $("#user_name").attr("readonly", true);
+          checkId = true;
         } else {
-          if (confirm("사용 가능한 아이디입니다. 사용하시겠습니까?")) {
-            $user_name.attr("readonly", true);
-            checkId = true;
-          } else {
-            $user_name.focus();
-            checkId = false;
-          }
+      	  $("#user_name").focus();
+          checkId = false;
         }
       }
-    });
-  }
-  
-  function nicknameCheck() {
-	    let $user_name = $("#user_name");
-	    $.ajax({
-	      url: "${cpath}/user/checkId",
-	      type: "post",
-	      data: { user_name: $user_name.val() },
-	      success: function(result) {
-	        if (result > 0) {
-	          alert("이미 사용중인 아이디입니다.");
-	          $user_name.focus();
-	        } else {
-	          if (confirm("사용 가능한 아이디입니다. 사용하시겠습니까?")) {
-	            $user_name.attr("readonly", true);
-	            checkId = true;
-	          } else {
-	            $user_name.focus();
-	            checkId = false;
-	          }
-	        }
-	      }
-	    });
-	  }
-/*
-  // 가입 가능 조건 체크 (버튼 enable)
-  setInterval(checkInfo, 500);
-  function checkInfo() {
-    if (checkId && checkNickname) {
-      $("#enrollBtn").removeAttr("disabled");
-    } else {
-      $("#enrollBtn").attr("disabled", true);
     }
-  }
-
-  // 필수 유효성 검사
-  $('#enroll-form').on('submit', function() {
-    let id = $("#user_name").val();
-    let pwd = $("#user_password").val();
-    let pwd2 = $("#user_password_check").val();
-    let name = $("#name").val();
-    let phone = $("#phone").val();
-    let email = $("#email").val();
-    let idRegex = /^[a-zA-Z0-9]{4,12}$/;
-    let pwdRegex = /^\S{6,15}$/;
-    let nameRegex = /^[가-힣]{2,5}$/;
-    let phoneRegex = /^[0-9]{11}$/;
-
-    if(!idRegex.test(id)) { alert("아이디 형식 오류"); $("#user_name").focus(); return false; }
-    if(!pwdRegex.test(pwd)) { alert("비밀번호 형식 오류"); $("#user_password").focus(); return false; }
-    if(pwd !== pwd2) { alert("비밀번호가 일치하지 않습니다."); $("#user_password_check").focus(); return false; }
-    if(!nameRegex.test(name)) { alert("이름 형식 오류"); $("#name").focus(); return false; }
-    if(!phoneRegex.test(phone)) { alert("전화번호 형식 오류"); $("#phone").focus(); return false; }
-    if(!email) { alert("이메일을 입력하세요."); $("#email").focus(); return false; }
-    return true;
   });
-  */
-</script>
+}
+
+function nicknameCheck() {
+  let nickname = $("#nickname").val();
+  $.ajax({
+	url: "${cpath}/auth/nickname/check",
+	type: "POST",
+	data: { nickname: nickname },
+	success: function(res) {
+	  if (res.duplicate) {
+	    alert("이미 사용중인 닉네임입니다.");
+	    $("#nickname").focus();
+	  } else {
+	    if (confirm("사용 가능한 닉네임입니다. 사용하시겠습니까?")) {
+	      $("#nickname").attr("readonly", true);
+	      checkNickname = true;
+	    } else {
+	      $("#nickname").focus();
+	      checkNickname = false;
+	    }
+	  }
+	}
+  });
+}
+
+function validateForm() {
+  if (!name) {
+    $('#msg-area').html('・ 이름을 입력하세요.')
+    $("#msg-area").css('color','#E44E37');
+    return;
+  } else if (!validateName(name)) {
+    $('#msg-area').html('・ 올바르지 않은 입력입니다.')
+    $("#msg-area").css('color','#E44E37');
+    return;
+  }
+}
+</script> 
+</body>

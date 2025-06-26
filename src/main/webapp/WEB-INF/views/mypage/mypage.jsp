@@ -14,7 +14,7 @@
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 <head>
-  <title> 카드가든 : 회원정보수정</title>
+  <title>카드가든 : 회원정보수정</title>
 <head>
 
 <style>
@@ -114,10 +114,9 @@ body {
   display: flex;
   align-items: center;
 }
-.form-group-end {
+.form-group:last-child {
   margin-bottom: 0px;
 }
-
 
 label {
   display: inline-block;
@@ -133,21 +132,35 @@ label {
   width: 350px;
   min-width: 150px;
 }
-.input-readonly {
-  background-color: #f8fbf8;
-}
 .btn {
-  min-width: 110px;
+  width: 110px;
   height: 44px;
   margin-left: 12px;
   cursor: pointer;
+}
+.btn-row {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin: 40px 10px 10px;
 }
 #enrollBtn {
   width:90%; 
   height:50px; 
   font-size:19px;
-  margin: 30px auto 0 auto;
+  margin: 0 auto;
   display: block;
+}
+#leaveBtn {
+  width:12%; 
+  height:50px; 
+  margin: 0 auto;
+  display: block;
+  font-size: 16px;
+  background: #e13a21;
+}
+#leaveBtn:hover {
+  background: #cc331c;
 }
 
 #enroll-form{
@@ -192,7 +205,7 @@ label {
 		<div class="inner-box inner-box-content">
 	        <div class="form-group">
 	          <label for="user_name">아이디</label>
-	          <input type="text" id="user_name" name="user_name" class="input input-readonly" readonly value="${user.user_name}">
+	          <input type="text" id="user_name" name="user_name" class="input" readonly value="${user.user_name}">
 	        </div>
 	
 	        <div class="form-group">
@@ -201,9 +214,9 @@ label {
 	          <button type="button" class="btn" onclick="nicknameCheck();">중복확인</button>
 	        </div>
 	
-	        <div class="form-group form-group-end">
+	        <div class="form-group">
 	          <label for="email">이메일</label>
-	          <input type="email" id="email" name="email" value="${user.email}" class="input input-readonly" readonly>
+	          <input type="email" id="email" name="email" value="${user.email}" class="input" readonly>
 	        </div>
         </div>
         
@@ -223,7 +236,7 @@ label {
 	
 	        <div class="form-group">
 	          <label for="birth">생년월일</label>
-	          <input type="text" id="birth" name="birth" class="input input-readonly" value="${user.birth}" readonly maxlength="10" readonly>
+	          <input type="text" id="birth" name="birth" class="input" value="${user.birth}" readonly maxlength="10" readonly>
 	        </div>
 	
 	        <div class="form-group">
@@ -231,14 +244,16 @@ label {
 	          <input type="text" id="phone" name="phone" class="input" value="${user.phone}" maxlength="13">
 	        </div>
 	        
-	        <div class="form-group form-group-end">
+	        <div class="form-group">
 	          <label>주소</label>
-	          <input type="text" id="addressView" name="addressView" class="input input-readonly" readonly>
+	          <input type="text" id="addressView" name="addressView" class="input" readonly>
 	          <button type="button" id="addressbtn" class="btn" onclick="execDaumPostcode();">주소 변경하기</button>
 	        </div>
 		</div>
-
-        <button id="enrollBtn" type="submit" class="btn">수정하기</button>
+		<div class="btn-row">
+          <button type="submit" id="enrollBtn" class="btn">수정하기</button>
+          <button type="button" id="leaveBtn" class="btn"><i class="fa fa-user-times"></i></button>
+        </div>
       </form>
     </div>
   </div>
@@ -308,12 +323,12 @@ document.addEventListener("DOMContentLoaded", function () {
       <label>주소</label>
       <div class="address-fields" style="flex:1; display: flex; flex-direction: column; gap: 8px;">
         <div class="addr-row" style="display: flex;">
-          <input type="text" id="postcode" name="postcode" class="input input-readonly" placeholder="우편번호" readonly value="\${postcode}">
+          <input type="text" id="postcode" name="postcode" class="input" placeholder="우편번호" readonly value="\${postcode}">
           <button type="button" class="btn" onclick="execDaumPostcode();">우편번호 찾기</button>
         </div>
         
-        <input type="text" id="roadAddress" name="roadAddress" class="input input-readonly" placeholder="도로명주소" readonly value="\${roadAddress}">
-        <input type="text" id="extraAddress" name="extraAddress" class="input input-readonly" readonly value="\${extraAddress}">
+        <input type="text" id="roadAddress" name="roadAddress" class="input" placeholder="도로명주소" readonly value="\${roadAddress}">
+        <input type="text" id="extraAddress" name="extraAddress" class="input" readonly value="\${extraAddress}">
         <input type="text" id="detailAddress" name="detailAddress" class="input" placeholder="상세주소" value="\${detailAddress}">
       </div>
     `;
@@ -357,5 +372,64 @@ function combineAddress() {
 $(document).on("input", ".address-fields input", function() {
 	combineAddress();
 })
+
+// 회원 탈퇴
+$("#leaveBtn").on("click", function() {
+  const user_id = "${user.user_id}";
+  console.log(user_id);
+  
+  if(confirm("카드카든 서비스를 정말 탈퇴하시겠습니까?")) {
+	$.ajax({
+	  url: "${cpath}/user/leave",
+	  type: "POST",
+	  success: function(leaveSuccess) {
+		if(leaveSuccess) {
+		  alert("회원탈퇴가 완료되었습니다.");
+		  window.location.href = "${cpath}/user/logout";
+		} else {
+		  alert("회원탈퇴를 실패했습니다.");
+		}
+	  },
+	  error: function() {
+		alert("예기치 못한 오류가 발생했습니다.");
+	  }
+	});
+  }
+});
+
+//중복확인 로직
+checkNickname = true;
+$("#nickname").on("input", function() {
+	checkNickname = false;
+	$("#nickname").css("background-color", "");
+});
+
+function nicknameCheck() {
+  let nickname = $("#nickname").val();
+  if(nickname == "${user.nickname}") {
+	alert("현재 닉네임과 동일합니다.");
+	checkNickname = true;
+	return;
+  }
+  $.ajax({
+	url: "${cpath}/auth/nickname/check",
+	type: "POST",
+	data: { nickname: nickname },
+	success: function(res) {
+	  if (res.duplicate) {
+	    alert("이미 사용중인 닉네임입니다.");
+	    $("#nickname").focus();
+	  } else {
+	    if (confirm("사용 가능한 닉네임입니다. 사용하시겠습니까?")) {
+	      $("#nickname").css("background-color", "#f8fbf8");
+	      checkNickname = true;
+	    } else {
+	      $("#nickname").focus();
+	      checkNickname = false;
+	    }
+	  }
+	}
+  });
+}
 </script> 
 </body>

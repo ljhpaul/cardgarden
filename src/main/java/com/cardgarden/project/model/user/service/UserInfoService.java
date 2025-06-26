@@ -101,8 +101,8 @@ public class UserInfoService {
     }
 
     // 아이디(로그인ID) 중복 여부
-    public boolean existsByLoginId(String login_id) {
-        return userInfoDAO.countByLoginId(login_id) > 0;
+    public boolean existsByLoginId(String user_name) {
+        return userInfoDAO.countByLoginId(user_name) > 0;
     }
     
     // 이름 존재 확인
