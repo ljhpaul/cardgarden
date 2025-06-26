@@ -296,36 +296,3 @@ header.main-header {
   font-weight: 750;
   z-index: 10;
 }
-
-/* 1~9 */
-.like-count-header {
-    top: 36px;
-    right: 12px;
-    font-size: 11px;
-    width: 16px;
-    height: 15px;
-}
-/* 10~99 */
-/* .like-count-header {
-    top: 36px;
-    right: 12px;
-    font-size: 10px;
-    width: 16px;
-    height: 16px;
-} */
-/* 99+이상 */
-/* .like-count-header {
-    top: 35px;
-    right: 11px;
-    font-size: 9px;
-    width: 18px;
-    height: 18px;
-} */
-.like-count-sticky {
-  top: -6px;
-  right: -6px;
-  font-size: 9px;
-  width: 18px;
-  height: 18px;
-  
-}
