@@ -1,4 +1,4 @@
-<%@ include file="../common/mypageheader.jsp"%>
+<%@ include file="../common/header.jsp"%>
 <%@ page language="java" contentType="text/html;charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -283,7 +283,7 @@ input[type="submit"]:hover {
 </head>
 <body>
 <div class="wrap">
-	<div style="text-align: left; width: 1100px;">
+	<div style="text-align: left; width: 1100px; margin-top: -50px;">
 	  <span style="font-size: 20px;">총 <strong>${myLikeCardList.size()}</strong>개의 카드를 좋아합니다</span>
 	</div>
   <div class="container">
