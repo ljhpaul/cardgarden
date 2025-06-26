@@ -126,8 +126,11 @@ def get_recommend_result(pattern_id):
             card_vec = card['benefit_vec']
             features = fake_customer + card_vec
             X_train.append(features)
-            match = sum([c > 20000 and v == 1 for c, v in zip(fake_customer, card_vec)])
+            match = sum([c > 5000 and v == 1 for c, v in zip(fake_customer, card_vec)])
+            if match > 4:
+                match = 4
             y_train.append(match)
+
 
     
     # 5. 실제 고객+카드 조합 예측

@@ -9,8 +9,10 @@
 <title>추천 카드 리스트</title>
 <style>
     body {
-	    font-family: var(--font);
-	    background-color: var(--main);
+		font-family: 'NanumSquareRound', sans-serif;
+		background-color: #F0F3F1;
+		padding: 0;
+		margin: 0;
 	}
 	.recommend-list {
 	    max-width: 480px;
@@ -98,11 +100,13 @@
 	    font-size: 18px;
 	}
 	a { text-decoration: none; color: var(--m3);}
-
+	.detail-type{
+		display: flex;
+		flex-direction : column;
+	}
 </style>
 </head>
 <body>
-	
     <div class="recommend-list">
 	    <h2>추천 카드 상세 리스트</h2>
 	    <c:forEach var="entry" items="${cardDetailMap}">
@@ -110,10 +114,21 @@
 	            <ul class="benefit-list">
 	                <c:forEach var="detail" items="${entry.value}">
 	                    <li class="benefit-item">
+	                    <div>
+	                    	<img class="card-img" src="${detail.card_image}" alt="카드 이미지"/>
+	                    </div>
+	                    <div class="detail-type">
 	                        <a class="card-id" href="${cpath}/card/detail?cardid=${entry.key}">
 	                          ${detail.card_name}
 	                        </a>
-	                        <img class="card-img" src="${detail.card_image}" alt="카드 이미지"/>
+	                        <p>
+	                          ${detail.company}
+	                        </p>
+	                        <p>
+	                          ${detail.card_type}
+	                        </p>
+	                    </div>    
+	                        
 	                        <!-- 추가 정보도 여기서 자유롭게! -->
 	                    </li>
 	                </c:forEach>

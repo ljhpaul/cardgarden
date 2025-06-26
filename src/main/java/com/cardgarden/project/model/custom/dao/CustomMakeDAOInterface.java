@@ -3,6 +3,7 @@ package com.cardgarden.project.model.custom.dao;
 import java.util.List;
 
 import com.cardgarden.project.model.custom.dto.CustomAssetDTO;
+import com.cardgarden.project.model.custom.dto.CustomCardDTO;
 
 public interface CustomMakeDAOInterface {
 	List<CustomAssetDTO> selectBackgroundList();
@@ -16,5 +17,7 @@ public interface CustomMakeDAOInterface {
     void plusUsed(int assetId);
 
     void minusUsed(int assetId);
+    
+    void insertCustomCard(CustomCardDTO dto);
 
 }

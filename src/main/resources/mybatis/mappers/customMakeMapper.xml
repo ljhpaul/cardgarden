@@ -43,4 +43,11 @@
 	    WHERE asset_id = #{assetId} AND used > 0
 	</update>
 	
+	<!-- 커스텀 카드 추가하기 -->
+	<insert id="insertCustomCard" parameterType="CustomCardDTO">
+    	INSERT INTO CustomCard (user_id, customcard_name, created_at)
+    	VALUES (#{user_id}, #{customcard_name}, NOW())
+    </insert>
+	
+	
 </mapper>

@@ -16,9 +16,10 @@
   visibility: hidden;
 }
 .save-modal .modal-content {
-  background: white;
-  padding: 30px;
-  border-radius: 10px;
+  font-family:var(--font);
+  background: var(--main);
+  padding: 60px;
+  border-radius: 12px;
   text-align: center;
 }
 </style>
@@ -97,14 +98,16 @@
 <div class="save-modal" id="saveModal">
   <div class="modal-content">
     <h2>카드 이름을 입력하세요</h2>
-    <input type="text" id="cardName" placeholder="카드 이름" style="padding:10px; width:80%; margin:20px 0;">
+    <input type="text" id="cardName" placeholder="카드 이름" style="padding:10px;font-family:var(--font); width:80%; margin:20px 0;">
     <div>
-      <button id="saveBtn" style="padding:10px 20px;">저장</button>
+      <button id="saveBtn" style="padding:10px 20px;font-family:var(--font);">저장</button>
     </div>
   </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/fabric@5.3.0/dist/fabric.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+
 
 <script>
 window.addEventListener("DOMContentLoaded", () => {
@@ -137,12 +140,11 @@ window.addEventListener("DOMContentLoaded", () => {
       const assetId = img.dataset.id;
       const isLocked = img.dataset.locked ? true : false;
 
+
       if (isLocked) {
-        lastLockedAssetId = assetId;
+          lastLockedAssetId = assetId;
         alert("보유하지 않은 아이템입니다.");
       }
-
-      lastLockedAssetId = null;
 
       fabric.Image.fromURL(url, function(oImg) {
         oImg.set({
@@ -216,54 +218,40 @@ window.addEventListener("DOMContentLoaded", () => {
   document.getElementById("completeBtn").addEventListener("click", () => {
     if (lastLockedAssetId) {
       alert("존재하지 않는 아이템이 있습니다. 상점으로 이동합니다.");
-      window.location.href = `/cardgarden/custom/detail?asset_id=${lastLockedAssetId}`;
+      window.location.href = "/cardgarden/custom/detail?asset_id="+lastLockedAssetId;
       return;
     }
     saveModal.style.visibility = "visible";
   });
 
   document.getElementById("saveBtn").addEventListener("click", () => {
-    const cardName = document.getElementById("cardName").value.trim();
-    if (!cardName) {
-      alert("이름을 입력하세요.");
-      return;
-    }
+	  const cardName = document.getElementById("cardName").value.trim();
+	  if (!cardName) {
+	    alert("이름을 입력하세요.");
+	    return;
+	  }
 
-    const tempCanvas = document.createElement("canvas");
-    tempCanvas.width = canvasEl.width;
-    tempCanvas.height = canvasEl.height;
-    const ctx = tempCanvas.getContext("2d");
+	  const cardFrame = document.getElementById("cardFrame");
 
-    const bgImg = new Image();
-    bgImg.src = background;
-    bgImg.onload = () => {
-      ctx.drawImage(bgImg, 0, 0, tempCanvas.width, tempCanvas.height);
+	  html2canvas(cardFrame, { backgroundColor: null }).then(canvas => {
+	    const finalDataUrl = canvas.toDataURL('image/png');
 
-      canvas.renderAll();
-      const stickerDataUrl = canvas.toDataURL({ format: 'png' });
-      const stickerImg = new Image();
-      stickerImg.src = stickerDataUrl;
-      stickerImg.onload = () => {
-        ctx.drawImage(stickerImg, 0, 0);
+	    fetch(`${cpath}/make/saveImage`, {
+	      method: "POST",
+	      headers: { "Content-Type": "application/json" },
+	      body: JSON.stringify({ imageData: finalDataUrl, cardName: cardName })
+	    })
+	    .then(res => res.text())
+	    .then(res => {
+	      if (res === "ok") {
+	        location.href = `${cpath}/make/result`;
+	      } else {
+	        alert("저장 실패");
+	      }
+	    });
+	  });
+	});
 
-        const finalDataUrl = tempCanvas.toDataURL('image/png');
-
-        fetch(`${cpath}/make/saveImage`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ imageData: finalDataUrl })
-        })
-        .then(res => res.text())
-        .then(res => {
-          if (res === "ok") {
-            location.href = `${cpath}/make/result`;
-          } else {
-            alert("저장 실패");
-          }
-        });
-      };
-    };
-  });
 
 });
 </script>
