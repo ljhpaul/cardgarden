@@ -55,7 +55,7 @@
 				<a href="${cpath}/user/card"> <img class="mascot"
 					src="${cpath}/resources/images/common/like.png" width="27">
 				</a>
-				<span id="userLike" class="like-count"></span>
+				<span class="like-count like-count-header"></span>
 			</div>
 		</div>
 
@@ -161,7 +161,7 @@
 				<a href="${cpath}/user/card" style="position: relative; display: inline-block;"> 
 					<img class="mascot" src="${cpath}/resources/images/common/like.png" width="27"> 
 				</a>
-				<span class="like-count-sticky">+${userLike}</span>
+				<span class="like-count like-count-sticky"></span>
 			</div>
 		</div>
 	</div>
@@ -245,13 +245,17 @@ drawParticles();
 
 // 좋아요 수 하트에 표시 및 스타일 변동
 const userLike = Number("${userLike}");
-$("#userLike").show().text(userLike<100?userLike:"99+");
+$(".like-count").show().text(userLike<100?userLike:"99+");
 if(userLike >= 100) {
-	$(".like-count").css("top", "35px").css("right", "11px").css("font-size", "9px").css("width", "18px").css("height", "18px");
+	$(".like-count").css("font-weight", "700");
+	$(".like-count-header").css("top", "35px").css("right", "11px").css("font-size", "9px").css("width", "18px").css("height", "18px");
+	$(".like-count-sticky").css("top", "-6px").css("right", "-6px").css("font-size", "9px").css("width", "18px").css("height", "18px");
 } else if(userLike >= 10) {
-	$(".like-count").css("top", "36px").css("right", "12px").css("font-size", "10px").css("width", "16px").css("height", "16px");
+	$(".like-count-header").css("top", "36px").css("right", "12px").css("font-size", "10px").css("width", "16px").css("height", "16px");
+	$(".like-count-sticky").css("top", "-6px").css("right", "-6px").css("font-size", "10px").css("width", "16px").css("height", "16px");
 } else if(userLike >= 1) {
-	$(".like-count").css("top", "36px").css("right", "12px").css("font-size", "11px").css("width", "16px").css("height", "15px");
+	$(".like-count-header").css("top", "36px").css("right", "12px").css("font-size", "11px").css("width", "16px").css("height", "15px");
+	$(".like-count-sticky").css("top", "-6px").css("right", "-6px").css("font-size", "11px").css("width", "15px").css("height", "14px");
 } else {
 	$(".like-count").hide();
 }
