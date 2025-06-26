@@ -41,7 +41,7 @@
 			<!--로고 -->
 			<div class="header-logo">
 				<a href="${cpath}/main"> <img class="mascot"
-					src="${cpath}/resources/images/mascot/flower/Mascot_flower_2.png">
+					src="${cpath}/resources/images/mascot/flower/Mascot_flower_1.png">
 					<img class="logo" src="${cpath}/resources/images/common/logo.png">
 				</a>
 			</div>
@@ -259,5 +259,36 @@ if(userLike >= 100) {
 } else {
 	$(".like-count").hide();
 }
+
+</script>
+<script>
+$(document).ready(function () {
+    const mascotImgs = document.querySelectorAll(".mascot");
+    const sessionDuration = 60; // 세션 총 시간 (초) 
+    let lastActionTime = Date.now(); // 페이지 로드 시점
+
+    const resetTimer = () => {
+        lastActionTime = Date.now();
+    };
+    $(document).on("click keydown", resetTimer);
+
+    setInterval(() => {
+        const elapsedSec = (Date.now() - lastActionTime) / 1000;
+        const remaining = sessionDuration - elapsedSec;
+
+        let imgNum = 3; // 기본: 세션 만료 (3번 이미지)
+        if (remaining > 30) {
+            imgNum = 1;
+        } else if (remaining > 0) {
+            imgNum = 2;
+        }
+
+        mascotImgs.forEach(img => {
+            if (img.src.includes("mascot/flower")) {
+                img.src = "${cpath}/resources/images/mascot/flower/Mascot_flower_"+imgNum+".png";
+            }
+        });
+    }, 1000);
+});
 
 </script>
