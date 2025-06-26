@@ -10,7 +10,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.cardgarden.project.model.CardSearchCondition.CardDTO;
@@ -31,9 +33,9 @@ public class UserController {
 	@Autowired
 	UserInfoService userInfoSerivce;
 
-	
+	// 마이페이지
 	@GetMapping("/mypage")
-	public String mypage(HttpServletRequest request,Model model, RedirectAttributes redirectAttr) {
+	public String mypage(HttpServletRequest request, Model model, RedirectAttributes redirectAttr) {
 	
 		String url;
 		
@@ -60,7 +62,7 @@ public class UserController {
 	}
 	
 	@PostMapping("/mypage")
-	public String updateUser(UserUpdateInfoDTO userupdateInfo,RedirectAttributes redirectAttr) {
+	public String updateUser(UserUpdateInfoDTO userupdateInfo, RedirectAttributes redirectAttr) {
 		String msg;
 		int result =  userInfoSerivce.update(userupdateInfo);
 		
@@ -74,9 +76,27 @@ public class UserController {
 	    return "redirect:/user/mypage";
 	}
 	
+	// 회원 탈퇴
+	@PostMapping("/leave")
+	@ResponseBody
+	public boolean deleteUser(HttpSession session) {
+		
+		Integer loginUserId = (Integer) session.getAttribute("loginUserId");
+		if(loginUserId == null) {
+			return false;
+		}
+		
+		boolean deleteSuccess = userInfoSerivce.delete(loginUserId) > 0;
+		if(deleteSuccess) {
+			session.invalidate();
+		}
+		
+		return deleteSuccess;
+	}
+	
 	// 소비패턴보기
 	@GetMapping("/consumptionPattern")
-	public String myconsumptionPattern(HttpServletRequest request,Model model, RedirectAttributes redirectAttr) {
+	public String myconsumptionPattern(HttpServletRequest request, Model model, RedirectAttributes redirectAttr) {
 		
 	    HttpSession mySession = request.getSession();
 	    Object loginUserIdObj = mySession.getAttribute("loginUserId");
@@ -100,9 +120,6 @@ public class UserController {
 	    return "mypage/myconsumptionPattern";
 		
 	}
-	
-	
-	
 	
 	//포인트관리
 	@GetMapping("/point")

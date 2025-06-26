@@ -93,10 +93,6 @@ body {
 	padding: 0;
 	margin: 0;
 }
-.container {
-	padding-top: 0px;
-}
-
 .box {
 	padding: 40px 36px 36px 36px;
 	min-width: 340px;

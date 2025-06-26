@@ -45,6 +45,7 @@ CREATE TABLE UserInfo (
 );
 
 alter table userInfo modify column phone VARCHAR(20) NOT NULL COMMENT '전화번호';
+ALTER TABLE userinfo DROP INDEX phone;
 alter table userInfo modify column created_at DATE NOT NULL DEFAULT (CURDATE()) COMMENT '가입일';
 
 CREATE TABLE Card (
