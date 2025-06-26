@@ -34,7 +34,13 @@
      <typeAlias type="com.cardgarden.project.model.userPatternBenefit.UserPatternBenefitDTO" alias="userPatternBenefitDTO"/>
 
      <typeAlias type="com.cardgarden.project.model.custom.dto.CustomAssetDTO" alias="CustomAssetDTO"/>
-      <typeAlias type="com.cardgarden.project.model.custom.dto.CustomCardDTO" alias="CustomCardDTO"/>
+     <typeAlias type="com.cardgarden.project.model.custom.dto.CustomCardDTO" alias="CustomCardDTO"/>
+      
+     <typeAlias type="com.cardgarden.project.model.event.dto.AttendanceDTO" alias="AttendanceDTO"/>
+     <typeAlias type="com.cardgarden.project.model.event.dto.WeeklyBonusDTO" alias="WeeklyBonusDTO" />
+     <typeAlias type="com.cardgarden.project.model.event.dto.MonthlyBonusDTO" alias="MonthlyBonusDTO" />
+
+     
      
   </typeAliases>
   
