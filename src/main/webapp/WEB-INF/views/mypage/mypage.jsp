@@ -39,6 +39,7 @@ body {
   align-items: flex-start;
   border-radius: 24px;
   margin: 0 auto;
+  padding-top: 0px;
   gap: 28px;
 }
 
