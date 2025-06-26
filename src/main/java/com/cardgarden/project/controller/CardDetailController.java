@@ -63,13 +63,10 @@ public class CardDetailController {
         	Map<Integer,List<CardDTO>> cosineData = new LinkedHashMap<>();
         	for (CardRecommendationDTO dto: cardCosineList) {
         		int groupKey = dto.getCard_id();
-        		if(cosineData.size()<3) {
-            		if (groupKey != cardid) {
-            			List<CardDTO> cardList1 = cardService.selectById(groupKey);
-                		cosineData.computeIfAbsent(groupKey, k -> new ArrayList<>()).addAll(cardList1);
-            		}
-        		
-        		}
+        		if (groupKey != cardid) {
+            		List<CardDTO> cardList1 = cardService.selectById(groupKey);
+                	cosineData.computeIfAbsent(groupKey, k -> new ArrayList<>()).addAll(cardList1);
+            	}
         		System.out.println(cosineData);
         	}
         	model.addAttribute("cosineData",cosineData);
@@ -107,13 +104,10 @@ public class CardDetailController {
         	Map<Integer,List<CardDTO>> cosineData = new LinkedHashMap<>();
         	for (CardRecommendationDTO dto: cardCosineList) {
         		int groupKey = dto.getCard_id();
-        		if(cosineData.size()<3) {
-            		if (groupKey != cardid) {
-            			List<CardDTO> cardList1 = cardService.selectById(groupKey);
-                		cosineData.computeIfAbsent(groupKey, k -> new ArrayList<>()).addAll(cardList1);
-            		}
-        		
-        		}
+        		if (groupKey != cardid) {
+            		List<CardDTO> cardList1 = cardService.selectById(groupKey);
+                	cosineData.computeIfAbsent(groupKey, k -> new ArrayList<>()).addAll(cardList1);
+            	}
         		System.out.println(cosineData);
         	}
         	model.addAttribute("cosineData",cosineData);

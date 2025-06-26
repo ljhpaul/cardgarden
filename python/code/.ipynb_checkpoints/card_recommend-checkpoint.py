@@ -10,7 +10,7 @@ import numpy as np
 from collections import Counter
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report, f1_score
-
+from datetime import datetime
 def softmax(x):
     x = np.array(x)
     e_x = np.exp(x - np.max(x))
@@ -22,16 +22,20 @@ def get_recommend_result(pattern_id):
     # 1. DB 연결 및 데이터 로딩 (한 번만)
     engine = create_engine("mysql+pymysql://cardgarden:1234@localhost/cardgarden?charset=utf8mb4")
 
-    # 소비패턴 데이터
-    sql_pattern = "SELECT pattern_id, user_id FROM UserConsumptionPattern ORDER BY CREATED_AT DESC"
+    # 모든데이터
+    sql_user = "SELECT * FROM userInfo WHERE user_id > 1"
+    sql_pattern = "SELECT pattern_id, user_id FROM UserConsumptionPattern WHERE user_id > 1 ORDER BY CREATED_AT DESC "
     sql_detail = "SELECT pattern_id, benefitcategory_id, amount FROM UserConsumptionPatternDetail"
     sql_detail_patternid = f"SELECT pattern_id, benefitcategory_id, amount FROM UserConsumptionPatternDetail WHERE pattern_id = {pattern_id}"
     sql_benefitCategoryid = "SELECT * FROM BenefitCategory"
+    # 모든데이터 dataframe 형태로 변환
+    df_user = pd.read_sql(sql_user,engine)
+    
     df_pattern_all = pd.read_sql(sql_pattern, engine)
     df_detail = pd.read_sql(sql_detail, engine)
     df_detail_patternid = pd.read_sql(sql_detail_patternid, engine)
     df_category = pd.read_sql(sql_benefitCategoryid, engine)
-
+    
     # 카드 + 혜택 데이터
     sql_card_detail = """
         SELECT
@@ -52,21 +56,38 @@ def get_recommend_result(pattern_id):
     # 2. 데이터 가공
     id_to_category = dict(zip(df_category['benefitcategory_id'], df_category['benefitcategory_name']))
 
+    #고객정보 원핫인코딩
+    df_user = df_user[["user_id","gender","birth"]]
+    df_user['gender'] = df_user['gender'].astype(str)
+    df_user = pd.get_dummies(df_user, columns=['gender'])
+    today = pd.Timestamp("today")
+    df_user['birth'] = pd.to_datetime(df_user['birth'])
+    today = pd.Timestamp("today")
+    df_user['age'] = (today.year - df_user['birth'].dt.year) + 1
+    bins = [0, 19, 29, 39, 49, 59, 150]
+    labels = ['10대이하', '20대', '30대', '40대', '50대', '60대이상']
+    df_user['age_group'] = pd.cut(df_user['age'], bins=bins, labels=labels, right=True)
+    df_user = pd.get_dummies(df_user, columns=['age_group'])
+    df_user = df_user[["user_id","gender_F","gender_M","age_group_10대이하","age_group_20대","age_group_30대","age_group_40대","age_group_50대","age_group_60대이상"]]
+    # print(df_user)
+    
     # 고객 벡터 생성
     customer = {k:0 for k in arr_key2}
     df_detail_patternid['benefitcategory_name'] = df_detail_patternid['benefitcategory_id'].map(id_to_category)
     for _, row in df_detail_patternid.iterrows():
         if row['benefitcategory_name'] in customer:
             customer[row['benefitcategory_name']] = row['amount']
-
+    # print(customer)
     # 전체 소비패턴 wide화
     df_detail['benefitcategory_name'] = df_detail['benefitcategory_id'].map(id_to_category)
     df_wide = df_detail.pivot_table(index='pattern_id', columns='benefitcategory_name', values='amount', fill_value=0)
     pid_to_uid = dict(zip(df_pattern_all['pattern_id'], df_pattern_all['user_id']))
-    df_wide['고객번호'] = df_wide.index.map(pid_to_uid)
-    df_wide = df_wide[['고객번호'] + arr_key2].fillna(0).reset_index(drop=True)
+    df_wide['user_id'] = df_wide.index.map(pid_to_uid)
+    df_wide = df_wide[['user_id'] + arr_key2].fillna(0).reset_index(drop=True)
     df_wide_list = df_wide[arr_key2].values.tolist()
+    
 
+    
     # 전체 wide 데이터의 소비금액 최대값/평균값 구하기
     max_amt = np.max(df_wide[arr_key2].values)
     mean_amt = np.mean(df_wide[arr_key2].values)
