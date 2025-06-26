@@ -20,4 +20,10 @@ public class CardRecommendationService {
 		List<CardRecommendationDTO> resultMessage = cardRecommendationDAO.getRecommendDetailResult(patternId, cardId);
 		return resultMessage;
 	}
+	
+	public List<CardRecommendationDTO> getRecommendCosine(int cardid) {
+		List<CardRecommendationDTO> resultList = cardRecommendationDAO.getRecommendCosine(cardid);
+		return resultList;
+		
+	}
 }

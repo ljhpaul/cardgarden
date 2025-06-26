@@ -57,32 +57,84 @@ public class CardDetailController {
                 mapPattern.computeIfAbsent(groupKey, k -> new ArrayList<>()).add(dto);
             }
             model.addAttribute("patternList", mapPattern);
+            
+          //해당 카드와 유사한 카드 top 3
+        	List<CardRecommendationDTO> cardCosineList = cardRecommendationService.getRecommendCosine(cardid);
+        	Map<Integer,List<CardDTO>> cosineData = new LinkedHashMap<>();
+        	for (CardRecommendationDTO dto: cardCosineList) {
+        		int groupKey = dto.getCard_id();
+        		List<CardDTO> cardList1 = cardService.selectById(groupKey);
+        		cosineData.computeIfAbsent(groupKey, k -> new ArrayList<>()).addAll(cardList1);
+        		System.out.println(cosineData);
+        	}
+        	model.addAttribute("cosineData",cosineData);
+        	
+//        	
+//        	List<CardDTO> cardList = cardService.selectById(cardid);
+//        	model.addAttribute("cardList", cardList);
+        	
+            List<CardDetailDTO> detailList = cardService.selectDetailByID(cardid);
+            Map<String, List<CardDetailDTO>> mapData = new LinkedHashMap<>();
 
+            for (CardDetailDTO dto : detailList) {
+                String groupKey = dto.getBenefitdetail_name();
+                mapData.computeIfAbsent(groupKey, k -> new ArrayList<>()).add(dto);
+            }
+            model.addAttribute("cardDetail", mapData);
+            
+                    
+            session.setAttribute("cardid", cardid);
+            
+            System.out.println("patternId: " + patternId + ", cardid: " + cardid);
+
+            if(patternId != null){
+                List<CardRecommendationDTO> aiDetailResult = 
+                    cardRecommendationService.getRecommendDetailResult(patternId, cardid);
+                model.addAttribute("aiDetailResult", aiDetailResult);
+                System.out.println(aiDetailResult);
+            }
+            
+
+    	}else if (userId==null) {
+    		List<CardDTO> cardList = cardService.selectById(cardid);
+        	model.addAttribute("cardList", cardList);
+    		
+    		//해당 카드와 유사한 카드 top 3
+        	List<CardRecommendationDTO> cardCosineList = cardRecommendationService.getRecommendCosine(cardid);
+        	Map<Integer,List<CardDTO>> cosineData = new LinkedHashMap<>();
+        	for (CardRecommendationDTO dto: cardCosineList) {
+        		int groupKey = dto.getCard_id();
+        		List<CardDTO> cardList1 = cardService.selectById(groupKey);
+        		cosineData.computeIfAbsent(groupKey, k -> new ArrayList<>()).addAll(cardList1);
+        		System.out.println(cosineData);
+        	}
+        	model.addAttribute("cosineData",cosineData);
+        	
+        	
+            List<CardDetailDTO> detailList = cardService.selectDetailByID(cardid);
+            Map<String, List<CardDetailDTO>> mapData = new LinkedHashMap<>();
+
+            for (CardDetailDTO dto : detailList) {
+                String groupKey = dto.getBenefitdetail_name();
+                mapData.computeIfAbsent(groupKey, k -> new ArrayList<>()).add(dto);
+            }
+            model.addAttribute("cardDetail", mapData);
+            
+                    
+            session.setAttribute("cardid", cardid);
+            
+            System.out.println("patternId: " + patternId + ", cardid: " + cardid);
+
+            if(patternId != null){
+                List<CardRecommendationDTO> aiDetailResult = 
+                    cardRecommendationService.getRecommendDetailResult(patternId, cardid);
+                model.addAttribute("aiDetailResult", aiDetailResult);
+                System.out.println(aiDetailResult);
+            }
+            
     	}
     	
-    	List<CardDTO> cardList = cardService.selectById(cardid);
-    	model.addAttribute("cardList", cardList);
+    	return "card/cardDetail";
     	
-        List<CardDetailDTO> detailList = cardService.selectDetailByID(cardid);
-        Map<String, List<CardDetailDTO>> mapData = new LinkedHashMap<>();
-
-        for (CardDetailDTO dto : detailList) {
-            String groupKey = dto.getBenefitdetail_name();
-            mapData.computeIfAbsent(groupKey, k -> new ArrayList<>()).add(dto);
-        }
-        model.addAttribute("cardDetail", mapData);
-        
-                
-        session.setAttribute("cardid", cardid);
-        
-        System.out.println("patternId: " + patternId + ", cardid: " + cardid);
-
-        if(patternId != null){
-            List<CardRecommendationDTO> aiDetailResult = 
-                cardRecommendationService.getRecommendDetailResult(patternId, cardid);
-            model.addAttribute("aiDetailResult", aiDetailResult);
-            System.out.println(aiDetailResult);
-        }
-        return "card/cardDetail";
     }
 }
