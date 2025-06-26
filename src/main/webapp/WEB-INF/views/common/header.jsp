@@ -55,7 +55,7 @@
 				<a href="${cpath}/user/card"> <img class="mascot"
 					src="${cpath}/resources/images/common/like.png" width="27">
 				</a>
-				<span id="userLike" class="like-count"></span>
+				<span id="userLike" class="like-count like-count-header"></span>
 			</div>
 		</div>
 
@@ -129,7 +129,7 @@
 				<a href="${cpath}/user/card" style="position: relative; display: inline-block;"> 
 					<img class="mascot" src="${cpath}/resources/images/common/like.png" width="27"> 
 				</a>
-				<span class="like-count-sticky">+${userLike}</span>
+				<span class="like-count like-count-sticky">+${userLike}</span>
 			</div>
 		</div>
 	</div>
