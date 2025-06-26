@@ -161,22 +161,33 @@ $(function() {
 		
 		<!-- ✅ AI 추천 결과: card-info 아래, card-bottom-center 위로 이동 -->
 		<div class="ai-recommendation">
-			<c:choose>
-				<c:when test="${not empty aiDetailResult}">
-					<ul>
-						<c:forEach items="${aiDetailResult}" var="result">
-							<li>
-								예상 매칭률: <b><fmt:formatNumber value="${result.resultValue * 100}" pattern="#.0" />%</b><br>
-								${result.message}
-							</li>
-						</c:forEach>
-					</ul>
-				</c:when>
-				<c:otherwise>
-					추천 결과가 없습니다. AI 버튼을 눌러보세요!
-				</c:otherwise>
-			</c:choose>
-		</div>
+  <c:choose>
+    <c:when test="${not empty aiDetailResult}">
+      <ul>
+        <c:forEach items="${aiDetailResult}" var="result">
+          <li>
+            <div class="gauge-label">
+              카드 적합도
+            </div>
+            <div class="gauge-bar"  style="--rate: ${result.resultValue * 100}%;">
+              <div class="gauge-fill" ></div>
+            </div>
+            <div class="gauge-percent">
+              <fmt:formatNumber value="${result.resultValue * 100}" pattern="#.0" />%
+            </div>
+            <div class="gauge-message">
+              ${result.message}
+            </div>
+          </li>
+        </c:forEach>
+      </ul>
+    </c:when>
+    <c:otherwise>
+      추천 결과가 없습니다. AI 버튼을 눌러보세요!
+    </c:otherwise>
+  </c:choose>
+</div>
+
 		<!-- 카드 타입/브랜드/연회비 등 -->
 				<div class="card-bottom-center">
 					<div class="card-tags">
@@ -293,6 +304,7 @@ $(function() {
 		    slidesPerView: 3,
 		    spaceBetween: 30,
 		    loop: true,
+		    loopFillGroupWithBlank: true,
 		    grabCursor: true, // 마우스 커서 손모양
 		    allowTouchMove: true, // 터치 슬라이딩 허용
 		    navigation: {
