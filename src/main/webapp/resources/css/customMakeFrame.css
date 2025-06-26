@@ -1,6 +1,9 @@
 body {
   background-color: var(--main);
   font-family: var(--font);
+  padding: 0;
+  margin: 0;
+  background-color: #F0F3F1;
 }
 
 .custom-main-container {

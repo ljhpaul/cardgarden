@@ -15,6 +15,7 @@ public class CardRecommendationDTO {
 	private Double expected_match;
 	private Double resultValue;
     private String message;
+    private Double similarity;
     public CardRecommendationDTO(int card_id, double resultValue, String message) {
     	this.card_id = card_id;
     	this.resultValue = resultValue;

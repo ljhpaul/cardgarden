@@ -10,16 +10,17 @@ import numpy as np
 from collections import Counter
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report, f1_score
+
 def softmax(x):
     x = np.array(x)
-    e_x = np.exp(x - np.max(x))  # 안정화
+    e_x = np.exp(x - np.max(x))
     return e_x / e_x.sum()
 
 def get_recommend_result(pattern_id):
     arr_key2 = ['모든가맹점','모빌리티','대중교통','통신','생활','쇼핑','외식/카페','뷰티/피트니스','금융/포인트','병원/약국','문화/취미','숙박/항공']
 
     # 1. DB 연결 및 데이터 로딩 (한 번만)
-    engine = create_engine("mysql+pymysql://cardgarden:1234@192.168.0.9/cardgarden?charset=utf8mb4")
+    engine = create_engine("mysql+pymysql://cardgarden:1234@localhost/cardgarden?charset=utf8mb4")
 
     # 소비패턴 데이터
     sql_pattern = "SELECT pattern_id, user_id FROM UserConsumptionPattern ORDER BY CREATED_AT DESC"
@@ -77,8 +78,6 @@ def get_recommend_result(pattern_id):
     
     df_wide_list_norm = df_wide_norm[arr_key2].values.tolist()
     
-    # 2. z-score 정규화 (선택적)
-    # df_wide_norm[cat] = (df_wide[cat] - df_wide[cat].mean()) / df_wide[cat].std()
     
 
     # 카드 벡터 생성
@@ -156,7 +155,6 @@ def get_recommend_result(pattern_id):
         for name, score in recommend[:10]
     ]
     
-    # Top-10만 소프트맥스 정규화
     top10_scores = [score for _, score in recommend[:10]]
     top10_softmax_scores = softmax(top10_scores)
     for i, rec in enumerate(result_list):
@@ -174,10 +172,6 @@ def get_recommend_result(pattern_id):
         print(f"{name} {round(score, 4)}", file=sys.stderr)
         
     return result_list
-
-
-
-
 
 from flask import Flask, request, jsonify
 
