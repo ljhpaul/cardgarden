@@ -6,6 +6,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <link rel="stylesheet" href="${cpath}/resources/css/cardDetail.css" />
 <meta charset="UTF-8">
 <title>카드가든 상세페이지</title>
@@ -111,6 +113,7 @@ $(function() {
 		}
 	});
 });
+
 
 </script>
 
@@ -249,26 +252,33 @@ $(function() {
 		</c:forEach>
 	</div>
 	
-		<!-- 추천 카드 섹션 -->
-	<div class="recommend-card-section">
-	    <h2 class="rec-text">많이 비교된 카드</h2>
-	    <div class="recommend-card-row">
-	        <c:forEach items="${cosineData}" var="entry">
-	            <c:forEach items="${entry.value}" var="card">
-	                <div class="recommend-card-box" 
-	                onclick="location.href='${pageContext.request.contextPath}/card/detail?cardid=${card.card_id}'">
-	                    <div class="recommend-card-img">
-	                        <img src="${card.card_image}" alt="${card.card_name}" />
-	                    </div>
-	                    <div class="recommend-card-info">
-	                        <p class="card-name">${card.card_name}</p>
-	                        <p class="card-company">${card.company}</p>
-	                    </div>
-	                </div>
-	            </c:forEach>
-	        </c:forEach>
-	    </div>
-	</div>
+		<!-- 추천 카드 섹션 (Swiper 버전) -->
+<div class="recommend-card-section">
+  <h2 class="rec-text">많이 비교된 카드</h2>
+
+  <!-- Swiper 컨테이너 -->
+  <div class="swiper recommend-swiper">
+    <div class="swiper-wrapper">
+      <c:forEach items="${cosineData}" var="entry">
+        <c:forEach items="${entry.value}" var="card">
+          <div class="swiper-slide recommend-card-box"
+               onclick="location.href='${pageContext.request.contextPath}/card/detail?cardid=${card.card_id}'">
+            <div class="recommend-card-img">
+              <img src="${card.card_image}" alt="${card.card_name}" />
+            </div>
+            <div class="recommend-card-info">
+              <p class="card-name">${card.card_name}</p>
+              <p class="card-company">${card.company}</p>
+            </div>
+          </div>
+        </c:forEach>
+      </c:forEach>
+    </div>
+  </div>
+<!-- 좌우 버튼 -->
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
+</div>
 
 
 	
@@ -277,7 +287,25 @@ $(function() {
 			<jsp:include page="../recommend/aiPattern.jsp" />
 		</div>
 	</div>
-
+	
+	<script>
+	  new Swiper(".recommend-swiper", {
+		    slidesPerView: 3,
+		    spaceBetween: 30,
+		    loop: true,
+		    grabCursor: true, // 마우스 커서 손모양
+		    allowTouchMove: true, // 터치 슬라이딩 허용
+		    navigation: {
+		      nextEl: ".swiper-button-next",
+		      prevEl: ".swiper-button-prev"
+		    },
+		    autoplay: {
+		      delay: 5000,
+		      disableOnInteraction: false
+		    }
+		  });
+	</script>	
+	
 	<script>
 		$(function() {
 			$(document).on("click", ".btn-open-modal", function() {

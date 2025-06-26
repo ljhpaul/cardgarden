@@ -432,9 +432,47 @@ body {
 .recommend-card-section {
     margin-top: 50px;
     margin-bottom: 100px;
+    height: 500px;
     text-align: -webkit-center;
     align-items: center;
+    position: relative;
 }
+
+.recommend-swiper {
+	max-width: 1000px;
+  margin: auto;
+  position: relative;
+}
+
+.swiper-slide.recommend-card-box {
+  height: 400px;
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.swiper-slide.recommend-card-box:hover {
+  transform: translateY(-6px);
+}
+.swiper-button-prev,
+.swiper-button-next {
+  color: #666;
+  top: 35%;
+  width: 40px;
+  height: 40px;
+}
+.swiper-button-prev {
+  left: -20px;
+}
+
+.swiper-button-next {
+  right: -20px;
+}
+
 .rec-text {
 	font-size: 28px;
     font-weight: 800;
@@ -481,8 +519,8 @@ body {
 }
 
 .card-name {
-    font-weight: bold;
-    font-size: 17px;
+    font-weight: 800;
+    font-size: 18px;
     margin-bottom: 4px;
 }
 
