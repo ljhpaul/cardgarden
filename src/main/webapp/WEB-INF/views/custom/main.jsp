@@ -15,7 +15,6 @@
   <div class="banner-content">
     <div class="banner-head">
       <h1>스페셜 콜라보</h1>
-      <a href="${cpath}/custom/main" class="btn-top">← 콜라보 홈</a>
     </div>
     
     <div class="banner-body">

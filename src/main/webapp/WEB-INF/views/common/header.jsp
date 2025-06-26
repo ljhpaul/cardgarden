@@ -41,7 +41,7 @@
 			<!--로고 -->
 			<div class="header-logo">
 				<a href="${cpath}/main"> <img class="mascot"
-					src="${cpath}/resources/images/mascot/flower/Mascot_flower_2.png">
+					src="${cpath}/resources/images/mascot/flower/Mascot_flower_1.png">
 					<img class="logo" src="${cpath}/resources/images/common/logo.png">
 				</a>
 			</div>
@@ -55,7 +55,7 @@
 				<a href="${cpath}/user/card"> <img class="mascot"
 					src="${cpath}/resources/images/common/like.png" width="27">
 				</a>
-				<span class="like-count">+${userLike}</span>
+				<span class="like-count like-count-header"></span>
 			</div>
 		</div>
 
@@ -82,13 +82,12 @@
 				</a>
 				<div class="submenu">
 					<a href="${cpath}/make/frame">나만의 디자인</a> <a
-						href="${cpath}/custom/main">콜라보</a> <a
 						href="${cpath}/custom/top?type=sticker">인기 아이템 랭킹</a>
 				</div>
 			</div>
 
 			<div class="menu-item">
-				<a href="${cpath}/event/list">이벤트 <img class="mascot"
+				<a href="${cpath}/event/attendance">이벤트 <img class="mascot"
 					src="${cpath}/resources/images/common/caretDown.png" width="15">
 				</a>
 				<div class="submenu">
@@ -115,9 +114,41 @@
 
 		<!-- 가운데 메뉴 -->
 		<div class="menu-center">
-			<a href="${cpath}/card/list">카드</a> <a href="${cpath}/recommend/ai">AI
-				추천</a> <a href="${cpath}/custom/main">커스터마이징</a> <a
-				href="${cpath}/event/list">이벤트</a>
+			<div class="header-bottom-sticky">
+			<div class="menu-item">
+				<a href="${cpath}/card/rank">카드 <img class="mascot"
+					src="${cpath}/resources/images/common/caretDown.png" width="15">
+				</a>
+				<div class="submenu">
+					<a href="${cpath}/cardSearchcondition">카드 조회</a> <a
+						href="${cpath}/card/rank">카드 랭킹</a> <a href="${cpath}/card/search">카드
+						검색</a>
+				</div>
+			</div>
+
+			<div class="menu-item">
+				<a href="${cpath}/recommend/ai">AI 카드추천</a>
+			</div>
+
+			<div class="menu-item">
+				<a href="${cpath}/custom/main">카드 커스터마이징 <img class="mascot"
+					src="${cpath}/resources/images/common/caretDown.png" width="15">
+				</a>
+				<div class="submenu">
+					<a href="${cpath}/make/frame">나만의 디자인</a> <a
+						href="${cpath}/custom/top?type=sticker">인기 아이템 랭킹</a>
+				</div>
+			</div>
+
+			<div class="menu-item">
+				<a href="${cpath}/event/attendance">이벤트 <img class="mascot"
+					src="${cpath}/resources/images/common/caretDown.png" width="15">
+				</a>
+				<div class="submenu">
+					<a href="${cpath}/event/attendance">출석체크</a>
+				</div>
+			</div>
+		</div>
 		</div>
 
 		<!-- 오른쪽 검색 + 하트 -->
@@ -130,10 +161,11 @@
 				<a href="${cpath}/user/card" style="position: relative; display: inline-block;"> 
 					<img class="mascot" src="${cpath}/resources/images/common/like.png" width="27"> 
 				</a>
-				<span class="like-count-sticky">+${userLike}</span>
+				<span class="like-count like-count-sticky"></span>
 			</div>
 		</div>
 	</div>
+	
 </nav>
 
 <!-- 나뭇잎,꽃잎 떨어지는 효과 -->
@@ -210,4 +242,53 @@ setInterval(() => {
 
 // 시작
 drawParticles();
+
+// 좋아요 수 하트에 표시 및 스타일 변동
+const userLike = Number("${userLike}");
+$(".like-count").show().text(userLike<100?userLike:"99+");
+if(userLike >= 100) {
+	$(".like-count").css("font-weight", "700");
+	$(".like-count-header").css("top", "35px").css("right", "11px").css("font-size", "9px").css("width", "18px").css("height", "18px");
+	$(".like-count-sticky").css("top", "-6px").css("right", "-6px").css("font-size", "9px").css("width", "18px").css("height", "18px");
+} else if(userLike >= 10) {
+	$(".like-count-header").css("top", "36px").css("right", "12px").css("font-size", "10px").css("width", "16px").css("height", "16px");
+	$(".like-count-sticky").css("top", "-6px").css("right", "-6px").css("font-size", "10px").css("width", "16px").css("height", "16px");
+} else if(userLike >= 1) {
+	$(".like-count-header").css("top", "36px").css("right", "12px").css("font-size", "11px").css("width", "16px").css("height", "15px");
+	$(".like-count-sticky").css("top", "-6px").css("right", "-6px").css("font-size", "11px").css("width", "15px").css("height", "14px");
+} else {
+	$(".like-count").hide();
+}
+
+</script>
+<script>
+$(document).ready(function () {
+    const mascotImgs = document.querySelectorAll(".mascot");
+    const sessionDuration = 60; // 세션 총 시간 (초) 
+    let lastActionTime = Date.now(); // 페이지 로드 시점
+
+    const resetTimer = () => {
+        lastActionTime = Date.now();
+    };
+    $(document).on("click keydown", resetTimer);
+
+    setInterval(() => {
+        const elapsedSec = (Date.now() - lastActionTime) / 1000;
+        const remaining = sessionDuration - elapsedSec;
+
+        let imgNum = 3; // 기본: 세션 만료 (3번 이미지)
+        if (remaining > 30) {
+            imgNum = 1;
+        } else if (remaining > 0) {
+            imgNum = 2;
+        }
+
+        mascotImgs.forEach(img => {
+            if (img.src.includes("mascot/flower")) {
+                img.src = "${cpath}/resources/images/mascot/flower/Mascot_flower_"+imgNum+".png";
+            }
+        });
+    }, 1000);
+});
+
 </script>
