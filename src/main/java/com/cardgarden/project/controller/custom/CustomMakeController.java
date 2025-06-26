@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import com.cardgarden.project.model.custom.dto.CustomAssetDTO;
+import com.cardgarden.project.model.custom.dto.CustomCardDTO;
 import com.cardgarden.project.model.custom.service.CustomMakeService;
 
 @Controller
@@ -82,7 +83,7 @@ public class CustomMakeController {
         return "custom/makeSticker";
     }
 
- // 이미지 저장
+     // 이미지 저장
     @PostMapping("/saveImage")
     @ResponseBody
     public String saveImage(@RequestBody Map<String, String> data, HttpSession session) {
@@ -98,10 +99,7 @@ public class CustomMakeController {
             String base64 = imageData.split(",")[1];
             byte[] imageBytes = Base64.getDecoder().decode(base64);
 
-            // 프로젝트 실제 경로 기준
-            String projectPath = System.getProperty("user.dir");
             String savePath = "C:/shinhan5/work/cardgarden/src/main/webapp/resources/images/custom/customcard";
-
             File folder = new File(savePath);
             if (!folder.exists()) {
                 folder.mkdirs();
@@ -116,12 +114,20 @@ public class CustomMakeController {
 
             System.out.println(">> 실제 저장 경로: " + outputFile.getAbsolutePath());
 
+            CustomCardDTO dto = CustomCardDTO.builder()
+                    .user_id(loginUserId)
+                    .customcard_name(cardName)
+                    .build();
+
+            service.saveCustomCard(dto);
+
             return "ok";
         } catch (Exception e) {
             e.printStackTrace();
             return "저장 실패";
         }
     }
+
 
 
 
