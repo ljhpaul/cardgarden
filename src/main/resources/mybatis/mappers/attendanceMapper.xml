@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cardgarden.attendance">
+
+  <!-- 1. 오늘 출석했는지 확인 -->
+  <select id="getTodayAttendance" parameterType="map" resultType="AttendanceDTO">
+    SELECT user_id, date
+    FROM Attendance
+    WHERE user_id = #{userId}
+      AND date = #{today}
+  </select>
+
+  <!-- 출석 기록 추가 -->
+  <insert id="insertAttendance" parameterType="AttendanceDTO">
+    INSERT INTO Attendance (user_id, date)
+    VALUES (#{userId}, #{date})
+  </insert>
+
+  <!-- 이번 주 WeeklyBonus 있는지 확인 -->
+  <select id="checkWeeklyBonus" parameterType="map" resultType="WeeklyBonusDTO">
+    SELECT *
+    FROM WeeklyBonus
+    WHERE user_id = #{userId}
+      AND week_start = #{weekStart}
+  </select>
+
+  <!-- 이번 주 출석 횟수 조회 -->
+  <select id="getWeeklyAttendanceCount" parameterType="map" resultType="int">
+    SELECT COUNT(*)
+    FROM Attendance
+    WHERE user_id = #{userId}
+    AND YEARWEEK(date, 1) = YEARWEEK(#{weekStart}, 1)
+  </select>
+  <!-- WeeklyBonus 등록 -->
+  <insert id="insertWeeklyBonus" parameterType="WeeklyBonusDTO">
+    INSERT INTO WeeklyBonus (user_id, week_start, bonus_given)
+    VALUES (#{userId}, #{weekStart}, 'Y')
+  </insert>
+
+  <!-- 이번 주 MonthlyBonus(실제는 주 단위) 있는지 확인 -->
+  <select id="checkMonthlyBonus" parameterType="map" resultType="MonthlyBonusDTO">
+    SELECT *
+    FROM MonthlyBonus
+    WHERE user_id = #{userId}
+      AND month_start = #{weekStart}
+  </select>
+  <!-- MonthlyBonus 등록 (주 5일 기준) -->
+  <insert id="insertMonthlyBonus" parameterType="MonthlyBonusDTO">
+    INSERT INTO MonthlyBonus (user_id, month_start, bonus_given)
+    VALUES (#{userId}, #{weekStart}, 'Y')
+  </insert>
+  
+  <!-- 6. 생일인지 확인 -->
+  <select id="isBirthday" parameterType="map" resultType="int">
+    SELECT COUNT(*)
+    FROM UserInfo
+    WHERE user_id = #{userId}
+      AND DATE_FORMAT(birth, '%m-%d') = #{todayMMDD}
+  </select>
+  
+  <!-- 포인트 지급  -->
+	<update id="addPoint" parameterType="map">
+	    UPDATE UserInfo
+	    SET point = point + #{point}
+	    WHERE user_id = #{userId}
+	</update>
+	
+	<!-- 이번달 출석 날짜 조회 -->
+	<select id="selectAttendedDays" parameterType="map" resultType="int">
+	    SELECT DAY(date)
+	    FROM Attendance
+	    WHERE user_id = #{userId}
+	    AND DATE_FORMAT(date, '%Y-%m') = #{targetMonth}
+	</select>
+	
+  
+
+</mapper>

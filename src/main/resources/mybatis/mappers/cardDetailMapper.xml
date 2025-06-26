@@ -14,7 +14,7 @@
 </resultMap>
  -->
 
-<mapper namespace="com.firstzone.card">
+<mapper namespace="com.cardgarden.card">
 	<select id="selectById" parameterType="int" resultType="DetailcardDTO">
 		select *
 		from Card

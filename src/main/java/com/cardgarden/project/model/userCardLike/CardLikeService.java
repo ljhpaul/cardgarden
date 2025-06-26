@@ -28,6 +28,8 @@ public class CardLikeService {
 	    params.put("userId", userId);
 	    return cardLikeDAO.selectByIdWithLike(params);
 	}
-
+	public int cardLikeSelectCount(int userId) {
+		return cardLikeDAO.cardLikeSelectCount(userId);
+	}
 	
 }
