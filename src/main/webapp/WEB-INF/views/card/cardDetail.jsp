@@ -6,6 +6,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <link rel="stylesheet" href="${cpath}/resources/css/cardDetail.css" />
 <meta charset="UTF-8">
 <title>카드가든 상세페이지</title>
@@ -50,6 +52,38 @@ function scrollToTarget(targetId) {
 		}
 	}
 }
+
+//좋아요 애니메이션
+function createRandomBurstEffect(button, imageUrl) {
+	const rect = button.getBoundingClientRect();
+	  const centerX = rect.left + rect.width / 2 + window.scrollX;
+	  const centerY = rect.top + rect.height / 2 + window.scrollY;
+
+	  const heartCount = 10; // 하트 개수
+	  const maxDistance = 80; // 최대 이동 거리(px)
+
+	  for (let i = 0; i < heartCount; i++) {
+	    // 랜덤 방향과 거리
+	    const angle = Math.random() * 2 * Math.PI;
+	    const distance = Math.random() * maxDistance;
+	    const x = Math.cos(angle) * distance + "px";
+	    const y = Math.sin(angle) * distance + "px";
+
+	    const heart = document.createElement("img");
+	    heart.src = imageUrl;
+	    heart.className = "burst-heart";
+	    heart.style.left = centerX + "px";
+	    heart.style.top = centerY + "px";
+	    heart.style.setProperty("--x", x);
+	    heart.style.setProperty("--y", y);
+
+	    document.body.appendChild(heart);
+
+	    setTimeout(() => {
+	      heart.remove();
+	    }, 600);
+	  }
+	}
 
 $(function() {
 	$(document).on("click", ".go-button", function () {
@@ -96,6 +130,9 @@ $(function() {
 						$btn.data("liked", true);
 						$icon.attr("src", "${cpath}/resources/images/cardlikeImage/like.png");
 						$count.text(Number($count.text()) + 1);
+						// 좋아요 애니메이션 추가
+						createRandomBurstEffect($btn[0], "${cpath}/resources/images/cardlikeImage/like.png");
+						
 					} else if (res.result === "login_required" || res.result === "need_login") {
 						alert("로그인 후 이용 가능합니다.");
 					} else {
@@ -111,6 +148,7 @@ $(function() {
 		}
 	});
 });
+
 
 </script>
 
@@ -158,22 +196,30 @@ $(function() {
 		
 		<!-- ✅ AI 추천 결과: card-info 아래, card-bottom-center 위로 이동 -->
 		<div class="ai-recommendation">
-			<c:choose>
-				<c:when test="${not empty aiDetailResult}">
-					<ul>
-						<c:forEach items="${aiDetailResult}" var="result">
-							<li>
-								예상 매칭률: <b><fmt:formatNumber value="${result.resultValue * 100}" pattern="#.0" />%</b><br>
-								${result.message}
-							</li>
-						</c:forEach>
-					</ul>
-				</c:when>
-				<c:otherwise>
-					추천 결과가 없습니다. AI 버튼을 눌러보세요!
-				</c:otherwise>
-			</c:choose>
-		</div>
+  <c:choose>
+    <c:when test="${not empty aiDetailResult}">
+      <ul>
+        <c:forEach items="${aiDetailResult}" var="result">
+          <li>
+            <div class="gauge-label">
+              카드 적합도
+            </div>
+            <div class="gauge-bar"  style="--rate: ${result.resultValue * 100}%;">
+              <div class="gauge-fill" ></div>
+            </div>
+            <div class="gauge-message">
+              ${result.message}
+            </div>
+          </li>
+        </c:forEach>
+      </ul>
+    </c:when>
+    <c:otherwise>
+      추천 결과가 없습니다. AI 버튼을 눌러보세요!
+    </c:otherwise>
+  </c:choose>
+</div>
+
 		<!-- 카드 타입/브랜드/연회비 등 -->
 				<div class="card-bottom-center">
 					<div class="card-tags">
@@ -249,10 +295,33 @@ $(function() {
 		</c:forEach>
 	</div>
 	
-	<c:forEach items="${cosineData}" var="card">
-	    <p>${card.key}</p>
-	    <p>${card.value}</p>
-	</c:forEach>
+		<!-- 추천 카드 섹션 (Swiper 버전) -->
+<div class="recommend-card-section">
+  <h2 class="rec-text">많이 비교된 카드</h2>
+
+  <!-- Swiper 컨테이너 -->
+  <div class="swiper recommend-swiper">
+    <div class="swiper-wrapper">
+      <c:forEach items="${cosineData}" var="entry">
+        <c:forEach items="${entry.value}" var="card">
+          <div class="swiper-slide recommend-card-box"
+               onclick="location.href='${pageContext.request.contextPath}/card/detail?cardid=${card.card_id}'">
+            <div class="recommend-card-img">
+              <img src="${card.card_image}" alt="${card.card_name}" />
+            </div>
+            <div class="recommend-card-info">
+              <p class="card-name">${card.card_name}</p>
+              <p class="card-company">${card.company}</p>
+            </div>
+          </div>
+        </c:forEach>
+      </c:forEach>
+    </div>
+  </div>
+<!-- 좌우 버튼 -->
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
+</div>
 
 
 	
@@ -261,7 +330,26 @@ $(function() {
 			<jsp:include page="../recommend/aiPattern.jsp" />
 		</div>
 	</div>
-
+	
+	<script>
+	  new Swiper(".recommend-swiper", {
+		    slidesPerView: 3,
+		    spaceBetween: 30,
+		    loop: true,
+		    loopFillGroupWithBlank: true,
+		    grabCursor: true, // 마우스 커서 손모양
+		    allowTouchMove: true, // 터치 슬라이딩 허용
+		    navigation: {
+		      nextEl: ".swiper-button-next",
+		      prevEl: ".swiper-button-prev"
+		    },
+		    autoplay: {
+		      delay: 5000,
+		      disableOnInteraction: false
+		    }
+		  });
+	</script>	
+	
 	<script>
 		$(function() {
 			$(document).on("click", ".btn-open-modal", function() {

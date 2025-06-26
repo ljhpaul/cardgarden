@@ -207,3 +207,33 @@ CREATE TABLE UserConsumptionPatternDetail (
   FOREIGN KEY (benefitcategory_id) REFERENCES BenefitCategory(benefitcategory_id)
 );
 #=========================================================================================
+
+-- cardlike 테이블 트리거
+
+CREATE TRIGGER LikeCardTrigger_Insert
+AFTER INSERT ON likecard
+FOR EACH ROW
+BEGIN
+    UPDATE Card
+    SET card_like = (
+        SELECT COUNT(*)
+        FROM LikeCard
+        WHERE card_id = NEW.card_id
+    )
+    WHERE card_id = NEW.card_id;
+END;
+
+CREATE TRIGGER LikeCardTrigger_Delete
+AFTER DELETE ON likecard
+FOR EACH ROW
+BEGIN
+    UPDATE Card
+    SET card_like = (
+        SELECT COUNT(*)
+        FROM LikeCard
+        WHERE card_id = OLD.card_id
+    )
+    WHERE card_id = OLD.card_id;
+END;
+
+
