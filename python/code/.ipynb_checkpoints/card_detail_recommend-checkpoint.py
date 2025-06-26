@@ -6,8 +6,13 @@ def get_consum_pattern_continuous(pattern_id, card_id):
     print("🚩 함수 시작")
     result = None
     # DB 연결
-    print(pattern_id, card_id)
+    
     DF_PARQUET = pd.read_parquet("/Users/isanghyeon/Documents/workspace-sts-3.9.18.RELEASE/cardgarden/python/result/q_table_continuous_normalized.parquet")
+
+
+    print("'249' in DF_PARQUET.columns:", '249' in DF_PARQUET.columns)
+    print("card_id 리스트 샘플:", DF_PARQUET.columns[:20])
+
     engine = create_engine("mysql+pymysql://cardgarden:1234@localhost/cardgarden?charset=utf8mb4")
     sql_detail_patternid = f"SELECT pattern_id, benefitcategory_id, amount FROM UserConsumptionPatternDetail WHERE pattern_id = {pattern_id}"
     sql_benefitCategoryid = "SELECT * FROM BenefitCategory"
@@ -54,20 +59,14 @@ def get_consum_pattern_continuous(pattern_id, card_id):
         print("Q값:", DF_PARQUET.loc[mask, str(card_id)] if str(card_id) in DF_PARQUET.columns else "없음")
 
     result = None
-    if mask.any():
-        # 컬럼 자동 탐색
-        cid_candidates = [card_id, str(card_id), int(card_id)]
-        for cid in cid_candidates:
-            if cid in DF_PARQUET.columns:
-                value = DF_PARQUET.loc[mask, cid]
-                print(f"Found column: {cid}, value:", value)
-                if not value.empty:
-                    result = float(value.values[0])
-                    break
-        if result is None:
-            print(f"card_id {card_id}가 컬럼에 없습니다. candidates={cid_candidates}")
+    column_key = str(card_id)
+    if column_key in DF_PARQUET.columns:
+        value = DF_PARQUET.loc[mask, column_key]
+        print(f"Found column: {column_key}, value:", value)
+        if not value.empty:
+            result = float(value.values[0])
     else:
-        print("amount_str로 매칭되는 row가 없습니다.")
+        print(f"card_id {card_id} (as '{column_key}')가 컬럼에 없습니다.")
 
     print("🚩 함수 마지막까지 실행")
     return result
