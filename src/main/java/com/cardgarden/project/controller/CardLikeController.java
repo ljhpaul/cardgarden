@@ -21,7 +21,6 @@ public class CardLikeController {
     @Autowired
     private CardLikeService cardLikeService;
     
-    // 좋아요 추가 (POST)
     @SuppressWarnings("unused")
 	@PostMapping("/cardLike")
     public Map<String, Object> cardLikeInsert(@RequestParam("card_id")int cardId,
@@ -38,7 +37,6 @@ public class CardLikeController {
                 .user_id(userId)
                 .build();
 
-        // 실제 insert 로직 예시 (service 사용 가정)
         int row = cardLikeService.cardLikeInsert(dto);
 
         Map<String, Object> result = new HashMap<>();
@@ -46,12 +44,11 @@ public class CardLikeController {
         return result;
     }
 
-    // 좋아요 취소 (POST)
+
     @SuppressWarnings("unused")
 	@PostMapping("/cardUnlike")
     public String cardLikeDelete(@RequestParam("card_id") int cardId, HttpSession session) {
         Integer userId = (Integer) session.getAttribute("loginUserId");
-//    	Integer userId = 1;
         if (userId == null) {
             return "로그인 필요";
         }
@@ -64,4 +61,8 @@ public class CardLikeController {
         int result = cardLikeService.cardLikeDelete(dto);
         return result > 0 ? "success" : "fail";
     }
+    
+    
+    
+    
 }

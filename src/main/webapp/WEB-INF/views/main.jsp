@@ -17,6 +17,7 @@
 <h1 id="main">
 	카드가든 메인화면
 </h1>
+
 </body>
 
 <style>

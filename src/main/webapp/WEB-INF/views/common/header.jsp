@@ -49,6 +49,7 @@
       </form>
       <a href="${cpath}/user/card">
         <img class="mascot" src="${cpath}/resources/images/common/like.png" width="27">
+        <span>${userLike}</span>
       </a>
     </div>
   </div>

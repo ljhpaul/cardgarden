@@ -20,6 +20,7 @@
     <typeAlias type="com.cardgarden.project.model.CardSearchCondition.CardDTO" alias="CardConditionDTO"/>
 	<typeAlias type="com.cardgarden.project.model.card.CardDTO" alias="CardDTO"/>
 	
+	<typeAlias type="com.cardgarden.project.model.userCardLike.CardLikeDTO" alias="cardLikeDTO" />
      <typeAlias type="com.cardgarden.project.model.cardDetail.CardDTO" alias="DetailcardDTO" />
      <typeAlias type="com.cardgarden.project.model.cardDetail.CardDetailDTO" alias="cardDetailDTO" />
 
