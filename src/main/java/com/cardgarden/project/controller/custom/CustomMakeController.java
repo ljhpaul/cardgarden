@@ -102,7 +102,6 @@ public class CustomMakeController {
             String projectPath = System.getProperty("user.dir");
             String savePath = "C:/shinhan5/work/cardgarden/src/main/webapp/resources/images/custom/customcard";
 
-
             File folder = new File(savePath);
             if (!folder.exists()) {
                 folder.mkdirs();

@@ -16,9 +16,10 @@
   visibility: hidden;
 }
 .save-modal .modal-content {
-  background: white;
-  padding: 30px;
-  border-radius: 10px;
+  font-family:var(--font);
+  background: var(--main);
+  padding: 60px;
+  border-radius: 12px;
   text-align: center;
 }
 </style>
@@ -97,9 +98,9 @@
 <div class="save-modal" id="saveModal">
   <div class="modal-content">
     <h2>카드 이름을 입력하세요</h2>
-    <input type="text" id="cardName" placeholder="카드 이름" style="padding:10px; width:80%; margin:20px 0;">
+    <input type="text" id="cardName" placeholder="카드 이름" style="padding:10px;font-family:var(--font); width:80%; margin:20px 0;">
     <div>
-      <button id="saveBtn" style="padding:10px 20px;">저장</button>
+      <button id="saveBtn" style="padding:10px 20px;font-family:var(--font);">저장</button>
     </div>
   </div>
 </div>
@@ -137,12 +138,11 @@ window.addEventListener("DOMContentLoaded", () => {
       const assetId = img.dataset.id;
       const isLocked = img.dataset.locked ? true : false;
 
+
       if (isLocked) {
-        lastLockedAssetId = assetId;
+          lastLockedAssetId = assetId;
         alert("보유하지 않은 아이템입니다.");
       }
-
-      lastLockedAssetId = null;
 
       fabric.Image.fromURL(url, function(oImg) {
         oImg.set({
@@ -216,7 +216,7 @@ window.addEventListener("DOMContentLoaded", () => {
   document.getElementById("completeBtn").addEventListener("click", () => {
     if (lastLockedAssetId) {
       alert("존재하지 않는 아이템이 있습니다. 상점으로 이동합니다.");
-      window.location.href = `/cardgarden/custom/detail?asset_id=${lastLockedAssetId}`;
+      window.location.href = "/cardgarden/custom/detail?asset_id="+lastLockedAssetId;
       return;
     }
     saveModal.style.visibility = "visible";
@@ -251,7 +251,7 @@ window.addEventListener("DOMContentLoaded", () => {
         fetch(`${cpath}/make/saveImage`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ imageData: finalDataUrl })
+          body: JSON.stringify({ imageData: finalDataUrl,cardName:cardName })
         })
         .then(res => res.text())
         .then(res => {

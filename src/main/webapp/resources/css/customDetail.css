@@ -2,6 +2,8 @@
 body {
   background-color: var(--main);
   font-family: var(--font);
+  padding: 0;
+  margin: 0;
 }
 
 .custom-detail-container {
