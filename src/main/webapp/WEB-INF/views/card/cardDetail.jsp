@@ -53,6 +53,38 @@ function scrollToTarget(targetId) {
 	}
 }
 
+//좋아요 애니메이션
+function createRandomBurstEffect(button, imageUrl) {
+	const rect = button.getBoundingClientRect();
+	  const centerX = rect.left + rect.width / 2 + window.scrollX;
+	  const centerY = rect.top + rect.height / 2 + window.scrollY;
+
+	  const heartCount = 10; // 하트 개수
+	  const maxDistance = 80; // 최대 이동 거리(px)
+
+	  for (let i = 0; i < heartCount; i++) {
+	    // 랜덤 방향과 거리
+	    const angle = Math.random() * 2 * Math.PI;
+	    const distance = Math.random() * maxDistance;
+	    const x = Math.cos(angle) * distance + "px";
+	    const y = Math.sin(angle) * distance + "px";
+
+	    const heart = document.createElement("img");
+	    heart.src = imageUrl;
+	    heart.className = "burst-heart";
+	    heart.style.left = centerX + "px";
+	    heart.style.top = centerY + "px";
+	    heart.style.setProperty("--x", x);
+	    heart.style.setProperty("--y", y);
+
+	    document.body.appendChild(heart);
+
+	    setTimeout(() => {
+	      heart.remove();
+	    }, 600);
+	  }
+	}
+
 $(function() {
 	$(document).on("click", ".go-button", function () {
 		var cardId = $(this).data("cardid");
@@ -98,6 +130,9 @@ $(function() {
 						$btn.data("liked", true);
 						$icon.attr("src", "${cpath}/resources/images/cardlikeImage/like.png");
 						$count.text(Number($count.text()) + 1);
+						// 좋아요 애니메이션 추가
+						createRandomBurstEffect($btn[0], "${cpath}/resources/images/cardlikeImage/like.png");
+						
 					} else if (res.result === "login_required" || res.result === "need_login") {
 						alert("로그인 후 이용 가능합니다.");
 					} else {
@@ -171,9 +206,6 @@ $(function() {
             </div>
             <div class="gauge-bar"  style="--rate: ${result.resultValue * 100}%;">
               <div class="gauge-fill" ></div>
-            </div>
-            <div class="gauge-percent">
-              <fmt:formatNumber value="${result.resultValue * 100}" pattern="#.0" />%
             </div>
             <div class="gauge-message">
               ${result.message}

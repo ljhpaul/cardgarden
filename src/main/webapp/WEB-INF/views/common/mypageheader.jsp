@@ -51,7 +51,7 @@
       <form action="${cpath}/card/cardsearch"" method="get">
         <input type="text" name="keyword" class="text1" placeholder="검색어를 입력하세요">
       </form>
-      <a href="${cpath}/mypage/likes.do">
+      <a href="${cpath}/user/card">
         <img class="mascot" src="${cpath}/resources/images/common/like.png" width="27">
       </a>
     </div>
