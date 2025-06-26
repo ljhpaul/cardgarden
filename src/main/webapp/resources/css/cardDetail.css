@@ -82,7 +82,8 @@ body {
 
 .card-title {
 	font-size: 30px;
-	font-weight: bold;
+    font-weight: 800;
+    line-height: 1.0em;
 	font-family: 'NanumSquareRound';
 }
 
@@ -427,4 +428,79 @@ body {
   font-size: 14px;
   line-height: 1.5;
 }
+
+.recommend-card-section {
+    margin-top: 50px;
+    margin-bottom: 100px;
+    text-align: -webkit-center;
+    align-items: center;
+}
+.rec-text {
+	font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.0em;
+
+}
+
+.recommend-card-row {
+	max-width: 1000px;
+	padding: 20px;
+	margin: auto;
+    display: flex;
+    flex-wrap: nowrap; /* 한 줄에 3개 */
+    gap: 20px;
+    justify-content: space-between;
+}
+
+.recommend-card-box {
+	cursor: pointer;
+    flex: 0 0 calc(33.33% - 14px); /* 3개씩 균등하게 */
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    transition: transform 0.2s ease, background-color 0.3s ease;
+}
+
+.recommend-card-box:hover {
+    transform: translateY(-5px);
+    background-color: var(--s2);
+}
+
+.recommend-card-img img {
+	padding-top: 30px;
+    width: 90%;
+    height: 250px;
+    object-fit: contain;
+}
+
+.recommend-card-info {
+    padding: 12px;
+}
+
+.card-name {
+    font-weight: bold;
+    font-size: 17px;
+    margin-bottom: 4px;
+}
+
+.card-company, .card-type {
+    font-size: 14px;
+    color: #555;
+}
+
+.card-link {
+    display: inline-block;
+    margin-top: 10px;
+    color: #007bff;
+    text-decoration: none;
+    font-size: 13px;
+}
+
+.card-link:hover {
+    text-decoration: underline;
+}
+
 

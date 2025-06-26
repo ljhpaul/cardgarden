@@ -249,10 +249,26 @@ $(function() {
 		</c:forEach>
 	</div>
 	
-	<c:forEach items="${cosineData}" var="card">
-	    <p>${card.key}</p>
-	    <p>${card.value}</p>
-	</c:forEach>
+		<!-- 추천 카드 섹션 -->
+	<div class="recommend-card-section">
+	    <h2 class="rec-text">많이 비교된 카드</h2>
+	    <div class="recommend-card-row">
+	        <c:forEach items="${cosineData}" var="entry">
+	            <c:forEach items="${entry.value}" var="card">
+	                <div class="recommend-card-box" 
+	                onclick="location.href='${pageContext.request.contextPath}/card/detail?cardid=${card.card_id}'">
+	                    <div class="recommend-card-img">
+	                        <img src="${card.card_image}" alt="${card.card_name}" />
+	                    </div>
+	                    <div class="recommend-card-info">
+	                        <p class="card-name">${card.card_name}</p>
+	                        <p class="card-company">${card.company}</p>
+	                    </div>
+	                </div>
+	            </c:forEach>
+	        </c:forEach>
+	    </div>
+	</div>
 
 
 	
