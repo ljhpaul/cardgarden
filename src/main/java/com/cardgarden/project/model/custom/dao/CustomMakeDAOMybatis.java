@@ -5,6 +5,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import com.cardgarden.project.model.custom.dto.CustomAssetDTO;
+import com.cardgarden.project.model.custom.dto.CustomCardDTO;
 
 @Repository
 public class CustomMakeDAOMybatis implements CustomMakeDAOInterface {
@@ -32,6 +33,10 @@ public class CustomMakeDAOMybatis implements CustomMakeDAOInterface {
     }
     public void minusUsed(int assetId) {
         sqlSession.update(namespace + ".minusUsed", assetId);
+    }
+    // 커스텀 카드 추가
+    public void insertCustomCard(CustomCardDTO dto) {
+        sqlSession.insert(namespace + ".insertCustomCard", dto);
     }
 
 }

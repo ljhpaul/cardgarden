@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.cardgarden.project.model.custom.dao.CustomMakeDAOInterface;
 import com.cardgarden.project.model.custom.dto.CustomAssetDTO;
+import com.cardgarden.project.model.custom.dto.CustomCardDTO;
 
 @Service
 public class CustomMakeService {
@@ -33,5 +34,9 @@ public class CustomMakeService {
 
     public void decrementUsed(int assetId) {
         dao.minusUsed(assetId);
+    }
+    
+    public void saveCustomCard(CustomCardDTO dto) {
+        dao.insertCustomCard(dto);
     }
 }

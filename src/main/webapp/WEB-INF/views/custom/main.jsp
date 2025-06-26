@@ -6,7 +6,6 @@
 
 
 <c:set var="cpath" value="${pageContext.servletContext.contextPath}" />
-<script src="${cpath}/resources/js/freeasset.js"></script> 
 <link rel="stylesheet" href="${cpath}/resources/css/customMain.css?after">
 
 <!-- 스페셜 콜라보 이미지 -->
@@ -27,7 +26,7 @@
         <p>6/20 ~ 7/20</p>
       </div>
     </div>
-    <a href="${cpath}/custom/detail?id=123" class="btn-bottom">보러가기</a>
+    <a href="${cpath}/custom/top?type=sticker&sortBy=used&brand=지브리" class="btn-bottom">보러가기</a>
     </div>
   </div>
 </div>
@@ -39,7 +38,7 @@
 			  <div class="pink-box1-text">
 			    나만의 커스텀 카드<br>만들러 가기
 			  </div>
-			  <img src="${cpath}/resources/images/custom/makecard/main.png" alt="추후 넣을예정">
+			  <img src="${cpath}/resources/images/custom/makecard.png" >
 			</div>
 	    </a>
 	</div>
@@ -124,5 +123,11 @@
   const loginUserId = "${sessionScope.loginUserId}";
   const cpath = "${pageContext.request.contextPath}";
 </script>
+<c:if test="${not empty error}">
+<script>
+    alert("${error}");
+</script>
+</c:if>
+
 
 	
