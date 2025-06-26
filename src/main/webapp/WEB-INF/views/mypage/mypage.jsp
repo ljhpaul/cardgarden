@@ -234,7 +234,7 @@ label {
 	        <div class="form-group form-group-end">
 	          <label>주소</label>
 	          <input type="hidden" id="address" name="address">
-	          <input type="text" id="detailAddress" name="detailAddress" class="input input-readonly" value="${user.address}" readonly>
+	          <input type="text" id="addressView" name="addressView" class="input input-readonly" value="${user.address}" readonly>
 	          <button type="button" id="addressbtn" class="btn" onclick="execDaumPostcode();">주소 변경하기</button>
 	        </div>
 		</div>
@@ -248,12 +248,18 @@ label {
 <script>
 $(function() {
   const address = "${user.address}";
-  const addressParts = address.split('/');
+  const addressParts = address.split("/");
 
   const roadAddress = addressParts[1] || '';
   const detailAddress = addressParts[3] || '';
   
-  $("#detailAddress").val(roadAddress + ", " + detailAddress);
+  if(addressParts.length == 1) {
+	var addressView = addressParts[0];
+  } else {
+	var addressView = roadAddress + (detailAddress!=""?", "+detailAddress:"");  
+  }
+  
+  $("#addressView").val(addressView);
 });
 
 let prevPhone = "";
@@ -340,8 +346,7 @@ function execDaumPostcode() {
   }).open();
 }
 
-// 주소 결합 : address = (postcode) roadAddress (detailAddress), extraAddress
-// (03143) 서울 종로구 율곡로2길 7 (수송동), 532호
+// 주소 결합 : address = postcode/roadAddress/extraAddress/detailAddress
 function combineAddress() {
 	let postcode = $("#postcode").val();
 	let roadAddress = $("#roadAddress").val();
