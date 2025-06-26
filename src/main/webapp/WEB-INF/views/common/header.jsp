@@ -261,23 +261,24 @@ if(userLike >= 100) {
 }
 
 </script>
+<c:if test="${not empty loginUserId}">
 <script>
 $(document).ready(function () {
     const mascotImgs = document.querySelectorAll(".mascot");
-    const sessionDuration = 60; // 세션 총 시간 (초) 
+    const sessionDuration = 40; // 세션 총 시간 (초)
     let lastActionTime = Date.now(); // 페이지 로드 시점
 
     const resetTimer = () => {
         lastActionTime = Date.now();
     };
-    $(document).on("click keydown", resetTimer);
+    $(document).on("click", resetTimer);
 
     setInterval(() => {
         const elapsedSec = (Date.now() - lastActionTime) / 1000;
         const remaining = sessionDuration - elapsedSec;
 
         let imgNum = 3; // 기본: 세션 만료 (3번 이미지)
-        if (remaining > 30) {
+        if (remaining > 20) {
             imgNum = 1;
         } else if (remaining > 0) {
             imgNum = 2;
@@ -285,10 +286,11 @@ $(document).ready(function () {
 
         mascotImgs.forEach(img => {
             if (img.src.includes("mascot/flower")) {
-                img.src = "${cpath}/resources/images/mascot/flower/Mascot_flower_"+imgNum+".png";
+                img.src = "${cpath}/resources/images/mascot/flower/Mascot_flower_" + imgNum + ".png";
             }
         });
     }, 1000);
 });
-
 </script>
+</c:if>
+
