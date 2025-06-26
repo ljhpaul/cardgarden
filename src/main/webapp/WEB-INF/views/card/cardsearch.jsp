@@ -165,12 +165,30 @@ body {
 }
 
 .card-info {
-	flex: 1;
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* 텍스트는 왼쪽에 정렬 */
+.card-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* like + 오른쪽 화살표를 오른쪽에 가로 정렬 */
+.card-icons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
 }
 .card-name {
-  font-size: 20px;
-  font-weight: bold;
-  margin-bottom: 8px;
+  font-size: 22px;
+  font-weight: 800;
+  margin-bottom: 12px;
 }
 
 .card-company {
@@ -281,13 +299,68 @@ body {
 .like-icon {
 	width: 40px;
     position: absolute;
-    top: 53px;
+    top: -20px;
     right: 80px;
     z-index: 10;
     height: 40px;
 }
+
+/* 좋아요 터짐 효과 */
+@keyframes burst {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--x), var(--y)) scale(0.5);
+    opacity: 0;
+  }
+}
+
+.burst-heart {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  pointer-events: none;
+  z-index: 999;
+  animation: burst 0.6s ease-out forwards;
+}
+
 </style>
 
+<script>
+//좋아요 애니메이션
+function createRandomBurstEffect(button, imageUrl) {
+	const rect = button.getBoundingClientRect();
+	  const centerX = rect.left + rect.width / 2 + window.scrollX;
+	  const centerY = rect.top + rect.height / 2 + window.scrollY;
+
+	  const heartCount = 10; // 하트 개수
+	  const maxDistance = 80; // 최대 이동 거리(px)
+
+	  for (let i = 0; i < heartCount; i++) {
+	    // 랜덤 방향과 거리
+	    const angle = Math.random() * 2 * Math.PI;
+	    const distance = Math.random() * maxDistance;
+	    const x = Math.cos(angle) * distance + "px";
+	    const y = Math.sin(angle) * distance + "px";
+
+	    const heart = document.createElement("img");
+	    heart.src = imageUrl;
+	    heart.className = "burst-heart";
+	    heart.style.left = centerX + "px";
+	    heart.style.top = centerY + "px";
+	    heart.style.setProperty("--x", x);
+	    heart.style.setProperty("--y", y);
+
+	    document.body.appendChild(heart);
+
+	    setTimeout(() => {
+	      heart.remove();
+	    }, 600);
+	  }
+	}
+</script>
 
 </head>
 <body>
@@ -315,19 +388,23 @@ body {
       <img src="${card.card_image}" alt="카드 이미지" class="card-image" />
     </div>
     <div class="card-info">
-      <div class="card-name">${card.card_name}</div>
-      <div class="card-company">
-        ${card.company}
-        <span class="card-type">
-          <c:choose>
-            <c:when test="${card.card_type == '신용카드'}">신용</c:when>
-            <c:when test="${card.card_type == '체크카드'}">체크</c:when>
-            <c:otherwise>신용</c:otherwise>
-          </c:choose>
-        </span>
-      </div>
+  <!-- 텍스트 묶음 -->
+  <div class="card-text">
+    <div class="card-name">${card.card_name}</div>
+    <div class="card-company">
+      ${card.company}
+      <span class="card-type">
+        <c:choose>
+          <c:when test="${card.card_type == '신용카드'}">신용</c:when>
+          <c:when test="${card.card_type == '체크카드'}">체크</c:when>
+          <c:otherwise>신용</c:otherwise>
+        </c:choose>
+      </span>
     </div>
-    
+  </div>
+
+  <!-- 아이콘 묶음 -->
+  <div class="card-icons">
     <div class="like-wrapper" data-cardid="${card.card_id}" data-liked="${card.liked ? 'true' : 'false'}">
       <img 
         class="like-icon go-button"
@@ -339,9 +416,13 @@ body {
     </div>
 
     <div class="right-cursor">
-      <img src="${pageContext.request.contextPath}/resources/images/right.png" alt="오른쪽커서" class="right-cursor" />
+      <img src="${pageContext.request.contextPath}/resources/images/right.png" alt="오른쪽커서" />
     </div>
   </div>
+</div>
+  
+    </div>
+    
 </c:forEach>
 
 	<!-- 페이징 -->
@@ -395,6 +476,7 @@ $(function () {
           if (res.result === "success") {
             $icon.attr("src", `${cpath}/resources/images/cardlikeImage/like.png`);
             $icon.attr("data-liked", "true");
+            createRandomBurstEffect($icon[0], "${cpath}/resources/images/cardlikeImage/like.png");
           } else if (res.result === "login_required" || res.result === "need_login") {
             alert("로그인 후 이용 가능합니다.");
           } else {
