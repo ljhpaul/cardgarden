@@ -15,7 +15,7 @@ public class CardLikeDAOMybatis implements CardLikeDAOInterface {
 	@Autowired
     private SqlSessionTemplate sqlSession;
 
-    private final String namespace = "com.firstzone.cardLike";
+    private final String namespace = "com.cardgarden.cardLike";
 
     @Override
 	public int cardLikeInsert(CardLikeDTO cardlike) {
@@ -33,8 +33,13 @@ public class CardLikeDAOMybatis implements CardLikeDAOInterface {
     
     @Override
     public CardDTO selectByIdWithLike(Map<String, Object> params) {
-        return sqlSession.selectOne("com.firstzone.card.selectLike", params);
+        return sqlSession.selectOne("com.cardgarden.card.selectLike", params);
     }
-
+    
+    @Override
+    public int cardLikeSelectCount(int userId) {
+        int result =  sqlSession.selectOne(namespace+".cardLikeSelectCount", userId);
+        return result;
+    }
 
 }
