@@ -211,40 +211,36 @@ setInterval(() => {
 // 시작
 drawParticles();
 </script>
+<c:if test="${not empty loginUserId}">
 <script>
 $(document).ready(function () {
     const mascotImgs = document.querySelectorAll(".mascot");
+    const sessionDuration = 40; // 세션 총 시간 (초)
+    let lastActionTime = Date.now(); // 페이지 로드 시점
+
+    const resetTimer = () => {
+        lastActionTime = Date.now();
+    };
+    $(document).on("click keydown", resetTimer);
 
     setInterval(() => {
-        $.ajax({
-            url: "${cpath}/user/session-remaining",
-            type: "GET",
-            success: function (res) {
-                if (!res.loggedIn) {
-                    return; // 로그인 안됐으면 이미지 안바꿈
-                }
+        const elapsedSec = (Date.now() - lastActionTime) / 1000;
+        const remaining = sessionDuration - elapsedSec;
 
-                const remaining = res.remaining;
-                let imgNum = 3;
+        let imgNum = 3; // 기본: 세션 만료 (3번 이미지)
+        if (remaining > 20) {
+            imgNum = 1;
+        } else if (remaining > 0) {
+            imgNum = 2;
+        }
 
-                if (remaining > 30 && remaining <= 60) {
-                    imgNum = 1;
-                } else if (remaining > 0 && remaining <= 30) {
-                    imgNum = 2;
-                }
-
-                mascotImgs.forEach(img => {
-                    if (img.src.includes("mascot/flower")) {
-                        img.src = "${cpath}/resources/images/mascot/flower/Mascot_flower_" + imgNum + ".png";
-                    }
-                });
-            },
-            error: function () {
-                console.log("세션 확인 실패");
+        mascotImgs.forEach(img => {
+            if (img.src.includes("mascot/flower")) {
+                img.src = "${cpath}/resources/images/mascot/flower/Mascot_flower_" + imgNum + ".png";
             }
         });
-    }, 10000);
+    }, 1000);
 });
-
-
 </script>
+</c:if>
+
