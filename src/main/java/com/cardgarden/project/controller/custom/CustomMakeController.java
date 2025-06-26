@@ -99,7 +99,11 @@ public class CustomMakeController {
             String base64 = imageData.split(",")[1];
             byte[] imageBytes = Base64.getDecoder().decode(base64);
 
-            String savePath = "C:/shinhan5/work/cardgarden/src/main/webapp/resources/images/custom/customcard";
+            String projectPath = System.getProperty("user.dir");
+           // String savePath = projectPath + "/src/main/webapp/resources/images/custom/customcard";
+            String savePath = session.getServletContext().getRealPath("/resources/images/custom/customcard");
+
+            
             File folder = new File(savePath);
             if (!folder.exists()) {
                 folder.mkdirs();
