@@ -38,7 +38,7 @@
 			  <div class="pink-box1-text">
 			    나만의 커스텀 카드<br>만들러 가기
 			  </div>
-			  <img src="${cpath}/resources/images/custom/makecard.png" alt="추후 넣을예정">
+			  <img src="${cpath}/resources/images/custom/makecard.png" >
 			</div>
 	    </a>
 	</div>
