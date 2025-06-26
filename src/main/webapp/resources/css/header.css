@@ -118,6 +118,15 @@ header.main-header {
   position: relative;
 }
 
+
+.header-bottom-sticky {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 200px;
+  padding: 10px 0;
+  position: relative;
+}
 .menu-item {
   position: relative;
 }
