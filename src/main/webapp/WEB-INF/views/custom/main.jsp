@@ -22,7 +22,7 @@
       <img class="banner-card" src="${cpath}/resources/images/asset/background/지브리/background_지브리_5_토토로배경.png" alt="카드 이미지">
       <div class="banner-text">
         <h2>지브리<br>X 카드가든</h2>
-        <p class="p1">대폭 할인중</p>
+        <p class="p1">한정판 스티커 판매중</p>
         <p>6/20 ~ 7/20</p>
       </div>
     </div>
@@ -78,7 +78,7 @@
 	        </c:forEach>
 	    </div>
 	</div>
- </div>s
+ </div>
 
 	<!-- 스티커 TOP5 -->
 	<div class="section-top5 dark">
