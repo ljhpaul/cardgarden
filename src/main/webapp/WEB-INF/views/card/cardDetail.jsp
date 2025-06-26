@@ -248,7 +248,14 @@ $(function() {
 
 		</c:forEach>
 	</div>
+	
+	<c:forEach items="${cosineData}" var="card">
+	    <p>${card.key}</p>
+	    <p>${card.value}</p>
+	</c:forEach>
 
+
+	
 	<div class="modal" id="patternModal" style="display: none;">
 		<div class="modal_body">
 			<jsp:include page="../recommend/aiPattern.jsp" />

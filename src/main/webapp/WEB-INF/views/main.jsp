@@ -14,7 +14,19 @@
 </head>
 
 <body>
-<h1>
+<h1 id="main">
 	카드가든 메인화면
 </h1>
 </body>
+
+<style>
+body {
+	font-family: 'NanumSquareRound', sans-serif;
+	background-color: #F0F3F1;
+	padding: 0;
+	margin: 0;
+}
+#main {
+	text-align: center;
+}
+</style>

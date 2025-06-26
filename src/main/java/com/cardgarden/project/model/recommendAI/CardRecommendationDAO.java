@@ -1,5 +1,6 @@
 package com.cardgarden.project.model.recommendAI;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -8,13 +9,18 @@ import org.springframework.stereotype.Repository;
 import org.springframework.web.client.RestTemplate;
 
 @Repository
-public class CardRecommendationDAO implements CardRecommendationDAOInterface {
+public class CardRecommendationDAO implements CardRecommendationDAOInterface{
+	
 
     @Value("${recommend.api.url}")
     private String recommendApiUrl;
 
     @Value("${recommend.detail.url}")
     private String recommendDetailUrl;
+    
+    
+    @Value("${recommend.cosine.url}")
+    private String recommendCosineUrl;
 
     @Override
     public List<CardRecommendationDTO> getRecommendResult(int patternId) {
@@ -26,11 +32,14 @@ public class CardRecommendationDAO implements CardRecommendationDAOInterface {
 
     @Override
     public List<CardRecommendationDTO> getRecommendDetailResult(int patternId, int cardId) {
+    	System.out.println(patternId);
+    	System.out.println(cardId);
         String url = recommendDetailUrl + "?pattern_id=" + patternId + "&card_id=" + cardId;
         RestTemplate restTemplate = new RestTemplate();
         ResultWrapper response = restTemplate.getForObject(url, ResultWrapper.class);
 
-        Double resultValue = response.getResult();
+        // 여기서부터 아래로는 중복 없이!
+        Double resultValue = response != null ? response.getResult() : null;
         String message = "";
 
         if (resultValue != null) {
@@ -45,8 +54,10 @@ public class CardRecommendationDAO implements CardRecommendationDAOInterface {
             message = "결과를 찾을 수 없습니다.";
         }
 
-        System.out.println("예상 매칭률: " + resultValue);
+        System.out.println("API 응답값: " + response); 
+        System.out.println("결과값: " + resultValue);
         System.out.println("메시지: " + message);
+
         CardRecommendationDTO result = CardRecommendationDTO.builder()
                 .card_id(cardId)
                 .resultValue(resultValue)
@@ -54,4 +65,15 @@ public class CardRecommendationDAO implements CardRecommendationDAOInterface {
                 .build();
         return Arrays.asList(result);
     }
+    
+    
+    @Override
+    public List<CardRecommendationDTO> getRecommendCosine(int cardid) {
+        String url = recommendCosineUrl + "?card_id=" + cardid;
+        RestTemplate restTemplate = new RestTemplate();
+        CardRecommendationDTO[] response = restTemplate.getForObject(url, CardRecommendationDTO[].class);
+
+        return Arrays.asList(response);
+    }
+
 }

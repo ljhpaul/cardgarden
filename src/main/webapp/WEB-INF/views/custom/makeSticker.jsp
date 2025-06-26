@@ -111,7 +111,8 @@ window.addEventListener("DOMContentLoaded", () => {
 
   const cpath = '${cpath}';
   const type = '${type}';
-  const background = '${background}';
+  const rawBackground = '${background}';
+  const background = decodeURIComponent(rawBackground);
 
   const cardFrame = document.getElementById("cardFrame");
   const canvasEl = document.getElementById("canvas");
@@ -138,8 +139,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
       if (isLocked) {
         lastLockedAssetId = assetId;
-        alert("없는 아이템입니다.");
-        return;
+        alert("보유하지 않은 아이템입니다.");
       }
 
       lastLockedAssetId = null;
@@ -209,12 +209,13 @@ window.addEventListener("DOMContentLoaded", () => {
   });
 
   document.getElementById("backBtn").addEventListener("click", () => {
-    window.location.href = `${cpath}/make/background?type=${type}`;
+    const encodedBg = encodeURIComponent(background);
+    window.location.href = `${cpath}/make/background?type=${type}&background=${encodedBg}`;
   });
 
   document.getElementById("completeBtn").addEventListener("click", () => {
     if (lastLockedAssetId) {
-      alert("없는 아이템이 있습니다. 상점으로 이동합니다.");
+      alert("존재하지 않는 아이템이 있습니다. 상점으로 이동합니다.");
       window.location.href = `/cardgarden/custom/detail?asset_id=${lastLockedAssetId}`;
       return;
     }
@@ -247,11 +248,19 @@ window.addEventListener("DOMContentLoaded", () => {
 
         const finalDataUrl = tempCanvas.toDataURL('image/png');
 
-        console.log("카드이름:", cardName);
-        console.log("최종이미지:", finalDataUrl);
-
-        alert("카드가 저장되었습니다.");
-        saveModal.style.visibility = "hidden";
+        fetch(`${cpath}/make/saveImage`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ imageData: finalDataUrl })
+        })
+        .then(res => res.text())
+        .then(res => {
+          if (res === "ok") {
+            location.href = `${cpath}/make/result`;
+          } else {
+            alert("저장 실패");
+          }
+        });
       };
     };
   });

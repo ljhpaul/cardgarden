@@ -11,7 +11,7 @@
     <title>카드가든 : ${title}</title>
 </head>
 
-<div class="bg-main">
+<body class="bg-main">
   <div class="container">
     <div class="box">
       <h2 class="title-lg">${title}</h2>
@@ -69,11 +69,17 @@
       </form>
     </div>
   </div>
-</div>
+</body>
 
 <style>
+  body {
+	font-family: 'NanumSquareRound', sans-serif;
+	background-color: #F0F3F1;
+	padding: 0;
+	margin: 0;
+  }
   .container {
-    padding-top: 110px;
+    padding-top: 70px;
   }
   .box {
     max-width: 440px;

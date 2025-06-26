@@ -19,7 +19,7 @@
     <title>카드가든 : 회원가입</title>
 </head>
 
-<div class="bg-main">
+<body class="bg-main">
   <div class="container">
     <div class="box">
       <h2 class="title-lg">회원정보 입력</h2>
@@ -112,9 +112,15 @@
       </form>
     </div>
   </div>
-</div>
+</body>
 
 <style>
+body {
+	font-family: 'NanumSquareRound', sans-serif;
+	background-color: #F0F3F1;
+	padding: 0;
+	margin: 0;
+}
 .box {
   max-width: 520px;
   margin: 70px auto 80px;

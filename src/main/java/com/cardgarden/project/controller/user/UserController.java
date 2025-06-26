@@ -87,7 +87,7 @@ public class UserController {
 	        return "redirect:/user/login";
 	    }
 	    
-	    int userId = (Integer) loginUserIdObj; // null 아님이 확실할 때만 형변환
+	    int userId = (Integer) loginUserIdObj;
 
 		List<UserConsumptionPatternResponseDTO> myConsumptionPatternList  = userInfoSerivce.selectMyonsumptionPattern(userId);
         
