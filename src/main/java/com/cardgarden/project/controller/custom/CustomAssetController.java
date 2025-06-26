@@ -26,6 +26,12 @@ public class CustomAssetController {
     public String showCustomMain(Model model, HttpSession session) {
         
         Integer loginId = (Integer) session.getAttribute("loginUserId");
+        
+        if (session != null) {
+            int remainingTime = session.getMaxInactiveInterval() - (int)((System.currentTimeMillis() - session.getLastAccessedTime()) / 1000);
+            System.out.println("남은 세션 시간(초) : " + remainingTime);
+        }
+
 
         Map<String, Object> allParam = new HashMap<>();
         allParam.put("asset_type", "");
