@@ -79,20 +79,25 @@ public class LoginController {
 
     @GetMapping("/session-remaining")
     @ResponseBody
-    public Map<String, Object> getRemainingSessionTime(HttpServletRequest request) {
+    public Map<String, Object> getRemainingSessionTime(HttpSession session) {
         Map<String, Object> map = new HashMap<>();
 
-        HttpSession session = request.getSession(false); 
+        Object userId = session.getAttribute("loginUserId");
 
-        int remainSec = -1;
-        if (session != null && session.getAttribute("loginUserId") != null) {
+        if (userId == null) {
+            map.put("loggedIn", false);  // 로그인 안됨
+        } else {
             int total = session.getMaxInactiveInterval();
             long last = session.getLastAccessedTime();
             long now = System.currentTimeMillis();
-            remainSec = (int) (total - (now - last) / 1000);
+            int remainSec = (int) (total - (now - last) / 1000);
+
+            map.put("loggedIn", true);
+            map.put("remaining", remainSec);
         }
-        map.put("remaining", remainSec);
+
         return map;
     }
+
 
 }
