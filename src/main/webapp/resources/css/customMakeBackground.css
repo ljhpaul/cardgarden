@@ -2,12 +2,12 @@ body {
   background-color: var(--main);
   font-family: var(--font);
   margin: 0;
+  padding: 0;
 }
 
 .background-page-container {
-  width: 100%;
-  min-height: 100vh;
   background-color: white;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   padding: 40px 60px;
@@ -51,6 +51,7 @@ body {
 }
 
 .card-frame {
+  background-color: white;
   width: 700px;
   height: 441px;
   background-size: cover;

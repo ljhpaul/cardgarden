@@ -105,7 +105,7 @@ document.getElementById("backBtn").addEventListener("click", () => {
 document.getElementById("nextBtn").addEventListener("click", () => {
   if (selectedBackgroundLocked) {
     alert("이 아이템이 없습니다. 상점으로 이동합니다.");
-    window.location.href = `${cpath}/custom/detail?asset_id=${selectedBackgroundId}`;
+    window.location.href = "/cardgarden/custom/detail?asset_id="+selectedBackgroundId;
     return;
   }
   const cardFrame = document.getElementById("cardFrame");
