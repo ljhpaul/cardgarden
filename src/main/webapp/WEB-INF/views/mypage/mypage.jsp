@@ -40,7 +40,6 @@ body {
   align-items: flex-start;
   border-radius: 24px;
   margin: 0 auto;
-  padding-top: 0px;
   gap: 28px;
 }
 
@@ -93,7 +92,7 @@ body {
   font-size: 16px;
   font-weight: bold;
   margin-bottom: 16px;
-  transition: color 0.2s;
+  transition: color 0.15s;
 }
 .inner-box-nav a:last-child {
   margin-bottom: 0;
@@ -139,7 +138,7 @@ label {
 }
 .btn {
   min-width: 110px;
-  height: 40px;
+  height: 44px;
   margin-left: 12px;
   cursor: pointer;
 }
@@ -185,9 +184,10 @@ label {
     <!-- 회원정보 -->
     <div class="box box-content">
       <h2 class="title-lg title-lg-content">${user.name}님의 회원정보</h2>
-      <form id="enroll-form" action="${cpath}/user/mypage" method="post" onsubmit="combineAddress();" autocomplete="off">
+      <form id="enroll-form" action="${cpath}/user/mypage" method="post" autocomplete="off">
         <input type="hidden" name="user_id" value="${user.user_id}">
         <input type="hidden" name="user_password" value="${user.user_password}">
+        <input type="hidden" id="address" name="address" value="${user.address}">
 		
 		<div class="inner-box inner-box-content">
 	        <div class="form-group">
@@ -233,8 +233,7 @@ label {
 	        
 	        <div class="form-group form-group-end">
 	          <label>주소</label>
-	          <input type="hidden" id="address" name="address">
-	          <input type="text" id="addressView" name="addressView" class="input input-readonly" value="${user.address}" readonly>
+	          <input type="text" id="addressView" name="addressView" class="input input-readonly" readonly>
 	          <button type="button" id="addressbtn" class="btn" onclick="execDaumPostcode();">주소 변경하기</button>
 	        </div>
 		</div>
@@ -246,6 +245,7 @@ label {
 </body>
 
 <script>
+// 주소 정리 후 출력
 $(function() {
   const address = "${user.address}";
   const addressParts = address.split("/");
@@ -290,7 +290,7 @@ $("#phone").on("input", function() {
 	$(this).val(phone);
 });
 
-//주소변경 버튼 누를 시 회원가입폼에 있는 주소입력창 생성
+// 주소변경 버튼 누를 시 회원가입폼에 있는 주소입력창 생성
 document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("addressbtn").addEventListener("click", function () {
     const formGroup = this.closest(".form-group");
@@ -307,11 +307,9 @@ document.addEventListener("DOMContentLoaded", function () {
     formGroup.innerHTML = `
       <label>주소</label>
       <div class="address-fields" style="flex:1; display: flex; flex-direction: column; gap: 8px;">
-        <input type="hidden" id="address" name="address">
-        
-        <div class="addr-row" style="display: flex; gap: 10px;">
+        <div class="addr-row" style="display: flex;">
           <input type="text" id="postcode" name="postcode" class="input input-readonly" placeholder="우편번호" readonly value="\${postcode}">
-          <button type="button" class="btn" onclick="execDaumPostcode();" style="min-width:110px; height:40px;">우편번호 찾기</button>
+          <button type="button" class="btn" onclick="execDaumPostcode();">우편번호 찾기</button>
         </div>
         
         <input type="text" id="roadAddress" name="roadAddress" class="input input-readonly" placeholder="도로명주소" readonly value="\${roadAddress}">
@@ -355,5 +353,9 @@ function combineAddress() {
 	let address = postcode + "/" +  roadAddress + "/" + (extraAddress ? extraAddress : " ") + "/" + detailAddress;
 	$("#address").val(address);
 }
+// address-fields 내부 input이 변경될 때마다 combineAddress 호출
+$(document).on("input", ".address-fields input", function() {
+	combineAddress();
+})
 </script> 
 </body>

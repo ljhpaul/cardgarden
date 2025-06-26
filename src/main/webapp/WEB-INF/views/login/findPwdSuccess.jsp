@@ -43,9 +43,6 @@ body {
 	padding: 0;
 	margin: 0;
 }
-.container {
-	padding-top: 100px;
-}
 
 .box {
 	max-width: 480px;

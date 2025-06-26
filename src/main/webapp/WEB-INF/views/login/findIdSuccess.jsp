@@ -44,9 +44,8 @@ body {
 	margin: 0;
 }
 .container {
-	padding-top: 100px;
+    padding-top: 60px;
 }
-
 .box {
 	max-width: 480px;
 	width: 100%;
