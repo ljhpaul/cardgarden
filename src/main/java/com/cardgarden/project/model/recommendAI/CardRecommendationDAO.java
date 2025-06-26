@@ -1,5 +1,6 @@
 package com.cardgarden.project.model.recommendAI;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -8,13 +9,18 @@ import org.springframework.stereotype.Repository;
 import org.springframework.web.client.RestTemplate;
 
 @Repository
-public class CardRecommendationDAO implements CardRecommendationDAOInterface {
+public class CardRecommendationDAO implements CardRecommendationDAOInterface{
+	
 
     @Value("${recommend.api.url}")
     private String recommendApiUrl;
 
     @Value("${recommend.detail.url}")
     private String recommendDetailUrl;
+    
+    
+    @Value("${recommend.cosine.url}")
+    private String recommendCosineUrl;
 
     @Override
     public List<CardRecommendationDTO> getRecommendResult(int patternId) {
@@ -59,4 +65,15 @@ public class CardRecommendationDAO implements CardRecommendationDAOInterface {
                 .build();
         return Arrays.asList(result);
     }
+    
+    
+    @Override
+    public List<CardRecommendationDTO> getRecommendCosine(int cardid) {
+        String url = recommendCosineUrl + "?card_id=" + cardid;
+        RestTemplate restTemplate = new RestTemplate();
+        CardRecommendationDTO[] response = restTemplate.getForObject(url, CardRecommendationDTO[].class);
+
+        return Arrays.asList(response);
+    }
+
 }

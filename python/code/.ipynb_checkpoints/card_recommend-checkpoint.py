@@ -8,6 +8,13 @@ from sklearn.cluster import KMeans
 from scipy.spatial.distance import cdist
 import numpy as np
 from collections import Counter
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import classification_report, f1_score
+
+def softmax(x):
+    x = np.array(x)
+    e_x = np.exp(x - np.max(x))
+    return e_x / e_x.sum()
 
 def get_recommend_result(pattern_id):
     arr_key2 = ['모든가맹점','모빌리티','대중교통','통신','생활','쇼핑','외식/카페','뷰티/피트니스','금융/포인트','병원/약국','문화/취미','숙박/항공']
@@ -60,15 +67,18 @@ def get_recommend_result(pattern_id):
     df_wide = df_wide[['고객번호'] + arr_key2].fillna(0).reset_index(drop=True)
     df_wide_list = df_wide[arr_key2].values.tolist()
 
-    # 1. z-score 정규화
+    # 전체 wide 데이터의 소비금액 최대값/평균값 구하기
+    max_amt = np.max(df_wide[arr_key2].values)
+    mean_amt = np.mean(df_wide[arr_key2].values)
+    
+    # 1. min-max 정규화 (0~1)
     df_wide_norm = df_wide.copy()
     for cat in arr_key2:
-        df_wide_norm[cat] = (df_wide[cat] - df_wide[cat].mean()) / df_wide[cat].std()
+        df_wide_norm[cat] = df_wide[cat] / max_amt
+    
     df_wide_list_norm = df_wide_norm[arr_key2].values.tolist()
     
-    # 2. 고객 벡터도 z-score로 맞추기
-    customer_vec = [(customer[cat] - df_wide[cat].mean()) / df_wide[cat].std() for cat in arr_key2]
-
+    
 
     # 카드 벡터 생성
     card_ids = df_card_detail["card_id"].unique()
@@ -91,8 +101,8 @@ def get_recommend_result(pattern_id):
     kmeans = KMeans(n_clusters=K, random_state=42)
     clusters = kmeans.fit_predict(benefit_vectors)
     
-    customer_vec_zscore = np.array([(customer[cat] - df_wide[cat].mean()) / df_wide[cat].std() for cat in arr_key2])
-    distances = cdist([customer_vec_zscore], kmeans.cluster_centers_)
+    customer_vec = np.array([customer[cat] for cat in arr_key2])
+    distances = cdist([customer_vec], kmeans.cluster_centers_)
     closest_cluster = distances.argmin()
     
     cluster_indices = np.where(clusters == closest_cluster)[0]
@@ -112,19 +122,21 @@ def get_recommend_result(pattern_id):
     y_train = []
     for card in card_list:
         for i in range(min(1500, len(df_wide_list_norm))):
-            fake_customer = df_wide_list_norm[i]
+            fake_customer = df_wide_list[i]
             card_vec = card['benefit_vec']
             features = fake_customer + card_vec
             X_train.append(features)
-            match = sum([c > 0.5 and v == 1 for c, v in zip(fake_customer, card_vec)])  # 정규화된 기준
+            match = sum([c > 20000 and v == 1 for c, v in zip(fake_customer, card_vec)])
             y_train.append(match)
-
 
     
     # 5. 실제 고객+카드 조합 예측
     X_test = []
+    # X_train 생성시
     for card in card_list:
-        features = customer_vec + card['benefit_vec']
+        customer_vec = [customer[cat]/max_amt for cat in arr_key2]   # 정규화
+        card_vec = card['benefit_vec']
+        features = customer_vec + card_vec
         X_test.append(features)
 
 
@@ -142,6 +154,11 @@ def get_recommend_result(pattern_id):
         {"card_id": int(name), "expected_match": float(f"{score:.2f}")}
         for name, score in recommend[:10]
     ]
+    
+    top10_scores = [score for _, score in recommend[:10]]
+    top10_softmax_scores = softmax(top10_scores)
+    for i, rec in enumerate(result_list):
+        rec["softmax_expected_match"] = float(f"{top10_softmax_scores[i]:.2f}")
     print("y_train class 분포:", Counter(y_train))
 
     X_tr, X_te, y_tr, y_te = train_test_split(
@@ -151,17 +168,10 @@ def get_recommend_result(pattern_id):
     y_pred = rf.predict(X_te)
     acc = accuracy_score(y_te, y_pred)
 
-    print("고객 소비패턴 샘플 수:", len(df_wide_list), file=sys.stderr)
-    print("추천 카드 상위 10개 (카드번호, 적합도):", file=sys.stderr)
     for name, score in recommend[:10]:
         print(f"{name} {round(score, 4)}", file=sys.stderr)
-    print("RandomForest Accuracy (for debug):", acc, file=sys.stderr)
+        
     return result_list
-
-
-
-
-
 
 from flask import Flask, request, jsonify
 
