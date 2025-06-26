@@ -38,6 +38,12 @@ public class CustomMakeController {
             HttpSession session,
             Model model) {
 
+    	if (session != null) {
+    	    int remainingTime = session.getMaxInactiveInterval() - (int)((System.currentTimeMillis() - session.getLastAccessedTime()) / 1000);
+    	    System.out.println("남은 세션 시간(초) : " + remainingTime);
+    	}
+
+
         Integer loginUserId = (Integer) session.getAttribute("loginUserId");
         if (loginUserId == null) {
             return "redirect:/user/login";

@@ -76,13 +76,12 @@
     </a>
     <div class="submenu">
       <a href="${cpath}/make/frame">나만의 디자인</a>
-      <a href="${cpath}/custom/main">콜라보</a>
       <a href="${cpath}/custom/top?type=sticker">인기 아이템 랭킹</a>
     </div>
   </div>
 
   <div class="menu-item">
-    <a href="${cpath}/event/list">이벤트
+    <a href="${cpath}/event/attendance">이벤트
       <img class="mascot" src="${cpath}/resources/images/common/caretDown.png" width="15">
     </a>
     <div class="submenu">
@@ -110,7 +109,7 @@
       <a href="${cpath}/card/list">카드</a>
       <a href="${cpath}/recommend/ai">AI 추천</a>
       <a href="${cpath}/custom/main">커스터마이징</a>
-      <a href="${cpath}/event/list">이벤트</a>
+      <a href="${cpath}/event/attendance">이벤트</a>
     </div>
 
     <!-- 오른쪽 검색 + 하트 -->
