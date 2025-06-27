@@ -50,7 +50,7 @@
 
     <!-- 보상 안내 -->  
     <div class="attendance-reward">  
-        <h3>출석 혜택</h3>  
+        <h3>-+ 출석 혜택 +-</h3>  
 
         <div class="reward-box-container">  
 

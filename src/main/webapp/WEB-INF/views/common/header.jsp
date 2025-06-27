@@ -41,7 +41,7 @@
 			<!--로고 -->
 			<div class="header-logo">
 				<a href="${cpath}/main"> <img class="mascot"
-					src="${cpath}/resources/images/mascot/flower/Mascot_flower_1.png">
+					src="${cpath}/resources/images/mascot/flower/mascot_flower_1.png">
 					<img class="logo" src="${cpath}/resources/images/common/logo.png">
 				</a>
 			</div>
@@ -105,7 +105,7 @@
 		<!-- 왼쪽 로고 -->
 		<div class="menu-left">
 			<a href="${cpath}/main"> <img class="mascot"
-				src="${cpath}/resources/images/mascot/flower/Mascot_flower_1.png"
+				src="${cpath}/resources/images/mascot/flower/mascot_flower_1.png"
 				style="height: 36px;"> <img class="logo"
 				src="${cpath}/resources/images/common/logo.png"
 				style="height: 26px;">
@@ -286,7 +286,7 @@ $(document).ready(function () {
 
         mascotImgs.forEach(img => {
             if (img.src.includes("mascot/flower")) {
-                img.src = "${cpath}/resources/images/mascot/flower/Mascot_flower_" + imgNum + ".png";
+                img.src = "${cpath}/resources/images/mascot/flower/mascot_flower_" + imgNum + ".png";
             }
         });
     }, 1000);
