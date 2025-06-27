@@ -135,4 +135,7 @@ public class UserInfoService {
 	public int insertOwnedAsset(Map<String, Object> paramMap) {
 	    return userInfoDAO.insertOwnedAsset(paramMap);
 	}
+	public Integer getDefaultMascotId(int userId) {
+	    return userInfoDAO.selectDefaultMascotId(userId);
+	}
 }
