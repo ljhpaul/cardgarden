@@ -7,7 +7,10 @@ def get_consum_pattern_continuous(pattern_id, card_id):
     result = None
     # DB 연결
     
-    DF_PARQUET = pd.read_parquet("/Users/isanghyeon/Documents/workspace-sts-3.9.18.RELEASE/cardgarden/python/result/q_table_continuous_normalized.parquet")
+    # DF_PARQUET = pd.read_parquet("/Users/isanghyeon/Documents/workspace-sts-3.9.18.RELEASE/cardgarden/python/result/q_table_continuous_normalized1.parquet")
+    DF_PARQUET = pd.read_parquet("/Users/isanghyeon/Documents/workspace-sts-3.9.18.RELEASE/cardgarden/python/result/q_table_continuous1.parquet")
+
+    
 
 
     print("'249' in DF_PARQUET.columns:", '249' in DF_PARQUET.columns)
