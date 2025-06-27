@@ -41,7 +41,7 @@
 			<!--로고 -->
 			<div class="header-logo">
 				<a href="${cpath}/main"> <img class="mascot"
-					src="${cpath}/resources/images/mascot/flower/Mascot_flower_1.png">
+					src="${cpath}/resources/images/mascot/flower/mascot_flower_1.png">
 					<img class="logo" src="${cpath}/resources/images/common/logo.png">
 				</a>
 			</div>
@@ -92,6 +92,8 @@
 				</a>
 				<div class="submenu">
 					<a href="${cpath}/event/attendance">출석체크</a>
+					<a href="${cpath}/event/mascot">포인트샵</a>
+					<a href="${cpath}/event/mascot/my">내마스코트</a>
 				</div>
 			</div>
 		</div>
@@ -105,7 +107,7 @@
 		<!-- 왼쪽 로고 -->
 		<div class="menu-left">
 			<a href="${cpath}/main"> <img class="mascot"
-				src="${cpath}/resources/images/mascot/flower/Mascot_flower_1.png"
+				src="${cpath}/resources/images/mascot/flower/mascot_flower_1.png"
 				style="height: 36px;"> <img class="logo"
 				src="${cpath}/resources/images/common/logo.png"
 				style="height: 26px;">
@@ -146,6 +148,8 @@
 				</a>
 				<div class="submenu">
 					<a href="${cpath}/event/attendance">출석체크</a>
+					<a href="${cpath}/event/mascot">포인트샵</a>
+					<a href="${cpath}/event/mascot/my">내 마스코트</a>
 				</div>
 			</div>
 		</div>
@@ -265,32 +269,33 @@ if(userLike >= 100) {
 <script>
 $(document).ready(function () {
     const mascotImgs = document.querySelectorAll(".mascot");
-    const sessionDuration = 40; // 세션 총 시간 (초)
-    let lastActionTime = Date.now(); // 페이지 로드 시점
 
-    const resetTimer = () => {
-        lastActionTime = Date.now();
-    };
-    $(document).on("click", resetTimer);
+    const mascotId = ${mascotId}; 
+    let mascotBrand = "flower";
+    if (mascotId === 121) mascotBrand = "card";
+    if (mascotId === 122) mascotBrand = "fairy";
+
+    const sessionDuration = 40;
+    let lastActionTime = Date.now();
+
+    $(document).on("click", () => { lastActionTime = Date.now(); });
 
     setInterval(() => {
         const elapsedSec = (Date.now() - lastActionTime) / 1000;
         const remaining = sessionDuration - elapsedSec;
 
-        let imgNum = 3; // 기본: 세션 만료 (3번 이미지)
-        if (remaining > 20) {
-            imgNum = 1;
-        } else if (remaining > 0) {
-            imgNum = 2;
-        }
+        let imgNum = 3;
+        if (remaining > 20) imgNum = 1;
+        else if (remaining > 0) imgNum = 2;
 
         mascotImgs.forEach(img => {
-            if (img.src.includes("mascot/flower")) {
-                img.src = "${cpath}/resources/images/mascot/flower/Mascot_flower_" + imgNum + ".png";
+            if (img.src.includes(`mascot/${mascotBrand}`)) {
+            	 img.src = "${cpath}/resources/images/mascot/" + mascotBrand + "/mascot_" + mascotBrand + "_" + imgNum + ".png";
             }
         });
     }, 1000);
 });
 </script>
 </c:if>
+
 

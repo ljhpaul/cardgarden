@@ -106,5 +106,9 @@ public class CustomAssetDAOMybatis implements CustomAssetDAOInterface {
     public int selectAssetLikeCount(int assetId) {
         return sqlSession.selectOne(namespace + ".selectAssetLikeCount", assetId);
     }
+    @Override
+    public List<CustomAssetDTO> selectOwnedMascots(int userId) {
+        return sqlSession.selectList(namespace + ".selectOwnedMascots", userId);
+    }
 
 }
