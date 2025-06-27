@@ -49,7 +49,7 @@
 		</c:choose>
 
 
-          <div class="like-section">
+          <%-- <div class="like-section">
             <c:choose>
               <c:when test="${liked == -1}">
                 <a href="${cpath}/login" class="like-btn">
@@ -69,7 +69,7 @@
                 </button>
               </c:when>
             </c:choose>
-          </div>
+          </div> --%>
 
         </div>
 
