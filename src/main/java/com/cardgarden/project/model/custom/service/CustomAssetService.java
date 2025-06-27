@@ -71,5 +71,6 @@ public class CustomAssetService {
     public int getUserAssetLike(int assetId) {
         return dao.selectAssetLikeCount(assetId);
     }
+
     
 }
