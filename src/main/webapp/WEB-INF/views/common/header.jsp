@@ -106,9 +106,11 @@
 
 		<!-- 왼쪽 로고 -->
 		<div class="menu-left">
-			<a href="${cpath}/main"> <img class="mascot"
+			<a href="${cpath}/main"> 
+			<img class="mascot"
 				src="${cpath}/resources/images/mascot/flower/mascot_flower_1.png"
-				style="height: 36px;"> <img class="logo"
+				style="height: 36px;"> 
+			<img class="logo"
 				src="${cpath}/resources/images/common/logo.png"
 				style="height: 26px;">
 			</a>
@@ -274,12 +276,18 @@ $(document).ready(function () {
     let mascotBrand = "flower";
     if (mascotId === 121) mascotBrand = "card";
     if (mascotId === 122) mascotBrand = "fairy";
+    
+    mascotImgs.forEach(img => {
+        if (img.src.includes("mascot/flower")) {
+        	img.src = "${cpath}/resources/images/mascot/" + mascotBrand + "/mascot_" + mascotBrand + "_1.png";
+        }
+    });
 
     const sessionDuration = 40;
     let lastActionTime = Date.now();
 
     $(document).on("click", () => { lastActionTime = Date.now(); });
-
+	
     setInterval(() => {
         const elapsedSec = (Date.now() - lastActionTime) / 1000;
         const remaining = sessionDuration - elapsedSec;
@@ -287,7 +295,7 @@ $(document).ready(function () {
         let imgNum = 3;
         if (remaining > 20) imgNum = 1;
         else if (remaining > 0) imgNum = 2;
-
+		
         mascotImgs.forEach(img => {
             if (img.src.includes(`mascot/${mascotBrand}`)) {
             	 img.src = "${cpath}/resources/images/mascot/" + mascotBrand + "/mascot_" + mascotBrand + "_" + imgNum + ".png";
