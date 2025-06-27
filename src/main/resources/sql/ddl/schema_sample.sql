@@ -17,3 +17,6 @@ insert into sample_table(id, name) values(6, '정진');
 update sample_table set name = '정진2' where id = 6;
 delete from sample_table where id = 6;
 select * from sample_table where id = 6;
+
+select * from userInfo where user_id > 5000;
+delete from userInfo where user_id = 5016;

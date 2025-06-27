@@ -90,8 +90,14 @@ public class JoinController {
 	
 	//3-1. 회원정보 입력
 	@GetMapping("/info")
-	public String inputInfoView() {
+	public String inputInfoView(HttpSession session) {
 		/* 소셜 인증일 경우 자동완성 추가 */
+		
+		/*
+		if(session.getAttribute("verifiedEmail") == null) {
+			return "redirect:/wrong";
+		}
+		*/
 		
 	    return "join/inputInfo";
 	}
