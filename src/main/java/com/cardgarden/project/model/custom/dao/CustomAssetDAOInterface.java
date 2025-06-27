@@ -36,4 +36,6 @@ public interface CustomAssetDAOInterface {
     void decreaseAssetLike(int assetId);
 
     int selectAssetLikeCount(int assetId);
+    
+    List<CustomAssetDTO> selectOwnedMascots(int userId);
 }

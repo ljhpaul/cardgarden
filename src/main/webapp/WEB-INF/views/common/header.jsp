@@ -93,6 +93,7 @@
 				<div class="submenu">
 					<a href="${cpath}/event/attendance">출석체크</a>
 					<a href="${cpath}/event/mascot">포인트샵</a>
+					<a href="${cpath}/event/mascot/my">내마스코트</a>
 				</div>
 			</div>
 		</div>
@@ -148,6 +149,7 @@
 				<div class="submenu">
 					<a href="${cpath}/event/attendance">출석체크</a>
 					<a href="${cpath}/event/mascot">포인트샵</a>
+					<a href="${cpath}/event/mascot/my">내 마스코트</a>
 				</div>
 			</div>
 		</div>
