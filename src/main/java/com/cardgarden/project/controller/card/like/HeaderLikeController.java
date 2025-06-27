@@ -1,4 +1,4 @@
-package com.cardgarden.project.controller;
+package com.cardgarden.project.controller.card.like;
 
 import javax.servlet.http.HttpSession;
 

@@ -1,4 +1,4 @@
-package com.cardgarden.project.controller;
+package com.cardgarden.project.controller.recommend;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
