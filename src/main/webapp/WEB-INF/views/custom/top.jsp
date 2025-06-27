@@ -35,7 +35,9 @@
     <div class="filter-group">
       <p>정렬 기준</p>
       <a href="?type=${type}&sortBy=used&brand=${brand}" class="filter-btn ${sortBy == 'used' ? 'active' : ''}">사용순</a>
-      <a href="?type=${type}&sortBy=like&brand=${brand}" class="filter-btn ${sortBy == 'like' ? 'active' : ''}">좋아요순</a>
+      <a href="?type=${type}&sortBy=pricehigh&brand=${brand}" class="filter-btn ${sortBy == 'pricehigh' ? 'active' : ''}">가격높은순</a>
+      <a href="?type=${type}&sortBy=pricelow&brand=${brand}" class="filter-btn ${sortBy == 'pricelow' ? 'active' : ''}">가격낮은순</a>
+<%--       <a href="?type=${type}&sortBy=like&brand=${brand}" class="filter-btn ${sortBy == 'like' ? 'active' : ''}">좋아요순</a> --%>
     </div>
     <div class="filter-group">
       <p>브랜드</p>
