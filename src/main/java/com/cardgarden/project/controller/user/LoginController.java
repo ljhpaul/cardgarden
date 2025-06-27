@@ -24,7 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 public class LoginController {
 
     @Autowired
-    private UserInfoService userInfoSerivce;
+    private UserInfoService userInfoService;
 
     // 1-1. 로그인 입력창
     @GetMapping("/login")
@@ -45,14 +45,14 @@ public class LoginController {
         log.info("(" + inputLoginId + ", " + inputLoginPassword + ")");
 
         // 아이디 검증
-        if (!userInfoSerivce.existsByLoginId(inputLoginId)) {
+        if (!userInfoService.existsByLoginId(inputLoginId)) {
             map.put("success", false);
             map.put("message", "존재하지 않는 아이디입니다.");
             return map;
         }
 
         // 비밀번호 검증
-        String password = userInfoSerivce.getPasswordByLoginId(inputLoginId);
+        String password = userInfoService.getPasswordByLoginId(inputLoginId);
         if (!inputLoginPassword.equals(password)) {
             map.put("success", false);
             map.put("message", "비밀번호가 일치하지 않습니다.");
@@ -60,7 +60,7 @@ public class LoginController {
         }
 
         // 로그인 성공
-        int loginUserId = userInfoSerivce.getUserIdByLoginId(inputLoginId);
+        int loginUserId = userInfoService.getUserIdByLoginId(inputLoginId);
         session.setAttribute("loginUserId", loginUserId);
         session.setAttribute("mascotId", 120);  // 디폴트 flower 선택
         session.setMaxInactiveInterval(40); 
