@@ -128,6 +128,12 @@
 		#{gender}, #{birth}, 
 		#{phone}, #{address})
 	</insert>
+	<!-- 보유자산 넣기 -->
+	<insert id="insertOwnedAsset" parameterType="map">
+	    INSERT INTO OwnedAsset (user_id, asset_id)
+	    VALUES (#{user_id}, #{asset_id})
+	</insert>
+	
 
 	<!-- 정보 수정(패스워드, 닉네임 등) -->
 	<update id="update" parameterType="userInfoDTO">

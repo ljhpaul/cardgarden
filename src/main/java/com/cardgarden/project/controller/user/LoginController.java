@@ -62,7 +62,7 @@ public class LoginController {
         // 로그인 성공
         int loginUserId = userInfoSerivce.getUserIdByLoginId(inputLoginId);
         session.setAttribute("loginUserId", loginUserId);
-        session.setMaxInactiveInterval(40); // 세션 유지 시간 (초)
+        session.setMaxInactiveInterval(4000); // 세션 유지 시간 (초)
         
         map.put("success", true);
         map.put("message", "로그인 성공");

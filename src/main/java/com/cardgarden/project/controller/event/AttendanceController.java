@@ -1,4 +1,4 @@
-package com.cardgarden.project.controller;
+package com.cardgarden.project.controller.event;
 
 import java.sql.Date;  
 import java.text.SimpleDateFormat;  
