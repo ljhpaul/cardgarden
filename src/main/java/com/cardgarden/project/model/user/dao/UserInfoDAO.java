@@ -110,6 +110,9 @@ public class UserInfoDAO {
 	public int insertOwnedAsset(Map<String, Object> paramMap) {
 	    return sqlSession.insert(namespace + "insertOwnedAsset", paramMap);
 	}
+	public Integer selectDefaultMascotId(int userId) {
+	    return sqlSession.selectOne(namespace + "selectDefaultMascotId", userId);
+	}
 
 	
 }

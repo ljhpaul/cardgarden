@@ -226,4 +226,11 @@
 		  </collection>
 		</resultMap>
 	<!-- 내가 좋요한 카드 끝 -->
+	
+	<select id="selectDefaultMascotId" resultType="int">
+	    SELECT mascot_id
+	    FROM UserInfo
+	    WHERE user_id = #{userId}
+	</select>
+	
 </mapper>

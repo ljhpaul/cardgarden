@@ -80,6 +80,44 @@ public class MascotController {
     public String showResultPage() {
         return "event/result";
     }
+    @GetMapping("/mascot/my")
+    public String myMascotPage(HttpSession session, Model model) {
+
+        Integer userId = (Integer) session.getAttribute("loginUserId");
+        if (userId == null) {
+            return "redirect:/user/login";
+        }
+
+        List<CustomAssetDTO> ownedList = service.getOwnedMascots(userId);
+        Integer mascotId = (Integer) session.getAttribute("mascotId");
+
+        CustomAssetDTO selectedMascot = null;
+        if (mascotId != null) {
+            selectedMascot = service.getAssetDetail(mascotId);
+        }
+
+        model.addAttribute("ownedList", ownedList);
+        model.addAttribute("selectedMascot", selectedMascot);
+
+        return "event/myMascot";
+    }
+    @PostMapping("/mascot/select")
+    @ResponseBody
+    public String selectMascot(@RequestParam("asset_id") int assetId, HttpSession session) {
+        Integer userId = (Integer) session.getAttribute("loginUserId");
+        if (userId == null) {
+            return "notlogin";
+        }
+
+        int owned = service.checkOwned(userId, assetId);
+        if (owned == 0) {
+            return "notowned";
+        }
+
+        session.setAttribute("mascotId", assetId);
+        return "success";
+    }
+
 
 
 }

@@ -127,5 +127,15 @@
   <insert id="insertOwnedAsset">
     INSERT INTO OwnedAsset (user_id, asset_id) VALUES (#{user_id}, #{asset_id})
   </insert>
+  
+	  <!-- 내가 보유한 마스코트 전체 조회 -->
+	<select id="selectOwnedMascots" resultType="CustomAssetDTO">
+	  SELECT ca.*
+	  FROM OwnedAsset oa
+	  JOIN CustomAsset ca ON oa.asset_id = ca.asset_id
+	  WHERE oa.user_id = #{user_id}
+	    AND ca.asset_type = 'mascot'
+	</select>
+  
 
 </mapper>

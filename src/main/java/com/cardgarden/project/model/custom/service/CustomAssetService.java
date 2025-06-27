@@ -71,6 +71,8 @@ public class CustomAssetService {
     public int getUserAssetLike(int assetId) {
         return dao.selectAssetLikeCount(assetId);
     }
-
+    public List<CustomAssetDTO> getOwnedMascots(int userId) {
+        return dao.selectOwnedMascots(userId);
+    }
     
 }
