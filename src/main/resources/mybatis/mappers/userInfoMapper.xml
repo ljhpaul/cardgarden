@@ -128,6 +128,12 @@
 		#{gender}, #{birth}, 
 		#{phone}, #{address})
 	</insert>
+	<!-- 보유자산 넣기 -->
+	<insert id="insertOwnedAsset" parameterType="map">
+	    INSERT INTO OwnedAsset (user_id, asset_id)
+	    VALUES (#{user_id}, #{asset_id})
+	</insert>
+	
 
 	<!-- 정보 수정(패스워드, 닉네임 등) -->
 	<update id="update" parameterType="userInfoDTO">
@@ -220,4 +226,11 @@
 		  </collection>
 		</resultMap>
 	<!-- 내가 좋요한 카드 끝 -->
+	
+	<select id="selectDefaultMascotId" resultType="int">
+	    SELECT mascot_id
+	    FROM UserInfo
+	    WHERE user_id = #{userId}
+	</select>
+	
 </mapper>

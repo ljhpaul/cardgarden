@@ -106,4 +106,13 @@ public class UserInfoDAO {
 	public List<CardDTO> myLikeCardList(int userId) {
 		return sqlSession.selectList(namespace + "userLikeCard", userId);
 	}
+	
+	public int insertOwnedAsset(Map<String, Object> paramMap) {
+	    return sqlSession.insert(namespace + "insertOwnedAsset", paramMap);
+	}
+	public Integer selectDefaultMascotId(int userId) {
+	    return sqlSession.selectOne(namespace + "selectDefaultMascotId", userId);
+	}
+
+	
 }

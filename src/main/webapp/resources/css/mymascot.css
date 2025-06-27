@@ -1,0 +1,117 @@
+.custom-top-container {
+    max-width: 1100px;
+    margin: auto;
+    padding: 30px 40px 60px 40px;
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    margin-bottom: 40px;
+}
+
+.custom-top-header h2 {
+    font-size: 30px;
+    font-weight: 900;
+    color: var(--m3);
+    margin-bottom: 30px;
+}
+
+.selected-section {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.selected-section h3 {
+    color: var(--m1);
+    margin-bottom: 20px;
+    font-size: 22px;
+}
+
+.selected-section .mascot-image-box {
+    width: 200px;
+    height: 200px;
+    background-color: var(--main);
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 15px auto;
+}
+
+.asset-name {
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--m3);
+}
+
+.mascot-list {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.mascot-card {
+    background-color: var(--m2);
+    border-radius: 16px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.mascot-image-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.mascot-image-box {
+    background-color: var(--main);
+    border-radius: 12px;
+    width: 250px;
+    height: 250px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+}
+
+.mascot-image-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.buy-btn {
+    width: 90%;
+    background-color: var(--m1);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    font-size: 30px;
+    height: 70px;
+    margin: auto;
+}
+
+.buy-btn:hover {
+    background-color: var(--s3);
+}
+.selected-text {
+    background-color: white;
+    color: var(--m3);
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 30px;
+    height: 70px;
+    line-height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 90%;
+    margin: auto;
+}
+

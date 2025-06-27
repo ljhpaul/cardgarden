@@ -1,6 +1,8 @@
 package com.cardgarden.project.controller.user;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -110,6 +112,12 @@ public class JoinController {
 		
 		String joinResult = "회원가입 " + ((result>0)?"성공 (아이디: " + user_id + "번)":"실패");
 		log.info(joinResult);
+		
+	    if (result > 0) {
+	        Map<String, Object> assetParam = new HashMap<>();
+	        assetParam.put("user_id", user_id);
+	        assetParam.put("asset_id", 120);
+	        userInfoSerivce.insertOwnedAsset(assetParam);}
 		
 		List<TermDTO> termList = termService.selectAll();
 		List<Integer> checkedTermList = (List<Integer>) session.getAttribute("checkedTermList");

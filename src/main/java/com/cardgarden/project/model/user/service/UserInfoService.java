@@ -131,4 +131,11 @@ public class UserInfoService {
 	public List<CardDTO> myLikeCardList(int userId){
 		return userInfoDAO.myLikeCardList(userId);
 	}
+	//asset 등록
+	public int insertOwnedAsset(Map<String, Object> paramMap) {
+	    return userInfoDAO.insertOwnedAsset(paramMap);
+	}
+	public Integer getDefaultMascotId(int userId) {
+	    return userInfoDAO.selectDefaultMascotId(userId);
+	}
 }

@@ -8,7 +8,7 @@
   <!--탑 랭킹 (좋아요순, 사용순, 전체순 등) -->
 	  
 	 <select id="selectTopAssets" resultType="CustomAssetDTO">
-	  SELECT asset_id, asset_brand, asset_type, asset_no, asset_name
+	  SELECT asset_id, asset_brand, asset_type, asset_no, asset_name, point_needed
 	  FROM CustomAsset
 	  <where>
         <if test="asset_type != null and asset_type != ''">
@@ -27,6 +27,12 @@
 	    </when>
 	    <when test="sortBy == 'all'">
 	      ORDER BY asset_like DESC, asset_brand ASC, asset_no ASC
+	    </when>
+	    <when test="sortBy == 'pricehigh'">
+	      ORDER BY point_needed DESC
+	    </when>
+	    <when test="sortBy == 'pricelow'">
+	      ORDER BY point_needed ASC
 	    </when>
 	    <otherwise>
 	      ORDER BY asset_id DESC
@@ -121,5 +127,15 @@
   <insert id="insertOwnedAsset">
     INSERT INTO OwnedAsset (user_id, asset_id) VALUES (#{user_id}, #{asset_id})
   </insert>
+  
+	  <!-- 내가 보유한 마스코트 전체 조회 -->
+	<select id="selectOwnedMascots" resultType="CustomAssetDTO">
+	  SELECT ca.*
+	  FROM OwnedAsset oa
+	  JOIN CustomAsset ca ON oa.asset_id = ca.asset_id
+	  WHERE oa.user_id = #{user_id}
+	    AND ca.asset_type = 'mascot'
+	</select>
+  
 
 </mapper>
