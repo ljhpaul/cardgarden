@@ -1,66 +1,62 @@
-<%@ include file="../common/header.jsp"%>
-<%@ page language="java" contentType="text/html;charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="cpath" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
-<html lang="ko">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>카드조회</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&family=Nanum+Square+Round&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css" />
-<link rel="stylesheet" href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css">
-<link rel="stylesheet" href="/resources/demos/style.css">
-  <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-  <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
+<title>카드가든 : 좋아요한 카드</title>
+<jsp:include page="/WEB-INF/views/common/header.jsp" />
+  <link rel="stylesheet" href="${cpath}/resources/css/common.css">
+  <link rel="stylesheet" href="${cpath}/resources/css/header.css">
+  <link rel="stylesheet" href="${cpath}/resources/css/font-awesome.min.css">
+  <link rel="stylesheet" href="${cpath}/resources/css/userStyle.css">
+  <script src="${cpath}/resources/js/header.js"></script>
+  <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+  
 <style>
-* {
-	box-sizing: border-box;
-	margin: 0;
-	padding: 0;
-}
-
-body {
-	font-family: 'Nanum Square Round', sans-serif;
-	background-color: #F0F3F1;
-}
-
 .wrap {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	width: 100%;
-	gap: 30px;
-	padding: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    width: 100%;
+    gap: 30px;
+    padding: 20px;
 }
 
 .tab {
-	width: 100%;
-	max-width: 1100px;
-	padding: 30px;
-	background: white;
-	border-radius: 16px;
-	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-	display: flex;
-	flex-direction: column;
-	gap: 20px;
-	margin-bottom: 25px;
+    width: 90%;
+    max-width: 1100px;
+    padding: 30px;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+    margin: 15px;
+	flex-direction: row;
+	align-items: center;
 }
-	.container {
-	  width: 100%;       /* container 너비는 꽉 채우고 */
-	  max-width: 1000px;  /* 최대 너비 제한 */
-	  padding: 20px;
-	  display: flex;
-	  flex-direction: column;
-	  justify-content: center;
-	  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-	  border-radius: 24px;
-	}
+
+.container {
+  width: 1000px;
+  padding: 15px 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 24px;
+  background-color : rgb(255,255,255,0.4);
+}
+
+.like-count-box {
+  padding: 10px 150px;
+  margin: 10px;
+  background: #fff;
+}
 
 .card-btn {
 	width: 100%;
@@ -80,31 +76,6 @@ body {
 	background-color: #7ca688;
 }
 
-input[type="submit"] {
-	width: 100%;
-	padding: 14px;
-	font-size: 16px;
-	font-weight: bold;
-	background-color: #4CAF50;
-	color: white;
-	border: none;
-	border-radius: 8px;
-	cursor: pointer;
-	transition: background-color 0.3s;
-}
-
-input[type="submit"]:hover {
-	background-color: #388E3C;
-}
-
-/* .ticks {
-	display: flex;
-	justify-content: space-between;
-	margin-top: 4px;
-	font-size: 12px;
-	color: #444;
-} */
-
 .card_img {
   width: 250px;
   height: 200px;
@@ -123,70 +94,56 @@ input[type="submit"]:hover {
   object-fit: contain;
 }
 
-.card_content {
+.card-content {
 	width: 100%;
 	display: flex;
 	flex-direction: column;
 	gap: 10px;
 }
 
-.card_content ul {
+.card-content ul {
 	list-style: none;
 	padding-left: 0;
 	margin: 0;
 }
 
-.card_content ul li {
-	  margin-bottom: 8px;
-	  font-size: 16px;
-	  line-height: 1.5;
-	  white-space: pre-line;
+.card-content ul li {
+	margin-bottom: 8px;
+	font-size: 16px;
+	line-height: 1.5;
+	white-space: pre-line;
 }
 
-
-.left, .right {
-	width: 100%;
-}
-
-
-.right{
-	margin-right: 20px;
-}
-
-.right p {
-	font-size: 18px;
-	color: #444;
-	margin: 4px 0;
-}
-
-.left span,p{
-		font-size: 18px;
-		font : bold;
-}
-
-/* 반응형 구조 */
-@media (min-width: 768px) {
-.tab {
-	flex-direction: row;
-	align-items: center;
-}
-.card_content {
-	flex-direction: row;
-	justify-content: space-between;
-	align-items: flex-start;
-	gap: 20px;
-}
-.left {
-	width: 70%;
-}
-
-.right {
+.card-right {
 	width: 30%;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: flex-end;
 	gap: 10px;
+	margin-top: 15px;
+	margin-right: 20px;
+}
+
+.card-right p {
+	font-size: 18px;
+	color: #444;
+	margin: 4px 0;
+}
+
+.card-left span, p {
+	font-size: 18px;
+	font : bold;
+}
+
+.card-content {
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: flex-start;
+	gap: 20px;
+}
+.card-left {
+	width: 70%;
 }
 
 .card-thumbnail {
@@ -269,7 +226,7 @@ input[type="submit"]:hover {
   height: 8px;
 }
 
-#btnarea{
+#btnarea {
   width: 1100px;
   margin-bottom: 25px;
 }
@@ -281,12 +238,18 @@ input[type="submit"]:hover {
 </style>
 
 </head>
-<body>
+<body class="bg-main">
 <div class="wrap">
-	<div style="text-align: left; width: 1100px; margin-top: -50px;">
-	  <span style="font-size: 20px;">총 <strong>${myLikeCardList.size()}</strong>개의 카드를 좋아합니다</span>
-	</div>
+  <!-- 사이드바 네비게이터 -->
+  <jsp:include page="/WEB-INF/views/mypage/sidebar.jsp" />
+
   <div class="container">
+    <div class="inner-box like-count-box">
+      <span style="font-size: 20px;">
+	    총 <strong>${myLikeCardList.size()}</strong>개의 카드를 좋아합니다
+	  </span>
+    </div>
+	
   <!-- 카드 리스트 출력 -->
   <c:forEach var="card" items="${myLikeCardList}">
     <div class="tab"
@@ -302,10 +265,10 @@ input[type="submit"]:hover {
       </div>
 
       <!-- 카드 정보 -->
-      <div class="card_content">
+      <div class="card-content">
 
         <!-- 왼쪽: 이름, 회사, 혜택 -->
-        <div class="left">
+        <div class="card-left">
           <h2>${card.card_name}</h2>
           <h3>${card.company}</h3>
           <br>
@@ -319,8 +282,8 @@ input[type="submit"]:hover {
         </div>
 
         <!-- 오른쪽: 버튼, 연회비, 전월실적 -->
-        <div class="right">
-          <a href="${cpath}/card/detail?cardid=${card.card_id}" class="card-btn">카드 보러가기</a>
+        <div class="card-right">
+          <a href="${cpath}/card/detail?cardid=${card.card_id}" class="btn card-btn">카드 보러가기</a>
           <br><br><br><br>
 		  <h3>연회비</h3>
 		  <c:choose>

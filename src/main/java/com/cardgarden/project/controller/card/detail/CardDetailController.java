@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,6 +36,11 @@ public class CardDetailController {
     private CardLikeService cardLkieService;
     @Autowired
     private CardRecommendationService cardRecommendationService;
+    
+    @Value("${ai.recommendation.enabled:true}") // 기본값 true
+    private boolean aiRecommendationEnabled;
+    @Value("${recommend.api.url}")
+    private String recommendApiUrl;
 
     @RequestMapping("/detail")
     public String cardDetail(@RequestParam("cardid") int cardid,
@@ -43,6 +49,9 @@ public class CardDetailController {
                              HttpSession session) {
         Integer userId = (Integer) session.getAttribute("loginUserId");
 
+        System.out.println("[DEBUG] aiRecommendationEnabled = " + aiRecommendationEnabled);
+        System.out.println("[DEBUG] Properties recommend.api.url = " + recommendApiUrl);
+        
         // 카드 기본 정보 (로그인 여부에 따라 다름)
         List<CardDTO> cardList = getCardList(cardid, userId);
         model.addAttribute("cardList", cardList);
@@ -52,7 +61,12 @@ public class CardDetailController {
         model.addAttribute("cardDetail", cardDetailMap);
 
         // 유사 카드 Top3
-        Map<Integer, List<CardDTO>> cosineData = getCosineCardData(cardid);
+        Map<Integer, List<CardDTO>> cosineData = null;
+        if(aiRecommendationEnabled) {
+        	cosineData = getCosineCardData(cardid);
+        } else {
+        	cosineData = new LinkedHashMap<>();
+        }
         model.addAttribute("cosineData", cosineData);
 
         // userId가 있을 때만 패턴 관련 정보 추가
@@ -62,7 +76,7 @@ public class CardDetailController {
         }
 
         // patternId가 있으면 AI 추천 결과 추가
-        if (patternId != null) {
+        if (patternId != null && aiRecommendationEnabled) {
             List<CardRecommendationDTO> aiDetailResult =
                     cardRecommendationService.getRecommendDetailResult(patternId, cardid);
             model.addAttribute("aiDetailResult", aiDetailResult);
@@ -100,6 +114,9 @@ public class CardDetailController {
 
     /** 유사 카드 Map */
     private Map<Integer, List<CardDTO>> getCosineCardData(int cardid) {
+    	if (!aiRecommendationEnabled) {
+            return new LinkedHashMap<>(); // 로컬에서 호출 차단
+        }
         List<CardRecommendationDTO> cardCosineList = cardRecommendationService.getRecommendCosine(cardid);
         Map<Integer, List<CardDTO>> cosineData = new LinkedHashMap<>();
         for (CardRecommendationDTO dto : cardCosineList) {

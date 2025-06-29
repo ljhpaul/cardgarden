@@ -22,22 +22,15 @@
 </head>
 
 <style>
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
 
 body {
   font-family: 'NanumSquareRound', sans-serif;
-  background-color: #F0F3F1;
   padding: 0;
   margin: 0;
 }
 
 .container {
-  width: 100%;
-  max-width: 950px;
+  width: 80%;
   height: 120%;
   display: flex;
   justify-content: center;
@@ -48,9 +41,9 @@ body {
 }
 
 .box {
-  width: 70%;
+  width: 650px;
   border-radius: 24px;
-  padding: 44px 50px 32px;
+  padding: 44px 0px 32px;
 }
 
 .title-lg {
@@ -74,9 +67,10 @@ body {
   margin-top: 0px;
 }
 
-label {
+.form-group label {
   display: inline-block;
-  width: 110px;
+  width: 20%;
+  min-width: 110px;
   margin-right: 10px;
   font-weight: bold;
   font-size: 16px;
@@ -85,7 +79,7 @@ label {
 
 .input {
   flex: 1;
-  width: 300px;
+  width: 70.5%;
   min-width: 150px;
 }
 .input[readonly] {
@@ -105,6 +99,7 @@ label {
 }
 
 .btn {
+  width: 20%;
   min-width: 110px;
   height: 44px;
   margin-left: 12px;
@@ -119,6 +114,7 @@ label {
 }
 
 #enroll-form {
+  width:90%; 
   padding: 0px 12px;
 }
 </style>
