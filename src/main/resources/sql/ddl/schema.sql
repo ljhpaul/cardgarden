@@ -104,6 +104,13 @@ CREATE TABLE UserConsumptionPattern (
   FOREIGN KEY (user_id) REFERENCES UserInfo(user_id)
 );
 
+ALTER TABLE UserConsumptionPattern
+DROP FOREIGN KEY userconsumptionpattern_ibfk_1;
+
+ALTER TABLE UserConsumptionPattern
+ADD CONSTRAINT userconsumptionpattern_ibfk_1 FOREIGN KEY (user_id)
+REFERENCES UserInfo(user_id) ON DELETE CASCADE;
+
 CREATE TABLE CustomCard (
   customcard_id INT PRIMARY KEY AUTO_INCREMENT COMMENT '생성된 커스텀카드1',
   customcard_name VARCHAR(100) DEFAULT NULL COMMENT '커스텀카드 이름',
@@ -128,6 +135,12 @@ CREATE TABLE Attendance (
   PRIMARY KEY (user_id, date),
   FOREIGN KEY (user_id) REFERENCES UserInfo(user_id)
 );
+
+ALTER TABLE Attendance
+DROP FOREIGN KEY attendance_ibfk_1;
+ALTER TABLE Attendance
+ADD CONSTRAINT attendance_ibfk_1
+FOREIGN KEY (user_id) REFERENCES UserInfo(user_id) ON DELETE CASCADE;
 
 CREATE TABLE WeeklyBonus (
   user_id INT NOT NULL COMMENT '사용자',
@@ -183,6 +196,13 @@ CREATE TABLE LikeCard (
   FOREIGN KEY (user_id) REFERENCES UserInfo(user_id)
 );
 
+ALTER TABLE LikeCard
+DROP FOREIGN KEY likecard_ibfk_2;
+
+ALTER TABLE LikeCard
+ADD CONSTRAINT likecard_ibfk_2 FOREIGN KEY (user_id)
+REFERENCES UserInfo(user_id) ON DELETE CASCADE;
+
 CREATE TABLE LikeAsset (
   user_id INT NOT NULL COMMENT '누가 좋아요 눌렀는지',
   asset_id INT NOT NULL COMMENT '좋아요 한 스티커',
@@ -199,6 +219,13 @@ CREATE TABLE OwnedAsset (
   FOREIGN KEY (asset_id) REFERENCES CustomAsset(asset_id)
 );
 
+ALTER TABLE OwnedAsset
+DROP FOREIGN KEY ownedasset_ibfk_1;
+
+ALTER TABLE OwnedAsset
+ADD CONSTRAINT ownedasset_ibfk_1 FOREIGN KEY (user_id)
+REFERENCES UserInfo(user_id) ON DELETE CASCADE;
+
 CREATE TABLE UserConsumptionPatternDetail (
   pattern_id INT NOT NULL COMMENT '소비패턴 고유번호',
   benefitcategory_id INT NOT NULL COMMENT '혜택 대분류',
@@ -208,3 +235,29 @@ CREATE TABLE UserConsumptionPatternDetail (
   FOREIGN KEY (benefitcategory_id) REFERENCES BenefitCategory(benefitcategory_id)
 );
 #=========================================================================================
+
+CREATE TRIGGER LikeCardTrigger_Insert
+AFTER INSERT ON likecard
+FOR EACH ROW
+BEGIN
+    UPDATE Card
+    SET card_like = (
+        SELECT COUNT(*)
+        FROM LikeCard
+        WHERE card_id = NEW.card_id
+    )
+    WHERE card_id = NEW.card_id;
+END;
+12:35
+CREATE TRIGGER LikeCardTrigger_Delete
+AFTER DELETE ON likecard
+FOR EACH ROW
+BEGIN
+    UPDATE Card
+    SET card_like = (
+        SELECT COUNT(*)
+        FROM LikeCard
+        WHERE card_id = OLD.card_id
+    )
+    WHERE card_id = OLD.card_id;
+END;
