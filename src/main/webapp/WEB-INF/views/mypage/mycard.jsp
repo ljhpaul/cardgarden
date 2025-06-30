@@ -14,7 +14,6 @@
   <link rel="stylesheet" href="${cpath}/resources/css/userStyle.css">
   <script src="${cpath}/resources/js/header.js"></script>
   <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-  
 <style>
 .wrap {
     display: flex;
@@ -56,6 +55,47 @@
   padding: 10px 150px;
   margin: 10px;
   background: #fff;
+}
+
+
+.sidebar {display: flex;
+  flex-direction: column;
+  gap: 40px;
+  min-width: 240px;
+  max-width: 280px;
+  margin-top: 40px;
+}
+
+.box-nav {
+  width: 220px; /* 왼쪽 메뉴 폭 고정 */
+  min-width: 180px;
+  max-width: 240px;
+  border-radius: 24px;
+  padding: 20px 20px;
+  box-sizing: border-box;
+}
+
+.inner-box-nav {
+  width: 100%;
+  padding: 25px 30px;
+  font-size: 12px;
+  margin-top: 10px;
+}
+
+.inner-box-nav a {
+  display: block;
+  color: #3e4e42;
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 16px;
+  transition: color 0.15s;
+}
+.inner-box-nav a:last-child {
+  margin-bottom: 0;
+}
+.inner-box-nav a:hover {
+  color: var(--m1);
+  text-shadow: 0 0 1px rgba(100,130,120,0.08);
 }
 
 .card-btn {
@@ -249,7 +289,6 @@
 	    총 <strong>${myLikeCardList.size()}</strong>개의 카드를 좋아합니다
 	  </span>
     </div>
-	
   <!-- 카드 리스트 출력 -->
   <c:forEach var="card" items="${myLikeCardList}">
     <div class="tab"
@@ -308,7 +347,6 @@
       </div>
     </div>
   </c:forEach>
-</div>
 </div>
 <script>
 
