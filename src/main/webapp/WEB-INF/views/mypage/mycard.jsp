@@ -348,10 +348,6 @@
     </div>
   </c:forEach>
 </div>
-<script>
-
-  
-</script>
 
 </body>
 </html>
