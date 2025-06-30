@@ -118,5 +118,10 @@ public class UserInfoDAO {
 		return sqlSession.selectOne(namespace + "getPointById", user_id);
 	}
 
+	public int setPasswordByLoginIdAndEmail(Map<String, Object> paramMap) {
+		int result = sqlSession.update(namespace + "setPasswordByLoginIdAndEmail", paramMap);
+        log.info(result + "건 수정됨(lombok_Slf4j)");
+        return result;
+	}
 	
 }
