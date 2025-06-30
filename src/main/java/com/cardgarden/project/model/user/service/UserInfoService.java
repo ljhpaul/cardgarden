@@ -138,4 +138,8 @@ public class UserInfoService {
 	public Integer getDefaultMascotId(int userId) {
 	    return userInfoDAO.selectDefaultMascotId(userId);
 	}
+
+	public int getPointById(int loginUserId) {
+		return userInfoDAO.getPointById(loginUserId);
+	}
 }

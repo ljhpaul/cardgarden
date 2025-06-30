@@ -65,7 +65,14 @@
 	</select>
 	
 	<!-- 로그인 아이디와 이메일로 비밀번호 조회 -->
-	<select id="getPasswordByLoginIdAndEmail" parameterType="map" resultType="string">
+	<select id="getPointById" parameterType="int" resultType="int">
+		SELECT point
+		  FROM userInfo
+		 WHERE user_id = #{user_id}
+	</select>
+	
+	<!-- 로그인 아이디로 포인트 조회 -->
+	<select id="get" parameterType="map" resultType="string">
 		SELECT user_password
 		  FROM userInfo
 		 WHERE user_name = #{user_name}
