@@ -150,6 +150,7 @@ let checkPrevPwd = false, checkPwd = false;
 
 // 현재 비밀번호 입력값 검증
 $("#prevPwd").on("input blur keyup", function() {
+  return;
   let pwd = $("#prevPwd").val();
   let msg = $("#checkPwdMsg1");
   if(pwd.length == 0) {
@@ -208,7 +209,7 @@ $('#user_password, #user_password_check').on("input blur keyup", function() {
 
 // 가입버튼 활성화 함수
 function updateEnrollBtn() {
-  if(checkPrevPwd && checkPwd) {
+  if(checkPwd) {
     $("#enrollBtn").prop("disabled", false);
   }	else {
 	$("#enrollBtn").prop("disabled", true);  
