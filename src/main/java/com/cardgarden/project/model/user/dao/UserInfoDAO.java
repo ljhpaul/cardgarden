@@ -114,5 +114,9 @@ public class UserInfoDAO {
 	    return sqlSession.selectOne(namespace + "selectDefaultMascotId", userId);
 	}
 
+	public int getPointById(int user_id) {
+		return sqlSession.selectOne(namespace + "getPointById", user_id);
+	}
+
 	
 }

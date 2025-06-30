@@ -19,12 +19,12 @@
 <style>
 .wrap {
   width: 100%;
-  height: 1024px;
   min-height: 100vh;
   display: flex;
   justify-content: center;
   flex-direction: row;
   gap: 20px;
+  margin-bottom: 50px;
 }
 
 .title-lg {

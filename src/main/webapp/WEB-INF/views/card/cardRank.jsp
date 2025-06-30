@@ -64,7 +64,7 @@ body {
 
 .section1 {
 	max-width: 1200px; /* 기존 100% -> 1200px로 맞춤 */
-	margin: 40px auto; /* 좌우 중앙 정렬 + 상하 마진 */
+	margin: -10px auto; /* 좌우 중앙 정렬 + 상하 마진 */
 	overflow-x: auto;
 }
 

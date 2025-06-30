@@ -123,9 +123,21 @@ public class UserController {
 	
 	//포인트관리
 	@GetMapping("/point")
-	public String myPoint(){
+	public String myPoint(HttpSession session, Model model, RedirectAttributes redirectAttr){
 		
-		 return "mypage/myPoint";
+	    Integer loginUserId = (Integer) session.getAttribute("loginUserId");
+	    
+	    // 로그인되지 않았을 경우 처리
+	    if (loginUserId == null) {
+	    	redirectAttr.addFlashAttribute("msg", "로그인이 필요한 기능입니다");
+	        return "redirect:/user/login";
+	    }
+		
+		int loginUserPoint = userInfoSerivce.getPointById(loginUserId);
+		
+		model.addAttribute("loginUserPoint", loginUserPoint);
+		
+		return "mypage/myPoint";
 	}
 	
 	//내가 좋아요한 카드
