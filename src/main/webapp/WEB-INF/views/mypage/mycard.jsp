@@ -2,14 +2,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="cpath" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
-
+<html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>카드가든 : 좋아요한 카드</title>
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
   <link rel="stylesheet" href="${cpath}/resources/css/common.css">
-  <link rel="stylesheet" href="${cpath}/resources/css/header.css">
   <link rel="stylesheet" href="${cpath}/resources/css/font-awesome.min.css">
   <link rel="stylesheet" href="${cpath}/resources/css/userStyle.css">
   <script src="${cpath}/resources/js/header.js"></script>
@@ -23,7 +22,6 @@
     justify-content: center;
     width: 100%;
     gap: 30px;
-    padding: 20px;
 }
 
 .tab {
