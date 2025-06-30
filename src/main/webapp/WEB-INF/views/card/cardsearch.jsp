@@ -378,7 +378,11 @@ function createRandomBurstEffect(button, imageUrl) {
 	    </div>
 	  </form>
 	</div>
-
+	
+	<c:if test="${not empty cardList}">
+		<div style="text-align: center; margin: 20px;">카드가 <strong>${totalCount}</strong>건 검색되었습니다.</div>
+	</c:if>
+	
 	<c:if test="${empty cardList}">
 		<div style="text-align: center; margin: 20px;">카드가 0건 검색되었습니다.</div>
 	</c:if>
