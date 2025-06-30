@@ -1,6 +1,7 @@
 .bg-main {
   background: #f9faf9 !important;
   min-height: 100vh;
+  font-family: 'Nanum Square Round', sans-serif;
 }
 
 .container {

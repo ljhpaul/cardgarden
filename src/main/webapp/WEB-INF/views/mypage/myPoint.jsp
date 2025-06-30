@@ -1,203 +1,117 @@
-<%@ include file="../common/mypageheader.jsp" %>
-<%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" isELIgnored="false" session="true" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%
-    HttpSession mySession = request.getSession();
-    Object userId = mySession.getAttribute("loginUserId");
-    System.out.println("로그인한 사용자 ID: " + userId);
-    if (userId == null) {
-%>
-    <script>
-        alert("로그인이 필요한 기능입니다.");
-        location.href = "<%= request.getContextPath() %>/user/login";
-    </script>
-<%
-        return;
-    }
-%>
-
+<%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="cpath" value="${pageContext.request.contextPath}" />
-<c:if test="${not empty msg}">
-    <script>alert('${msg}');</script>
-</c:if>
 
 <!DOCTYPE html>
-<html>
+
 <head>
 <meta charset="UTF-8">
-<title>내 소비패턴</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>카드가든 : 포인트관리</title>
+<jsp:include page="/WEB-INF/views/common/header.jsp" />
+  <link rel="stylesheet" href="${cpath}/resources/css/common.css">
+  <link rel="stylesheet" href="${cpath}/resources/css/header.css">
+  <link rel="stylesheet" href="${cpath}/resources/css/font-awesome.min.css">
+  <link rel="stylesheet" href="${cpath}/resources/css/userStyle.css">
+  <script src="${cpath}/resources/js/header.js"></script>
+  <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
 <style>
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-@font-face {
-  font-family: 'NanumSquareRound';
-  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
-
-body {
-  font-family: 'NanumSquareRound', sans-serif;
-  background-color: #F0F3F1;
-  color: #333;
-  
-}
-
-h1 {
-  text-align: center;
-  font-size: 30px;
-  margin-bottom: 40px;
-  color: #646F58;
-}
-
-#myfrm {
-  max-width: 700px;
-  margin: auto;
-  background: #ffffff;
-  padding: 40px;
-  border-radius: 20px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
-}
-
 .wrap {
   width: 100%;
-  height: 1024px;
   min-height: 100vh;
   display: flex;
   justify-content: center;
-  padding: 40px;
-  background-color: #F0F3F1;
+  flex-direction: row;
+  gap: 20px;
+  margin-bottom: 50px;
 }
 
-.wrap2 {
-  width: 100%;
-  height:180px; 
-  display: flex;
-  justify-content: center;
-  background-color: #F0F3F1;
-  margin-top: 80px;
+.title-lg {
+  font-size: 2.6rem;
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 30px;
 }
 
-.form-container {
-  width: 800px;
+.main-container {
+  width: 730px;
   background-color: #ffffff;
   padding: 40px;
   border-radius: 20px;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.form-group {
+.point-container {
+  max-height: 190px;
   margin-bottom: 30px;
+  padding: 20px 30px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
 }
 
-label {
-  display: block;
-  margin-bottom: 10px;
+.point-area {
+  width: 500px;
+  height: 120px;
+  padding: 30px 40px;
   font-weight: bold;
   font-size: 16px;
   color: #3e4e42;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-input[type="text"],
-input[type="number"],
-select {
-  width: 100%;
-  padding: 14px 16px;
-  font-size: 15px;
-  border: 1px solid #ccc;
-  border-radius: 12px;
-  background-color: #FAFAFA;
-  transition: border-color 0.3s ease;
+.point {
+  color: var(--m1);
+  font-size: 3rem;
+  font-weight: bold;
+  margin-bottom: 7px;
 }
 
-input:focus,
-select:focus {
-  border-color: #8FB098;
-  outline: none;
+.event-area a img {
+  height: 115px;
+  margin-left: 10px;
+  border-radius: 12.5px;
+  box-shadow: 0 0.5px 4px rgba(100,130,120,0.08);
 }
 
-span.remove {
-  display: inline-block;
-  margin-top: 10px;
-  background-color: #ff6b6b;
-  color: #fff;
-  padding: 6px 14px;
-  border-radius: 8px;
-  font-size: 13px;
-  cursor: pointer;
-  transition: background-color 0.3s;
+.event-area a img:hover {
+  box-shadow: 0 2px 16px rgba(180, 140, 90, 0.22);
+  cursor: url("");
 }
 
-span.remove:hover {
-  background-color: #e84545;
-}
 
-.button-group {
-  text-align: center;
-  margin-top: 40px;
-}
-
-input[type="submit"],
-input[type="reset"],
-#btnpuls {
-  background-color: #8FB098;
-  color: white;
-  font-size: 16px;
-  border: none;
-  padding: 14px 28px;
-  margin: 5px;
-  border-radius: 12px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-input[type="submit"]:hover,
-input[type="reset"]:hover,
-#btnpuls:hover {
-  background-color: #6B8B71;
-}
-.patternSelectarea{
-	  width: 800px;
-
-}
 </style>
 </head>
-<body>
+<body class="bg-main">
 <div class="wrap">
-<!-- 패턴 상세보기 -->
-  <div class="wrap pattern-form" id="pattern_${pattern.pattern_id}" style="display:flex;">
-    <div class="form-container">
-      <form id="myfrm" action="${cpath}/ConsumptionPattern/updateCon" method="post">
-        <input type="hidden" name="pattern_id" value="${pattern.pattern_id}">
-        <input type="hidden" name="job" value="insert">
-
-        <div class="form-group">
-          <label style="font-weight:1000; font-size: 25px;">소비패턴 이름</label>
-          <input type="text" name="pattern_name" value="">
-		  <span style="display:inline-block; margin-top:10px;">
-		  	 생성일자 : <fmt:formatDate value="" pattern="yyyy-MM-dd" />
-		  </span>
-        </div>
-          <div class="form-group">
-            <label>사용내역</label>
-            <input type="text" name="description">
-          </div>
-
-        <div class="button-group">
-          <input type="submit" value="수정">
-        </div>
-      </form>
+  <!-- 사이드바 네비게이터 -->
+  <jsp:include page="/WEB-INF/views/mypage/sidebar.jsp" />
+  
+  <!-- 패턴 선택 드롭다운 -->
+  <div class="main-container">
+  	<h2 class="title-lg">내 포인트관리</h2>
+  
+    <div class="inner-box point-container">
+      <div class="inner-box point-area">내 포인트 : <span class="point">${loginUserPoint} P</span></div>
+      <div class="event-area">
+        <a href="${cpath}/event/attendance">
+          <img alt="출석체크" src="${cpath}/resources/images/mypage/attendance.png">
+        </a>
+        <a href="${cpath}/event/mascot">
+          <img alt="마스코트" src="${cpath}/resources/images/mypage/mascot.png">
+        </a>
+      </div>
     </div>
   </div>
 </div>
-
-<script>
-</script>
 
 </body>
 </html>
