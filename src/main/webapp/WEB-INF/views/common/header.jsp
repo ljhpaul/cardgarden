@@ -254,13 +254,13 @@ const userLike = Number("${userLike}");
 $(".like-count").show().text(userLike<100?userLike:"99+");
 if(userLike >= 100) {
 	$(".like-count").css("font-weight", "700");
-	$(".like-count-header").css("top", "35px").css("right", "11px").css("font-size", "9px").css("width", "18px").css("height", "18px");
+	$(".like-count-header").css("top", "40px").css("right", "11px").css("font-size", "9px").css("width", "18px").css("height", "18px");
 	$(".like-count-sticky").css("top", "-6px").css("right", "-6px").css("font-size", "9px").css("width", "18px").css("height", "18px");
 } else if(userLike >= 10) {
-	$(".like-count-header").css("top", "36px").css("right", "12px").css("font-size", "10px").css("width", "16px").css("height", "16px");
+	$(".like-count-header").css("top", "41px").css("right", "12px").css("font-size", "10px").css("width", "16px").css("height", "16px");
 	$(".like-count-sticky").css("top", "-6px").css("right", "-6px").css("font-size", "10px").css("width", "16px").css("height", "16px");
 } else if(userLike >= 1) {
-	$(".like-count-header").css("top", "36px").css("right", "12px").css("font-size", "11px").css("width", "16px").css("height", "15px");
+	$(".like-count-header").css("top", "41px").css("right", "12px").css("font-size", "11px").css("width", "16px").css("height", "15px");
 	$(".like-count-sticky").css("top", "-6px").css("right", "-6px").css("font-size", "11px").css("width", "15px").css("height", "14px");
 } else {
 	$(".like-count").hide();
