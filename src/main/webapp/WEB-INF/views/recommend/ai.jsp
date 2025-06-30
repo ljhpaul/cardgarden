@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../common/header.jsp" %>
 <c:set var="cpath" value="${pageContext.servletContext.contextPath}" />
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,13 +18,14 @@
 	}
 	.pattern-page {
 		display: flex;
-		align-items: flex-start;
-		justify-content: center;
-		gap: 36px;
-		width: 100%;
-		max-width: 1400px;
-		margin: 0 auto;
-		padding-top: 40px;
+	    align-items: flex-start;
+	    justify-content: center;
+	    gap: 36px;
+	    width: 100%;
+	    max-width: 1400px;
+	    margin: 0 auto;
+	    padding-top: 0px;
+	    margin-top: -10;
 	}
 	.side-menu {
 		display: flex;
@@ -298,6 +302,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 </head>
 <body>
+
 <div class="mask">
    <img class="loadingImg" src='https://i.ibb.co/20zw80q/1487.gif'>
 </div>

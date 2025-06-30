@@ -5,16 +5,8 @@ from flask import Flask, request, jsonify
 def get_consum_pattern_continuous(pattern_id, card_id):
     print("🚩 함수 시작")
     result = None
-    # DB 연결
     
-    # DF_PARQUET = pd.read_parquet("/Users/isanghyeon/Documents/workspace-sts-3.9.18.RELEASE/cardgarden/python/result/q_table_continuous_normalized1.parquet")
     DF_PARQUET = pd.read_parquet("/Users/isanghyeon/Documents/workspace-sts-3.9.18.RELEASE/cardgarden/python/result/q_table_continuous1.parquet")
-
-    
-
-
-    print("'249' in DF_PARQUET.columns:", '249' in DF_PARQUET.columns)
-    print("card_id 리스트 샘플:", DF_PARQUET.columns[:20])
 
     engine = create_engine("mysql+pymysql://cardgarden:1234@localhost/cardgarden?charset=utf8mb4")
     sql_detail_patternid = f"SELECT pattern_id, benefitcategory_id, amount FROM UserConsumptionPatternDetail WHERE pattern_id = {pattern_id}"
@@ -24,14 +16,11 @@ def get_consum_pattern_continuous(pattern_id, card_id):
     engine.dispose()
 
     max_amt = 500000  
-
-    # 카테고리와 결제액 병합
     df_category_patternid = pd.merge(df_category, df_detail_patternid, on="benefitcategory_id", how="left")
     df_category_patternid = df_category_patternid[['benefitcategory_name', 'amount']]
     df_category_patternid['amount'] = df_category_patternid['amount'].fillna(0)
     df_category_patternid['amount'] = df_category_patternid['amount'].apply(lambda x: x / max_amt if max_amt != 0 else 0)
 
-    # 카테고리 개수 맞추기
     category_count = len(DF_PARQUET.iloc[0]['user_state'].split(','))  # 예: 12
     amount_list = df_category_patternid['amount'].tolist()
     if len(amount_list) < category_count:
@@ -44,35 +33,44 @@ def get_consum_pattern_continuous(pattern_id, card_id):
 
     amount_list = [custom_round(x) for x in amount_list]
     amount_str = ",".join([f"{x:.3f}" for x in amount_list])
-
     print("라운딩 후 amount_str:", amount_str)
 
-    matches = DF_PARQUET[DF_PARQUET['user_state'] == amount_str]
-    print("매칭 row 개수:", len(matches))
-    if not matches.empty:
-        print(matches)
-
-    mask = DF_PARQUET['user_state'] == amount_str
-    print("패턴ID, 카드ID:", pattern_id, card_id)
-    print("amount_str:", amount_str)
-    print("amount_str in DF_PARQUET['user_state']:", amount_str in DF_PARQUET['user_state'].values)
-    print("card_id in columns:", str(card_id) in DF_PARQUET.columns, card_id in DF_PARQUET.columns)
-    if (amount_str in DF_PARQUET['user_state'].values):
-        mask = DF_PARQUET['user_state'] == amount_str
-        print("Q값:", DF_PARQUET.loc[mask, str(card_id)] if str(card_id) in DF_PARQUET.columns else "없음")
-
-    result = None
     column_key = str(card_id)
-    if column_key in DF_PARQUET.columns:
-        value = DF_PARQUET.loc[mask, column_key]
-        print(f"Found column: {column_key}, value:", value)
-        if not value.empty:
-            result = float(value.values[0])
-    else:
+    if column_key not in DF_PARQUET.columns:
         print(f"card_id {card_id} (as '{column_key}')가 컬럼에 없습니다.")
+        return None  # 카드 ID가 Q테이블에 없으면 None 반환
 
+    # 정확 매칭
+    matches = DF_PARQUET[DF_PARQUET['user_state'] == amount_str]
+    if not matches.empty:
+        value = matches[column_key].values
+        if len(value) > 0:
+            result = float(value[0])
+            print(f"정확 매칭 Q값: {result}")
+            # Penalty Q zone이면 None 반환 (추천 제외)
+            if result <= 0.05:
+                print("⚠️ penalty zone(Q<=0.05)이므로 추천 제외")
+                return None
+            print("🚩 함수 마지막까지 실행")
+            return result
+
+    # fallback: 가장 가까운 user_state 행의 Q값 사용
+    input_vec = [float(x) for x in amount_str.split(',')]
+    DF_PARQUET['distance'] = DF_PARQUET['user_state'].apply(
+        lambda s: sum(abs(float(a)-float(b)) for a, b in zip(s.split(','), amount_str.split(',')))
+    )
+    nearest_row = DF_PARQUET.loc[DF_PARQUET['distance'].idxmin()]
+    if column_key in nearest_row:
+        result = float(nearest_row[column_key])
+        print(f"Fallback Q값(가장 가까운 행): {result}")
+        if result <= 0.05:
+            print("⚠️ penalty zone(Q<=0.05)이므로 추천 제외")
+            return None
+    else:
+        print(f"card_id {card_id} (as '{column_key}')가 fallback에서도 없음.")
     print("🚩 함수 마지막까지 실행")
     return result
+
 
 app = Flask(__name__)
 

@@ -48,7 +48,7 @@ def find_cosine_card5(card_id):
     card_idx = df_card_vec[df_card_vec['card_id'] == card_id].index[0]
     target_vec = X[card_idx].reshape(1, -1)
     sim_scores = cosine_similarity(target_vec, X).flatten()
-    top_n = 4
+    top_n = 10
     similar_card_indices = sim_scores.argsort()[::-1][1:top_n+1]
     similar_card_ids = df_card_vec.iloc[similar_card_indices]['card_id'].tolist()
     similarities = sim_scores[similar_card_indices].tolist()
