@@ -451,7 +451,7 @@ body {
   width: 0; /* 초기값 0 */
   background-color: var(--s1);
   border-radius: 8px;
-  animation: fillGauge 1s ease forwards;
+  animation: fillGauge 2s ease forwards;
 }
 
 @keyframes fillGauge {
