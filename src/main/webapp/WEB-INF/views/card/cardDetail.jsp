@@ -200,7 +200,8 @@ $(function() {
 		    <c:when test="${not empty aiDetailResult}">
 		     <ul>
 			  <c:forEach items="${aiDetailResult}" var="result">
-			    <li class="card-recommend-block ${!result.recommend ? 'dimmed' : ''}">
+			  <!-- 추천하지 않으면 class가 card-recommend-block.dimmed로 변경 -->
+			    <li class="card-recommend-block ${!result.recommend ? 'dimmed' : ''}"> 
 			      <div class="gauge-label">
 		              카드 적합도
 		            </div>

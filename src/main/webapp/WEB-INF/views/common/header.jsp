@@ -185,6 +185,91 @@
 </nav>
 
 <!-- 나뭇잎,꽃잎 떨어지는 효과 -->
+<canvas id="rareCanvas"></canvas>
+<style>
+canvas#rareCanvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: auto;
+  z-index: -1;
+}
+</style>
+<script>
+//희귀 꽃 캔버스
+const rareCanvas = document.getElementById("rareCanvas");
+const rareCtx = rareCanvas.getContext("2d");
+rareCanvas.width = window.innerWidth;
+rareCanvas.height = window.innerHeight;
+
+const rareImg = new Image();
+rareImg.src = `${cpath}/resources/images/common/rare.png`;
+
+let rareParticles = [];
+
+function createRareParticle() {
+  return {
+    id: Date.now() + Math.random(),
+    x: Math.random() * rareCanvas.width,
+    y: -20,
+    speedY: 1 + Math.random(),
+    speedX: Math.random() * 2 - 1,
+    size: 40,
+    angle: Math.random() * Math.PI * 2,
+    rotateSpeed: Math.random() * 0.02,
+  };
+}
+
+// 그리기
+function drawRareParticles() {
+  rareCtx.clearRect(0, 0, rareCanvas.width, rareCanvas.height);
+  rareParticles.forEach(p => {
+    rareCtx.save();
+    rareCtx.translate(p.x, p.y);
+    rareCtx.rotate(p.angle);
+    rareCtx.drawImage(rareImg, -p.size / 2, -p.size / 2, p.size, p.size);
+    rareCtx.restore();
+
+    p.y += p.speedY;
+    p.x += p.speedX;
+    p.angle += p.rotateSpeed;
+  });
+
+  rareParticles = rareParticles.filter(p => p.y < rareCanvas.height + 50);
+  requestAnimationFrame(drawRareParticles);
+}
+
+// 일정 간격 생성
+setInterval(() => {
+  if (Math.random() < 0.01) {
+    rareParticles.push(createRareParticle());
+  }
+}, 300);
+
+// 클릭 이벤트
+rareCanvas.addEventListener("click", function (e) {
+  const rect = rareCanvas.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  const y = e.clientY - rect.top;
+
+  for (let i = 0; i < rareParticles.length; i++) {
+    const p = rareParticles[i];
+    const dx = p.x - x;
+    const dy = p.y - y;
+    if (Math.sqrt(dx * dx + dy * dy) < p.size / 2) {
+      alert("🎉 희귀 꽃 클릭!");
+      rareParticles.splice(i, 1);
+      break;
+    }
+  }
+});
+
+// 시작
+drawRareParticles();
+</script>
+
+
+
 <style>
 canvas#effectCanvas {
 	position: fixed;
@@ -194,6 +279,7 @@ canvas#effectCanvas {
 	z-index: -1; /* 필요시 조절 */
 }
 </style>
+
 
 <canvas id="effectCanvas"></canvas>
 
@@ -318,5 +404,3 @@ $(document).ready(function () {
 });
 </script>
 </c:if>
-
-
