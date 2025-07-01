@@ -29,12 +29,12 @@ body {
   margin-bottom: 20px;
 }
 .result-container img {
-  width: 600px;
+  width: 300px;
   height: auto;
-  margin-top: 30px;
-  margin-bottom: 60px;
+  margin-bottom: 30px;
   border: 2px solid var(--m1);
   border-radius: 10px;
+  cursor: pointer;
 }
 .result-container .btn-group {
   display: flex;
@@ -60,12 +60,21 @@ body {
 <div class="result-container">
   <h1>카드가 성공적으로 저장되었습니다!</h1>
 
-  <c:if test="${not empty cardImg}">
-      <img src="${cpath}${cardImg}" alt="저장된 카드 이미지">
-  </c:if>
+  <!-- 더미 이미지 먼저 보여줌 -->
+  <img id="fakeImg" src="${cpath}/resources/images/etc/placeholder.png" alt="대기 이미지">
 
   <div class="btn-group">
     <a href="${cpath}/custom/main" class="btn">커스텀 홈으로</a>
     <a href="${cpath}/make/frame" class="btn">새로 만들기</a>
   </div>
 </div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const fakeImg = document.getElementById("fakeImg");
+
+    fakeImg.addEventListener("click", () => {
+        location.reload();
+    });
+});
+</script>
