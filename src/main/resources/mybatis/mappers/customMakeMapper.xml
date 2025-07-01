@@ -49,5 +49,4 @@
     	VALUES (#{user_id}, #{customcard_name}, NOW())
     </insert>
 	
-	
 </mapper>

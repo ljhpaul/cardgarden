@@ -134,7 +134,7 @@
 	  FROM OwnedAsset oa
 	  JOIN CustomAsset ca ON oa.asset_id = ca.asset_id
 	  WHERE oa.user_id = #{user_id}
-	    AND ca.asset_type = 'mascot'
+	  AND ca.asset_type = 'mascot'
 	</select>
   
 
