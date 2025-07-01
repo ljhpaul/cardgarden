@@ -196,29 +196,44 @@ $(function() {
 		
 		<!-- ✅ AI 추천 결과: card-info 아래, card-bottom-center 위로 이동 -->
 		<div class="ai-recommendation">
-  <c:choose>
-    <c:when test="${not empty aiDetailResult}">
-      <ul>
-        <c:forEach items="${aiDetailResult}" var="result">
-          <li>
-            <div class="gauge-label">
-              카드 적합도
-            </div>
-            <div class="gauge-bar"  style="--rate: ${result.resultValue * 100}%;">
-              <div class="gauge-fill" ></div>
-            </div>
-            <div class="gauge-message">
-              ${result.message}
-            </div>
-          </li>
-        </c:forEach>
-      </ul>
-    </c:when>
-    <c:otherwise>
-      추천 결과가 없습니다. AI 버튼을 눌러보세요!
-    </c:otherwise>
-  </c:choose>
-</div>
+		  <c:choose>
+		    <c:when test="${not empty aiDetailResult}">
+		     <ul>
+			  <c:forEach items="${aiDetailResult}" var="result">
+			    <li class="card-recommend-block ${!result.recommend ? 'dimmed' : ''}">
+			      <div class="gauge-label">
+		              카드 적합도
+		            </div>
+		            <div class="gauge-bar"  style="--rate: ${result.q_value * 100}%;">
+		              <div class="gauge-fill" ></div>
+		            </div>
+			      <div class="category-match">
+			        혜택 일치 카테고리:
+			        <span class="stars">
+			          <c:forEach begin="1" end="${result.matched_category_count}" var="i">★</c:forEach>
+			        </span>
+			        (${result.matched_category_count}개)
+			      </div>
+			      <div class="recommend-status">
+			        <c:choose>
+			          <c:when test="${result.recommend}">
+			            <span class="recommend-yes">추천!</span>
+			          </c:when>
+			          <c:otherwise>
+			            <span class="recommend-no">추천 제외</span>
+			          </c:otherwise>
+			        </c:choose>
+			      </div>
+			    </li>
+			  </c:forEach>
+			</ul>
+
+		    </c:when>
+		    <c:otherwise>
+		      추천 결과가 없습니다. AI 버튼을 눌러보세요!
+		    </c:otherwise>
+		  </c:choose>
+		</div>
 
 		<!-- 카드 타입/브랜드/연회비 등 -->
 				<div class="card-bottom-center">

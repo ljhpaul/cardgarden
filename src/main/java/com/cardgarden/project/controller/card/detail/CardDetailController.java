@@ -19,6 +19,7 @@ import com.cardgarden.project.model.cardDetail.CardDetailDTO;
 import com.cardgarden.project.model.cardDetail.CardService;
 import com.cardgarden.project.model.recommendAI.CardRecommendationDTO;
 import com.cardgarden.project.model.recommendAI.CardRecommendationService;
+import com.cardgarden.project.model.recommendAI.RecommendResultDTO;
 import com.cardgarden.project.model.userCardLike.CardLikeService;
 import com.cardgarden.project.model.userPatternBenefit.UserPatternBenefitDTO;
 import com.cardgarden.project.model.userPatternBenefit.UserPatternBenefitService;
@@ -41,6 +42,8 @@ public class CardDetailController {
     private boolean aiRecommendationEnabled;
     @Value("${recommend.api.url}")
     private String recommendApiUrl;
+    
+    
 
     @RequestMapping("/detail")
     public String cardDetail(@RequestParam("cardid") int cardid,
@@ -77,7 +80,7 @@ public class CardDetailController {
 
         // patternId가 있으면 AI 추천 결과 추가
         if (patternId != null && aiRecommendationEnabled) {
-            List<CardRecommendationDTO> aiDetailResult =
+            List<RecommendResultDTO> aiDetailResult =
                     cardRecommendationService.getRecommendDetailResult(patternId, cardid);
             model.addAttribute("aiDetailResult", aiDetailResult);
             System.out.println(aiDetailResult);
