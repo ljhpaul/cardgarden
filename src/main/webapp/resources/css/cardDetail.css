@@ -161,6 +161,14 @@ body {
     background-color: #fff;
 }
 
+.rec_count {
+  color: #6A4E17;
+  font-weight: 800;
+  font-size: 24px;
+  min-width: 36px;
+  text-align: center;
+}
+
 .go-button:hover {
 	background-color: #FFE0A3;
 }
@@ -620,4 +628,8 @@ body {
 .stars { color: #FFD700; }
 .recommend-yes { color: #38971a; font-weight: bold; }
 .recommend-no { color: #aaa; font-size: 0.9em; }
-.card-recommend-block.dimmed { opacity: 0.4; }
+.card-recommend-block.dimmed .gauge-fill{ background-color: #aaa }
+.card-recommend-block.dimmed .gauge-bar{
+	background-color: white;
+	
+}
