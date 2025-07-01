@@ -105,7 +105,7 @@
         <a href="${cpath}/event/attendance">
           <img alt="출석체크" src="${cpath}/resources/images/mypage/attendance.png">
         </a>
-        <a href="${cpath}/event/mascot">
+        <a href="${cpath}/event/mascot/my">
           <img alt="마스코트" src="${cpath}/resources/images/mypage/mascot.png">
         </a>
       </div>

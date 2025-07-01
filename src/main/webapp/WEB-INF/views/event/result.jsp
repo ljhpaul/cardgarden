@@ -11,7 +11,8 @@
   <h2>구매가 완료되었습니다!</h2>
   
   <div class="btn-row">
-    <a href="${cpath}/event/mascot" class="buy-btn">상점으로</a>
+    <a href="${cpath}/event/mascot/my" class="buy-btn">변경하러 가기</a>
+    <a href="${cpath}/event/mascot" class="buy-btn">상점으로 돌아가기</a>
   </div>
 
 </div>
