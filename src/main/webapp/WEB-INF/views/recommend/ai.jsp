@@ -308,6 +308,18 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 
+document.getElementById('submit-pattern').addEventListener('click', function(e){
+    const checkedRadio = document.querySelector('.pattern-radio:checked');
+    if (!checkedRadio) {
+      e.preventDefault();
+      alert('소비패턴을 먼저 선택해 주세요!');
+    } else {
+      e.preventDefault();
+      showLoadingPopup();
+      setTimeout(() => { location.href = this.href; }, 1000); // 1초 후 이동
+    }
+  });
+});
 
 
 </script>
@@ -357,7 +369,7 @@ document.addEventListener('DOMContentLoaded', function() {
               </label>
             </c:forEach>
           </div>
-          <a href="${cpath}/ConsumptionPattern/submitPattern"  class="button-primary"  id="submit-pattern" >
+          <a href="#"  class="button-primary"  id="submit-pattern" >
 		   제출하기
 		  </a>
         </div>
