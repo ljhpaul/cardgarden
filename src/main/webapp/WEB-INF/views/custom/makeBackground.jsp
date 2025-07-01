@@ -2,7 +2,7 @@
 <%@ include file="../common/header.jsp" %>
 <c:set var="cpath" value="${pageContext.servletContext.contextPath}" />
 
-<link rel="stylesheet" href="${cpath}/resources/css/customMakeBackground.css?ver=2">
+<link rel="stylesheet" href="${cpath}/resources/css/customMakeBackground.css?ver=3">
 
 <div class="background-page-container">
 
@@ -59,6 +59,45 @@
 
 </div>
 
+<!-- 확인 모달 -->
+<div class="confirm-modal" id="confirmModal">
+  <div class="modal-content">
+    <p>아무 배경도 선택하지 않았습니다.<Br> 계속 진행할까요?</p>
+    <div class="btn-area">
+      <button id="confirmYes" class="big-btn">예</button>
+      <button id="confirmNo" class="big-btn">아니오</button>
+    </div>
+  </div>
+</div>
+
+<style>
+.confirm-modal {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  visibility: hidden;
+}
+
+.confirm-modal .modal-content {
+  background: white;
+  padding: 40px;
+  border-radius: 12px;
+  text-align: center;
+  font-family: var(--font);
+  width: 400px;
+}
+
+.confirm-modal .btn-area {
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+}
+</style>
+
 <script>
 const cpath = '${cpath}';
 const type = '${type}';
@@ -66,8 +105,10 @@ const type = '${type}';
 let selectedBackgroundId = null;
 let selectedBackgroundLocked = false;
 
-document.querySelectorAll(".bg-option").forEach(img => {
-  img.addEventListener("click", () => {
+const confirmModal = document.getElementById("confirmModal");
+
+document.querySelectorAll(".bg-option").forEach(function(img) {
+  img.addEventListener("click", function() {
     const cardFrame = document.getElementById("cardFrame");
     const url = img.dataset.img;
     const assetId = img.dataset.id;
@@ -76,18 +117,20 @@ document.querySelectorAll(".bg-option").forEach(img => {
     selectedBackgroundId = assetId;
     selectedBackgroundLocked = isLocked;
 
-    cardFrame.style.backgroundImage = `url("\${url}")`;
+    cardFrame.style.backgroundImage = "url('" + url + "')";
   });
 });
 
-document.querySelectorAll(".brand-btn").forEach(btn => {
-  btn.addEventListener("click", () => {
+document.querySelectorAll(".brand-btn").forEach(function(btn) {
+  btn.addEventListener("click", function() {
     const selectedBrand = btn.dataset.brand;
 
-    document.querySelectorAll(".brand-btn").forEach(b => b.classList.remove("active"));
+    document.querySelectorAll(".brand-btn").forEach(function(b) {
+      b.classList.remove("active");
+    });
     btn.classList.add("active");
 
-    document.querySelectorAll(".bg-item").forEach(item => {
+    document.querySelectorAll(".bg-item").forEach(function(item) {
       const img = item.querySelector(".bg-option");
       if (selectedBrand === "all" || img.dataset.brand === selectedBrand) {
         item.style.display = "block";
@@ -98,26 +141,43 @@ document.querySelectorAll(".brand-btn").forEach(btn => {
   });
 });
 
-document.getElementById("backBtn").addEventListener("click", () => {
-  window.location.href = `${cpath}/make/frame`;
+document.getElementById("backBtn").addEventListener("click", function() {
+  window.location.href = cpath + "/make/frame";
 });
 
-document.getElementById("nextBtn").addEventListener("click", () => {
+document.getElementById("nextBtn").addEventListener("click", function() {
   if (selectedBackgroundLocked) {
     alert("이 아이템이 없습니다. 상점으로 이동합니다.");
-    window.location.href = "/cardgarden/custom/detail?asset_id="+selectedBackgroundId;
+    window.location.href = "/cardgarden/custom/detail?asset_id=" + selectedBackgroundId;
     return;
   }
   const cardFrame = document.getElementById("cardFrame");
   const backgroundImage = cardFrame.style.backgroundImage;
 
   if (!backgroundImage || backgroundImage === "none") {
-    alert("배경을 선택하세요.");
+    confirmModal.style.visibility = "visible";
     return;
   }
 
-  const url = backgroundImage.slice(5, -2);
-
-  window.location.href = "${cpath}/make/sticker?type=" + type + "&background=" + encodeURIComponent(url);
+  proceedToNext(backgroundImage);
 });
+
+document.getElementById("confirmYes").addEventListener("click", function() {
+  confirmModal.style.visibility = "hidden";
+  proceedToNext(null);
+});
+
+document.getElementById("confirmNo").addEventListener("click", function() {
+  confirmModal.style.visibility = "hidden";
+});
+
+function proceedToNext(backgroundImage) {
+  let url = "";
+  if (backgroundImage) {
+    url = backgroundImage.slice(5, -2);
+  }
+  const encodedUrl = encodeURIComponent(url);
+
+  window.location.href = cpath + "/make/sticker?type=" + type + "&background=" + encodedUrl;
+}
 </script>
