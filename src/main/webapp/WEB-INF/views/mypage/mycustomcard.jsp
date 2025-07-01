@@ -153,7 +153,7 @@
 
     <!-- 생성하러 가기 버튼 -->
     <div style="display: flex; justify-content: center; margin: 20px;">
-      <a href="${cpath}/make/frame" class="card-btn" style="width: 200px; font-size:25px; text-align: center;">
+      <a href="${cpath}/make/frame" class="card-btn" style="width: 940px; font-size:25px; text-align: center;">
         생성하러 가기
       </a>
     </div>
