@@ -106,15 +106,25 @@
 
 		<!-- 왼쪽 로고 -->
 		<div class="menu-left">
-			<a href="${cpath}/main"> 
-			<img class="mascot"
-				src="${cpath}/resources/images/mascot/flower/mascot_flower_1.png"
-				style="height: 36px;"> 
-			<img class="logo"
-				src="${cpath}/resources/images/common/logo.png"
-				style="height: 26px;">
+			<a href="${cpath}/main">
+				<c:choose>
+					<c:when test="${not empty loginUserId}">
+						<img class="mascot"
+							src="${cpath}/resources/images/mascot/${mascotBrand}/mascot_${mascotBrand}_1.png"
+							style="height: 36px;">
+					</c:when>
+					<c:otherwise>
+						<img class="mascot"
+							src="${cpath}/resources/images/mascot/flower/mascot_flower_1.png"
+							style="height: 36px;">
+					</c:otherwise>
+				</c:choose>
+				<img class="logo"
+					src="${cpath}/resources/images/common/logo.png"
+					style="height: 26px;">
 			</a>
 		</div>
+
 
 		<!-- 가운데 메뉴 -->
 		<div class="menu-center">
@@ -267,6 +277,10 @@ if(userLike >= 100) {
 }
 
 </script>
+
+<script>
+img.src = "${cpath}/resources/images/mascot/" + mascotBrand + "/mascot_" + mascotBrand + "_1.png";
+</script>
 <c:if test="${not empty loginUserId}">
 <script>
 $(document).ready(function () {
@@ -285,7 +299,6 @@ $(document).ready(function () {
 
     const sessionDuration = 40;
     let lastActionTime = Date.now();
-
     $(document).on("click", () => { lastActionTime = Date.now(); });
 	
     setInterval(() => {
