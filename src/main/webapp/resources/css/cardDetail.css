@@ -607,3 +607,17 @@ body {
   animation: burst 0.6s ease-out forwards;
 }
 
+.gauge-bar-outer {
+  width: 150px; height: 16px; background: #eee; border-radius: 8px; margin-bottom: 5px;
+  position: relative;
+}
+.gauge-bar-inner {
+  height: 100%; border-radius: 8px;
+  background: linear-gradient(90deg, #6be585 70%, #fcb900 100%);
+  text-align: right; color: #222; font-size: 0.9em; line-height: 16px;
+}
+.gauge-percentage { position: absolute; right: 10px; font-weight: bold;}
+.stars { color: #FFD700; }
+.recommend-yes { color: #38971a; font-weight: bold; }
+.recommend-no { color: #aaa; font-size: 0.9em; }
+.card-recommend-block.dimmed { opacity: 0.4; }

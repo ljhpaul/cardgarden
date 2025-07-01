@@ -16,8 +16,8 @@ public class CardRecommendationService {
 		return resultList;
 	}
 	
-	public List<CardRecommendationDTO> getRecommendDetailResult(int patternId, int cardId) {
-		List<CardRecommendationDTO> resultMessage = cardRecommendationDAO.getRecommendDetailResult(patternId, cardId);
+	public List<RecommendResultDTO> getRecommendDetailResult(int patternId, int cardId) {
+		List<RecommendResultDTO> resultMessage = cardRecommendationDAO.getRecommendDetailResult(patternId, cardId);
 		return resultMessage;
 	}
 	

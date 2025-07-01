@@ -229,19 +229,19 @@
 	  });
 	  // aside-ai 클릭 시 선택 안 했으면 막기, 선택하면 alert 후 로딩
 	  document.getElementById('aside-ai').addEventListener('click', function(e){
-	    const checkedRadio = document.querySelector('.pattern-radio:checked');
-	    if (!checkedRadio) {
-	      e.preventDefault();
-	      alert('소비패턴을 먼저 선택해 주세요!');
-	    } else {
-	      e.preventDefault(); // 링크 이동 막고, 직접 이동하게 처리
-	      alert('AI 카드 추천을 시작합니다!\n잠시만 기다려 주세요.');
-	      document.querySelector('.mask').style.display = 'block';
-	      document.querySelector('html').style.overflow = 'hidden';
-	      // 링크로 직접 이동
-	      location.href = this.href;
-	    }
-	  });
+		  const checkedRadio = document.querySelector('.pattern-radio:checked');
+		  if (!checkedRadio) {
+		    e.preventDefault();
+		    alert('소비패턴을 먼저 선택해 주세요!');
+		  } else {
+		    e.preventDefault(); // 링크 이동 막고, 직접 이동하게 처리
+		    // alert('AI 카드 추천을 시작합니다!\n잠시만 기다려 주세요.'); // 이 부분 삭제!
+		    document.querySelector('.mask').style.display = 'block';
+		    document.querySelector('html').style.overflow = 'hidden';
+		    // 링크로 직접 이동
+		    location.href = this.href;
+		  }
+		});
 	});
 	
 </script>
