@@ -411,16 +411,7 @@ document.getElementById('submit-pattern').addEventListener('click', function(e){
     <div class="loading-text">로딩중입니다...</div>
   </div>
 </div>
-<h2>카드 혜택 카테고리 분포</h2>
-  <div class="chart-container">
-    <iframe
-	  src="${metabaseUrl}"
-	  frameborder="0"
-	  width="800"
-	  height="600"
-	  allowtransparency>
-	</iframe>
-  </div>
+
 <script type="text/javascript">
 let loadingTextInterval = null;
 

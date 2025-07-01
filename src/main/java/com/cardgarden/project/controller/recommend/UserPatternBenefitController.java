@@ -20,8 +20,7 @@ import com.cardgarden.project.model.userPatternBenefit.UserPatternBenefitService
 @Controller
 @RequestMapping("/recommend")
 public class UserPatternBenefitController {
-	 @Value("${metabase.url}")
-	 private String metabaseUrl;
+	 
 	
 	@Autowired
     private UserPatternBenefitService userPatternBenefitService;
@@ -46,7 +45,7 @@ public class UserPatternBenefitController {
             mapData.computeIfAbsent(groupKey, k -> new ArrayList<>()).add(dto);
         }
         model.addAttribute("patternList", mapData);
-        model.addAttribute("metabaseUrl", metabaseUrl);
+        
         return "recommend/ai";
     }
 
