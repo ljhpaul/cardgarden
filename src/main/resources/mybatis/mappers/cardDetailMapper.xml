@@ -39,6 +39,18 @@
 		WHERE c.card_id = #{cardId}
 		
 	</select>
+	
+	<!-- 카드 회사별 좋아요 수 1위 카드 조회 -->
+<select id="selectTopLikeCardByCompany" resultType="cardDTO">
+  SELECT *
+  FROM (
+    SELECT *, ROW_NUMBER() OVER (PARTITION BY company ORDER BY card_like DESC) AS rnk
+    FROM Card
+  ) ranked
+  WHERE rnk = 1
+</select>
+	
+	
 </mapper>
 
 	
