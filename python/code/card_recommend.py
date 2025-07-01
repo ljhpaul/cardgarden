@@ -1,3 +1,4 @@
+# 필수 패키지 정리
 import sys
 import pandas as pd
 from sqlalchemy import create_engine
@@ -8,13 +9,14 @@ from sklearn.cluster import KMeans
 from scipy.spatial.distance import cdist
 import numpy as np
 from collections import Counter
-
+# 결과 안정을 위한 softmax 함수 구현 추천의 강도 표현
 def softmax(x):
     x = np.array(x)
     e_x = np.exp(x - np.max(x))
     return e_x / e_x.sum()
-
+# 가공 시작
 def get_recommend_result(pattern_id):
+    # 카테고리 설정 해당 부분은 Table이 구현 됐다면 그 과정을 통해 진행
     arr_key2 = ['모든가맹점','모빌리티','대중교통','통신','생활','쇼핑','외식/카페','뷰티/피트니스','금융/포인트','병원/약국','문화/취미','숙박/항공']
 
     # DB 연결 및 데이터 로딩
@@ -25,7 +27,7 @@ def get_recommend_result(pattern_id):
     sql_detail = "SELECT pattern_id, benefitcategory_id, amount FROM UserConsumptionPatternDetail"
     sql_detail_patternid = f"SELECT pattern_id, benefitcategory_id, amount FROM UserConsumptionPatternDetail WHERE pattern_id = {pattern_id}"
     sql_benefitCategoryid = "SELECT * FROM BenefitCategory"
-
+    # DB에서 얻어온 값을 DataFrame 형태로 저장
     df_user = pd.read_sql(sql_user, engine)
     df_pattern_all = pd.read_sql(sql_pattern, engine)
     df_detail = pd.read_sql(sql_detail, engine)
@@ -104,7 +106,9 @@ def get_recommend_result(pattern_id):
         rows.append(arr)
     df = pd.DataFrame(rows, columns=["카드번호"] + arr_key2)
 
-    # KMeans 클러스터링
+    # KMeans 클러스터링을 통해 비슷한 혜택을 가진 값들로 군집화를 진행
+    # 해당 과정을 통해 결과 도출 시간 조절 진행
+    # 원래 실루엣 계수 혹은 엘보우 기법을 통해 설정 예정이었음
     K = 10
     benefit_vectors = df[arr_key2].values
     kmeans = KMeans(n_clusters=K, random_state=42)
