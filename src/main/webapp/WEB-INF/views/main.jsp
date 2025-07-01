@@ -63,6 +63,34 @@
                 <img src="${cpath}/resources/images/golink/custom.png" style="width:500px;">
             </a>
         </div>
+        <div id="fairy-card-container">
+		  <div class="fairy-wrapper">
+		    <img src="${cpath}/resources/images/mascot/fairy/mascot_fairy_4.png" class="fairy-img" />
+		    <img id="card-img-inside" src="" class="card-overlay" />
+		  </div>
+		  <div class="card-name-text" id="card-name-inside"></div>
+		</div>
+        
+        
+        <div class="popup-overlay" id="cardPopupOverlay" onclick="closeCardPopup()"></div>
+		<div class="bottom-card-list popup-card-list" id="cardPopup">
+		    <h1>🐥카드사별 베스트셀러 모음🐥</h1>
+		    <div class="card-slider">
+		        <c:forEach var="card" items="${topCards}">
+		            <div class="card-slide">
+		                <a href="${cpath}/card/detail?cardid=${card.card_id}">
+		                    <div class="card-image-box">
+							  <img src="${card.card_image}" alt="${card.card_name}" />
+							</div>
+		                    <div class="card-name">${card.card_name}</div>
+		                    <div class="card-company">${card.company}</div>
+		                </a>
+		            </div>
+		        </c:forEach>
+		    </div>
+		</div>
+		
+		
     </div>
 </body>
 <script type="text/javascript">
@@ -101,6 +129,53 @@ function nextSlide(event) {
     $(".mySlideDiv").removeClass("active");
     $(".mySlideDiv").eq(newIndex).addClass("active").show();
 }
+
+
+
+document.getElementById("card-img-inside").addEventListener("click", function() {
+    document.getElementById("cardPopup").classList.add("show");
+    document.getElementById("cardPopupOverlay").classList.add("show");
+});
+
+function closeCardPopup() {
+    document.getElementById("cardPopup").classList.remove("show");
+    document.getElementById("cardPopupOverlay").classList.remove("show");
+}
+
+
+
+
+//카드 보이는 부분
+const cards = [
+	  <c:forEach items="${topCards}" var="card" varStatus="status">
+	    {
+	      image: "${card.card_image}",
+	      name: "${card.card_name}",
+	      url: "${cpath}/card/detail?cardid=${card.card_id}"
+	    }<c:if test="${!status.last}">,</c:if>
+	  </c:forEach>
+	];
+
+	let index = 0;
+
+	function updateCardDisplay() {
+	    const card = cards[index];
+	    const cardImg = document.getElementById("card-img-inside");
+	    const cardName = document.getElementById("card-name-inside");
+
+	    cardImg.src = card.image;
+	    cardName.textContent = card.name;
+
+	    index = (index + 1) % cards.length;
+	}
+
+	document.addEventListener("DOMContentLoaded", () => {
+	    if (cards.length === 0) return;
+	    updateCardDisplay();
+	    setInterval(updateCardDisplay, 2000); // 2초마다 변경
+	});
+
+
 </script>
 <style>
 body {
@@ -219,4 +294,165 @@ body {
         max-width: 98vw;
     }
 }
+
+.card-slider {
+    display: flex;
+    overflow-x: auto;
+    gap: 16px;
+    padding: 20px 0;
+    scroll-snap-type: x mandatory;
+    flex-wrap: wrap;
+}
+.card-slide {
+  flex: 0 0 auto;
+  width: 160px;
+  text-align: center;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+
+}
+.card-slide img {
+    width: 100%;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+}
+.card-name {
+    padding: 8px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+
+
+
+
+#fairy-card-container {
+  text-align: center;
+  margin: 48px 0;
+}
+
+.fairy-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.fairy-img {
+  width: 600px;
+}
+
+.card-overlay {
+  position: absolute;
+  top: 430px; /* 손 중앙 기준 y좌표 */
+  left: 300px; /* 손 중앙 기준 x좌표 */
+  max-width: 200px;
+  max-height: 200px;
+  transform: translate(-50%, -50%); /* 중심 정렬 */
+  object-fit: contain;
+  border-radius: 8px;
+  background: white;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  transition: transform 1s;
+  cursor: pointer;
+}
+.card-overlay:hover {
+	animation: shakeCard 0.4s ease-in-out;
+}
+@keyframes shakeCard {
+  0% { transform: translate(-50%, -50%) rotate(0deg); }
+  25% { transform: translate(-50%, -50%) rotate(4deg); }
+  50% { transform: translate(-50%, -50%) rotate(-4deg); }
+  75% { transform: translate(-50%, -50%) rotate(1deg); }
+  100% { transform: translate(-50%, -50%) rotate(0deg); }
+}
+.card-name-text {
+  margin-top: 32px;
+  font-size: 32px;
+  font-weight: 800;
+  color: #444;
+}
+
+.popup-card-list {
+  text-align: center;
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 80vw;
+  max-width: 800px;
+  max-height: 80vh;
+  overflow-y: auto;
+  background: white;
+  border-radius: 20px;
+  padding: 20px;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  box-shadow: 0 4px 30px rgba(0,0,0,0.3);
+}
+
+.popup-card-list .card-slider {
+  display: flex;
+  flex-wrap: wrap; /* 줄바꿈 허용 */
+  justify-content: center; /* 가운데 정렬 */
+  gap: 16px;
+  padding: 20px 0;
+  scroll-snap-type: none; /* 필요 시 제거 */
+  overflow-x: hidden; /* 가로 스크롤 제거 */
+}
+
+@keyframes popupFadeIn {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+.popup-card-list.show {
+  display: block;
+  animation: popupFadeIn 0.3s ease-out;
+}
+
+@keyframes overlayFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.popup-overlay.show {
+  display: block;
+  animation: overlayFadeIn 0.3s ease-out;
+}
+
+
+.popup-overlay {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 9998;
+}
+
+.card-image-box {
+  width: 100%;
+  height: 220px; /* 카드 고정 높이 */
+  background-color: #fff;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-image-box img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+
 </style>

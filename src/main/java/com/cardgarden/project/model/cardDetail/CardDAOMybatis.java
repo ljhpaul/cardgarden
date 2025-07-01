@@ -17,6 +17,11 @@ public class CardDAOMybatis implements CardDAOInterface {
 
     private final String namespace = "com.cardgarden.card";
 	
+    @Override
+    public List<CardDTO> selectTopLikeCardByCompany() {
+        return sqlSession.selectList(namespace + ".selectTopLikeCardByCompany");
+    }
+    
 	@Override
 	public List<CardDTO> selectById(int cardId){
 		List<CardDTO> cardList = sqlSession.selectList(namespace+".selectById",cardId);
