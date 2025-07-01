@@ -351,7 +351,7 @@ body {
 
 #fairy-card-container {
   text-align: center;
-  margin: 150px 0;
+  margin: 48px 0;
 }
 
 .fairy-wrapper {
@@ -415,12 +415,21 @@ body {
 
 .popup-card-list .card-slider {
   display: flex;
-  flex-wrap: wrap; /* 줄바꿈 허용 */
-  justify-content: center; /* 가운데 정렬 */
+  flex-wrap: wrap;
+  justify-content: space-between; /* 또는 center */
   gap: 16px;
   padding: 20px 0;
-  scroll-snap-type: none; /* 필요 시 제거 */
-  overflow-x: hidden; /* 가로 스크롤 제거 */
+  overflow-x: hidden;
+}
+
+.popup-card-list .card-slide {
+  flex: 0 0 calc(33.333% - 16px);
+  box-sizing: border-box;
+  width: calc(33.333% - 16px);
+  background: white;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 @keyframes popupFadeIn {
@@ -471,8 +480,8 @@ body {
 }
 
 .card-image-box img {
-  max-width: 100%;
-  max-height: 100%;
+  max-width: 90%;
+  max-height: 90%;
   object-fit: contain;
 }
 
