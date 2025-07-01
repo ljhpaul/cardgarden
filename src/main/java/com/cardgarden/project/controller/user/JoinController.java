@@ -7,6 +7,9 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -60,14 +63,12 @@ public class JoinController {
 		//사용자가 뒤로가기 등으로 다시 약관 동의를 수정할 경우 덮어쓰기됨
 		session.setAttribute("checkedTermList", checkedTermList);
 		
-		String socialJoin = (String) session.getAttribute("socialJoin");
+		Boolean socialJoin = (Boolean) session.getAttribute("socialJoin");
 		
-		if(socialJoin == null || "".equals(socialJoin)) {
+		if(socialJoin == null) {
 			return "redirect:/user/join/email";
 		} else {
-			/* 정보입력 자동완성 */
-			
-			return "redirect:/user/join/inputInfo";
+			return "redirect:/user/join/info";
 		}
 	}
 	
@@ -90,9 +91,20 @@ public class JoinController {
 	
 	//3-1. 회원정보 입력
 	@GetMapping("/info")
-	public String inputInfoView(HttpSession session) {
-		/* 소셜 인증일 경우 자동완성 추가 */
+	public String inputInfoView(HttpSession session, Model model) {
 		
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+		if (authentication != null && authentication.getPrincipal() instanceof OAuth2User) {
+			OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
+			model.addAttribute("socialId", oAuth2User.getAttribute("sub"));
+		    model.addAttribute("socialName", oAuth2User.getAttribute("name"));
+			session.setAttribute("emailVerified", oAuth2User.getAttribute("email_verified"));
+			session.setAttribute("verifiedEmail", oAuth2User.getAttribute("email"));
+		} else {
+	        return "redirect:/wrong";
+	    }
+	    
 		/*
 		if(session.getAttribute("verifiedEmail") == null) {
 			return "redirect:/wrong";
@@ -135,6 +147,9 @@ public class JoinController {
 		}
 		
 		if(result > 0 && checkedTermList != null) {
+			//소셜회원가입여부 세션 저장값 초기화
+			session.removeAttribute("socialJoin");
+			
 			//약관동의 세션 저장값 초기화
 			session.removeAttribute("checkedTermList");
 			

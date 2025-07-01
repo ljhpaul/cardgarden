@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.cardgarden.project.model.CardSearchCondition.CardDTO;
+import com.cardgarden.project.model.custom.dto.CustomCardDTO;
 import com.cardgarden.project.model.user.dto.UserConsumptionPatternResponseDTO;
 import com.cardgarden.project.model.user.dto.UserInfoDTO;
 import com.cardgarden.project.model.user.dto.UserUpdateInfoDTO;
@@ -40,9 +41,12 @@ public class UserInfoDAO {
         return sqlSession.selectOne(namespace + "selectByEmail", email);
     }
     
-    
     public int getUserIdByLoginId(String user_name) {
     	return sqlSession.selectOne(namespace + "getUserIdByLoginId", user_name);
+    }
+    
+    public int getUserIdByEmail(String email) {
+    	return sqlSession.selectOne(namespace + "getUserIdByEmail", email);
     }
     
 	public String getLoginIdByNameAndEmail(Map<String, Object> paramMap) {
@@ -123,5 +127,8 @@ public class UserInfoDAO {
         log.info(result + "건 수정됨(lombok_Slf4j)");
         return result;
 	}
-	
+	public List<CustomCardDTO> selectMyCustomCardList(int userId) {
+	    return sqlSession.selectList(namespace + "selectMyCustomCardList", userId);
+	}
+
 }

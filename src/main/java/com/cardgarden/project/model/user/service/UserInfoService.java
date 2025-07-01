@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.cardgarden.project.model.CardSearchCondition.CardDTO;
+import com.cardgarden.project.model.custom.dto.CustomCardDTO;
 import com.cardgarden.project.model.user.dao.UserInfoDAO;
 import com.cardgarden.project.model.user.dto.UserConsumptionPatternResponseDTO;
 import com.cardgarden.project.model.user.dto.UserInfoDTO;
@@ -48,6 +49,13 @@ public class UserInfoService {
     public int getUserIdByLoginId(String user_name) {
     	int user_id = userInfoDAO.getUserIdByLoginId(user_name);
     	log.info("UserInfoService에서 로그출력: getUserIdByLoginId -> user_id = " + user_id);
+    	return user_id;
+    }
+    
+    // email로 user_id 찾기
+    public int getUserIdByEmail(String email) {
+    	int user_id = userInfoDAO.getUserIdByEmail(email);
+    	log.info("UserInfoService에서 로그출력: getUserIdByEmail -> user_id = " + user_id);
     	return user_id;
     }
     
@@ -148,4 +156,8 @@ public class UserInfoService {
         log.info("UserInfoService에서 로그출력:" + result + "건 insert");
         return result;
 	}
+	public List<CustomCardDTO> myCustomCardList(int userId) {
+	    return userInfoDAO.selectMyCustomCardList(userId);
+	}
+
 }

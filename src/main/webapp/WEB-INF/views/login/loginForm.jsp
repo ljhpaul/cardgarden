@@ -205,7 +205,7 @@ body {
 				method: 'POST',
 				data: formData,
 				success: function(res) {
-					$(".msg-area").show();
+					console.log("ajax success!", res);
 					if(res.success) {
 						/* 아이디 저장 체크 여부 */
 						isRemeberChecked();

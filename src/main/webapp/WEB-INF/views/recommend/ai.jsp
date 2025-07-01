@@ -120,18 +120,21 @@
 	}
 	.button-primary {
 		margin-top: 32px;
-		padding: 13px 36px;
+		padding: 16px 48px;
 		background-color: #FFF5E1;
 		color: var(--m3, #49615A);
 		border: none;
 		border-radius: 10px;
-		font-size: 17px;
-		font-weight: bold;
+		font-size: 24px;
+		font-weight: 800;
 		cursor: pointer;
 		box-shadow: 0 2px 8px rgba(143,176,152,0.07);
 		transition: background 0.15s, color 0.15s;
 		display: inline-block;
 		text-align: center;
+		margin-left: 50px; 
+		text-decoration: none;
+		margin-bottom: 300px;
 	}
 	.button-primary:hover {
 		background-color: #FFE0A3;
@@ -210,38 +213,60 @@
 	.loading-text {
 	  font-size: 1.25em; color: #2B362D; font-weight: bold; letter-spacing: 1.5px;
 	}
+	.chart-container {
+      max-width: 900px;
+      margin: 40px auto;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 4px 24px #0002;
+      padding: 32px 0;
+      display: flex;
+      justify-content: center;
+    }
+    h2 {
+      text-align: center;
+      font-size: 2rem;
+      margin-top: 40px;
+    }
 </style>
 <script>
-	document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function() {
 	  var cpath = "${cpath}";
-	  // pattern-radio 클릭 시 aside-ai 링크 업데이트 + 시각적 선택 표시
+
+	  // pattern-radio 클릭 시 aside-ai 링크 업데이트 + 선택 표시
 	  document.querySelectorAll('.pattern-radio').forEach(function(radio) {
 	    radio.addEventListener('change', function() {
 	      const asideAi = document.getElementById('aside-ai');
+	      const submitBtn = document.getElementById('submit-pattern');
 	      document.querySelectorAll('.pattern-group').forEach(function(label){
 	        label.classList.remove('selected');
 	      });
 	      if (radio.checked) {
-	        asideAi.href = cpath + "/recommend/selectPattern?patternId=" + radio.value;
+	        const newHref = cpath + "/recommend/selectPattern?patternId=" + radio.value;
+	        asideAi.href = newHref;
+	        submitBtn.href = newHref; // ← 제출 버튼에도 적용
 	        radio.closest('.pattern-group').classList.add('selected');
 	      }
 	    });
 	  });
-	  // aside-ai 클릭 시 선택 안 했으면 막기, 선택하면 alert 후 로딩
-	  document.getElementById('aside-ai').addEventListener('click', function(e){
+
+	  // 공통 클릭 핸들러
+	  function handlePatternClick(e) {
 	    const checkedRadio = document.querySelector('.pattern-radio:checked');
 	    if (!checkedRadio) {
 	      e.preventDefault();
 	      alert('소비패턴을 먼저 선택해 주세요!');
 	    } else {
-	      e.preventDefault(); // 링크 이동 막고, 직접 이동하게 처리
-	      alert('AI 카드 추천을 시작합니다!\n잠시만 기다려 주세요.');
+	      e.preventDefault();
+	      /* alert('AI 카드 추천을 시작합니다!\n잠시만 기다려 주세요.'); */
 	      document.querySelector('.mask').style.display = 'block';
 	      document.querySelector('html').style.overflow = 'hidden';
-	      // 링크로 직접 이동
-	      location.href = this.href;
+	      location.href = e.currentTarget.href;
 	    }
-	  });
+	  }
+
+	  document.getElementById('aside-ai').addEventListener('click', handlePatternClick);
+	  document.getElementById('submit-pattern').addEventListener('click', handlePatternClick);
 	});
 	
 </script>
@@ -312,9 +337,9 @@ document.addEventListener('DOMContentLoaded', function() {
     <a href="${cpath}/ConsumptionPattern/inCon" class="side-btn">
       <img src="${cpath}/resources/images/consumpattern/goconsumpattern.png" alt="소비패턴 입력하러 가기">
     </a>
-    <a href="#" id="aside-ai" class="side-btn">
+   <%--  <a href="#" id="aside-ai" class="side-btn">
       <img src="${cpath}/resources/images/consumpattern/goAI.png" alt="AI 맞춤 카드 추천 받기">
-    </a>
+    </a> --%>
   </div>
   <div class="pattern-content">
     <c:choose>
@@ -346,6 +371,13 @@ document.addEventListener('DOMContentLoaded', function() {
               </label>
             </c:forEach>
           </div>
+          
+          <div>
+          	<a href ="#" id="aside-ai" class="button-primary">
+          		제출하기
+          	</a>
+		  </div>
+          
         </div>
       </c:otherwise>
     </c:choose>
@@ -356,14 +388,72 @@ document.addEventListener('DOMContentLoaded', function() {
 <div class="loading-popup-mask" style="display:none;">
   <div class="loading-popup-inner">
     <div class="loading-run">
-      <img class="run-frame" src="${cpath}/resources/images/consumpattern/ai1.png" alt="1" style="display:block;">
-      <img class="run-frame" src="${cpath}/resources/images/consumpattern/ai2.png" alt="2" style="display:none;">
-      <img class="run-frame" src="${cpath}/resources/images/consumpattern/ai3.png" alt="3" style="display:none; ">
-      <%-- <img class="run-frame" src="${cpath}/resources/images/consumpattern/ai4.png" alt="4" style="display:none;"> --%>
-      <img class="run-frame" src="${cpath}/resources/images/consumpattern/ai5.png" alt="5" style="display:none;">
+      <img class="run-frame" src="${cpath}/resources/images/consumpattern/baseball1.png" alt="1" style="display:block;">
+      <img class="run-frame" src="${cpath}/resources/images/consumpattern/baseball2.png" alt="2" style="display:none;">
+      <img class="run-frame" src="${cpath}/resources/images/consumpattern/baseball3.png" alt="3" style="display:none; ">
+      <img class="run-frame" src="${cpath}/resources/images/consumpattern/base1.png" alt="1" style="display:block;">
+      <img class="run-frame" src="${cpath}/resources/images/consumpattern/base2.png" alt="2" style="display:none;">
+      <img class="run-frame" src="${cpath}/resources/images/consumpattern/base3.png" alt="3" style="display:none; ">
+      <img class="run-frame" src="${cpath}/resources/images/consumpattern/base4.png" alt="3" style="display:none; ">
     </div>
     <div class="loading-text">로딩중입니다...</div>
   </div>
 </div>
+<h2>카드 혜택 카테고리 분포</h2>
+  <div class="chart-container">
+    <iframe
+      src="http://localhost:3000/public/question/fc5eb28a-4720-4a39-a1df-b84e95402fb0"
+      frameborder="0"
+      width="800"
+      height="600"
+      allowtransparency>
+    </iframe>
+  </div>
+<script type="text/javascript">
+let loadingTextInterval = null;
+
+function startLoadingText() {
+  const loadingText = document.querySelector('.loading-text');
+  const baseMsg = "AI 측정중 입니다";
+  let dotCount = 0;
+  if (loadingTextInterval) clearInterval(loadingTextInterval);
+  loadingTextInterval = setInterval(() => {
+    let dots = '.'.repeat(dotCount);
+    loadingText.textContent = baseMsg + dots;
+    dotCount = (dotCount + 1) % 4; // 0,1,2,3 (4는 다시 0)
+  }, 350); // 속도는 350ms 조정 가능
+}
+
+function stopLoadingText() {
+  if (loadingTextInterval) {
+    clearInterval(loadingTextInterval);
+    loadingTextInterval = null;
+  }
+  // 혹시 hide할 때 기본 메시지로
+  const loadingText = document.querySelector('.loading-text');
+  if (loadingText) loadingText.textContent = "AI 측정중 입니다";
+}
+
+// showLoadingPopup 호출 시에도 실행되게
+function showLoadingPopup() {
+  document.querySelector('.loading-popup-mask').style.display = 'flex';
+  frameIdx = 0;
+  const frames = document.querySelectorAll('.run-frame');
+  if (runInterval) clearInterval(runInterval);
+  runInterval = setInterval(() => {
+    frames.forEach((img, i) => img.style.display = i === frameIdx ? 'block' : 'none');
+    frameIdx = (frameIdx + 1) % frames.length;
+  }, 1000);
+  startLoadingText();
+}
+
+function hideLoadingPopup() {
+  document.querySelector('.loading-popup-mask').style.display = 'none';
+  if (runInterval) clearInterval(runInterval);
+  stopLoadingText();
+}
+
+
+</script>
 </body>
 </html>

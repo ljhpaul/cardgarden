@@ -1,0 +1,63 @@
+body {
+    font-family: var(--font);
+    background-color: var(--main);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.error-container {
+    text-align: center;
+    background-color: white;
+    padding: 100px 100px;
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    max-width: 1000px;
+}
+
+.error-mascot {
+    width: 160px;
+    height: 160px;
+    object-fit: contain;
+    margin-bottom: 20px;
+}
+
+h1 {
+    font-size: 28px;
+    color: var(--m3);
+    margin-bottom: 10px;
+}
+
+p {
+    font-size: 16px;
+    color: #555;
+    margin: 8px 0;
+}
+
+.btn-group {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.btn-home {
+    padding: 10px 20px;
+    background-color: var(--s1);
+    color: white;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 700;
+    transition: all 0.2s ease;
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.btn-home:hover {
+    background-color: var(--m2);
+    color: black;
+}

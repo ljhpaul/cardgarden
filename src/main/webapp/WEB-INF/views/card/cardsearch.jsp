@@ -214,7 +214,8 @@ body {
 }
 
 .pagination {
-	margin-top: 30px;
+	margin-top: 40px;
+	margin-bottom: 40px;
 	text-align: center;
 }
 

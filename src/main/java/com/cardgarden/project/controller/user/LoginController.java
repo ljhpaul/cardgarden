@@ -36,7 +36,7 @@ public class LoginController {
     @PostMapping("/login")
     @ResponseBody
     public Map<String, Object> loginProcess(HttpSession session, LoginRequestDTO inputData) {
-
+    	
         Map<String, Object> map = new HashMap<>();
 
         String inputLoginId = inputData.getUser_name();
@@ -63,7 +63,7 @@ public class LoginController {
         int loginUserId = userInfoService.getUserIdByLoginId(inputLoginId);
         session.setAttribute("loginUserId", loginUserId);
         session.setAttribute("mascotId", 120);  // 디폴트 flower 선택
-        session.setMaxInactiveInterval(40);
+        session.setMaxInactiveInterval(4000);
         map.put("success", true);
         map.put("message", "로그인 성공");
         return map;
