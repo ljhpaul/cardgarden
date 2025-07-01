@@ -36,7 +36,7 @@ public class LoginController {
     @PostMapping("/login")
     @ResponseBody
     public Map<String, Object> loginProcess(HttpSession session, LoginRequestDTO inputData) {
-
+    	
         Map<String, Object> map = new HashMap<>();
 
         String inputLoginId = inputData.getUser_name();
