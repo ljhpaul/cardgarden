@@ -120,18 +120,21 @@
 	}
 	.button-primary {
 		margin-top: 32px;
-		padding: 13px 36px;
+		padding: 16px 48px;
 		background-color: #FFF5E1;
 		color: var(--m3, #49615A);
 		border: none;
 		border-radius: 10px;
-		font-size: 17px;
-		font-weight: bold;
+		font-size: 24px;
+		font-weight: 800;
 		cursor: pointer;
 		box-shadow: 0 2px 8px rgba(143,176,152,0.07);
 		transition: background 0.15s, color 0.15s;
 		display: inline-block;
 		text-align: center;
+		margin-left: 50px; 
+		text-decoration: none;
+		margin-bottom: 300px;
 	}
 	.button-primary:hover {
 		background-color: #FFE0A3;
@@ -210,38 +213,46 @@
 	.loading-text {
 	  font-size: 1.25em; color: #2B362D; font-weight: bold; letter-spacing: 1.5px;
 	}
+
 </style>
 <script>
-	document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function() {
 	  var cpath = "${cpath}";
-	  // pattern-radio 클릭 시 aside-ai 링크 업데이트 + 시각적 선택 표시
+
+	  // pattern-radio 클릭 시 aside-ai 링크 업데이트 + 선택 표시
 	  document.querySelectorAll('.pattern-radio').forEach(function(radio) {
 	    radio.addEventListener('change', function() {
 	      const asideAi = document.getElementById('aside-ai');
+	      const submitBtn = document.getElementById('submit-pattern');
 	      document.querySelectorAll('.pattern-group').forEach(function(label){
 	        label.classList.remove('selected');
 	      });
 	      if (radio.checked) {
-	        asideAi.href = cpath + "/recommend/selectPattern?patternId=" + radio.value;
+	        const newHref = cpath + "/recommend/selectPattern?patternId=" + radio.value;
+	        asideAi.href = newHref;
+	        submitBtn.href = newHref; // ← 제출 버튼에도 적용
 	        radio.closest('.pattern-group').classList.add('selected');
 	      }
 	    });
 	  });
-	  // aside-ai 클릭 시 선택 안 했으면 막기, 선택하면 alert 후 로딩
-	  document.getElementById('aside-ai').addEventListener('click', function(e){
+
+	  // 공통 클릭 핸들러
+	  function handlePatternClick(e) {
 	    const checkedRadio = document.querySelector('.pattern-radio:checked');
 	    if (!checkedRadio) {
 	      e.preventDefault();
 	      alert('소비패턴을 먼저 선택해 주세요!');
 	    } else {
-	      e.preventDefault(); // 링크 이동 막고, 직접 이동하게 처리
+	      e.preventDefault();
 	      alert('AI 카드 추천을 시작합니다!\n잠시만 기다려 주세요.');
 	      document.querySelector('.mask').style.display = 'block';
 	      document.querySelector('html').style.overflow = 'hidden';
-	      // 링크로 직접 이동
-	      location.href = this.href;
+	      location.href = e.currentTarget.href;
 	    }
-	  });
+	  }
+
+	  document.getElementById('aside-ai').addEventListener('click', handlePatternClick);
+	  document.getElementById('submit-pattern').addEventListener('click', handlePatternClick);
 	});
 	
 </script>
@@ -346,6 +357,9 @@ document.addEventListener('DOMContentLoaded', function() {
               </label>
             </c:forEach>
           </div>
+          <a href="${cpath}/ConsumptionPattern/submitPattern"  class="button-primary"  id="submit-pattern" >
+		   제출하기
+		  </a>
         </div>
       </c:otherwise>
     </c:choose>
