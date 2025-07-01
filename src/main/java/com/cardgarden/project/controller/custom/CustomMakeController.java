@@ -100,8 +100,8 @@ public class CustomMakeController {
             byte[] imageBytes = Base64.getDecoder().decode(base64);
 
             String projectPath = System.getProperty("user.dir");
-           // String savePath = projectPath + "/src/main/webapp/resources/images/custom/customcard";
-            String savePath = session.getServletContext().getRealPath("/resources/images/custom/customcard");
+            // String savePath = projectPath + "/src/main/webapp/resources/images/custom/customcard";
+            String savePath = "C:/javaOS/install/springFramework/workSpace/cardgarden/src/main/webapp/resources/images/custom/customcard";
 
             
             File folder = new File(savePath);

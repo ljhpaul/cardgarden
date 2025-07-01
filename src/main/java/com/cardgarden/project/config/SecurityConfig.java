@@ -6,17 +6,12 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 
-import com.cardgarden.project.model.auth.CustomOAuth2UserService;
-
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-	private final CustomOAuth2UserService customOAuth2UserService;
 	private final OAuth2SuccessHandler successHandler;
 
-	public SecurityConfig(CustomOAuth2UserService customOAuth2UserService,
-			OAuth2SuccessHandler successHandler) {
-		this.customOAuth2UserService = customOAuth2UserService;
+	public SecurityConfig(OAuth2SuccessHandler successHandler) {
 		this.successHandler = successHandler;
 	}
 
@@ -30,7 +25,7 @@ public class SecurityConfig {
 	        .and()
 	        .csrf().disable() // 개발시 임시로 해제, 운영시엔 활성화/토큰처리 필요
 	        .oauth2Login()
-	            // ...
+	        	.successHandler(successHandler)
 	        ;
 	    return http.build();
 	}

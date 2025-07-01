@@ -40,9 +40,12 @@ public class UserInfoDAO {
         return sqlSession.selectOne(namespace + "selectByEmail", email);
     }
     
-    
     public int getUserIdByLoginId(String user_name) {
     	return sqlSession.selectOne(namespace + "getUserIdByLoginId", user_name);
+    }
+    
+    public int getUserIdByEmail(String email) {
+    	return sqlSession.selectOne(namespace + "getUserIdByEmail", email);
     }
     
 	public String getLoginIdByNameAndEmail(Map<String, Object> paramMap) {

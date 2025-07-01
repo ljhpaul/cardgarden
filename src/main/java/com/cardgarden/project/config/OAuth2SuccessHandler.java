@@ -5,6 +5,7 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -15,6 +16,9 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 
 import com.cardgarden.project.model.user.service.UserInfoService;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Configuration
 @EnableWebSecurity
 public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
@@ -26,15 +30,23 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws IOException, ServletException {
     	
+    	HttpSession session = request.getSession();
+    	
     	OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
         String email = oAuth2User.getAttribute("email");
+        
+        log.info(email);
     	
         if(userInfoService.existsByEmail(email)) {
-        	response.sendRedirect("/user/login");
+        	int loginUserId = userInfoService.getUserIdByEmail(email);
+        	session.setAttribute("loginUserId", loginUserId);
+        	session.setAttribute("mascotId", 120);  // 디폴트 flower 선택
+            session.setMaxInactiveInterval(4000);
+        	response.sendRedirect("/cardgarden/main");
         } else {
-        	response.sendRedirect("/user/join/info");
+        	session.setAttribute("socialJoin", true);
+        	response.sendRedirect("/cardgarden/user/join/term");
         }
-        
     }
 	
 }
