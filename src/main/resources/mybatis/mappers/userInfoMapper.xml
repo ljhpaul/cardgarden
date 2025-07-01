@@ -65,6 +65,14 @@
 	</select>
 	
 	<!-- 로그인 아이디와 이메일로 비밀번호 조회 -->
+	<select id="getPasswordByLoginIdAndEmail" parameterType="map" resultType="string">
+		SELECT user_password
+		  FROM userInfo
+		 WHERE user_name = #{user_name}
+		   AND email = #{email}
+	</select>
+	
+	<!-- 로그인 아이디와 이메일로 비밀번호 조회 -->
 	<select id="getPointById" parameterType="int" resultType="int">
 		SELECT point
 		  FROM userInfo
@@ -152,6 +160,14 @@
 		phone = #{phone},
 		address = #{address}
 		WHERE user_id = #{user_id}
+	</update>
+	
+	<!-- 로그인아이디와 이메일로 비밀번호 수정 -->
+	<update id="setPasswordByLoginIdAndEmail" parameterType="map">
+		UPDATE userInfo
+		   SET user_password = #{user_password}
+		 WHERE user_name = #{user_name}
+		   AND email = #{email}
 	</update>
 	
 		<!-- 관리자가 회원정보 수정 -->

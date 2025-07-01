@@ -142,4 +142,10 @@ public class UserInfoService {
 	public int getPointById(int loginUserId) {
 		return userInfoDAO.getPointById(loginUserId);
 	}
+
+	public int setPasswordByLoginIdAndEmail(Map<String, Object> paramMap) {
+		int result = userInfoDAO.setPasswordByLoginIdAndEmail(paramMap);
+        log.info("UserInfoService에서 로그출력:" + result + "건 insert");
+        return result;
+	}
 }

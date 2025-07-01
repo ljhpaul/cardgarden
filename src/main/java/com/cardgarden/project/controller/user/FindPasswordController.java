@@ -33,10 +33,10 @@ public class FindPasswordController {
 	
 	// 1-2. 로그인 아이디 세션에 저장
 	@PostMapping("/find-password")
-	public String setName(HttpSession session, String loginId) {
+	public String setName(HttpSession session, String user_name) {
 		/* 세션에 로그인 아이디 저장 */
-		session.setAttribute("loginIdForFind", loginId);
-		log.info(loginId);
+		session.setAttribute("loginIdForFind", user_name);
+		log.info(user_name);
 		
 		return "redirect:/user/find-password/email";
 	}
@@ -80,28 +80,64 @@ public class FindPasswordController {
 		
 		session.setAttribute("foundPwd", foundPwd);
 		
-		session.removeAttribute("loginIdForFind");
+//		session.removeAttribute("loginIdForFind");
 		session.removeAttribute("emailCode");
 		session.removeAttribute("emailExpire");
 		session.removeAttribute("emailToVerify");
+//		session.removeAttribute("emailVerified");
+//		session.removeAttribute("verifiedEmail");
+		
+		return "redirect:/user/find-password/reset";
+	}
+	
+	// 3-1. 비밀번호 재설정
+	@GetMapping("/find-password/reset")
+	public String findPwdResetView() {
+		return "login/findPwdReset";
+	}
+	
+	// 3-2. 비밀번호 재설정 검증
+	@PostMapping("/find-password/reset")
+	public String findPwdResetProcess(HttpSession session, RedirectAttributes redirectAttributes,
+			String prevPwd, String user_password) {
+		
+		String foundPwd = (String) session.getAttribute("foundPwd");
+		log.info(foundPwd + "/" + prevPwd + "/" + user_password);
+		
+		if(!foundPwd.equals(prevPwd)) {
+			redirectAttributes.addFlashAttribute("alertMsg", 
+					"입력하신 비밀번호가 기존 비밀번호와 일치하지 않습니다.");
+			return "redirect:/user/find-password/reset";
+		}
+		
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		String user_name = (String) session.getAttribute("loginIdForFind");
+		String email = (String) session.getAttribute("verifiedEmail");
+		paramMap.put("user_name", user_name);
+		paramMap.put("user_password", user_password);
+		paramMap.put("email", email);
+		log.info(paramMap.toString());
+		
+		int result = userInfoSerivce.setPasswordByLoginIdAndEmail(paramMap);
+		log.info(result + "");
+		
+		if(result == 0) {
+			redirectAttributes.addFlashAttribute("alertMsg", 
+					"비밀번호 재설정에 실패했습니다.");
+			return "redirect:/user/find-password/reset";
+		}
+		
+		session.removeAttribute("loginIdForFind");
+		session.removeAttribute("foundPwd");
 		session.removeAttribute("emailVerified");
 		session.removeAttribute("verifiedEmail");
 		
 		return "redirect:/user/find-password/success";
 	}
 	
-	// 3. 아이디 찾기 성공
+	// 4. 비밀번호 재설정 성공
 	@GetMapping("/find-password/success")
-	public String findPwdComplete(HttpSession session, Model model) {
-		
-		String foundPwd = (String) session.getAttribute("foundPwd");	
-		
-		if(foundPwd == null || foundPwd.equals("")) {
-			return "redirect:/wrong";
-		}
-		
-		model.addAttribute("foundPwd", foundPwd);
-		
+	public String findPwdSuccess() {
 		return "login/findPwdSuccess";
 	}
 	

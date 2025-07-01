@@ -43,10 +43,10 @@
 		display: block;
 	}
 	.side-btn img{
-		box-shadow:0 2px 10px rgba(143,176,152,0.18); 
+		box-shadow: 0 2px 16px rgba(100,130,120,0.08);
 	}
 	.side-btn img:hover {
-		box-shadow: 0 4px 20px rgba(143,176,152,0.23);
+		box-shadow: 0 3px 24px rgba(180, 140, 90, 0.22);
 		transition: box-shadow 0.18s;
 	}
 	.side-menu img {

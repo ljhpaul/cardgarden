@@ -45,6 +45,7 @@ public class CardSearchController {
         int endPage = Math.min(totalPages, page + 5);
 
         request.setAttribute("cardList", results);
+        request.setAttribute("totalCount", totalCount);
         request.setAttribute("currentPage", page);
         request.setAttribute("totalPages", totalPages);
         request.setAttribute("startPage", startPage);

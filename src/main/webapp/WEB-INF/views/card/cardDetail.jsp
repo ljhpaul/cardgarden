@@ -309,7 +309,6 @@ $(function() {
 
 		</c:forEach>
 	</div>
-	
 		<!-- 추천 카드 섹션 (Swiper 버전) -->
 <div class="recommend-card-section">
   <h2 class="rec-text">많이 비교된 카드</h2>

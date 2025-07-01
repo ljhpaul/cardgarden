@@ -28,6 +28,7 @@ header.main-header {
 
 /* 왼쪽 로그인 */
 .header-left {
+  width: 160px;
   margin-left: 20px;
   display: flex;
   gap: 20px;
@@ -63,6 +64,9 @@ header.main-header {
 
 /* 오른쪽 검색 */
 .header-right {
+  height: 56px; /* 원하는 고정 높이 */
+  min-height: 56px;
+  max-height: 56px;
   margin-right: 20px;
   display: flex;
   align-items: center;
@@ -82,6 +86,8 @@ header.main-header {
   font-size: 15px;
   font-weight: 400;
   color: var(--m3);
+  box-sizing: border-box;
+  line-height: 1; /* 고정 */
 }
 .header-right input::placeholder {
   color: var(--m1);
@@ -93,7 +99,14 @@ header.main-header {
 }
 
 .header-right a {
-  margin-bottom: 15px;
+  margin: 0; /* 기존 margin-bottom 제거 */
+  display: flex;
+  align-items: center;
+  height: 100%; /* 높이 맞추기 */
+}
+
+.header-right form {
+	margin : 0;
 }
 
 .header-right input:focus {

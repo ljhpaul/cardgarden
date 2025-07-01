@@ -106,15 +106,25 @@
 
 		<!-- 왼쪽 로고 -->
 		<div class="menu-left">
-			<a href="${cpath}/main"> 
-			<img class="mascot"
-				src="${cpath}/resources/images/mascot/flower/mascot_flower_1.png"
-				style="height: 36px;"> 
-			<img class="logo"
-				src="${cpath}/resources/images/common/logo.png"
-				style="height: 26px;">
+			<a href="${cpath}/main">
+				<c:choose>
+					<c:when test="${not empty loginUserId}">
+						<img class="mascot"
+							src="${cpath}/resources/images/mascot/${mascotBrand}/mascot_${mascotBrand}_1.png"
+							style="height: 36px;">
+					</c:when>
+					<c:otherwise>
+						<img class="mascot"
+							src="${cpath}/resources/images/mascot/flower/mascot_flower_1.png"
+							style="height: 36px;">
+					</c:otherwise>
+				</c:choose>
+				<img class="logo"
+					src="${cpath}/resources/images/common/logo.png"
+					style="height: 26px;">
 			</a>
 		</div>
+
 
 		<!-- 가운데 메뉴 -->
 		<div class="menu-center">
@@ -254,18 +264,22 @@ const userLike = Number("${userLike}");
 $(".like-count").show().text(userLike<100?userLike:"99+");
 if(userLike >= 100) {
 	$(".like-count").css("font-weight", "700");
-	$(".like-count-header").css("top", "35px").css("right", "11px").css("font-size", "9px").css("width", "18px").css("height", "18px");
+	$(".like-count-header").css("top", "40px").css("right", "11px").css("font-size", "9px").css("width", "18px").css("height", "18px");
 	$(".like-count-sticky").css("top", "-6px").css("right", "-6px").css("font-size", "9px").css("width", "18px").css("height", "18px");
 } else if(userLike >= 10) {
-	$(".like-count-header").css("top", "36px").css("right", "12px").css("font-size", "10px").css("width", "16px").css("height", "16px");
+	$(".like-count-header").css("top", "41px").css("right", "12px").css("font-size", "10px").css("width", "16px").css("height", "16px");
 	$(".like-count-sticky").css("top", "-6px").css("right", "-6px").css("font-size", "10px").css("width", "16px").css("height", "16px");
 } else if(userLike >= 1) {
-	$(".like-count-header").css("top", "36px").css("right", "12px").css("font-size", "11px").css("width", "16px").css("height", "15px");
+	$(".like-count-header").css("top", "41px").css("right", "12px").css("font-size", "11px").css("width", "16px").css("height", "15px");
 	$(".like-count-sticky").css("top", "-6px").css("right", "-6px").css("font-size", "11px").css("width", "15px").css("height", "14px");
 } else {
 	$(".like-count").hide();
 }
 
+</script>
+
+<script>
+img.src = "${cpath}/resources/images/mascot/" + mascotBrand + "/mascot_" + mascotBrand + "_1.png";
 </script>
 <c:if test="${not empty loginUserId}">
 <script>
@@ -285,7 +299,6 @@ $(document).ready(function () {
 
     const sessionDuration = 40;
     let lastActionTime = Date.now();
-
     $(document).on("click", () => { lastActionTime = Date.now(); });
 	
     setInterval(() => {
