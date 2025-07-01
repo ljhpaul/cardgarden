@@ -234,8 +234,11 @@
         $("#cardCount").text(count);
         $("#cardCountdiv").css("background-color", count > 0 ? "#4CAF50" : "#DFEED8");
         if(count == 0){
-            console.log("카드타입 선택 안 됨 - 버튼 비활성화");
+            console.log("카드가 0개임 비활성화");
             cardsubmit.disabled = true;
+        }else{
+        	console.log("카드가 있음 활성화");
+            cardsubmit.disabled = false;
         }
 
       },
