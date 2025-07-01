@@ -295,6 +295,27 @@ body {
     }
 }
 
+
+
+.card-name {
+  padding: 8px 4px 4px 4px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #333;
+  font-family: 'Pretendard', 'NanumSquareRound', 'Apple SD Gothic Neo', sans-serif;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-company {
+  font-size: 13px;
+  font-weight: 500;
+  color: #777;
+  font-family: 'Pretendard', 'NanumSquareRound', 'Apple SD Gothic Neo', sans-serif;
+  padding-bottom: 8px;
+}
+
 .card-slider {
     display: flex;
     overflow-x: auto;
@@ -330,7 +351,7 @@ body {
 
 #fairy-card-container {
   text-align: center;
-  margin: 48px 0;
+  margin: 150px 0;
 }
 
 .fairy-wrapper {
@@ -339,14 +360,15 @@ body {
 }
 
 .fairy-img {
-  width: 600px;
+  width: 1040px;
+  border-radius: 10px;
 }
 
 .card-overlay {
   position: absolute;
   top: 430px; /* 손 중앙 기준 y좌표 */
-  left: 300px; /* 손 중앙 기준 x좌표 */
-  max-width: 200px;
+  left: 520px; /* 손 중앙 기준 x좌표 */
+  max-width: 250px;
   max-height: 200px;
   transform: translate(-50%, -50%); /* 중심 정렬 */
   object-fit: contain;
