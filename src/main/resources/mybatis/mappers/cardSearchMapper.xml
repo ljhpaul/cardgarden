@@ -6,47 +6,66 @@
 <mapper namespace="com.cardgarden.cardsearch">
 
 <select id="searchCards" resultType="DetailcardDTO" parameterType="map">
-    SELECT DISTINCT 
-        c.*, 
-        CASE WHEN lc.user_id IS NOT NULL THEN 1 ELSE 0 END AS liked
-    FROM card c
-    LEFT JOIN CardBenefitDetail cbd ON c.card_id = cbd.card_id
-    LEFT JOIN BenefitDetail bd ON cbd.benefitdetail_id = bd.benefitdetail_id
-    LEFT JOIN LikeCard lc ON c.card_id = lc.card_id AND lc.user_id = #{user_id}
-    WHERE 
+  SELECT DISTINCT 
+      c.*, 
+      CASE WHEN lc.user_id IS NOT NULL THEN 1 ELSE 0 END AS liked
+  FROM card c
+  LEFT JOIN CardBenefitDetail cbd ON c.card_id = cbd.card_id
+  LEFT JOIN BenefitDetail bd ON cbd.benefitdetail_id = bd.benefitdetail_id
+  LEFT JOIN LikeCard lc ON c.card_id = lc.card_id AND lc.user_id = #{user_id}
+  WHERE
+  <choose>
+    <when test="keyword != null and keyword != ''">
+      (
         LOWER(c.card_name) LIKE CONCAT('%', LOWER(#{keyword}), '%')
         OR LOWER(c.company) LIKE CONCAT('%', LOWER(#{keyword}), '%')
         OR LOWER(c.brand) LIKE CONCAT('%', LOWER(#{keyword}), '%')
         OR LOWER(cbd.cardbenefitdetail_text) LIKE CONCAT('%', LOWER(#{keyword}), '%')
         OR LOWER(bd.benefitdetail_name) LIKE CONCAT('%', LOWER(#{keyword}), '%')
-    <choose>
-        <when test="sort == 'views'">
-            ORDER BY c.card_views DESC
-        </when>
-        <when test="sort == 'likes'">
-            ORDER BY c.card_like DESC
-        </when>
-        <when test="sort == 'name'">
-            ORDER BY c.card_name ASC
-        </when>
-        <otherwise>
-            ORDER BY c.card_name ASC  
-        </otherwise>
-    </choose>
-    LIMIT #{offset}, #{pageSize}
+      )
+    </when>
+    <otherwise>
+      1 = 0 <!-- 공백일 경우 항상 false → 검색 결과 없음 -->
+    </otherwise>
+  </choose>
+  <choose>
+    <when test="sort == 'views'">
+      ORDER BY c.card_views DESC
+    </when>
+    <when test="sort == 'likes'">
+      ORDER BY c.card_like DESC
+    </when>
+    <when test="sort == 'name'">
+      ORDER BY c.card_name ASC
+    </when>
+    <otherwise>
+      ORDER BY c.card_name ASC  
+    </otherwise>
+  </choose>
+  LIMIT #{offset}, #{pageSize}
 </select>
 
+
 <select id="countCards" resultType="int" parameterType="map">
-    SELECT COUNT(DISTINCT c.card_id)
-    FROM card c
-    LEFT JOIN CardBenefitDetail cbd ON c.card_id = cbd.card_id
-    LEFT JOIN BenefitDetail bd ON cbd.benefitdetail_id = bd.benefitdetail_id
-    WHERE 
+  SELECT COUNT(DISTINCT c.card_id)
+  FROM card c
+  LEFT JOIN CardBenefitDetail cbd ON c.card_id = cbd.card_id
+  LEFT JOIN BenefitDetail bd ON cbd.benefitdetail_id = bd.benefitdetail_id
+  WHERE
+  <choose>
+    <when test="keyword != null and keyword != ''">
+      (
         LOWER(c.card_name) LIKE CONCAT('%', LOWER(#{keyword}), '%')
         OR LOWER(c.company) LIKE CONCAT('%', LOWER(#{keyword}), '%')
         OR LOWER(c.brand) LIKE CONCAT('%', LOWER(#{keyword}), '%')
         OR LOWER(cbd.cardbenefitdetail_text) LIKE CONCAT('%', LOWER(#{keyword}), '%')
         OR LOWER(bd.benefitdetail_name) LIKE CONCAT('%', LOWER(#{keyword}), '%')
+      )
+    </when>
+    <otherwise>
+      1 = 0
+    </otherwise>
+  </choose>
 </select>
 
 

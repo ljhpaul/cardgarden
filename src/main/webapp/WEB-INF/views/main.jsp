@@ -7,7 +7,6 @@
 <link rel="stylesheet" href="${cpath}/resources/css/common.css">
 <link rel="stylesheet" href="${cpath}/resources/css/header.css">
 <link rel="stylesheet" href="${cpath}/resources/css/font-awesome.min.css">
-<link rel="stylesheet" href="${cpath}/resources/css/style.css">
 
 <head>
     <title>CARD GARDEN</title>
@@ -16,14 +15,41 @@
 <body>
     <div class="main-all">
         <div class="slideshow-container">
+        	<!-- 메인 슬라이드 -->
             <div class="mySlideDiv fade active">
-                <a href="${cpath}/make/frame">
-                    <img src="${cpath}/resources/images/slide/cardgardenJapan.png" class="slide-img link-slide">
+                <a href="${cpath}/main">
+                    <img src="${cpath}/resources/images/slide/slide_main.png" class="slide-img link-slide" alt="메인">
                 </a>
             </div>
+        	<!-- 지브리 콜라보 -->
+            <div class="mySlideDiv fade active">
+                <a href="${cpath}/custom/main">
+                    <img src="${cpath}/resources/images/slide/slide_ghibli.png" class="slide-img link-slide" alt="지브리x카드가든">
+                </a>
+            </div>
+            <!-- 마스코트 상점 -->
+            <div class="mySlideDiv fade">
+                <a href="${cpath}/event/mascot">
+                    <img src="${cpath}/resources/images/slide/slide_mascot.png" class="slide-img link-slide" alt="마스코트상점">
+                </a>
+            </div>
+            <!-- 출석체크 이벤트 -->
             <div class="mySlideDiv fade">
                 <a href="${cpath}/event/attendance">
-                    <img src="${cpath}/resources/images/slide/1차.png" class="slide-img link-slide">
+                	<c:choose>
+					  <c:when test="${dayOfWeek == 4}">
+					    <img src="${cpath}/resources/images/slide/slide_attendance_wed.png" class="slide-img link-slide" alt="출석체크">
+					  </c:when>
+					  <c:otherwise>
+					    <img src="${cpath}/resources/images/slide/slide_attendance.png" class="slide-img link-slide" alt="출석체크_수요일">
+					  </c:otherwise>
+					</c:choose>
+                </a>
+            </div>
+            <!-- KBO 콜라보 -->
+            <div class="mySlideDiv fade">
+                <a href="${cpath}/card/detail?cardid=111">
+                    <img src="${cpath}/resources/images/slide/slide_kbo.png" class="slide-img link-slide" alt="마스코트상점">
                 </a>
             </div>
             <button type="button" class="prev" onclick="prevSlide(event)">&#10094;</button>
@@ -92,7 +118,7 @@ body {
     text-align: center;
     overflow: hidden;
     position: relative;
-    height: 500px; /* 슬라이드 이미지 높이와 맞춤 */
+    height: 500px;
 }
 .prev, .next {
     cursor: pointer;
@@ -123,7 +149,7 @@ body {
     right: 32px;
 }
 .prev:hover, .next:hover {
-    background-color: rgba(0,0,0,0.8);
+    background-color: rgba(0,0,0,0.4);
     box-shadow: 0 4px 20px rgba(0,0,0,0.25);
 }
 @media (max-width: 900px) {
@@ -143,7 +169,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    gap: 60px;
+    gap: 40px;
     margin-top: 32px;
 }
 .bottom-banner a img {
@@ -160,8 +186,8 @@ body {
     max-width: 1200px;
     display: block;
     margin: 0 auto;
-    border-radius: 20px;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    border-radius: 10px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
 }
 .mySlideDiv {
     max-width: 1200px;

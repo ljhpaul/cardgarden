@@ -115,7 +115,7 @@ body {
 .image-button {
 	border: none;
 	background: none;
-	border-radius: 12px;
+	border-radius: 26px;
 	padding: 0;
 	margin: 0;
 	width: 100%;
