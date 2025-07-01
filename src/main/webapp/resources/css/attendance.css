@@ -115,7 +115,7 @@ body {
     content: "";
     position: absolute;
     top: 40px;
-    bottom: 0;
+    bottom: -20px;
     left: calc(100% / 7 * 3); 
     width: calc(100% / 7);
     background-color: rgba(160, 231, 229, 0.1); 
