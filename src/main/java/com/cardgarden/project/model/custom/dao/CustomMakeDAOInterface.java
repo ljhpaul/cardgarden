@@ -19,5 +19,7 @@ public interface CustomMakeDAOInterface {
     void minusUsed(int assetId);
     
     void insertCustomCard(CustomCardDTO dto);
+    
+    CustomCardDTO selectLatestCustomCardByUser(int userId);
 
 }

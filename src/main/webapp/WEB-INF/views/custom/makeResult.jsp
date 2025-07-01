@@ -29,9 +29,10 @@ body {
   margin-bottom: 20px;
 }
 .result-container img {
-  width: 300px;
+  width: 600px;
   height: auto;
-  margin-bottom: 30px;
+  margin-top: 30px;
+  margin-bottom: 60px;
   border: 2px solid var(--m1);
   border-radius: 10px;
 }
@@ -58,7 +59,11 @@ body {
 
 <div class="result-container">
   <h1>카드가 성공적으로 저장되었습니다!</h1>
-  
+
+  <c:if test="${not empty cardImg}">
+      <img src="${cpath}${cardImg}" alt="저장된 카드 이미지">
+  </c:if>
+
   <div class="btn-group">
     <a href="${cpath}/custom/main" class="btn">커스텀 홈으로</a>
     <a href="${cpath}/make/frame" class="btn">새로 만들기</a>
