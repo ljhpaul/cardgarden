@@ -213,7 +213,21 @@
 	.loading-text {
 	  font-size: 1.25em; color: #2B362D; font-weight: bold; letter-spacing: 1.5px;
 	}
-
+	.chart-container {
+      max-width: 900px;
+      margin: 40px auto;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 4px 24px #0002;
+      padding: 32px 0;
+      display: flex;
+      justify-content: center;
+    }
+    h2 {
+      text-align: center;
+      font-size: 2rem;
+      margin-top: 40px;
+    }
 </style>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
@@ -385,6 +399,16 @@ document.addEventListener('DOMContentLoaded', function() {
     <div class="loading-text">로딩중입니다...</div>
   </div>
 </div>
+<h2>카드 혜택 카테고리 분포</h2>
+  <div class="chart-container">
+    <iframe
+      src="http://localhost:3000/public/question/fc5eb28a-4720-4a39-a1df-b84e95402fb0"
+      frameborder="0"
+      width="800"
+      height="600"
+      allowtransparency>
+    </iframe>
+  </div>
 <script type="text/javascript">
 let loadingTextInterval = null;
 
