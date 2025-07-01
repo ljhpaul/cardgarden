@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.cardgarden.project.model.CardSearchCondition.CardDTO;
+import com.cardgarden.project.model.custom.dto.CustomCardDTO;
 import com.cardgarden.project.model.user.dao.UserInfoDAO;
 import com.cardgarden.project.model.user.dto.UserConsumptionPatternResponseDTO;
 import com.cardgarden.project.model.user.dto.UserInfoDTO;
@@ -148,4 +149,8 @@ public class UserInfoService {
         log.info("UserInfoService에서 로그출력:" + result + "건 insert");
         return result;
 	}
+	public List<CustomCardDTO> myCustomCardList(int userId) {
+	    return userInfoDAO.selectMyCustomCardList(userId);
+	}
+
 }

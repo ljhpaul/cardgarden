@@ -18,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.cardgarden.project.model.CardSearchCondition.CardDTO;
 import com.cardgarden.project.model.benefitCategory.benefitCategoryDTO;
 import com.cardgarden.project.model.benefitCategory.benefitCategoryService;
+import com.cardgarden.project.model.custom.dto.CustomCardDTO;
 import com.cardgarden.project.model.user.dto.UserConsumptionPatternResponseDTO;
 import com.cardgarden.project.model.user.dto.UserInfoDTO;
 import com.cardgarden.project.model.user.dto.UserUpdateInfoDTO;
@@ -163,5 +164,24 @@ public class UserController {
 		
 		 return "mypage/mycard";
 	}
+	// 내 커스텀 카드 보기
+	@GetMapping("/customcard")
+	public String myCustomCardList(HttpServletRequest request, Model model, RedirectAttributes redirectAttr) {
+
+	    HttpSession session = request.getSession();
+	    Integer loginUserId = (Integer) session.getAttribute("loginUserId");
+
+	    if (loginUserId == null) {
+	        redirectAttr.addFlashAttribute("msg", "로그인이 필요한 기능입니다");
+	        return "redirect:/user/login";
+	    }
+
+	    List<CustomCardDTO> myCustomCardList = userInfoSerivce.myCustomCardList(loginUserId);
+
+	    model.addAttribute("myCustomCardList", myCustomCardList);
+
+	    return "mypage/mycustomcard";
+	}
+
 
 }

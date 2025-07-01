@@ -87,7 +87,7 @@ public class CustomMakeController {
     }
 
      // 이미지 저장
-    @Value("${myimgurl}")
+    @Value("${myimg}")
     private String myimgurl;
 
     @PostMapping("/saveImage")
