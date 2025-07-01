@@ -140,13 +140,13 @@ body {
 			<div id="password-area">
 	          <div class="form-group">
 	            <label for="user_password">비밀번호 <span style="color:#dc3545">*</span></label>
-	            <input type="password" id="user_password" name="user_password" class="input" required placeholder="영문자, 숫자, 특수문자 포함 8~15자" maxlength="15">
+	            <input type="password" id="user_password" name="user_password" class="input" placeholder="영문자, 숫자, 특수문자 포함 8~15자" maxlength="15">
 	            <span id="checkPwdMsg1" class="check-msg"></span>
 	          </div>
 	        
 	          <div class="form-group">
 	            <label for="user_password_check">비밀번호 확인</label>
-	            <input type="password" id="user_password_check" class="input" required>
+	            <input type="password" id="user_password_check" class="input">
 	            <span id="checkPwdMsg2" class="check-msg"></span>
 	          </div>
 	        </div>
@@ -218,11 +218,18 @@ body {
 // 입력값 검증 및 가입버튼 활성화 조건
 let checkId = false, checkPwd = false, checkNickname = false, checkEmail = false, checkBirth = false, checkPhone = true;
 
-// 소셜 자동 완성
+// 소셜 로그인 체크
 let socialJoin = "${sessionScope.socialJoin}";
 if(socialJoin) {
+	// 아이디 자동완성
 	$("#user_name").val("${socialId}").attr("readonly", true);
+	checkId = true;
+    $("#loginIdCheckArea").html("");
+    
+ 	// 이름 자동완성
 	$("#name").val("${socialName}").attr("readonly", true);
+	
+	// 비밀번호 칸 숨기기
 	checkPwd = true;
 	$("#password-area").hide();
 }
