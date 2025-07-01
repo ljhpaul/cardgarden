@@ -263,4 +263,12 @@
 	    WHERE user_id = #{userId}
 	</select>
 	
+	<select id="selectMyCustomCardList" parameterType="int" resultType="com.cardgarden.project.model.custom.dto.CustomCardDTO">
+	    SELECT customcard_id, customcard_name, user_id, created_at
+	    FROM CustomCard
+	    WHERE user_id = #{userId}
+	    ORDER BY created_at DESC
+	</select>
+
+	
 </mapper>

@@ -1,5 +1,8 @@
 package com.cardgarden.project.controller.custom;
 
+import org.springframework.beans.factory.annotation.Value;
+
+
 import java.io.*;
 import java.util.Base64;
 import java.util.List;
@@ -84,6 +87,9 @@ public class CustomMakeController {
     }
 
      // 이미지 저장
+    @Value("${myimg}")
+    private String myimgurl;
+
     @PostMapping("/saveImage")
     @ResponseBody
     public String saveImage(@RequestBody Map<String, String> data, HttpSession session) {
@@ -99,12 +105,7 @@ public class CustomMakeController {
             String base64 = imageData.split(",")[1];
             byte[] imageBytes = Base64.getDecoder().decode(base64);
 
-            String projectPath = System.getProperty("user.dir");
-            // String savePath = projectPath + "/src/main/webapp/resources/images/custom/customcard";
-            String savePath = "C:/javaOS/install/springFramework/workSpace/cardgarden/src/main/webapp/resources/images/custom/customcard";
-
-            
-            File folder = new File(savePath);
+            File folder = new File(myimgurl);
             if (!folder.exists()) {
                 folder.mkdirs();
             }
@@ -131,9 +132,6 @@ public class CustomMakeController {
             return "저장 실패";
         }
     }
-
-
-
 
     @GetMapping("/result")
     public String makeResult(HttpSession session) {
