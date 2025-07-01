@@ -52,6 +52,13 @@ public class UserInfoService {
     	return user_id;
     }
     
+    // email로 user_id 찾기
+    public int getUserIdByEmail(String email) {
+    	int user_id = userInfoDAO.getUserIdByEmail(email);
+    	log.info("UserInfoService에서 로그출력: getUserIdByEmail -> user_id = " + user_id);
+    	return user_id;
+    }
+    
     // 이름과 이메일로 로그인아이디 찾기
     public String getLoginIdByNameAndEmail(Map<String, Object> paramMap) {
     	String user_name = userInfoDAO.getLoginIdByNameAndEmail(paramMap);

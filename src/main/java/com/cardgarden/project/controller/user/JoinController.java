@@ -62,14 +62,12 @@ public class JoinController {
 		//사용자가 뒤로가기 등으로 다시 약관 동의를 수정할 경우 덮어쓰기됨
 		session.setAttribute("checkedTermList", checkedTermList);
 		
-		String socialJoin = (String) session.getAttribute("socialJoin");
+		Boolean socialJoin = (Boolean) session.getAttribute("socialJoin");
 		
-		if(socialJoin == null || "".equals(socialJoin)) {
+		if(socialJoin == null) {
 			return "redirect:/user/join/email";
 		} else {
-			/* 정보입력 자동완성 */
-			
-			return "redirect:/user/join/inputInfo";
+			return "redirect:/user/join/info";
 		}
 	}
 	
@@ -92,21 +90,15 @@ public class JoinController {
 	
 	//3-1. 회원정보 입력
 	@GetMapping("/info")
-	public String inputInfoView(@AuthenticationPrincipal OAuth2User oauth2User, HttpSession session, Model model) {
+	public String inputInfoView(@AuthenticationPrincipal OAuth2User oAuth2User, 
+			HttpSession session, Model model) {
+		
 		/* 소셜 인증일 경우 자동완성 추가 */
-		System.out.println("OAuth2User attributes = " + oauth2User.getAttributes());
-		
-		if (oauth2User != null) {
-            String email = oauth2User.getAttribute("email");
-            String name = oauth2User.getAttribute("name");
-            String picture = oauth2User.getAttribute("picture"); // 필요시
-            
-            // model에 담아서 JSP에서 자동 완성
-            model.addAttribute("userEmail", email);
-            model.addAttribute("userName", name);
-            model.addAttribute("userPicture", picture);
-        }
-		
+		model.addAttribute("socialId", oAuth2User.getAttribute("sub"));
+	    model.addAttribute("socialName", oAuth2User.getAttribute("name"));
+		session.setAttribute("emailVerified", oAuth2User.getAttribute("email_verified"));
+		session.setAttribute("verifiedEmail", oAuth2User.getAttribute("email"));
+	    
 		/*
 		if(session.getAttribute("verifiedEmail") == null) {
 			return "redirect:/wrong";
@@ -149,6 +141,9 @@ public class JoinController {
 		}
 		
 		if(result > 0 && checkedTermList != null) {
+			//소셜회원가입여부 세션 저장값 초기화
+			session.removeAttribute("socialJoin");
+			
 			//약관동의 세션 저장값 초기화
 			session.removeAttribute("checkedTermList");
 			
