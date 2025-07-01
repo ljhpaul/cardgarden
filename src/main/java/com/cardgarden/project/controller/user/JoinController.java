@@ -7,6 +7,8 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -90,8 +92,20 @@ public class JoinController {
 	
 	//3-1. 회원정보 입력
 	@GetMapping("/info")
-	public String inputInfoView(HttpSession session) {
+	public String inputInfoView(@AuthenticationPrincipal OAuth2User oauth2User, HttpSession session, Model model) {
 		/* 소셜 인증일 경우 자동완성 추가 */
+		System.out.println("OAuth2User attributes = " + oauth2User.getAttributes());
+		
+		if (oauth2User != null) {
+            String email = oauth2User.getAttribute("email");
+            String name = oauth2User.getAttribute("name");
+            String picture = oauth2User.getAttribute("picture"); // 필요시
+            
+            // model에 담아서 JSP에서 자동 완성
+            model.addAttribute("userEmail", email);
+            model.addAttribute("userName", name);
+            model.addAttribute("userPicture", picture);
+        }
 		
 		/*
 		if(session.getAttribute("verifiedEmail") == null) {
