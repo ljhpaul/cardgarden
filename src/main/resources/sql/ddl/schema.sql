@@ -31,7 +31,7 @@ DROP TABLE IF EXISTS UserInfo;
 CREATE TABLE UserInfo (
   user_id INT PRIMARY KEY AUTO_INCREMENT COMMENT '회원 고유 ID',
   user_name VARCHAR(50) NOT NULL UNIQUE COMMENT '아이디',
-  user_password VARCHAR(255) NOT NULL COMMENT '비밀번호 (암호화 저장)',
+  user_password VARCHAR(255) DEFAULT NULL COMMENT '비밀번호 (암호화 저장)',
   email VARCHAR(100) NOT NULL UNIQUE COMMENT '이메일',
   nickname VARCHAR(30) NOT NULL UNIQUE COMMENT '닉네임',
   name VARCHAR(30) DEFAULT NULL COMMENT '이름',
@@ -45,8 +45,9 @@ CREATE TABLE UserInfo (
 );
 
 alter table userInfo modify column phone VARCHAR(20) NOT NULL COMMENT '전화번호';
-ALTER TABLE userinfo DROP INDEX phone;
+alter table userinfo drop index phone;
 alter table userInfo modify column created_at DATE NOT NULL DEFAULT (CURDATE()) COMMENT '가입일';
+alter table userInfo modify column user_password VARCHAR(255) DEFAULT NULL COMMENT '비밀번호 (암호화 저장)';
 
 CREATE TABLE Card (
   card_id INT PRIMARY KEY AUTO_INCREMENT COMMENT '카드 번호',

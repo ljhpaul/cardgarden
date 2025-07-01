@@ -56,6 +56,7 @@
 		<div class="inner-box inner-box-nav">
 			<a href="${cpath}/user/mypage">회원정보관리</a><br>
 			<a href="${cpath}/user/point">포인트관리</a><br>
+			<a href="${cpath}/user/customcard">커스텀 카드 보기</a><br>
 			<a href="${cpath}/user/card">좋아요한 카드</a><br>
 			<a href="${cpath}/user/consumptionPattern">소비패턴관리</a>
 		</div>

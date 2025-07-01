@@ -49,6 +49,13 @@
 		WHERE user_name = #{user_name}
 	</select>
 	
+	<!-- 이메일로 user_id 조회 -->
+	<select id="getUserIdByEmail" parameterType="string" resultType="int">
+		SELECT user_id
+		FROM userInfo
+		WHERE email = #{email}
+	</select>
+	
 	<!-- 이름과 이메일로 로그인아이디 조회 -->
 	<select id="getLoginIdByNameAndEmail" parameterType="map" resultType="string">
 		SELECT user_name
@@ -255,5 +262,13 @@
 	    FROM UserInfo
 	    WHERE user_id = #{userId}
 	</select>
+	
+	<select id="selectMyCustomCardList" parameterType="int" resultType="com.cardgarden.project.model.custom.dto.CustomCardDTO">
+	    SELECT customcard_id, customcard_name, user_id, created_at
+	    FROM CustomCard
+	    WHERE user_id = #{userId}
+	    ORDER BY created_at DESC
+	</select>
+
 	
 </mapper>
