@@ -322,10 +322,12 @@ window.addEventListener("DOMContentLoaded", () => {
       })
       .then(res => res.text())
       .then(res => {
-        if (res === "ok") {
-          location.href = cpath + "/make/result";
-        } else {
-          alert("저장 실패");
+    	  if (res === "ok") {
+              setTimeout(() => {
+                location.href = cpath + "/make/result";
+              }, 500); 
+            } else {
+              alert("저장 실패");
         }
       });
     });

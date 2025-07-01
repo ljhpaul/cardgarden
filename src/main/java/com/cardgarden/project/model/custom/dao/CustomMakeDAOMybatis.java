@@ -38,5 +38,9 @@ public class CustomMakeDAOMybatis implements CustomMakeDAOInterface {
     public void insertCustomCard(CustomCardDTO dto) {
         sqlSession.insert(namespace + ".insertCustomCard", dto);
     }
+    public CustomCardDTO selectLatestCustomCardByUser(int userId) {
+        return sqlSession.selectOne(namespace + ".selectLatestCustomCardByUser", userId);
+    }
+
 
 }
