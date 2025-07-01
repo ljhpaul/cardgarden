@@ -7,7 +7,8 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -90,14 +91,19 @@ public class JoinController {
 	
 	//3-1. 회원정보 입력
 	@GetMapping("/info")
-	public String inputInfoView(@AuthenticationPrincipal OAuth2User oAuth2User, 
-			HttpSession session, Model model) {
+	public String inputInfoView(HttpSession session, Model model) {
 		
-		/* 소셜 인증일 경우 자동완성 추가 */
-		model.addAttribute("socialId", oAuth2User.getAttribute("sub"));
-	    model.addAttribute("socialName", oAuth2User.getAttribute("name"));
-		session.setAttribute("emailVerified", oAuth2User.getAttribute("email_verified"));
-		session.setAttribute("verifiedEmail", oAuth2User.getAttribute("email"));
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+		if (authentication != null && authentication.getPrincipal() instanceof OAuth2User) {
+			OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
+			model.addAttribute("socialId", oAuth2User.getAttribute("sub"));
+		    model.addAttribute("socialName", oAuth2User.getAttribute("name"));
+			session.setAttribute("emailVerified", oAuth2User.getAttribute("email_verified"));
+			session.setAttribute("verifiedEmail", oAuth2User.getAttribute("email"));
+		} else {
+	        return "redirect:/wrong";
+	    }
 	    
 		/*
 		if(session.getAttribute("verifiedEmail") == null) {
