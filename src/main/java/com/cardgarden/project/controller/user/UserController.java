@@ -144,7 +144,7 @@ public class UserController {
 	
 	//내가 좋아요한 카드
 	@GetMapping("/card")
-	public String mmyLikeCardList(HttpServletRequest request, Model model, RedirectAttributes redirectAttr){
+	public String mmyLikeCardList(HttpSession session ,HttpServletRequest request, Model model, RedirectAttributes redirectAttr){
 		
 	    HttpSession mySession = request.getSession();
 	    Object loginUserIdObj = mySession.getAttribute("loginUserId");
@@ -152,6 +152,7 @@ public class UserController {
 	    // 로그인되지 않았을 경우 처리
 	    if (loginUserIdObj == null) {
 	    	redirectAttr.addFlashAttribute("msg", "로그인이 필요한 기능입니다");
+	    	session.setAttribute("redirectAfterLogin", "/user/card");
 	        return "redirect:/user/login";
 	    }
 	    

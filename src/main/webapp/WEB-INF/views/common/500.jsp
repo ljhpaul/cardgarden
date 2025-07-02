@@ -14,7 +14,7 @@
 
 <div class="error-container">
     <img src="${cpath}/resources/images/common/mascot_error.png" alt="마스코트" class="error-mascot">
-    <h1>[오류] 프로그램 문제발생</h1>
+    <h1>[500 오류] 프로그램 문제발생</h1>
 	<p><%=exception %></p>
 	<p><%=exception.getMessage() %></p>
 	
