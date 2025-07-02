@@ -44,6 +44,7 @@ public class UserController {
 	    Object loginUserIdObj = mySession.getAttribute("loginUserId");
 	    // 로그인되지 않았을 경우 처리
 	    if (loginUserIdObj == null) {
+	    	System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!  비로그인상태  !!!!!!!!!!!!!!!!!!!!!!!!!!!");
 	    	redirectAttr.addFlashAttribute("msg", "로그인이 필요한 기능입니다");
 	        return "redirect:/user/login";
 	    }

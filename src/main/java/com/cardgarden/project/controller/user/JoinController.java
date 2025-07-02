@@ -107,20 +107,21 @@ public class JoinController {
 				model.addAttribute("socialId", oAuth2User.getAttribute("sub"));
 			    model.addAttribute("socialName", oAuth2User.getAttribute("name"));
 				session.setAttribute("emailVerified", oAuth2User.getAttribute("email_verified"));
-				session.setAttribute("verifiedEmail", oAuth2User.getAttribute("email"));
+				session.setAttribute("verifiedEmail", oAuth2User.getAttribute("email") + " (" + registrationId + ")");
 			} else if("naver".equals(registrationId)) {
 				log.info("@@@@@ NAVER @@@@@");
-				log.info(oAuth2User.getAttribute("id").toString());
-				log.info(oAuth2User.getAttribute("name").toString());
 	            model.addAttribute("socialId", oAuth2User.getAttribute("id"));
 	            model.addAttribute("socialName", oAuth2User.getAttribute("name"));
 	            model.addAttribute("socialGender", oAuth2User.getAttribute("gender"));
 	            model.addAttribute("socialBirth", oAuth2User.getAttribute("birthyear") + "-" + oAuth2User.getAttribute("birthday"));
 	            model.addAttribute("socialPhone", oAuth2User.getAttribute("mobile"));
 	            session.setAttribute("emailVerified", true);
-	            session.setAttribute("verifiedEmail", oAuth2User.getAttribute("email"));
+	            session.setAttribute("verifiedEmail", oAuth2User.getAttribute("email") + " (" + registrationId + ")");
 		    } else if("kakao".equals(registrationId)) {
 		    	log.info("@@@@@ KAKAO @@@@@");
+		    	model.addAttribute("socialId", oAuth2User.getAttribute("id"));
+		    	session.setAttribute("emailVerified", true);
+				session.setAttribute("verifiedEmail", oAuth2User.getAttribute("email") + " (" + registrationId + ")");
 		    }
 		}
 	    
