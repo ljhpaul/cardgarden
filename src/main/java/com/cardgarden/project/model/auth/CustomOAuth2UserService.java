@@ -35,6 +35,43 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             }
         }
         
+        
+        if ("kakao".equals(registrationId)) {
+            Map<String, Object> attributes = oAuth2User.getAttributes();
+            Map<String, Object> flattened = new java.util.HashMap<>();
+
+            // 1. id, connected_at 등 최상위 값 직접 복사
+            if (attributes.get("id") != null) {
+                flattened.put("id", attributes.get("id"));
+            }
+            if (attributes.get("connected_at") != null) {
+                flattened.put("connected_at", attributes.get("connected_at"));
+            }
+
+            // 2. kakao_account map 안의 값들 복사
+            Object accountObj = attributes.get("kakao_account");
+            if (accountObj instanceof Map) {
+                Map<String, Object> account = (Map<String, Object>) accountObj;
+                for (Map.Entry<String, Object> entry : account.entrySet()) {
+                    flattened.put(entry.getKey(), entry.getValue());
+                }
+            }
+
+            // 3. properties map(닉네임 등) 복사
+            Object propertiesObj = attributes.get("properties");
+            if (propertiesObj instanceof Map) {
+                Map<String, Object> properties = (Map<String, Object>) propertiesObj;
+                for (Map.Entry<String, Object> entry : properties.entrySet()) {
+                    flattened.put(entry.getKey(), entry.getValue());
+                }
+            }
+
+            System.out.println("===[CustomOAuth2UserService (KAKAO)] flattened: " + flattened);
+
+            // id가 고유키
+            return new DefaultOAuth2User(Collections.singleton(() -> "ROLE_USER"), flattened, "id");
+        }
+        
         return oAuth2User;
     }
 }

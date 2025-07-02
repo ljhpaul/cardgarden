@@ -217,15 +217,17 @@ let checkId = false, checkPwd = false, checkNickname = false, checkEmail = false
 
 // 소셜 로그인 체크
 let socialJoin = "${sessionScope.socialJoin}";
+let socialMethod = "${socialMethod}";
 if(socialJoin) {
-	let socialMethod = "${socialMethod}";
 	
 	$("#user_name").val("${socialId}").attr("readonly", true);
 	checkId = true;
     $("#loginIdCheckArea").html("");
     
- 	// 이름 자동완성
-	$("#name").val("${socialName}").attr("readonly", true);
+    if(socialMethod != "kakao") {
+     	// 이름 자동완성
+    	$("#name").val("${socialName}").attr("readonly", true);
+    }
 	
 	// 비밀번호 칸 숨기기
 	checkPwd = true;
