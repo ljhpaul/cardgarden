@@ -48,5 +48,14 @@
     	INSERT INTO CustomCard (user_id, customcard_name, created_at)
     	VALUES (#{user_id}, #{customcard_name}, NOW())
     </insert>
+    <!-- 가져오기 -->
+	<select id="selectLatestCustomCardByUser" resultType="CustomCardDTO">
+	    SELECT * 
+	    FROM CustomCard 
+	    WHERE user_id = #{userId}
+	      AND customcard_id = (SELECT MAX(customcard_id) FROM CustomCard WHERE user_id = #{userId})
+	</select>
+
+    
 	
 </mapper>

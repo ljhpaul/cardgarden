@@ -206,6 +206,7 @@ body {
 				data: formData,
 				success: function(res) {
 					console.log("ajax success!", res);
+					$(".msg-area").show();
 					if(res.success) {
 						/* 아이디 저장 체크 여부 */
 						isRemeberChecked();
@@ -213,7 +214,7 @@ body {
 						$("#user_name").css("background-color", "#f8fbf8");
 						$("#user_password").css("background-color", "#f8fbf8");
 						$("#login-msg").css("color", "#27AE60").text(res.message);
-						window.location.href = '${cpath}/main';
+						window.location.href = '${cpath}' + res.redirectAfterLogin;
 					} else {
 						$("#login-msg").css("color", "#E44E37").text(res.message);
 					}

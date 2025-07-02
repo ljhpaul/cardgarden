@@ -63,9 +63,19 @@ public class LoginController {
         int loginUserId = userInfoService.getUserIdByLoginId(inputLoginId);
         session.setAttribute("loginUserId", loginUserId);
         session.setAttribute("mascotId", 120);  // 디폴트 flower 선택
-        session.setMaxInactiveInterval(4000);
+        session.setMaxInactiveInterval(40);
         map.put("success", true);
         map.put("message", "로그인 성공");
+        
+        // 로그인 후 리다이렉트 경로 분기
+        String redirectAfterLogin = (String) session.getAttribute("redirectAfterLogin");
+        if(redirectAfterLogin == null || redirectAfterLogin.equals("")) {
+        	map.put("redirectAfterLogin", "/main");
+        } else {
+        	map.put("redirectAfterLogin", redirectAfterLogin);
+        	session.removeAttribute("redirectAfterLogin");
+        }
+
         return map;
     }
 

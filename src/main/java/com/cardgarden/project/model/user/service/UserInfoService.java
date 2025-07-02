@@ -159,5 +159,10 @@ public class UserInfoService {
 	public List<CustomCardDTO> myCustomCardList(int userId) {
 	    return userInfoDAO.selectMyCustomCardList(userId);
 	}
+	public int deleteCustomCard(int customcard_id) {
+	    int result = userInfoDAO.deleteCustomCard(customcard_id);
+	    return result;
+	}
+
 
 }

@@ -55,7 +55,7 @@
 				<a href="${cpath}/user/card"> <img class="mascot"
 					src="${cpath}/resources/images/common/like.png" width="27">
 				</a>
-				<span class="like-count like-count-header"></span>
+				<span id="userLike" data-count="${userLike}" class="like-count like-count-header"></span>
 			</div>
 		</div>
 
@@ -344,7 +344,7 @@ setInterval(() => {
 drawParticles();
 
 // 좋아요 수 하트에 표시 및 스타일 변동
-const userLike = Number("${userLike}");
+const userLike = Number($("#userLike").data("count"));
 $(".like-count").show().text(userLike<100?userLike:"99+");
 if(userLike >= 100) {
 	$(".like-count").css("font-weight", "700");
