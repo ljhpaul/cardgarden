@@ -143,10 +143,7 @@ public class CustomAssetController {
         int userPoint = service.getUserPoint(userId);
         CustomAssetDTO asset = service.getAssetDetail(assetId);
 
-        int price = asset.getPoint_needed();
-        if (asset.getDiscount() > 0) {
-            price = asset.getDiscount();
-        }
+        int price = asset.getFinal_price();  // 오직 final_price만 믿는다
 
         if (userPoint < price) {
             model.addAttribute("asset", asset);
@@ -174,6 +171,7 @@ public class CustomAssetController {
 
         return "custom/result";
     }
+
 
     @GetMapping("/discount")
     public String showDiscountPage(Model model) {
