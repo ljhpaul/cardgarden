@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.cardgarden.project.model.user.dto.LoginRequestDTO;
 import com.cardgarden.project.model.user.service.UserInfoService;
@@ -71,8 +72,9 @@ public class LoginController {
 
     // 2. 로그아웃
     @GetMapping("/logout")
-    public String logoutProcess(HttpSession session) {
+    public String logoutProcess(HttpSession session, RedirectAttributes redirectAttributes) {
         session.removeAttribute("loginUserId");
+        session.removeAttribute("userLike");    // 좋아요 카운트도 제거
         return "redirect:/main";
     }
 
