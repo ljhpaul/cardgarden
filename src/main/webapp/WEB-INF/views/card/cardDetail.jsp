@@ -134,7 +134,22 @@ $(function() {
 						createRandomBurstEffect($btn[0], "${cpath}/resources/images/cardlikeImage/like.png");
 						
 					} else if (res.result === "login_required" || res.result === "need_login") {
-						alert("로그인 후 이용 가능합니다.");
+					    alert("로그인 후 이용 가능합니다.");
+					    const cpath = "${cpath}";
+					    
+					    let path = "/card/detail" + window.location.search;
+					    console.log(path);
+					    $.ajax({
+							url: "${cpath}/card/cardLike/pageSave",
+							type: "POST",
+							data: { path: path },
+							success: function (res) {
+									
+							}
+						});
+					    
+					    // 로그인 페이지로 이동
+					    location.href = cpath + "/user/login";
 					} else {
 						alert("좋아요 실패!");
 					}
@@ -366,9 +381,38 @@ $(function() {
 	</script>	
 	
 	<script>
-		$(function() {
+		/* $(function() {
 			$(document).on("click", ".btn-open-modal", function() {
 				$("#patternModal").css("display", "flex");
+			});
+			
+		}); */
+		
+		
+		$(function() {
+			$(document).on("click", ".btn-open-modal", function () {
+				$.ajax({
+					url: "${cpath}/recommend/noaipattern",
+					type: "POST",
+					success: function (res) {
+						console.log(res);
+						if (res.result == "go_need_login") {
+							alert("로그인 후 이용 가능합니다.");
+							const cpath = "${cpath}";
+							let path = "/card/detail" + window.location.search;
+							$.ajax({
+								url: cpath + "/recommend/goodaipattern",
+								type: "POST",
+								data: { path: path },
+								success: function (res) {
+								}
+							});
+							location.href = cpath + "/user/login";
+						}else if (res.result == "login_good"){
+							$("#patternModal").css("display", "flex");
+						}
+					}
+				});
 			});
 			$(document).on("click", ".modal", function(e) {
 				if (e.target === this) {
@@ -376,6 +420,7 @@ $(function() {
 				}
 			});
 		});
+		
 	</script>
 
 </body>

@@ -53,6 +53,7 @@ public class MascotController {
 
         Integer userId = (Integer) session.getAttribute("loginUserId");
         if (userId == null) {
+        	session.setAttribute("redirectAfterLogin", "/event/mascot");
             return "notlogin";
         }
 
@@ -85,6 +86,7 @@ public class MascotController {
 
         Integer userId = (Integer) session.getAttribute("loginUserId");
         if (userId == null) {
+        	session.setAttribute("redirectAfterLogin", "/event/mascot/my");
             return "redirect:/user/login";
         }
 
@@ -106,6 +108,7 @@ public class MascotController {
     public String selectMascot(@RequestParam("asset_id") int assetId, HttpSession session) {
         Integer userId = (Integer) session.getAttribute("loginUserId");
         if (userId == null) {
+        	session.setAttribute("redirectAfterLogin", "/event/mascot/my");
             return "notlogin";
         }
 
@@ -113,8 +116,11 @@ public class MascotController {
         if (owned == 0) {
             return "notowned";
         }
-
-        session.setAttribute("mascotId", assetId);
+        
+        String mascotBrand = "flower";
+        if (assetId == 121) mascotBrand = "card";
+        if (assetId == 122) mascotBrand = "fairy";
+        session.setAttribute("mascotBrand", mascotBrand);
         return "success";
     }
 

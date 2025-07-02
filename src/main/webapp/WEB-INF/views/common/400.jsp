@@ -14,9 +14,12 @@
 
 <div class="error-container">
     <img src="${cpath}/resources/images/common/mascot_error.png" alt="마스코트" class="error-mascot">
-    <h1>[404 오류]페이지를 찾을 수 없습니다</h1>
-    <p>요청하신 주소는 존재하지 않거나 삭제되었습니다.</p>
-
+    <h1>[400 오류] 잘못된 요청입니다</h1>
+    <p>요청이 잘못되었거나, 서버가 요청을 이해할 수 없습니다.</p>
+    
+    <c:if test="${not empty errorMessage}">
+        <h2>${errorMessage}</h2>
+    </c:if>
     
     <div class="btn-group">
         <a href="${cpath}/" class="btn-home">메인으로</a>

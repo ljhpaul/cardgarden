@@ -3,6 +3,10 @@
 
 <c:set var="cpath" value="${pageContext.servletContext.contextPath}" />
 
+<script>
+const cpath = '${cpath}';
+</script>
+
 <script src="${cpath}/resources/js/assetlike.js"></script>
 <link rel="stylesheet" href="${cpath}/resources/css/customDetail.css?ver=4">
 
@@ -94,8 +98,15 @@
   </div>
 </div>
 <script>
+
+const assetid = '${asset.asset_id}';
+
 function alertAndGoLogin() {
   alert("로그인 후 이용 가능합니다.");
-  location.href = "${cpath}/user/login";
+  const currentUrl = "/custom/detail?asset_id="+assetid;
+  console.log(currentUrl);  
+  location.href = "/cardgarden/custom/redirectToLogin?redirect=" + currentUrl;
+
+
 }
 </script>
