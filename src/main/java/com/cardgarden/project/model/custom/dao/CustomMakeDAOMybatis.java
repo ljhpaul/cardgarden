@@ -29,10 +29,11 @@ public class CustomMakeDAOMybatis implements CustomMakeDAOInterface {
         return sqlSession.selectList(namespace + ".selectOwnedStickerList", userId);
     }
     public void plusUsed(int assetId) {
-        sqlSession.update(namespace + ".plusUsed", assetId);
+        sqlSession.update(namespace + ".incrementUsed", assetId);
     }
+
     public void minusUsed(int assetId) {
-        sqlSession.update(namespace + ".minusUsed", assetId);
+        sqlSession.update(namespace + ".decrementUsed", assetId);
     }
     // 커스텀 카드 추가
     public void insertCustomCard(CustomCardDTO dto) {

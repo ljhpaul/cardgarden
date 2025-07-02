@@ -11,7 +11,7 @@ if (userId == null) {
 <script>
         alert("로그인이 필요한 기능입니다.");
         location.href = "<%=request.getContextPath()%>/user/login";
-    </script>
+</script>
 <%
 return;
 }
