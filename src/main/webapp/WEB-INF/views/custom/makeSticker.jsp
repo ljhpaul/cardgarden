@@ -302,6 +302,8 @@ window.addEventListener("DOMContentLoaded", () => {
   });
 
   document.getElementById("completeBtn").addEventListener("click", () => {
+	canvas.discardActiveObject();
+	canvas.requestRenderAll();
     saveModal.style.visibility = "visible";
   });
 
