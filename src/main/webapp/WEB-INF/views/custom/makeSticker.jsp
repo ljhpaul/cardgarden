@@ -94,11 +94,11 @@
 <!-- 구매 모달 -->
 <div class="save-modal" id="buyModal">
   <div class="modal-content">
-    <h2>스티커 구매</h2>
+    <h2>스티커 구매하기</h2>
     <p id="buyStickerName">스티커명</p>
     <p>가격: <span id="stickerPrice"></span> Point</p>
     <p>내 포인트: <span id="userPoint"></span> Point</p>
-    <div>
+    <div class="btn-group">
       <button id="confirmBuyBtn">구매하기</button>
       <button id="cancelBuyBtn">취소</button>
     </div>
