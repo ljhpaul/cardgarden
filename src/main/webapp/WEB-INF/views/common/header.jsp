@@ -40,8 +40,18 @@
 
 			<!--로고 -->
 			<div class="header-logo">
-				<a href="${cpath}/main"> <img class="mascot"
-					src="${cpath}/resources/images/mascot/flower/mascot_flower_1.png">
+				<a href="${cpath}/main"> 
+					<c:choose>
+					    <c:when test="${not empty loginUserId}">
+					        <img class="mascot"
+					            src="${cpath}/resources/images/mascot/${mascotBrand}/mascot_${mascotBrand}_1.png">
+					    </c:when>
+					    <c:otherwise>
+					        <img class="mascot"
+					            src="${cpath}/resources/images/mascot/flower/mascot_flower_1.png">
+					    </c:otherwise>
+					</c:choose>
+
 					<img class="logo" src="${cpath}/resources/images/common/logo.png">
 				</a>
 			</div>
@@ -93,6 +103,7 @@
 				<div class="submenu">
 					<a href="${cpath}/event/attendance">출석체크</a>
 					<a href="${cpath}/event/mascot">포인트샵</a>
+					<a href="${cpath}/event/mascot/my">내 마스코트</a>
 				</div>
 			</div>
 		</div>
@@ -159,7 +170,8 @@
 				</a>
 				<div class="submenu">
 					<a href="${cpath}/event/attendance">출석체크</a>
-					<a href="${cpath}/event/mascot">포인트샵</a>
+					<a href="${cpath}/event/mascot">마스코트 샵</a>
+					<a href="${cpath}/event/mascot/my">내 마스코트</a>
 				</div>
 			</div>
 		</div>
@@ -370,10 +382,7 @@ img.src = "${cpath}/resources/images/mascot/" + mascotBrand + "/mascot_" + masco
 $(document).ready(function () {
     const mascotImgs = document.querySelectorAll(".mascot");
 
-    const mascotId = ${mascotId}; 
-    let mascotBrand = "flower";
-    if (mascotId === 121) mascotBrand = "card";
-    if (mascotId === 122) mascotBrand = "fairy";
+    const mascotBrand = ${mascotBrand}; 
     
     mascotImgs.forEach(img => {
         if (img.src.includes("mascot/flower")) {
@@ -381,7 +390,7 @@ $(document).ready(function () {
         }
     });
 
-    const sessionDuration = 40;
+    const sessionDuration = 120;
     let lastActionTime = Date.now();
     $(document).on("click", () => { lastActionTime = Date.now(); });
 	

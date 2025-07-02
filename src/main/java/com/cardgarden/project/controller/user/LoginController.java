@@ -62,8 +62,8 @@ public class LoginController {
         // 로그인 성공
         int loginUserId = userInfoService.getUserIdByLoginId(inputLoginId);
         session.setAttribute("loginUserId", loginUserId);
-        session.setAttribute("mascotId", 120);  // 디폴트 flower 선택
-        session.setMaxInactiveInterval(40);
+        session.setAttribute("mascotBrand", "flower");  // 디폴트 flower 선택
+        session.setMaxInactiveInterval(120);
         map.put("success", true);
         map.put("message", "로그인 성공");
         

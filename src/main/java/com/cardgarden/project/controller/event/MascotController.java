@@ -113,8 +113,11 @@ public class MascotController {
         if (owned == 0) {
             return "notowned";
         }
-
-        session.setAttribute("mascotId", assetId);
+        
+        String mascotBrand = "flower";
+        if (assetId == 121) mascotBrand = "card";
+        if (assetId == 122) mascotBrand = "fairy";
+        session.setAttribute("mascotBrand", mascotBrand);
         return "success";
     }
 
