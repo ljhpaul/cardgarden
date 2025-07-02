@@ -107,6 +107,15 @@
 .card-btn:hover {
 	background-color: #7ca688;
 }
+
+.delete-btn {
+	background-color: #e13a21;
+}
+
+.delete-btn:hover {
+	background-color: #cc331c;
+}
+
 </style>
 
 </head>
@@ -125,7 +134,7 @@
 
     <!-- 커스텀 카드 리스트 출력 -->
     <c:forEach var="card" items="${myCustomCardList}">
-      <div class="tab">
+      <div class="tab" data-customcard-id="${card.customcard_id}">
         
         <!-- 카드 이미지 -->
         <div class="card_img">
@@ -138,13 +147,18 @@
             <p><strong>커스텀명:</strong> ${card.customcard_name}</p>
             <p><strong>생성날짜:</strong> ${card.created_at}</p>
             
+            <div>
             <!-- 다운로드 버튼 추가 -->
             <a href="${cpath}/resources/images/custom/customcard/${card.user_id}_${card.customcard_name}.png" 
                download="${card.customcard_name}.png" 
                class="card-btn" 
-               style="width: 150px; font-size: 16px; padding: 10px; margin-top: 10px;">
+               style="width: 150px; font-size: 20px;margin-top: 20px;">
                다운로드
             </a>
+            <div class="card-btn delete-btn" style="width: 150px; font-size: 20px; margin-left:10px;margin-top: 20px;">
+               삭제하기
+            </div>
+            </div>
           </div>
         </div>
 
@@ -157,9 +171,47 @@
         생성하러 가기
       </a>
     </div>
-
   </div>
-
 </div>
 </body>
 </html>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.delete-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const confirmDelete = confirm('정말 삭제하시겠습니까?');
+      if (confirmDelete) {
+        const tab = btn.closest('.tab');
+        const customcardId = tab.dataset.customcardId;
+
+        fetch('${cpath}/user/customcard/delete', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: 'customcard_id=' + encodeURIComponent(customcardId)
+        })
+        .then(response => response.text())
+        .then(result => {
+          if (result === 'true') {
+            alert('삭제되었습니다.');
+            tab.remove();
+            const count = document.querySelectorAll('.tab').length;
+
+            // 텍스트 수정
+            document.querySelector('.like-count-box span').innerHTML =
+              "총 <strong>"+count+"</strong>개의 커스텀 카드를 만들었습니다";
+          } else {
+            alert('삭제 실패');
+          }
+        })
+        .catch(err => {
+          alert('에러 발생');
+          console.error(err);
+        });
+      }
+    });
+  });
+});
+</script>
+
+

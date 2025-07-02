@@ -127,7 +127,7 @@ def get_consum_pattern_continuous(pattern_id, card_id, q_cutoff=0.8, min_matched
 # --- Flask API ---
 app = Flask(__name__)
 
-@app.route('/recommendDetail', methods=['GET'])
+@app.route('/recommendDetail1', methods=['GET'])
 def recommendDetail():
     pattern_id = request.args.get('pattern_id')
     card_id = request.args.get('card_id')

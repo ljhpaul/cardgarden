@@ -63,13 +63,16 @@
 	</div>
 
 	<!-- 관리자페이지 네비게이터 -->
+	<c:if test="${sessionScope.loginUserId eq 1}">
 	<div class="box box-nav">
 		<h2 class="title-lg title-lg-nav">관리자페이지</h2>
 		<div class="inner-box inner-box-nav">
-			<a href="${cpath}/user/mypage">내 정보관리</a><br> <a
-				href="${cpath}/user/point">포인트관리</a><br> <a
-				href="${cpath}/user/card">내 카드관리</a><br> <a
-				href="${cpath}/user/consumptionPattern">소비패턴관리</a>
+			<%-- <a href="${cpath}/user/mypage">내 정보관리</a><br>
+			<a href="${cpath}/user/point">포인트관리</a><br>
+			<a href="${cpath}/user/card">내 카드관리</a><br>
+			<a href="${cpath}/user/consumptionPattern">소비패턴관리</a> --%>
+			<a href="${cpath}/admin/metabase">시각화정보</a>
 		</div>
 	</div>
+	</c:if>
 </div>

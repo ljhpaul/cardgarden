@@ -130,5 +130,12 @@ public class UserInfoDAO {
 	public List<CustomCardDTO> selectMyCustomCardList(int userId) {
 	    return sqlSession.selectList(namespace + "selectMyCustomCardList", userId);
 	}
+	
+	public int deleteCustomCard(int customcard_id) {
+	    int result = sqlSession.delete(namespace + "deleteCustomCard", customcard_id);
+	    log.info(result + "건 커스텀카드 삭제됨");
+	    return result;
+	}
+
 
 }
