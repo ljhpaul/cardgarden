@@ -239,10 +239,10 @@ document.getElementById("patternSelect").addEventListener("change", function () 
   }
 });
 
-/* document.getElementById("inCon").addEventListener("click", function () {
+document.getElementById("inCon").addEventListener("click", function () {
   location.href = cpath + "/ConsumptionPattern/inCon";
 });
- */
+ 
 // 삭제 버튼 전체에 이벤트 바인딩
 document.querySelectorAll(".deleteBtn").forEach(btn => {
   btn.addEventListener("click", function () {

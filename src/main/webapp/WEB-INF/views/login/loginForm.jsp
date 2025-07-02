@@ -2,6 +2,10 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="cpath" value="${pageContext.servletContext.contextPath}" />
+<c:if test="${not empty sessionScope.msg}">
+  <script>alert('${sessionScope.msg}');</script>
+  <c:remove var="msg" scope="session"/>
+</c:if>
 
 <!-- 헤더와 공통 스타일/스크립트 -->
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
