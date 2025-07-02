@@ -269,6 +269,12 @@
 	    WHERE user_id = #{userId}
 	    ORDER BY created_at DESC
 	</select>
+	
+	<delete id="deleteCustomCard" parameterType="int">
+	    DELETE FROM CustomCard
+	    WHERE customcard_id = #{customcard_id}
+	</delete>
+	
 
 	
 </mapper>

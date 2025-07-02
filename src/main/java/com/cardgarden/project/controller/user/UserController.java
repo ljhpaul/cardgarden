@@ -179,9 +179,22 @@ public class UserController {
 	    List<CustomCardDTO> myCustomCardList = userInfoSerivce.myCustomCardList(loginUserId);
 
 	    model.addAttribute("myCustomCardList", myCustomCardList);
-
 	    return "mypage/mycustomcard";
 	}
+	@PostMapping("/customcard/delete")
+	@ResponseBody
+	public boolean deleteCustomCard(int customcard_id, HttpSession session) {
+	    
+	    Integer loginUserId = (Integer) session.getAttribute("loginUserId");
+
+	    if (loginUserId == null) {
+	        return false;
+	    }
+	    int result = userInfoSerivce.deleteCustomCard(customcard_id);
+
+	    return result > 0;
+	}
+
 
 
 }
