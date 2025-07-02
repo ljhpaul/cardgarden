@@ -47,30 +47,6 @@
 		    <p>${asset.point_needed}Point</p>
 		  </c:otherwise>
 		</c:choose>
-
-
-          <%-- <div class="like-section">
-            <c:choose>
-              <c:when test="${liked == -1}">
-                <a href="${cpath}/login" class="like-btn">
-                  <img src="${cpath}/resources/images/common/like.png" alt="좋아요"> ${asset.asset_like}
-                </a>
-              </c:when>
-              <c:when test="${liked == 0}">
-                <button type="button" class="like-btn" id="like-btn">
-                  <img src="${cpath}/resources/images/common/like.png" alt="좋아요"> 
-                  <span id="like-count">${asset.asset_like}</span>
-                </button>
-              </c:when>
-              <c:when test="${liked == 1}">
-                <button type="button" class="unlike-btn" id="like-btn">
-                  <img src="${cpath}/resources/images/common/melike.png" alt="좋아요 취소"> 
-                  <span id="like-count">${asset.asset_like}</span>
-                </button>
-              </c:when>
-            </c:choose>
-          </div> --%>
-
         </div>
 
         <div class="btn-group">
@@ -83,11 +59,11 @@
             </c:when>
             <c:when test="${owned == 0}">
               <c:choose>
-                <c:when test="${userPoint < asset.point_needed}">
+                <c:when test="${userPoint < asset.final_price}">
                   <button type="button" class="buy-btn" disabled>포인트 부족</button>
                 </c:when>
                 <c:otherwise>
-                  <a href="${cpath}/custom/buy?asset_id=${asset.asset_id}" class="buy-btn">구매하기</a>
+                  <a href="${cpath}/custom/buy?asset_id=${asset.asset_id}&price=${asset.final_price}" class="buy-btn">구매하기</a>
                 </c:otherwise>
               </c:choose>
             </c:when>

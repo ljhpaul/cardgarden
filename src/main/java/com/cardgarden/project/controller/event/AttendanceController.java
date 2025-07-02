@@ -30,7 +30,8 @@ public class AttendanceController {
     public String attendancePage(HttpSession session, Model model) {  
 
         Object userIdObj = session.getAttribute("loginUserId");  
-        if (userIdObj == null) {  
+        if (userIdObj == null) {
+        	session.setAttribute("redirectAfterLogin", "/event/attendance");
             return "redirect:/user/login";  
         }  
 
