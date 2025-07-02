@@ -7,54 +7,57 @@
 <link rel="stylesheet" href="${cpath}/resources/css/common.css">
 <link rel="stylesheet" href="${cpath}/resources/css/header.css">
 <link rel="stylesheet" href="${cpath}/resources/css/font-awesome.min.css">
-
+<link rel="stylesheet" href="https://unpkg.com/swiper@9/swiper-bundle.min.css" />
+<script src="https://unpkg.com/swiper@9/swiper-bundle.min.js"></script>
 <head>
     <title>CARD GARDEN</title>
 </head>
 
 <body>
     <div class="main-all">
-        <div class="slideshow-container">
-        	<!-- 메인 슬라이드 -->
-            <div class="mySlideDiv fade active">
-                <a href="${cpath}/main">
-                    <img src="${cpath}/resources/images/slide/slide_main.png" class="slide-img link-slide" alt="메인">
-                </a>
-            </div>
-        	<!-- 지브리 콜라보 -->
-            <div class="mySlideDiv fade active">
-                <a href="${cpath}/custom/main">
-                    <img src="${cpath}/resources/images/slide/slide_ghibli.png" class="slide-img link-slide" alt="지브리x카드가든">
-                </a>
-            </div>
-            <!-- 마스코트 상점 -->
-            <div class="mySlideDiv fade">
-                <a href="${cpath}/event/mascot">
-                    <img src="${cpath}/resources/images/slide/slide_mascot.png" class="slide-img link-slide" alt="마스코트상점">
-                </a>
-            </div>
-            <!-- 출석체크 이벤트 -->
-            <div class="mySlideDiv fade">
-                <a href="${cpath}/event/attendance">
-                	<c:choose>
-					  <c:when test="${dayOfWeek == 4}">
-					    <img src="${cpath}/resources/images/slide/slide_attendance_wed.png" class="slide-img link-slide" alt="출석체크">
-					  </c:when>
-					  <c:otherwise>
-					    <img src="${cpath}/resources/images/slide/slide_attendance.png" class="slide-img link-slide" alt="출석체크_수요일">
-					  </c:otherwise>
-					</c:choose>
-                </a>
-            </div>
-            <!-- KBO 콜라보 -->
-            <div class="mySlideDiv fade">
-                <a href="${cpath}/card/detail?cardid=111">
-                    <img src="${cpath}/resources/images/slide/slide_kbo.png" class="slide-img link-slide" alt="마스코트상점">
-                </a>
-            </div>
-            <button type="button" class="prev" onclick="prevSlide(event)">&#10094;</button>
-            <button type="button" class="next" onclick="nextSlide(event)">&#10095;</button>
-        </div>
+        <div class="swiper-container slideshow-container" style="width:1000px;">
+		  <div class="swiper-wrapper">
+		    <div class="swiper-slide">
+		      <a href="${cpath}/main">
+		        <img src="${cpath}/resources/images/slide/slide_main.png" class="slide-img" alt="메인" />
+		      </a>
+		    </div>
+		    <div class="swiper-slide">
+		      <a href="${cpath}/custom/main">
+		        <img src="${cpath}/resources/images/slide/slide_ghibli.png" class="slide-img" alt="지브리" />
+		      </a>
+		    </div>
+		    <div class="swiper-slide">
+		      <a href="${cpath}/event/mascot">
+		        <img src="${cpath}/resources/images/slide/slide_mascot.png" class="slide-img" alt="마스코트상점" />
+		      </a>
+		    </div>
+		    <div class="swiper-slide">
+		      <a href="${cpath}/event/attendance">
+		        <c:choose>
+		          <c:when test="${dayOfWeek == 4}">
+		            <img src="${cpath}/resources/images/slide/slide_attendance_wed.png" class="slide-img" alt="수요일 출석" />
+		          </c:when>
+		          <c:otherwise>
+		            <img src="${cpath}/resources/images/slide/slide_attendance.png" class="slide-img" alt="출석" />
+		          </c:otherwise>
+		        </c:choose>
+		      </a>
+		    </div>
+		    <div class="swiper-slide">
+		      <a href="${cpath}/card/detail?cardid=111">
+		        <img src="${cpath}/resources/images/slide/slide_kbo.png" class="slide-img" alt="KBO" />
+		      </a>
+		    </div>
+		  </div>
+		
+		  <!-- 좌우 버튼 -->
+		  <div class="swiper-button-prev"></div>
+		  <div class="swiper-button-next"></div>
+		
+		  <!-- 점(dot) 네비게이션 -->
+		  <div class="swiper-pagination"></div>
+		</div>
         <div class="bottom-banner">
             <a href="${cpath}/recommend/ai">
                 <img src="${cpath}/resources/images/golink/recommend.png" style="width:500px;">
@@ -97,41 +100,24 @@
     </div>
 </body>
 <script type="text/javascript">
-
-$(document).ready(function () {
-    $(".mySlideDiv").not(".active").hide(); // 첫번째 div를 제외한 나머지 숨김
-    setInterval(nextSlide, 4000); // 4초마다 자동 슬라이드
-});
-
-function prevSlide(event) {
-    if(event) event.stopPropagation(); // a태그 클릭 버블링 차단
-    $(".mySlideDiv").hide();
-    var allSlide = $(".mySlideDiv");
-    var currentIndex = 0;
-    $(".mySlideDiv").each(function(index, item){
-        if($(this).hasClass("active")) {
-            currentIndex = index;
-        }
+document.addEventListener("DOMContentLoaded", function () {
+    const swiper = new Swiper('.swiper-container', {
+      loop: true,
+      autoplay: {
+        delay: 4000,
+        disableOnInteraction: false,
+      },
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+      },
+      grabCursor: true,
     });
-    var newIndex = (currentIndex <= 0) ? allSlide.length-1 : currentIndex-1;
-    $(".mySlideDiv").removeClass("active");
-    $(".mySlideDiv").eq(newIndex).addClass("active").show();
-}
-
-function nextSlide(event) {
-    if(event) event.stopPropagation(); // a태그 클릭 버블링 차단
-    $(".mySlideDiv").hide();
-    var allSlide = $(".mySlideDiv");
-    var currentIndex = 0;
-    $(".mySlideDiv").each(function(index, item){
-        if($(this).hasClass("active")) {
-            currentIndex = index;
-        }
-    });
-    var newIndex = (currentIndex >= allSlide.length-1) ? 0 : currentIndex+1;
-    $(".mySlideDiv").removeClass("active");
-    $(".mySlideDiv").eq(newIndex).addClass("active").show();
-}
+  });
 
 
 
@@ -187,61 +173,45 @@ body {
     padding: 0;
     margin: 0;
 }
+
 #main {
     text-align: center;
 }
-.slideshow-container {
-    max-width: 1200px;
-    margin: auto;
-    text-align: center;
-    overflow: hidden;
-    position: relative;
-    height: 500px;
+.swiper-container {
+  width: 100%;
+  max-width: 1200px;
+  height: 500px;
+  position: relative;
+  margin: auto;
+  border-radius: 12px;
+  overflow: hidden;
 }
-.prev, .next {
-    cursor: pointer;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 50px;
-    height: 80px;
-    padding: 0;
-    color: white;
-    font-weight: bold;
-    font-size: 48px;
-    border-radius: 10%;
-    background: rgba(0,0,0,0.23); 
-    z-index: 2;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.14);
-    transition: background 0.18s, box-shadow 0.18s;
-    border: none;
-    outline: none;
+
+.swiper-slide {
+  text-align: center;
+  cursor: default;
 }
-.prev {
-    left: 32px;
+.swiper-slide a {
+  display: inline-block;
+  max-width: 1000px;
+  max-height: 500px;
 }
-.next {
-    right: 32px;
+
+.swiper-slide img {
+  width: 1000px;
+  height: 500px;
+  object-fit: cover;
+  border-radius: 12px;
 }
-.prev:hover, .next:hover {
-    background-color: rgba(0,0,0,0.4);
-    box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+
+.swiper-button-prev,
+.swiper-button-next {
+    color: #b5cfa0;
+    text-shadow: 0 0 6px rgb(166 172 140 / 80%);
 }
-@media (max-width: 900px) {
-    .slideshow-container {
-        height: 35vw;
-        min-height: 220px;
-    }
-    .prev, .next {
-        width: 40px;
-        height: 60px;
-        font-size: 32px;
-        left: 8px;
-        right: 8px;
-    }
+
+.swiper-pagination-bullet-active {
+  background: #333 !important;
 }
 .bottom-banner {
     display: flex;
@@ -280,12 +250,12 @@ body {
     /* 블록이 아니라 인라인블록! */
 }
 .main-all {
-    max-width: 1280px;
+    max-width: 1200px;
     margin: -10px auto 0 auto;
     background: rgba(255, 255, 255, 0.93);
-    border-radius: 32px;
-    box-shadow: 0 12px 40px rgba(60,70,90,0.13);
-    padding: 48px 32px 56px 32px;
+    border-radius: 22px;
+    box-shadow: 0 12px 40px rgba(60, 70, 90, 0.13);
+    padding: 48px 32px 56px;
     box-sizing: border-box;
     transition: box-shadow 0.2s;
    	
@@ -534,6 +504,24 @@ body {
   max-width: 90%;
   max-height: 90%;
   object-fit: contain;
+}
+
+/* 스크롤바 css */
+
+/* 스크롤바 너비 */
+.popup-card-list::-webkit-scrollbar {
+  width: 12px;
+}
+
+/* 스크롤바 색상 + radius 조정*/
+.popup-card-list::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 8px;
+}
+/* 트랙 색상 + 트랙 위치  */
+.popup-card-list::-webkit-scrollbar-track {
+  background: #f0f0f0;
+  margin-top: 125px; /* 트랙 시작 여백 */
 }
 
 
