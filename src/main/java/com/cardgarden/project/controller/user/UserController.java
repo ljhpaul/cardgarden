@@ -36,7 +36,7 @@ public class UserController {
 
 	// 마이페이지
 	@GetMapping("/mypage")
-	public String mypage(HttpServletRequest request, Model model, RedirectAttributes redirectAttr) {
+	public String mypage(HttpServletRequest request, Model model, RedirectAttributes redirectAttr,HttpSession session) {
 	
 		String url;
 		
@@ -44,8 +44,9 @@ public class UserController {
 	    Object loginUserIdObj = mySession.getAttribute("loginUserId");
 	    // 로그인되지 않았을 경우 처리
 	    if (loginUserIdObj == null) {
-	    	System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!  비로그인상태  !!!!!!!!!!!!!!!!!!!!!!!!!!!");
-	    	redirectAttr.addFlashAttribute("msg", "로그인이 필요한 기능입니다");
+	    	session.setAttribute("msg", "로그인이 필요한 기능입니다");
+	    	session.setAttribute("redirectAfterLogin", "/user/mypage");
+
 	        return "redirect:/user/login";
 	    }
 	    
@@ -98,14 +99,14 @@ public class UserController {
 	
 	// 소비패턴보기
 	@GetMapping("/consumptionPattern")
-	public String myconsumptionPattern(HttpServletRequest request, Model model, RedirectAttributes redirectAttr) {
+	public String myconsumptionPattern(HttpServletRequest request, Model model, HttpSession session ) {
 		
 	    HttpSession mySession = request.getSession();
 	    Object loginUserIdObj = mySession.getAttribute("loginUserId");
-	    
 	    // 로그인되지 않았을 경우 처리
 	    if (loginUserIdObj == null) {
-	    	redirectAttr.addFlashAttribute("msg", "로그인이 필요한 기능입니다");
+	    	session.setAttribute("msg", "로그인이 필요한 기능입니다");
+	    	session.setAttribute("redirectAfterLogin", "/user/myconsumptionPattern");
 	        return "redirect:/user/login";
 	    }
 	    
@@ -125,13 +126,16 @@ public class UserController {
 	
 	//포인트관리
 	@GetMapping("/point")
-	public String myPoint(HttpSession session, Model model, RedirectAttributes redirectAttr){
+	public String myPoint(HttpServletRequest request,HttpSession session, Model model){
 		
 	    Integer loginUserId = (Integer) session.getAttribute("loginUserId");
 	    
+	    HttpSession mySession = request.getSession();
+	    Object loginUserIdObj = mySession.getAttribute("loginUserId");
 	    // 로그인되지 않았을 경우 처리
-	    if (loginUserId == null) {
-	    	redirectAttr.addFlashAttribute("msg", "로그인이 필요한 기능입니다");
+	    if (loginUserIdObj == null) {
+	    	session.setAttribute("msg", "로그인이 필요한 기능입니다");
+	    	session.setAttribute("redirectAfterLogin", "/user/myPoint");
 	        return "redirect:/user/login";
 	    }
 		
@@ -144,15 +148,17 @@ public class UserController {
 	
 	//내가 좋아요한 카드
 	@GetMapping("/card")
-	public String mmyLikeCardList(HttpSession session ,HttpServletRequest request, Model model, RedirectAttributes redirectAttr){
+	public String mmyLikeCardList(HttpServletRequest request,HttpSession session,Model model, RedirectAttributes redirectAttr){
+
 		
 	    HttpSession mySession = request.getSession();
 	    Object loginUserIdObj = mySession.getAttribute("loginUserId");
-	    
 	    // 로그인되지 않았을 경우 처리
 	    if (loginUserIdObj == null) {
-	    	redirectAttr.addFlashAttribute("msg", "로그인이 필요한 기능입니다");
-	    	session.setAttribute("redirectAfterLogin", "/user/card");
+
+	    	session.setAttribute("msg", "로그인이 필요한 기능입니다");
+	    	session.setAttribute("redirectAfterLogin", "/user/mycard");
+
 	        return "redirect:/user/login";
 	    }
 	    
@@ -168,13 +174,15 @@ public class UserController {
 	}
 	// 내 커스텀 카드 보기
 	@GetMapping("/customcard")
-	public String myCustomCardList(HttpServletRequest request, Model model, RedirectAttributes redirectAttr) {
+	public String myCustomCardList(HttpServletRequest request,HttpSession session, Model model, RedirectAttributes redirectAttr) {
 
-	    HttpSession session = request.getSession();
+	    HttpSession mysession = request.getSession();
+	    Object loginUserIdObj = mysession.getAttribute("loginUserId");
 	    Integer loginUserId = (Integer) session.getAttribute("loginUserId");
-
-	    if (loginUserId == null) {
-	        redirectAttr.addFlashAttribute("msg", "로그인이 필요한 기능입니다");
+	    // 로그인되지 않았을 경우 처리
+	    if (loginUserIdObj == null) {
+	    	session.setAttribute("msg", "로그인이 필요한 기능입니다");
+	    	session.setAttribute("redirectAfterLogin", "/user/mycustomcard");
 	        return "redirect:/user/login";
 	    }
 
@@ -183,6 +191,8 @@ public class UserController {
 	    model.addAttribute("myCustomCardList", myCustomCardList);
 	    return "mypage/mycustomcard";
 	}
+	
+	
 	@PostMapping("/customcard/delete")
 	@ResponseBody
 	public boolean deleteCustomCard(int customcard_id, HttpSession session) {

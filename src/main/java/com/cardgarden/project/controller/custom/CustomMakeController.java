@@ -158,6 +158,19 @@ public class CustomMakeController {
 
         return "custom/makeResult";
     }
+    @PostMapping("/custom/incrementUsed")
+    @ResponseBody
+    public void incrementUsed(@RequestParam int asset_id) {
+        service.incrementUsed(asset_id);
+    }
+
+    @PostMapping("/custom/decrementUsed")
+    @ResponseBody
+    public void decrementUsed(@RequestParam int asset_id) {
+        service.decrementUsed(asset_id);
+    }
+
+    
 
 
 
