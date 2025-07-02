@@ -494,7 +494,29 @@ body {
 	max-width: 1000px;
   margin: auto;
   position: relative;
+  padding-top: 10px;
 }
+
+.recommend-swiper::after {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  width: 30px;
+  height: 100%;
+  background: linear-gradient(to left, #F0F3F1, transparent);
+  z-index: 10;
+}
+
+.recommend-swiper::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 30px;
+  height: 100%;
+  background: linear-gradient(to right, #F0F3F1, transparent);
+  z-index: 10;
+}
+
 
 .swiper-slide.recommend-card-box {
   height: 400px;
@@ -633,3 +655,4 @@ body {
 	background-color: white;
 	
 }
+

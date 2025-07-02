@@ -72,22 +72,25 @@
 		</div>
         
         
-        <div class="popup-overlay" id="cardPopupOverlay" onclick="closeCardPopup()"></div>
-		<div class="bottom-card-list popup-card-list" id="cardPopup">
+		<div class="popup-card-list" id="cardPopup">
+		  <div class="popup-fixed-header">
 		    <h1>🐥카드사별 베스트셀러 모음🐥</h1>
-		    <div class="card-slider">
-		        <c:forEach var="card" items="${topCards}">
-		            <div class="card-slide">
-		                <a href="${cpath}/card/detail?cardid=${card.card_id}">
-		                    <div class="card-image-box">
-							  <img src="${card.card_image}" alt="${card.card_name}" />
-							</div>
-		                    <div class="card-name">${card.card_name}</div>
-		                    <div class="card-company">${card.company}</div>
-		                </a>
-		            </div>
-		        </c:forEach>
-		    </div>
+		    <button class="popup-close-btn" onclick="closeCardPopup()">✕</button>
+		  </div>
+		
+		  <div class="card-slider">
+		    <c:forEach var="card" items="${topCards}">
+		      <div class="card-slide">
+		        <a href="${cpath}/card/detail?cardid=${card.card_id}">
+		          <div class="card-image-box">
+		            <img src="${card.card_image}" alt="${card.card_name}" />
+		          </div>
+		          <div class="card-name">${card.card_name}</div>
+		          <div class="card-company">${card.company}</div>
+		        </a>
+		      </div>
+		    </c:forEach>
+		  </div>
 		</div>
 		
 		
@@ -407,12 +410,55 @@ body {
   overflow-y: auto;
   background: white;
   border-radius: 20px;
-  padding: 20px;
   transform: translate(-50%, -50%);
   z-index: 9999;
   box-shadow: 0 4px 30px rgba(0,0,0,0.3);
 }
+.popup-fixed-header {
+  position: sticky;
+  top: 0;
+  background: white;
+  height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* 중앙 기준 */
+  border-bottom: 1px solid #ddd;
+  z-index: 10;
+  position: sticky;
+}
 
+.popup-fixed-header h1 {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 28px;
+  font-weight: 800;
+  margin: 0;
+  color: #333;
+}
+
+.popup-close-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  font-size: 20px;
+  font-weight: bold;
+  width: 32px;
+  height: 32px;
+  line-height: 30px;
+  border: none;
+  border-radius: 50%;
+  background-color: #f2f2f2;
+  color: #333;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  z-index: 10000;
+}
+.popup-close-btn:hover {
+  background-color: #ffe6e6;
+  transform: scale(1.1);
+}
 .popup-card-list .card-slider {
   display: flex;
   flex-wrap: wrap;
