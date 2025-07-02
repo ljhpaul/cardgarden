@@ -89,7 +89,9 @@ document.getElementById("makeForm").addEventListener("submit", (e) => {
     if (isLogin === false) {
         e.preventDefault();
         alert("로그인을 해야합니다.");
-        location.href = `${cpath}/user/login`;
+        location.href = `${cpath}/make/user/redirectToLogin`;
+
+
     }
 });
 
