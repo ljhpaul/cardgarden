@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -97,25 +98,30 @@ public class JoinController {
 
 		if (authentication != null && authentication.getPrincipal() instanceof OAuth2User) {
 			OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
-			
-			//네이버 확인
-			Object responseAttr = oAuth2User.getAttribute("response");
-			if (responseAttr instanceof Map) {
-				@SuppressWarnings("unchecked")
-	            Map<String, Object> responseMap = (Map<String, Object>) responseAttr;
-				log.info(responseMap.toString());
-				log.info(responseMap.get("id").toString());
-				log.info(responseMap.get("name").toString());
-	            model.addAttribute("socialId", responseMap.get("id"));
-	            model.addAttribute("socialName", responseMap.get("name"));
-	            session.setAttribute("emailVerified", true);
-	            session.setAttribute("verifiedEmail", responseMap.get("email"));
-			} else {
+			String registrationId = ((OAuth2AuthenticationToken) authentication).getAuthorizedClientRegistrationId();
+			model.addAttribute("socialMethod", registrationId);
+			log.info(oAuth2User.toString());
+
+			if("google".equals(registrationId)) {
+				log.info("@@@@@ GOOGLE @@@@@");
 				model.addAttribute("socialId", oAuth2User.getAttribute("sub"));
 			    model.addAttribute("socialName", oAuth2User.getAttribute("name"));
 				session.setAttribute("emailVerified", oAuth2User.getAttribute("email_verified"));
 				session.setAttribute("verifiedEmail", oAuth2User.getAttribute("email"));
-			}
+			} else if("naver".equals(registrationId)) {
+				log.info("@@@@@ NAVER @@@@@");
+				log.info(oAuth2User.getAttribute("id").toString());
+				log.info(oAuth2User.getAttribute("name").toString());
+	            model.addAttribute("socialId", oAuth2User.getAttribute("id"));
+	            model.addAttribute("socialName", oAuth2User.getAttribute("name"));
+	            model.addAttribute("socialGender", oAuth2User.getAttribute("gender"));
+	            model.addAttribute("socialBirth", oAuth2User.getAttribute("birthyear") + "-" + oAuth2User.getAttribute("birthday"));
+	            model.addAttribute("socialPhone", oAuth2User.getAttribute("mobile"));
+	            session.setAttribute("emailVerified", true);
+	            session.setAttribute("verifiedEmail", oAuth2User.getAttribute("email"));
+		    } else if("kakao".equals(registrationId)) {
+		    	log.info("@@@@@ KAKAO @@@@@");
+		    }
 		}
 	    
 		/*

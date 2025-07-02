@@ -15,25 +15,23 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     public OAuth2User loadUser(OAuth2UserRequest userRequest) {
 
         String registrationId = userRequest.getClientRegistration().getRegistrationId();
-        System.out.println("===[CustomOAuth2UserService] registrationId: " + registrationId);
+        System.out.println("===[CustomOAuth2UserService (1)] registrationId: " + registrationId);
         
         OAuth2User oAuth2User = super.loadUser(userRequest);
         
         if ("naver".equals(registrationId)) {
             Map<String, Object> attributes = oAuth2User.getAttributes();
             Object response = attributes.get("response");
-            System.out.println("===[CustomOAuth2UserService] naver response: " + response);
+            System.out.println("===[CustomOAuth2UserService (2)] naver response: " + response);
             
             if (response instanceof Map) {
                 @SuppressWarnings("unchecked")
                 Map<String, Object> responseMap = (Map<String, Object>) response;
-                System.out.println("===[CustomOAuth2UserService] naver responseMap: " + responseMap);
+                System.out.println("===[CustomOAuth2UserService (3)] naver responseMap: " + responseMap);
                 
-                return new DefaultOAuth2User(
-                        Collections.singleton(() -> "ROLE_USER"),
-                        responseMap, "id" );
+                return new DefaultOAuth2User( Collections.singleton(() -> "ROLE_USER"), responseMap, "id" );
             } else {
-                System.out.println("===[CustomOAuth2UserService] response is NOT Map: " + response);
+                System.out.println("===[CustomOAuth2UserService (4)] response is NOT Map: " + response);
             }
         }
         
