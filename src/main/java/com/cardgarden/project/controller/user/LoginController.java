@@ -66,6 +66,16 @@ public class LoginController {
         session.setMaxInactiveInterval(40);
         map.put("success", true);
         map.put("message", "로그인 성공");
+        
+        // 로그인 후 리다이렉트 경로 분기
+        String redirectAfterLogin = (String) session.getAttribute("redirectAfterLogin");
+        if(redirectAfterLogin == null || redirectAfterLogin.equals("")) {
+        	map.put("redirectAfterLogin", "/main");
+        } else {
+        	map.put("redirectAfterLogin", redirectAfterLogin);
+        	session.removeAttribute("redirectAfterLogin");
+        }
+
         return map;
     }
 
