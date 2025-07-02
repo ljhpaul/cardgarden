@@ -163,7 +163,7 @@ window.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      addSticker(url);
+      addSticker(url, assetId);
     });
   });
 
@@ -190,12 +190,22 @@ window.addEventListener("DOMContentLoaded", () => {
     buyModal.style.visibility = "hidden";
   };
 
-  function addSticker(url) {
-    fabric.Image.fromURL(url, oImg => {
-      oImg.set({ left: 50, top: 50, scaleX: 0.3, scaleY: 0.3 });
-      canvas.add(oImg).setActiveObject(oImg);
-    });
-  }
+  function addSticker(url, assetId = null) {
+	  fabric.Image.fromURL(url, oImg => {
+	    oImg.set({ left: 50, top: 50, scaleX: 0.3, scaleY: 0.3 });
+	    if (assetId) oImg.assetId = assetId;
+	    canvas.add(oImg).setActiveObject(oImg);
+
+	    if (assetId) {
+	      fetch(cpath + "/make/custom/incrementUsed", {
+	        method: "POST",
+	        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+	        body: "asset_id=" + assetId
+	      });
+	    }
+	  });
+	}
+
 
   document.querySelectorAll(".tool-btn").forEach(btn => {
     btn.addEventListener("click", () => {
@@ -278,11 +288,21 @@ window.addEventListener("DOMContentLoaded", () => {
   });
 
   document.addEventListener("keydown", e => {
-    if ((e.key === "Delete" || e.key === "Backspace") && currentMode === "select") {
-      const activeObj = canvas.getActiveObject();
-      if (activeObj) canvas.remove(activeObj);
-    }
-  });
+	  if ((e.key === "Delete" || e.key === "Backspace") && currentMode === "select") {
+	    const activeObj = canvas.getActiveObject();
+	    if (activeObj) {
+	      if (activeObj.assetId) {
+	        fetch(cpath + "/make/custom/decrementUsed", {
+	          method: "POST",
+	          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+	          body: "asset_id=" + activeObj.assetId
+	        });
+	      }
+	      canvas.remove(activeObj);
+	    }
+	  }
+	});
+
 
   document.querySelectorAll(".brand-btn").forEach(btn => {
     btn.addEventListener("click", () => {
