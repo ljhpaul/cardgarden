@@ -134,9 +134,23 @@ public class CustomMakeController {
     }
 
     @GetMapping("/result")
-    public String makeResult(HttpSession session) {
+    public String makeResult(HttpSession session, Model model) {
+
+        Integer loginUserId = (Integer) session.getAttribute("loginUserId");
+        if (loginUserId == null) {
+            return "redirect:/user/login";
+        }
+
+        CustomCardDTO latestCard = service.getLatestCustomCardByUser(loginUserId);
+
+        if (latestCard != null) {
+            String imgPath = "/resources/images/custom/customcard/" + latestCard.getUser_id() + "_" + latestCard.getCustomcard_name() + ".png";
+            model.addAttribute("cardImg", imgPath);
+        }
+
         return "custom/makeResult";
     }
+
 
 
     private boolean checkLogin(HttpSession session) {

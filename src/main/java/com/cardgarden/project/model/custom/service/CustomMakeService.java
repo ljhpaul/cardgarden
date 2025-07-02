@@ -39,4 +39,7 @@ public class CustomMakeService {
     public void saveCustomCard(CustomCardDTO dto) {
         dao.insertCustomCard(dto);
     }
+    public CustomCardDTO getLatestCustomCardByUser(int userId) {
+        return dao.selectLatestCustomCardByUser(userId);
+    }
 }

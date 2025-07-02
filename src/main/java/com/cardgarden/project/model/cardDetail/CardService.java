@@ -11,7 +11,12 @@ public class CardService {
     @Autowired
     private CardDAOInterface cardDAO;
 	
-	
+    public List<CardDTO> getTopLikeCardByCompany() {
+        return cardDAO.selectTopLikeCardByCompany();
+    }
+    
+    
+    
 	public List<CardDTO> selectById(int cardId){
 		List<CardDTO> cardList = cardDAO.selectById(cardId);
 		return cardList;
