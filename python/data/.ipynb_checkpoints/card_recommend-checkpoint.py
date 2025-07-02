@@ -192,7 +192,7 @@ from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
-@app.route('/recommend', methods=['GET'])
+@app.route('/recommend1', methods=['GET'])
 def recommend():
     try:
         pattern_id = int(request.args.get('pattern_id', 1))
