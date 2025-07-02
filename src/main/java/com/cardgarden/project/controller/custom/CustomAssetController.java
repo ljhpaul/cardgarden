@@ -221,6 +221,7 @@ public class CustomAssetController {
     ) {
         Integer userId = (Integer) session.getAttribute("loginUserId");
         if (userId == null) {
+        	session.setAttribute("redirectAfterLogin", "/custom/free");
             return "redirect:/user/login";
         }
 
