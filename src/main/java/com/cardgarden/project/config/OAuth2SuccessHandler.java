@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
@@ -34,6 +35,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
     	HttpSession session = request.getSession();
     	
     	OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
+    	String registrationId = ((OAuth2AuthenticationToken) authentication).getAuthorizedClientRegistrationId();
         String email = null;
         
         Object responseAttr = oAuth2User.getAttribute("response");
@@ -46,6 +48,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
         	email = oAuth2User.getAttribute("email");
         }
         
+    	email += " (" + registrationId + ")";
         log.info("소셜 로그인 email: {}", email);
     	
         if(userInfoService.existsByEmail(email)) {

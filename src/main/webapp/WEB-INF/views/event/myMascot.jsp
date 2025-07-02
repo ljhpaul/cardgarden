@@ -28,7 +28,7 @@
         </div>
 
         <c:choose>
-          <c:when test="${selectedMascot != null && selectedMascot.asset_id == mascot.asset_id}">
+          <c:when test="${mascot.asset_brand == mascotBrand}">
             <div class="selected-text">선택된 마스코트</div>
           </c:when>
           <c:otherwise>

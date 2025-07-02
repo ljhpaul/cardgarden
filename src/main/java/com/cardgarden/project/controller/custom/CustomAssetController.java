@@ -120,6 +120,12 @@ public class CustomAssetController {
 
         return "custom/detail";
     }
+    @GetMapping("/redirectToLogin")
+    public String redirectToLogin(@RequestParam String redirect, HttpSession session) {
+        session.setAttribute("redirectAfterLogin", redirect);
+        return "redirect:/user/login";
+    }
+
 
     @GetMapping("/buy")
     public String buyConfirm(@RequestParam("asset_id") int assetId, HttpSession session, Model model) {
