@@ -181,19 +181,54 @@ span.remove:hover {
     </div>
   </div>
   </c:forEach>
-    
-    
-    
   </div>
-
-
-  
 </div>
 
 <script>
+// 소비영역 중복금지, 3개 미만 금지
+// 소비금액 100만원까지만
+document.addEventListener("DOMContentLoaded", function () {
+  document.querySelectorAll('input[type="submit"]').forEach(btn => {
+    btn.addEventListener("click", function (event) {
+      event.preventDefault();
+
+      const form = this.closest("form");
+      const categorySelects = form.querySelectorAll('select[name="benefitcategory_id"]');
+      const amountInputs = form.querySelectorAll('input[name="amount"]');
+
+      // 소비영역 최소 3개
+      if (categorySelects.length < 3) {
+        alert("소비영역을 최소 3개 이상 입력해 주세요.");
+        return;
+      }
+
+      // 소비영역 중복 확인
+      const selectedValues = Array.from(categorySelects).map(select => select.value);
+      const hasDuplicate = new Set(selectedValues).size !== selectedValues.length;
+      if (hasDuplicate) {
+        alert("중복된 소비영역이 존재합니다. 다시 확인해 주세요");
+        return;
+      }
+
+      // 소비금액 유효성 검사
+      const hasInvalidAmount = Array.from(amountInputs).some(input => {
+        const value = parseInt(input.value);
+        return !input.value || isNaN(value) || value > 1000000 || value <= 0;
+      });
+      if (hasInvalidAmount) {
+        alert("소비금액은 1원 이상 100만원 이하로 입력해 주세요.");
+        return;
+      }
+
+      form.submit();
+    });
+  });
+});
+
 const cpath = "${cpath}";
 
-document.getElementById("patternSelect").addEventListener("change", function() {
+// 패턴 선택해서 보기
+document.getElementById("patternSelect").addEventListener("change", function () {
   const selectedId = this.value;
   document.querySelectorAll(".pattern-form").forEach(form => {
     form.style.display = "none";
@@ -204,39 +239,34 @@ document.getElementById("patternSelect").addEventListener("change", function() {
   }
 });
 
-
-
-
-document.getElementById("inCon").addEventListener("click", function() {
-	
-	  location.href = cpath + "/ConsumptionPattern/inCon"; 
-
+/* document.getElementById("inCon").addEventListener("click", function () {
+  location.href = cpath + "/ConsumptionPattern/inCon";
 });
-
-
-//삭제 버튼 전체에 이벤트 바인딩
+ */
+// 삭제 버튼 전체에 이벤트 바인딩
 document.querySelectorAll(".deleteBtn").forEach(btn => {
   btn.addEventListener("click", function () {
     const patternId = this.dataset.patternId;
     if (confirm("정말 삭제하시겠습니까?")) {
-    	   fetch(`${cpath}/ConsumptionPattern/deleteCon`, {
-    	        method: "POST",
-    	        headers: {
-    	          "Content-Type": "application/x-www-form-urlencoded"
-    	        },
-    	        body: "pattern_id=" + encodeURIComponent(patternId)
-    	      }).then(response => response.text()) // 결과값에 담긴 text 꺼내기
-    	      .then(result => {
-    	    	  if (result.trim() === "ok") {
-    	    		    alert("삭제가 완료되었습니다.");
-    	    		    location.href = cpath + "/user/consumptionPattern"; 
-    	    		  } else {
-    	    		    alert("삭제에 실패했습니다.");
-    	    		  }
-    	    })
+      fetch(`${cpath}/ConsumptionPattern/deleteCon`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: "pattern_id=" + encodeURIComponent(patternId)
+      }).then(response => response.text())
+        .then(result => {
+          if (result.trim() === "ok") {
+            alert("삭제가 완료되었습니다.");
+            location.href = cpath + "/user/consumptionPattern";
+          } else {
+            alert("삭제에 실패했습니다.");
+          }
+        });
     }
   });
 });
+
 
 </script>
 
