@@ -23,7 +23,7 @@
 }
 .admin-container {
   max-width: 1200px;
-  margin: 36px auto 50px auto;
+  margin: -10px auto 50px auto;
   padding: 36px 20px;
   background: #fff;
   border-radius: 24px;
@@ -64,7 +64,7 @@
   justify-content: flex-start;
 }
 .chart-section:hover {
-  box-shadow: 0 6px 24px 0 rgba(56,142,60,0.14);
+  box-shadow: 0 4px 19px 0 rgba(56,142,60,0.3);
 }
 .chart-title {
   font-size: 1.55rem;
@@ -110,7 +110,7 @@
   }
 }
 
-  </style>
+</style>
 </head>
 <body>
   <div class="admin-container">
