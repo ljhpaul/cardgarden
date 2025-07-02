@@ -56,7 +56,7 @@ def find_cosine_card5(card_id):
 
 app = Flask(__name__)
 
-@app.route('/recommendCosine', methods=['GET'])
+@app.route('/recommendCosine1', methods=['GET'])
 def recommendCosine():
     try:
         card_id = int(request.args.get('card_id', 1))

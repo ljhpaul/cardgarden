@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +20,9 @@ import com.cardgarden.project.model.userPatternBenefit.UserPatternBenefitService
 @Controller
 @RequestMapping("/recommend")
 public class UserPatternBenefitController {
-    @Autowired
+	 
+	
+	@Autowired
     private UserPatternBenefitService userPatternBenefitService;
 
     @RequestMapping("/ai")
@@ -42,6 +45,7 @@ public class UserPatternBenefitController {
             mapData.computeIfAbsent(groupKey, k -> new ArrayList<>()).add(dto);
         }
         model.addAttribute("patternList", mapData);
+        
         return "recommend/ai";
     }
 

@@ -1,6 +1,7 @@
 package com.cardgarden.project.config;
 
 import java.io.IOException;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -33,9 +34,19 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
     	HttpSession session = request.getSession();
     	
     	OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
-        String email = oAuth2User.getAttribute("email");
+        String email = null;
         
-        log.info(email);
+        Object responseAttr = oAuth2User.getAttribute("response");
+        
+        if(responseAttr instanceof Map) {
+        	@SuppressWarnings("unchecked")
+			Map<String, Object> responseMap = (Map<String, Object>) responseAttr;
+            email = (String) responseMap.get("email");
+        } else {
+        	email = oAuth2User.getAttribute("email");
+        }
+        
+        log.info("소셜 로그인 email: {}", email);
     	
         if(userInfoService.existsByEmail(email)) {
         	int loginUserId = userInfoService.getUserIdByEmail(email);

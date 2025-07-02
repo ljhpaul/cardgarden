@@ -97,13 +97,26 @@ public class JoinController {
 
 		if (authentication != null && authentication.getPrincipal() instanceof OAuth2User) {
 			OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
-			model.addAttribute("socialId", oAuth2User.getAttribute("sub"));
-		    model.addAttribute("socialName", oAuth2User.getAttribute("name"));
-			session.setAttribute("emailVerified", oAuth2User.getAttribute("email_verified"));
-			session.setAttribute("verifiedEmail", oAuth2User.getAttribute("email"));
-		} else {
-	        return "redirect:/wrong";
-	    }
+			
+			//네이버 확인
+			Object responseAttr = oAuth2User.getAttribute("response");
+			if (responseAttr instanceof Map) {
+				@SuppressWarnings("unchecked")
+	            Map<String, Object> responseMap = (Map<String, Object>) responseAttr;
+				log.info(responseMap.toString());
+				log.info(responseMap.get("id").toString());
+				log.info(responseMap.get("name").toString());
+	            model.addAttribute("socialId", responseMap.get("id"));
+	            model.addAttribute("socialName", responseMap.get("name"));
+	            session.setAttribute("emailVerified", true);
+	            session.setAttribute("verifiedEmail", responseMap.get("email"));
+			} else {
+				model.addAttribute("socialId", oAuth2User.getAttribute("sub"));
+			    model.addAttribute("socialName", oAuth2User.getAttribute("name"));
+				session.setAttribute("emailVerified", oAuth2User.getAttribute("email_verified"));
+				session.setAttribute("verifiedEmail", oAuth2User.getAttribute("email"));
+			}
+		}
 	    
 		/*
 		if(session.getAttribute("verifiedEmail") == null) {

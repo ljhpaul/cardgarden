@@ -136,21 +136,18 @@ body {
 	          </div>
 	        </div>
 			
-			
-			<div id="password-area">
-	          <div class="form-group">
-	            <label for="user_password">비밀번호 <span style="color:#dc3545">*</span></label>
-	            <input type="password" id="user_password" name="user_password" class="input" placeholder="영문자, 숫자, 특수문자 포함 8~15자" maxlength="15">
-	            <span id="checkPwdMsg1" class="check-msg"></span>
-	          </div>
-	        
-	          <div class="form-group">
-	            <label for="user_password_check">비밀번호 확인</label>
-	            <input type="password" id="user_password_check" class="input">
-	            <span id="checkPwdMsg2" class="check-msg"></span>
-	          </div>
+	        <div class="form-group password-area">
+	          <label for="user_password">비밀번호 <span style="color:#dc3545">*</span></label>
+	          <input type="password" id="user_password" name="user_password" class="input" placeholder="영문자, 숫자, 특수문자 포함 8~15자" maxlength="15">
+	          <span id="checkPwdMsg1" class="check-msg"></span>
 	        </div>
-	
+	        
+	        <div class="form-group password-area">
+	          <label for="user_password_check">비밀번호 확인</label>
+	          <input type="password" id="user_password_check" class="input">
+	          <span id="checkPwdMsg2" class="check-msg"></span>
+	        </div>
+	        
 	        <div class="form-group">
 	          <label for="nickname">닉네임 <span style="color:#dc3545">*</span></label>
 	          <input type="text" id="nickname" name="nickname" class="input">
@@ -222,6 +219,9 @@ let checkId = false, checkPwd = false, checkNickname = false, checkEmail = false
 let socialJoin = "${sessionScope.socialJoin}";
 if(socialJoin) {
 	// 아이디 자동완성
+	let idid = "${socialId}";
+	console.log(idid);
+	
 	$("#user_name").val("${socialId}").attr("readonly", true);
 	checkId = true;
     $("#loginIdCheckArea").html("");
@@ -231,7 +231,7 @@ if(socialJoin) {
 	
 	// 비밀번호 칸 숨기기
 	checkPwd = true;
-	$("#password-area").hide();
+	$(".password-area").hide();
 }
 
 // 이메일 자동 완성

@@ -181,7 +181,7 @@ header.main-header {
   padding: 8px 12px;
   color: var(--m3);
   text-decoration: none;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 500;
 }
 
@@ -240,7 +240,7 @@ header.main-header {
   flex-grow: 1;
 }
 
-.menu-center a {
+.menu-center > .header-bottom-sticky > .menu-item > a {
   font-size: 16px;
   font-weight: bold;
   font-family: var(--font);
