@@ -171,9 +171,9 @@ body {
 	
 	        <div class="form-group">
 	          <label for="gender">성별 <span style="color:#dc3545">*</span></label>
-	          <select name="gender" class="input">
-	            <option value="M" ${user.gender == 'M' ? 'selected' : ''}>남</option>
-	            <option value="F" ${user.gender == 'F' ? 'selected' : ''}>여</option>
+	          <select id="gender" name="gender" class="input">
+	            <option value="M" ${socialGender == 'M' ? 'selected' : ''}>남</option>
+	            <option value="F" ${socialGender == 'F' ? 'selected' : ''}>여</option>
 	          </select>
 	        </div>
 	
@@ -218,9 +218,7 @@ let checkId = false, checkPwd = false, checkNickname = false, checkEmail = false
 // 소셜 로그인 체크
 let socialJoin = "${sessionScope.socialJoin}";
 if(socialJoin) {
-	// 아이디 자동완성
-	let idid = "${socialId}";
-	console.log(idid);
+	let socialMethod = "${socialMethod}";
 	
 	$("#user_name").val("${socialId}").attr("readonly", true);
 	checkId = true;
@@ -232,6 +230,14 @@ if(socialJoin) {
 	// 비밀번호 칸 숨기기
 	checkPwd = true;
 	$(".password-area").hide();
+	
+	// naver 회원가입 추가정보
+	if(socialMethod == "naver") {
+		$("#birth").val("${socialBirth}").attr("readonly", true);
+		$("#phone").val("${socialPhone}").attr("readonly", true);
+		checkBirth = true;
+		checkPhone = true;
+	}
 }
 
 // 이메일 자동 완성

@@ -34,6 +34,7 @@ public class UserPatternBenefitController {
 //    	}
     	if (userId == null) {
     	    model.addAttribute("alertMsg", "로그인이 필요합니다.");
+    	    session.setAttribute("redirectAfterLogin", "/recommend/ai");
     	    session.setAttribute("returnUrl", "/recommend/ai");
     	    return "recommend/alertLogin";
     	}
