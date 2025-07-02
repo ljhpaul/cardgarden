@@ -2,35 +2,13 @@
 <%@ include file="../common/header.jsp" %>
 <c:set var="cpath" value="${pageContext.servletContext.contextPath}" />
 
-<link rel="stylesheet" href="${cpath}/resources/css/customMakeSticker.css?ver=1">
-<style>
-.save-modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%; height: 100%;
-  background: rgba(0,0,0,0.4);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  visibility: hidden;
-}
-.save-modal .modal-content {
-  font-family:var(--font);
-  background: var(--main);
-  padding: 60px;
-  border-radius: 12px;
-  text-align: center;
-}
-</style>
+<link rel="stylesheet" href="${cpath}/resources/css/customMakeSticker.css?after">
 
 <div class="background-page-container">
 
   <h1 class="page-title">스티커 선택</h1>
 
   <div class="background-content-box">
-
-    <!-- 왼쪽 카드 미리보기 -->
     <div class="preview-area">
       <div class="preview-toolbar">
         <button class="tool-btn" data-tool="pen">펜</button>
@@ -40,24 +18,18 @@
       
       <div class="pen-setting-bar" style="visibility: hidden;">
         <div id="penControls">
-          <label>도구:
+          <label>도구: 
             <select id="brushType">
               <option value="pencil">연필</option>
               <option value="spray">스프레이</option>
               <option value="fill">색 채우기</option>
             </select>
           </label>
-          <label>두께:
-            <input type="range" id="penWidth" min="1" max="20" value="3">
-          </label>
-          <label>색상:
-            <input type="color" id="penColor" value="#000000">
-          </label>
+          <label>두께: <input type="range" id="penWidth" min="1" max="20" value="3"></label>
+          <label>색상: <input type="color" id="penColor" value="#000000"></label>
         </div>
         <div id="backgroundControls" style="display: none;">
-          <label>배경 색상:
-            <input type="color" id="backgroundColor" value="#ffffff">
-          </label>
+          <label>배경 색상: <input type="color" id="backgroundColor" value="#ffffff"></label>
         </div>
       </div>
 
@@ -70,7 +42,6 @@
       </div>
     </div>
 
-    <!-- 오른쪽 스티커 선택 영역 -->
     <div class="bg-select-area">
       <div class="brand-filter">
         <button class="brand-btn active" data-brand="all">전체</button>
@@ -113,9 +84,23 @@
 <div class="save-modal" id="saveModal">
   <div class="modal-content">
     <h2>카드 이름을 입력하세요</h2>
-    <input type="text" id="cardName" placeholder="카드 이름" style="padding:10px;font-family:var(--font); width:80%; margin:20px 0;">
+    <input type="text" id="cardName" placeholder="카드 이름">
     <div>
-      <button id="saveBtn" style="padding:10px 20px;font-family:var(--font);">저장</button>
+      <button id="saveBtn">저장</button>
+    </div>
+  </div>
+</div>
+
+<!-- 구매 모달 -->
+<div class="save-modal" id="buyModal">
+  <div class="modal-content">
+    <h2>스티커 구매</h2>
+    <p id="buyStickerName">스티커명</p>
+    <p>가격: <span id="stickerPrice"></span> Point</p>
+    <p>내 포인트: <span id="userPoint"></span> Point</p>
+    <div>
+      <button id="confirmBuyBtn">구매하기</button>
+      <button id="cancelBuyBtn">취소</button>
     </div>
   </div>
 </div>
@@ -134,24 +119,23 @@ window.addEventListener("DOMContentLoaded", () => {
   const cardFrame = document.getElementById("cardFrame");
   const canvasEl = document.getElementById("canvas");
   const saveModal = document.getElementById("saveModal");
+  const buyModal = document.getElementById("buyModal");
 
   const canvas = new fabric.Canvas('canvas');
   let currentMode = "select";
-  let lastLockedAssetId = null;
+  let selectedAssetId = null;
+  let selectedAssetImg = null;
 
   function resizeCanvasAccurate() {
     const frameRect = cardFrame.getBoundingClientRect();
     const ratio = window.devicePixelRatio || 1;
-
     canvasEl.style.width = frameRect.width + "px";
     canvasEl.style.height = frameRect.height + "px";
     canvasEl.width = frameRect.width * ratio;
     canvasEl.height = frameRect.height * ratio;
-
     canvas.setWidth(frameRect.width);
     canvas.setHeight(frameRect.height);
     canvas.setZoom(ratio);
-
     canvas.renderAll();
   }
 
@@ -166,35 +150,69 @@ window.addEventListener("DOMContentLoaded", () => {
       const isLocked = img.dataset.locked ? true : false;
 
       if (isLocked) {
-        lastLockedAssetId = assetId;
-        alert("보유하지 않은 아이템입니다.");
+        fetch(cpath + "/custom/detailInfo?asset_id=" + assetId)
+          .then(res => res.json())
+          .then(data => {
+            document.getElementById("buyStickerName").innerText = data.asset_name;
+            document.getElementById("stickerPrice").innerText = data.final_price;
+            document.getElementById("userPoint").innerText = data.userPoint;
+            buyModal.style.visibility = "visible";
+            selectedAssetId = assetId;
+            selectedAssetImg = url;
+          });
+        return;
       }
 
-      fabric.Image.fromURL(url, function(oImg) {
-        oImg.set({ left: 50, top: 50, scaleX: 0.3, scaleY: 0.3 });
-        canvas.add(oImg).setActiveObject(oImg);
-      });
+      addSticker(url);
     });
   });
 
+  document.getElementById("confirmBuyBtn").onclick = () => {
+    if (!selectedAssetId) return;
+
+    fetch(cpath + "/custom/buyDirect", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: "asset_id=" + selectedAssetId
+    })
+    .then(res => res.json())
+    .then(data => {
+    	if (data.success) {
+    	    alert("구매가 완료되었습니다.");
+    	    location.reload();
+    	} else {
+    	    alert(data.msg);
+    	}
+    });
+  };
+
+  document.getElementById("cancelBuyBtn").onclick = () => {
+    buyModal.style.visibility = "hidden";
+  };
+
+  function addSticker(url) {
+    fabric.Image.fromURL(url, oImg => {
+      oImg.set({ left: 50, top: 50, scaleX: 0.3, scaleY: 0.3 });
+      canvas.add(oImg).setActiveObject(oImg);
+    });
+  }
+
   document.querySelectorAll(".tool-btn").forEach(btn => {
     btn.addEventListener("click", () => {
-      const tool = btn.dataset.tool;
-      currentMode = tool;
-
+      currentMode = btn.dataset.tool;
       const penControls = document.getElementById("penControls");
       const backgroundControls = document.getElementById("backgroundControls");
 
-      if (tool === "pen") {
+      if (currentMode === "pen") {
         setBrush();
         canvas.isDrawingMode = true;
         document.querySelector(".pen-setting-bar").style.visibility = "visible";
         penControls.style.display = "flex";
         backgroundControls.style.display = "none";
-      } else if (tool === "select") {
+      } else if (currentMode === "select") {
         canvas.isDrawingMode = false;
         document.querySelector(".pen-setting-bar").style.visibility = "hidden";
-      } else if (tool === "background") {
+      } else if (currentMode === "background") {
         canvas.isDrawingMode = false;
         document.querySelector(".pen-setting-bar").style.visibility = "visible";
         penControls.style.display = "none";
@@ -203,17 +221,13 @@ window.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  document.getElementById("backgroundColor").addEventListener("input", (e) => {
+  document.getElementById("backgroundColor").addEventListener("input", e => {
     if (currentMode !== "background") return;
-
-    const color = e.target.value;
-    canvas.setBackgroundColor(color, canvas.renderAll.bind(canvas));
+    canvas.setBackgroundColor(e.target.value, canvas.renderAll.bind(canvas));
   });
 
   document.getElementById("brushType").addEventListener("change", () => {
-    if (currentMode === "pen") {
-      setBrush();
-    }
+    if (currentMode === "pen") setBrush();
   });
 
   function setBrush() {
@@ -226,28 +240,22 @@ window.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    let brush;
-
-    if (brushType === "pencil") {
-      brush = new fabric.PencilBrush(canvas);
-    } else if (brushType === "spray") {
-      brush = new fabric.SprayBrush(canvas);
-      brush.width = width * 2;
-      brush.density = 25;
-    }
+    const brush = brushType === "pencil" 
+      ? new fabric.PencilBrush(canvas) 
+      : new fabric.SprayBrush(canvas);
 
     brush.color = color;
-    brush.width = width;
+    brush.width = brushType === "spray" ? width * 2 : width;
+    if (brushType === "spray") brush.density = 25;
 
     canvas.freeDrawingBrush = brush;
     canvas.isDrawingMode = true;
   }
 
-  canvas.on("mouse:down", (opt) => {
+  canvas.on("mouse:down", opt => {
     if (currentMode === "pen" && document.getElementById("brushType").value === "fill") {
       const color = document.getElementById("penColor").value;
       const target = opt.target;
-
       if (target) {
         target.set("fill", color);
         canvas.requestRenderAll();
@@ -257,32 +265,30 @@ window.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  document.getElementById("penWidth").addEventListener("input", (e) => {
+  document.getElementById("penWidth").addEventListener("input", e => {
     if (currentMode === "pen" && canvas.freeDrawingBrush) {
       canvas.freeDrawingBrush.width = e.target.value;
     }
   });
 
-  document.getElementById("penColor").addEventListener("input", (e) => {
+  document.getElementById("penColor").addEventListener("input", e => {
     if (currentMode === "pen" && canvas.freeDrawingBrush) {
       canvas.freeDrawingBrush.color = e.target.value;
     }
   });
 
-  document.addEventListener("keydown", (e) => {
+  document.addEventListener("keydown", e => {
     if ((e.key === "Delete" || e.key === "Backspace") && currentMode === "select") {
       const activeObj = canvas.getActiveObject();
-      if (activeObj) {
-        canvas.remove(activeObj);
-      }
+      if (activeObj) canvas.remove(activeObj);
     }
   });
 
   document.querySelectorAll(".brand-btn").forEach(btn => {
     btn.addEventListener("click", () => {
-      const selectedBrand = btn.dataset.brand;
       document.querySelectorAll(".brand-btn").forEach(b => b.classList.remove("active"));
       btn.classList.add("active");
+      const selectedBrand = btn.dataset.brand;
 
       document.querySelectorAll(".bg-item").forEach(item => {
         const img = item.querySelector(".bg-option");
@@ -292,16 +298,10 @@ window.addEventListener("DOMContentLoaded", () => {
   });
 
   document.getElementById("backBtn").addEventListener("click", () => {
-    const encodedBg = encodeURIComponent(background);
-    window.location.href = cpath + "/make/background?type=" + type + "&background=" + encodedBg;
+    window.location.href = cpath + "/make/background?type=" + type + "&background=" + encodeURIComponent(background);
   });
 
   document.getElementById("completeBtn").addEventListener("click", () => {
-    if (lastLockedAssetId) {
-      alert("존재하지 않는 아이템이 있습니다. 상점으로 이동합니다.");
-      window.location.href = "/cardgarden/custom/detail?asset_id=" + lastLockedAssetId;
-      return;
-    }
     saveModal.style.visibility = "visible";
   });
 
@@ -313,21 +313,17 @@ window.addEventListener("DOMContentLoaded", () => {
     }
 
     html2canvas(cardFrame, { backgroundColor: null }).then(canvas => {
-      const finalDataUrl = canvas.toDataURL('image/png');
-
       fetch(cpath + "/make/saveImage", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ imageData: finalDataUrl, cardName: cardName })
+        body: JSON.stringify({ imageData: canvas.toDataURL('image/png'), cardName })
       })
       .then(res => res.text())
       .then(res => {
-    	  if (res === "ok") {
-              setTimeout(() => {
-                location.href = cpath + "/make/result";
-              }, 500); 
-            } else {
-              alert("저장 실패");
+        if (res === "ok") {
+          setTimeout(() => window.location.href = cpath + "/make/result", 500);
+        } else {
+          alert("저장 실패");
         }
       });
     });
