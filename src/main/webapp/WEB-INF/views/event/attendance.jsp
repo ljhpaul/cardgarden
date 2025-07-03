@@ -120,14 +120,16 @@
 
     const attendedDays = ${attendedDays};  
 
-    grid.querySelectorAll(".day-circle").forEach(e => e.remove());  
+    grid.querySelectorAll(".day-circle, .empty-circle").forEach(e => e.remove());  
 
+    // 월초 빈칸
     for (let i = 0; i < firstDay; i++) {  
         const empty = document.createElement("div");  
-        empty.className = "day-circle";  
+        empty.className = "empty-circle";  
         grid.appendChild(empty);  
     }  
 
+    // 날짜 그리기  
     for (let i = 1; i <= lastDay; i++) {  
         const day = document.createElement("div");  
         day.className = "day-circle";  
@@ -138,6 +140,17 @@
         }  
 
         grid.appendChild(day);  
+    }  
+
+    // 월말 빈칸
+    const totalCells = firstDay + lastDay;  
+    const remainingCells = 7 - (totalCells % 7);  
+    if (remainingCells < 7) {  
+        for (let i = 0; i < remainingCells; i++) {  
+            const empty = document.createElement("div");  
+            empty.className = "empty-circle";  
+            grid.appendChild(empty);  
+        }  
     }  
 
     document.getElementById("yearMonth").innerText = year + "년 " + (month + 1) + "월";  
