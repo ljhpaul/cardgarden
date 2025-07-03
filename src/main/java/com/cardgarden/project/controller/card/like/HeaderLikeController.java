@@ -27,17 +27,15 @@ public class HeaderLikeController {
         Integer likeCount = (Integer) session.getAttribute("userLike");
 
         if (userId != null) {
-            if (likeCount == null) {
-                try {
-                    likeCount = cardLikeService.cardLikeSelectCount(userId);
-                    session.setAttribute("userLike", likeCount);
-                } catch (Exception e) {
-                    System.out.println("cardLikeSelectCount 실행 오류: " + e.getMessage());
-                    likeCount = 0; // 실패 시 기본값
-                }
+            try {
+                likeCount = cardLikeService.cardLikeSelectCount(userId);
+                session.setAttribute("userLike", likeCount); 
+            } catch (Exception e) {
+                System.out.println("cardLikeSelectCount 실행 오류: " + e.getMessage());
+                likeCount = null; // 실패 시 기본값
             }
         } else {
-            likeCount = 0; // 로그인 안된 경우 0으로 처리
+            likeCount = null; // 로그인 안된 경우 null으로 처리
             session.removeAttribute("userLike");
         }
 
