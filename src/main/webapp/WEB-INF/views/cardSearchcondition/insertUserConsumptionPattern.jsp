@@ -102,7 +102,7 @@ label {
 	transition: border-color 0.3s ease;
 }
 
-.inputst:focus, select:focus {
+.inputst:focus,select:focus {
 	border-color: #8FB098;
 	outline: none;
 }
