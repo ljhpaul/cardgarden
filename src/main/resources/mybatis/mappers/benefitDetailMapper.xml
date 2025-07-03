@@ -7,15 +7,29 @@
   <select id="selectAll" resultType="BenefitDetailDTO">
     select * from BenefitDetail
   </select>
-  <select id="selectPatternCardID" resultType="BenefitDetailDTO">
-  	SELECT bd.benefitdetail_name
-	FROM CardBenefitDetail cbd
-		INNER JOIN BenefitDetail bd
-			ON bd.benefitdetail_id = cbd.benefitdetail_id
-		INNER JOIN UserConsumptionPatternDetail ucp
-			ON ucp.benefitcategory_id = bd.benefitcategory_id
-	WHERE pattern_id=#{patternid}
-		AND card_id = #{cardid};
-  
-  </select>
+  <resultMap id="CardBenefitRankMap" type="com.cardgarden.project.model.cardDetail.CardBenefitRankDTO">
+	<result column="amount_rank" property="amount_Rank" />
+	<association property="benefitDetailDTO" javaType="com.cardgarden.project.model.benefitDetail.BenefitDetailDTO">
+		<id column="benefitdetail_id" property="benefitdetail_id" />
+		<result column="benefitdetail_name" property="benefitdetail_name" />
+	</association>
+	<association property="userConsumptionPatternDetailDTO" javaType="com.cardgarden.project.model.userConsumptionPatternDetail.UserConsumptionPatternDetailDTO">
+	    <result column="amount" property="amount" />
+	</association>
+  </resultMap>
+	<select id="selectPatternCardID" resultMap="CardBenefitRankMap">
+		SELECT
+			bd.benefitdetail_id,
+			bd.benefitdetail_name,
+			ucp.amount,
+			RANK() OVER (ORDER BY ucp.amount DESC) AS amount_rank
+		FROM CardBenefitDetail cbd
+			INNER JOIN BenefitDetail bd
+				ON bd.benefitdetail_id = cbd.benefitdetail_id
+			INNER JOIN UserConsumptionPatternDetail ucp
+				ON ucp.benefitcategory_id = bd.benefitcategory_id
+		WHERE ucp.pattern_id = #{patternid}
+			AND cbd.card_id = #{cardid}
+	</select>
+
  </mapper>
