@@ -6,6 +6,7 @@ import java.util.*;
 
 import javax.servlet.http.HttpSession;
 
+import com.cardgarden.project.model.event.dao.AttendanceDAOInterface;
 import com.cardgarden.project.model.event.dto.AttendanceDTO;
 import com.cardgarden.project.model.event.dto.MonthlyBonusDTO;
 import com.cardgarden.project.model.event.dto.WeeklyBonusDTO;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class AttendanceController {
 
+	@Autowired
     private AttendanceDAOInterface dao;  
     @Autowired
     private AttendanceService service;
