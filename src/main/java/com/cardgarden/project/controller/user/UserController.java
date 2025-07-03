@@ -157,7 +157,7 @@ public class UserController {
 	    if (loginUserIdObj == null) {
 
 	    	session.setAttribute("msg", "로그인이 필요한 기능입니다");
-	    	session.setAttribute("redirectAfterLogin", "/user/mycard");
+	    	session.setAttribute("redirectAfterLogin", "/user/card");
 
 	        return "redirect:/user/login";
 	    }

@@ -28,8 +28,9 @@ public class AttendanceController {
 
         Object userIdObj = session.getAttribute("loginUserId");
         if (userIdObj == null) {
-            session.setAttribute("redirectAfterLogin", "/event/attendance");
-            return "redirect:/user/login";
+        	session.setAttribute("msg", "로그인이 필요한 기능입니다");
+        	session.setAttribute("redirectAfterLogin", "/event/attendance");
+            return "redirect:/user/login";  
         }
 
         int userId = (int) userIdObj;
