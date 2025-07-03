@@ -107,7 +107,7 @@ public class UserController {
 	    // 로그인되지 않았을 경우 처리
 	    if (loginUserIdObj == null) {
 	    	session.setAttribute("msg", "로그인이 필요한 기능입니다");
-	    	session.setAttribute("redirectAfterLogin", "/user/myconsumptionPattern");
+	    	session.setAttribute("redirectAfterLogin", "/user/consumptionPattern");
 	        return "redirect:/user/login";
 	    }
 	    
@@ -136,7 +136,7 @@ public class UserController {
 	    // 로그인되지 않았을 경우 처리
 	    if (loginUserIdObj == null) {
 	    	session.setAttribute("msg", "로그인이 필요한 기능입니다");
-	    	session.setAttribute("redirectAfterLogin", "/user/myPoint");
+	    	session.setAttribute("redirectAfterLogin", "/user/Point");
 	        return "redirect:/user/login";
 	    }
 		
