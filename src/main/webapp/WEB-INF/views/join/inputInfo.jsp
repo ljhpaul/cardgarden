@@ -384,7 +384,7 @@ $('#user_password, #user_password_check').on("input blur keyup", function() {
   let a = $("#user_password").val();
   let b = $("#user_password_check").val();
   let msg = $("#checkPwdMsg2");
-  if(a.length == 0) {
+  if(a.length == 0 || !pwdCheck(a)) {
 	msg.html("");
 	$("#user_password_check").css({"background-color": "", "border": "", "outline": ""});
 	checkPwd = false; updateEnrollBtn();
