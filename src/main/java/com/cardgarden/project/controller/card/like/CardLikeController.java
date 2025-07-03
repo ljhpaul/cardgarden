@@ -40,7 +40,15 @@ public class CardLikeController {
         int row = cardLikeService.cardLikeInsert(dto);
 
         Map<String, Object> result = new HashMap<>();
-        result.put("result", row > 0 ? "success" : "fail");
+        if (row > 0) {
+            int likeCount = cardLikeService.cardLikeSelectCount(userId);
+            session.setAttribute("userLike", likeCount);
+            result.put("result", "success");
+            result.put("userLike", likeCount);
+        } else {
+            result.put("result", "fail");
+        }
+
         return result;
     }
     
@@ -56,19 +64,30 @@ public class CardLikeController {
 
     @SuppressWarnings("unused")
 	@PostMapping("/cardUnlike")
-    public String cardLikeDelete(@RequestParam("card_id") int cardId, HttpSession session) {
-        Integer userId = (Integer) session.getAttribute("loginUserId");
-        if (userId == null) {
-            return "로그인 필요";
-        }
+    public Map<String, Object> cardLikeDelete(@RequestParam("card_id") int cardId, HttpSession session) {
+    	 Integer userId = (Integer) session.getAttribute("loginUserId");
+     	if (userId == null) {
+             Map<String, Object> loginResult = new HashMap<>();
+             loginResult.put("result", "need_login");
+             return loginResult;
+         }
 
         CardLikeDTO dto = CardLikeDTO.builder()
                 .card_id(cardId)
                 .user_id(userId)
                 .build();
+        int row = cardLikeService.cardLikeDelete(dto);
+        Map<String, Object> result = new HashMap<>();
+        if (row > 0) {
+            int likeCount = cardLikeService.cardLikeSelectCount(userId);
+            session.setAttribute("userLike", likeCount);
+            result.put("result", "success");
+            result.put("userLike", likeCount);
+        } else {
+            result.put("result", "fail");
+        }
 
-        int result = cardLikeService.cardLikeDelete(dto);
-        return result > 0 ? "success" : "fail";
+        return result;
     }
     
     
