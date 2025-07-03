@@ -7,5 +7,15 @@
   <select id="selectAll" resultType="BenefitDetailDTO">
     select * from BenefitDetail
   </select>
+  <select id="selectPatternCardID" resultType="BenefitDetailDTO">
+  	SELECT bd.benefitdetail_name
+	FROM CardBenefitDetail cbd
+		INNER JOIN BenefitDetail bd
+			ON bd.benefitdetail_id = cbd.benefitdetail_id
+		INNER JOIN UserConsumptionPatternDetail ucp
+			ON ucp.benefitcategory_id = bd.benefitcategory_id
+	WHERE pattern_id=#{patternid}
+		AND card_id = #{cardid};
   
+  </select>
  </mapper>

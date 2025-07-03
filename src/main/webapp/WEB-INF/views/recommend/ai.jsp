@@ -69,7 +69,7 @@
 	    border: none;
 	    box-shadow: none;
 	    padding: 25px;
-	    text-align: center;
+	    text-align: left;
 	    margin-left: 0;
 	    min-height: 370px;
 	    border-radius: 20px;
@@ -225,6 +225,9 @@
 	    width: auto;
 	    text-align: center;
 	}
+	.abcd{
+		height:100px
+	}
 </style>
 </head>
 <body>
@@ -277,6 +280,7 @@
     </c:choose>
   </div>
 </div>
+<div class="abcd"></div>
 
 <!-- 로딩 팝업 -->
 <div class="loading-popup-mask" style="display:none;">

@@ -1,7 +1,9 @@
 package com.cardgarden.project.model.cardDetail;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -9,6 +11,8 @@ import org.json.simple.parser.JSONParser;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import com.cardgarden.project.model.benefitDetail.BenefitDetailDTO;
 
 @Repository
 public class CardDAOMybatis implements CardDAOInterface {
@@ -28,6 +32,12 @@ public class CardDAOMybatis implements CardDAOInterface {
 		return cardList;
 	}
 	
+	public List<BenefitDetailDTO> selectPatternCardID(int patternid, int cardid){
+	    Map<String, Object> param = new HashMap<>();
+	    param.put("patternid", patternid);
+	    param.put("cardid", cardid);
+	    return sqlSession.selectList("com.cardgarden.benefitDetail.selectPatternCardID", param);
+	}
 	
 	@Override
 	public List<CardDetailDTO> selectDetailByID(int cardId) {
