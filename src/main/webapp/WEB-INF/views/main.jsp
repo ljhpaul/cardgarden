@@ -254,7 +254,7 @@ body {
     margin: -10px auto 0 auto;
     background: rgba(255, 255, 255, 0.93);
     border-radius: 22px;
-    box-shadow: 0 12px 40px rgba(60, 70, 90, 0.13);
+    box-shadow: 0 4px 24px rgba(100,130,120,0.1);
     padding: 48px 32px 56px;
     box-sizing: border-box;
     transition: box-shadow 0.2s;
