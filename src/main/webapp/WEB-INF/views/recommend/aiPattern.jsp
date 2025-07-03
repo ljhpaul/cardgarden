@@ -296,7 +296,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <c:otherwise>
               <div class="no-pattern-message" style="text-align:center;">
                 <p>아직 등록된 소비 패턴이 없습니다.</p>
-                <a href="${cpath}/ConsumptionPattern/inCon" class="btn">패턴 입력하러 가기</a>
+                <a href="${cpath}/ConsumptionPattern/inCon?cardid=${cardid}" class="btn">패턴 입력하러 가기</a>
               </div>
             </c:otherwise>
           </c:choose>

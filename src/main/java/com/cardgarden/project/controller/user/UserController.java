@@ -119,6 +119,8 @@ public class UserController {
 		
 		model.addAttribute("benefitCategorylist", benefitCategorylist);
         model.addAttribute("myConsumptionPatternList", myConsumptionPatternList);
+        
+        String uri = request.getRequestURI();
 
 		
 	    return "mypage/myconsumptionPattern";
