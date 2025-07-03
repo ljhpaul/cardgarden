@@ -4,7 +4,7 @@
 
 <c:set var="cpath" value="${pageContext.servletContext.contextPath}" />
 <link rel="stylesheet" href="${cpath}/resources/css/customTop.css?ver=2">
-
+<title>카드가든 : 스티커 랭킹</title>
 <div class="custom-top-container">
 
   <!-- 제목 -->

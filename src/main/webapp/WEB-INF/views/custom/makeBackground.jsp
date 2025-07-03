@@ -3,7 +3,7 @@
 <c:set var="cpath" value="${pageContext.servletContext.contextPath}" />
 
 <link rel="stylesheet" href="${cpath}/resources/css/customMakeBackground.css?ver=3">
-
+<title>카드가든 : 커스텀 디자인 제작</title>
 <div class="background-page-container">
 
   <h1 class="page-title">배경 선택</h1>
