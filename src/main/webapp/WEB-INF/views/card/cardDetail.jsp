@@ -104,10 +104,15 @@ $(function() {
 				data: { card_id: cardId },
 				success: function (res) {
 					console.log("서버 응답 (unlike):", res);
-					if (res === "success") {
+					if (res.result === "success") {
 						$btn.data("liked", false);
 						$icon.attr("src", "${cpath}/resources/images/cardlikeImage/unlike.png");
 						$count.text(Number($count.text()) - 1);
+						if (res.userLike !== undefined) {
+					        $("#userLike").text(res.userLike);
+					        $(".like-count.like-count-sticky").text(res.userLike);
+					    }
+						
 					} else {
 						alert("좋아요 취소 실패!");
 					}
@@ -132,6 +137,10 @@ $(function() {
 						$count.text(Number($count.text()) + 1);
 						// 좋아요 애니메이션 추가
 						createRandomBurstEffect($btn[0], "${cpath}/resources/images/cardlikeImage/like.png");
+						if (res.userLike !== undefined) {
+					        $("#userLike").text(res.userLike);
+					        $(".like-count.like-count-sticky").text(res.userLike);
+					    }
 						
 					} else if (res.result === "login_required" || res.result === "need_login") {
 					    alert("로그인 후 이용 가능합니다.");

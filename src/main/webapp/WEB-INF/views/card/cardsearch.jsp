@@ -469,9 +469,15 @@ $(function () {
 
       if (liked) {
         $.post(`${cpath}/card/cardUnlike`, { card_id: cardId }, function (res) {
-          if (res === "success") {
+          if (res.result === "success") {
             $icon.attr("src", `${cpath}/resources/images/cardlikeImage/unlike.png`);
             $icon.attr("data-liked", "false");
+            
+            if (res.userLike !== undefined) {
+		        $("#userLike").text(res.userLike);
+		        $(".like-count.like-count-sticky").text(res.userLike);
+		    }
+            
           } else {
             alert("좋아요 취소 실패!");
           }
@@ -482,6 +488,13 @@ $(function () {
             $icon.attr("src", `${cpath}/resources/images/cardlikeImage/like.png`);
             $icon.attr("data-liked", "true");
             createRandomBurstEffect($icon[0], "${cpath}/resources/images/cardlikeImage/like.png");
+            
+            if (res.userLike !== undefined) {
+		        $("#userLike").text(res.userLike);
+		        $(".like-count.like-count-sticky").text(res.userLike);
+		    }
+            
+            
           } else if (res.result === "login_required" || res.result === "need_login") {
             alert("로그인 후 이용 가능합니다.");
             const cpath = "${cpath}";
