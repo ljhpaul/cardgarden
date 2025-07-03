@@ -319,9 +319,6 @@ body {
 }
 
 
-
-
-
 #fairy-card-container {
   text-align: center;
   margin: 48px 0;
@@ -523,6 +520,5 @@ body {
   background: #f0f0f0;
   margin-top: 125px; /* 트랙 시작 여백 */
 }
-
 
 </style>
