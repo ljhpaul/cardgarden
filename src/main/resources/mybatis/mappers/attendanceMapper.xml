@@ -50,8 +50,9 @@
   <!-- MonthlyBonus 등록 (주 5일 기준) -->
   <insert id="insertMonthlyBonus" parameterType="MonthlyBonusDTO">
     INSERT INTO MonthlyBonus (user_id, month_start, bonus_given)
-    VALUES (#{userId}, #{weekStart}, 'Y')
-  </insert>
+    VALUES (#{userId}, #{monthStart}, 'Y')
+</insert>
+
   
   <!-- 6. 생일인지 확인 -->
   <select id="isBirthday" parameterType="map" resultType="int">
