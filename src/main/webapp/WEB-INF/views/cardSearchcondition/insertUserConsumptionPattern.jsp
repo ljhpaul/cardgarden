@@ -92,7 +92,7 @@ label {
 	color: #3e4e42;
 }
 
-input[type="text"], input[type="number"], select {
+.inputst[type="text"], input[type="number"], select {
 	width: 100%;
 	padding: 14px 16px;
 	font-size: 15px;
@@ -102,7 +102,7 @@ input[type="text"], input[type="number"], select {
 	transition: border-color 0.3s ease;
 }
 
-input:focus, select:focus {
+.inputst:focus, select:focus {
 	border-color: #8FB098;
 	outline: none;
 }
@@ -154,7 +154,7 @@ input[type="submit"]:hover, input[type="reset"]:hover, #btnpuls:hover {
 
 				<div class="form-group">
 					<label style="font-weight: 1000; font-size: 25px;">소비패턴 이름</label>
-					<input type="text" name="pattern_name" required autofocus
+					<input type="text" class="inputst" name="pattern_name" required autofocus
 						placeholder="소비패턴 이름을 입력하세요">
 				</div>
 
@@ -164,14 +164,14 @@ input[type="submit"]:hover, input[type="reset"]:hover, #btnpuls:hover {
 							<option value="${benefit.benefitcategory_id}">${benefit.benefitCategory_name}</option>
 						</c:forEach>
 					</select> <br>
-					<br> <label>소비금액</label> <input type="number" name="amount"
+					<br> <label>소비금액</label> <input type="number" name="amount" class="inputst"
 						id="inputAmount" placeholder="금액을 입력하세요" min="0" max=""> <br>
 					<br>
 				</div>
 
 				<div class="button-group">
-					<input type="submit" value="등록"> <input type="reset"
-						id="reset_id_btn" value="초기화">
+					<input type="submit" value="등록"> 
+					<input type="reset" id="reset_id_btn" value="초기화">
 					<button type="button" id="btnpuls">입력칸 추가</button>
 				</div>
 			</form>
