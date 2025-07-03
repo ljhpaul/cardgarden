@@ -42,6 +42,7 @@ public class UserController {
 		
 	    HttpSession mySession = request.getSession();
 	    Object loginUserIdObj = mySession.getAttribute("loginUserId");
+	    
 	    // 로그인되지 않았을 경우 처리
 	    if (loginUserIdObj == null) {
 	    	session.setAttribute("msg", "로그인이 필요한 기능입니다");
@@ -182,7 +183,7 @@ public class UserController {
 	    // 로그인되지 않았을 경우 처리
 	    if (loginUserIdObj == null) {
 	    	session.setAttribute("msg", "로그인이 필요한 기능입니다");
-	    	session.setAttribute("redirectAfterLogin", "/user/mycustomcard");
+	    	session.setAttribute("redirectAfterLogin", "/user/customcard");
 	        return "redirect:/user/login";
 	    }
 

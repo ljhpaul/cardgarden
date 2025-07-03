@@ -6,7 +6,7 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title>카드조회</title>
+  <title>카드가든 : 카드조회</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&family=Nanum+Square+Round&display=swap" rel="stylesheet">
@@ -210,13 +210,13 @@
 		  </div>
 </form>
 <script>
-  function updateCardCount() {
+function updateCardCount() {
     const category = [];
     document.querySelectorAll('input[name="category"]:checked').forEach(ct => category.push(ct.value));
     const cardType = [];
     document.querySelectorAll('input[name="cardType"]:checked').forEach(ct => cardType.push(ct.value));
 
-    const cardsubmit = document.getElementById("cardsubmit")
+
     
     if (cardType.length === 0) {
       alert("신용카드 또는 체크카드 중 하나는 선택해야 합니다.");
@@ -250,6 +250,7 @@
   }
 
   document.addEventListener("DOMContentLoaded", function () {
+	  const cardsubmit = document.getElementById("cardsubmit")
     document.querySelectorAll('input[name="category"], input[name="cardType"]').forEach(input => {
       input.addEventListener("change", updateCardCount);
     });
@@ -260,7 +261,9 @@
         alert("신용카드 또는 체크카드 중 하나는 선택해야 합니다.");
         e.preventDefault();
         document.getElementById("focus").focus();
-      }
+      }else{
+        cardsubmit.disabled = false;
+    }
     });
   });
 </script>
