@@ -7,7 +7,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>추천 카드 리스트</title>
+<title>카드가든 : AI 카드추천</title>
 <link href="https://fonts.googleapis.com/css2?family=Nanum+Square+Round&display=swap" rel="stylesheet">
 <style>
 :root {
