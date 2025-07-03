@@ -120,6 +120,11 @@ CREATE TABLE CustomCard (
   FOREIGN KEY (user_id) REFERENCES UserInfo(user_id)
 );
 
+ALTER TABLE customcard DROP FOREIGN KEY customcard_ibfk_1;
+ALTER TABLE customcard
+ADD CONSTRAINT customcard_ibfk_1
+FOREIGN KEY (user_id) REFERENCES userinfo(user_id) ON DELETE CASCADE;
+
 CREATE TABLE point_history (
   id INT PRIMARY KEY AUTO_INCREMENT COMMENT '포인트 내역 고유 번호',
   user_id INT NOT NULL COMMENT '회원 번호',
@@ -235,6 +240,13 @@ CREATE TABLE UserConsumptionPatternDetail (
   FOREIGN KEY (pattern_id) REFERENCES UserConsumptionPattern(pattern_id),
   FOREIGN KEY (benefitcategory_id) REFERENCES BenefitCategory(benefitcategory_id)
 );
+
+ALTER TABLE UserConsumptionPatternDetail
+DROP FOREIGN KEY userconsumptionpatterndetail_ibfk_1;
+
+ALTER TABLE UserConsumptionPatternDetail
+ADD CONSTRAINT userconsumptionpatterndetail_ibfk_1 FOREIGN KEY (pattern_id)
+REFERENCES UserConsumptionPattern(pattern_id) ON DELETE CASCADE;
 #=========================================================================================
 
 CREATE TRIGGER LikeCardTrigger_Insert

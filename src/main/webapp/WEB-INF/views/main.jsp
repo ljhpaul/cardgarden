@@ -334,7 +334,9 @@ body {
 
 .fairy-img {
   width: 1040px;
-  border-radius: 10px;
+  border-radius: 14px;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.08);
+  transition: transform 0.2s;
 }
 
 .card-overlay {
@@ -347,7 +349,10 @@ body {
   object-fit: contain;
   border-radius: 8px;
   background: white;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    box-shadow: 
+    0 0 24px 8px rgba(255,254,222,0.8),   /* 강한 흰색 광채 */
+    0 0 32px 12px rgba(255, 220, 120, 0.7), /* 노란빛 광채 */
+    0 4px 20px rgba(0,0,0,0.08);           /* 약한 그림자 */
   transition: transform 1s;
   cursor: pointer;
 }

@@ -45,9 +45,28 @@ public class JoinController {
 		return "join/joinMethod";
 	}
 	
-	//1-1. 약관 동의
+	//1-1(1). 약관 동의
 	@GetMapping("/term")
-	public String termAgreeView(Model model) {
+	public String termAgreeView(HttpSession session, Model model) {
+		List<TermDTO> termList = termService.selectAll();
+		model.addAttribute("termList", termList);
+		session.removeAttribute("socialId");
+        session.removeAttribute("socialName");
+        session.removeAttribute("socialGender");
+        session.removeAttribute("socialBirth");
+        session.removeAttribute("socialPhone");
+        session.removeAttribute("socialJoin");
+        
+		session.removeAttribute("emailVerified");
+		session.removeAttribute("verifiedEmail");
+		SecurityContextHolder.getContext().setAuthentication(null);
+		log.info("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! email(JoinController_1): "+session.getAttribute("verifiedEmail")+"");
+		return "join/termAgree";
+	}
+	
+	//1-1(2). 약관 동의(소셜)
+	@GetMapping("/term/social")
+	public String termAgreeSocialView(Model model) {
 		List<TermDTO> termList = termService.selectAll();
 		model.addAttribute("termList", termList);
 		return "join/termAgree";
@@ -93,6 +112,7 @@ public class JoinController {
 	//3-1. 회원정보 입력
 	@GetMapping("/info")
 	public String inputInfoView(HttpSession session, Model model) {
+		log.info("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! email(JoinController_2): "+session.getAttribute("verifiedEmail")+"");
 		
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
@@ -125,11 +145,9 @@ public class JoinController {
 		    }
 		}
 	    
-		/*
 		if(session.getAttribute("verifiedEmail") == null) {
 			return "redirect:/wrong";
 		}
-		*/
 		
 	    return "join/inputInfo";
 	}
@@ -168,7 +186,17 @@ public class JoinController {
 		
 		if(result > 0 && checkedTermList != null) {
 			//소셜회원가입여부 세션 저장값 초기화
-			session.removeAttribute("socialJoin");
+			Boolean socialJoin = (Boolean) session.getAttribute("socialJoin");
+			
+			if(socialJoin != null) {
+				session.removeAttribute("socialId");
+	            session.removeAttribute("socialName");
+	            session.removeAttribute("socialGender");
+	            session.removeAttribute("socialBirth");
+	            session.removeAttribute("socialPhone");
+				
+				session.removeAttribute("socialJoin");
+			}
 			
 			//약관동의 세션 저장값 초기화
 			session.removeAttribute("checkedTermList");
