@@ -82,4 +82,7 @@
      <error-code>500</error-code>
      <location>/WEB-INF/views/common/500.jsp</location>
   </error-page>
+  <absolute-ordering>
+    <name>spring_web</name>
+</absolute-ordering>
 </web-app>
