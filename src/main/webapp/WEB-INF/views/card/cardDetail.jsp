@@ -229,7 +229,7 @@ $(function() {
 			      <div class="gauge-label">
 		              카드 적합도
 		            </div>
-		            <div class="gauge-bar"  style="--rate: ${(result.q_value-0.3) * 100}%;">
+		            <div class="gauge-bar"  style="--rate: ${(result.q_value-0.2) * 100}%;">
 		              <div class="gauge-fill" ></div>
 		            </div>
 			      <div class="category-match">
@@ -290,8 +290,11 @@ $(function() {
 						</c:choose>
 					</div>
 					<div class="card-tags">
-						<span>국내연회비: ${card.fee_domestic}원 &ensp;|</span>
-						<span>해외연회비: ${card.fee_foreign}원 &ensp;|</span>
+						<fmt:formatNumber value="${card.fee_domestic}" type="number" groupingUsed="true" var="fee_domestic"/>
+						<span>국내연회비: ${fee_domestic}원 &ensp;|</span>
+						<fmt:formatNumber type="number" maxFractionDigits="3" value="${card.fee_foreign}" var="fee_foreign" />
+						<span>해외연회비: ${fee_foreign}원 &ensp;|</span>
+						<%-- <fmt:formatNumber value="${card.prev_month_cost}" type="number" groupingUsed="true" var="prev_month_cost"/> --%>
 						<span>전월실적: ${card.prev_month_cost}만원</span>
 					</div>
 					<a href="${card.card_url}" class="company-button">카드사 바로가기</a>

@@ -61,18 +61,18 @@
 	}
 	.pattern-container {
 		display: grid;
-		grid-template-columns: repeat(3, 1fr);
-		gap: 24px;
-		max-width: 900px;
-		width: 100%;
-		background: rgba(255,255,255,0.93);
-		border: none;
-		box-shadow: none;
-		padding: 25px;
-		text-align: center;
-		margin-left: 50px;
-		min-height: 370px;
-		border-radius: 20px;
+	    grid-template-columns: repeat(3, 1fr);
+	    gap: 24px;
+	    max-width: 900px;
+	    width: 100%;
+	    background: rgba(255, 255, 255, 0.93);
+	    border: none;
+	    box-shadow: none;
+	    padding: 25px;
+	    text-align: center;
+	    margin-left: 0;
+	    min-height: 370px;
+	    border-radius: 20px;
 	}
 	.pattern-group {
 		position: relative;
@@ -119,21 +119,19 @@
 	}
 	.button-primary {
 		margin-top: 32px;
-		padding: 16px 48px;
-		background-color: #FFF5E1;
-		color: var(--m3, #49615A);
-		border: none;
-		border-radius: 10px;
-		font-size: 24px;
-		font-weight: 800;
-		cursor: pointer;
-		box-shadow: 0 2px 8px rgba(143,176,152,0.07);
-		transition: background 0.15s, color 0.15s;
-		display: inline-block;
-		text-align: center;
-		margin-left: 50px; 
-		text-decoration: none;
-		margin-bottom: 300px;
+	    padding: 16px 48px;
+	    background-color: #FFF5E1;
+	    color: var(--m3, #49615A);
+	    border: none;
+	    border-radius: 10px;
+	    font-size: 24px;
+	    font-weight: 800;
+	    cursor: pointer;
+	    box-shadow: 0 2px 8px rgba(143, 176, 152, 0.07);
+	    transition: background 0.15s, color 0.15s;
+	    display: inline-block;
+	    text-align: center;
+	    text-decoration: none;
 	}
 	.button-primary:hover {
 		background-color: #FFE0A3;
@@ -154,7 +152,7 @@
 		z-index: 9999;
 		display: none;
 	}
-	@media (max-width: 1100px) {
+	@media (max-width: 900px) {
 		.pattern-container {
 			grid-template-columns: repeat(2, 1fr);
 		}
@@ -213,6 +211,20 @@
 	  font-size: 1.25em; color: #2B362D; font-weight: bold; letter-spacing: 1.5px;
 	  margin-top: 12px;
 	}
+	.ai-form{
+		height: auto;
+	    max-width: 950px;
+	    margin-left: 50px;
+	    width: auto;
+	    background: white;
+	    text-align: center;
+	    border-radius: 30px;
+	}
+	.button-submit{
+		height: 110px;
+	    width: auto;
+	    text-align: center;
+	}
 </style>
 </head>
 <body>
@@ -255,7 +267,7 @@
             </c:forEach>
           </div>
           
-          <div>
+          <div class="button-submit">
           	<a href ="#" id="aside-ai" class="button-primary">
           		제출하기
           	</a>
