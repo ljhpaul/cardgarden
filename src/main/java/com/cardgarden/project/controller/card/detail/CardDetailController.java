@@ -84,6 +84,7 @@ public class CardDetailController {
             Map<Integer, List<UserPatternBenefitDTO>> patternList = getPatternList(userId);
             model.addAttribute("patternList", patternList);
             model.addAttribute("userInfo",userInfoService.selectById(userId));
+            
         }
 
         // patternId가 있으면 AI 추천 결과 추가
@@ -91,6 +92,7 @@ public class CardDetailController {
             List<RecommendResultDTO> aiDetailResult =
                     cardRecommendationService.getRecommendDetailResult(patternId, cardid);
             model.addAttribute("aiDetailResult", aiDetailResult);
+            model.addAttribute("benefitDetail",cardService.selectPatternCardID(patternId, cardid));
             System.out.println(aiDetailResult);
         }
         

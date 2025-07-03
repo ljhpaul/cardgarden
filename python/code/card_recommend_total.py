@@ -211,7 +211,7 @@ def find_cosine_card5(card_id):
     return [{"card_id": cid, "similarity": sim} for cid, sim in zip(similar_card_ids, similarities)]
 
 # --- 추천 3 (Q Table 방식) ---
-def get_consum_pattern_continuous(pattern_id, card_id, q_cutoff=0.6, min_matched=2):
+def get_consum_pattern_continuous(pattern_id, card_id, q_cutoff=0.75, min_matched=2):
     result = None
     # Q Table 불러오기 (parquet 경로 실제 서버 경로로 수정 필요!)
     DF_PARQUET = pd.read_parquet(

@@ -273,7 +273,7 @@ $(function() {
 			      <div class="gauge-label">
 		              카드 적합도
 		            </div>
-		            <div class="gauge-bar"  style="--rate: ${(result.q_value-0.3) * 100}%;">
+		            <div class="gauge-bar"  style="--rate: ${(result.q_value-0.2) * 100}%;">
 		              <div class="gauge-fill" ></div>
 		            </div>
 			      <div class="category-match">
@@ -303,7 +303,7 @@ $(function() {
 		    </c:otherwise>
 		  </c:choose>
 		</div>
-
+		
 		<!-- 카드 타입/브랜드/연회비 등 -->
 				<div class="card-bottom-center">
 					<div class="card-tags">
@@ -334,8 +334,11 @@ $(function() {
 						</c:choose>
 					</div>
 					<div class="card-tags">
-						<span>국내연회비: ${card.fee_domestic}원 &ensp;|</span>
-						<span>해외연회비: ${card.fee_foreign}원 &ensp;|</span>
+						<fmt:formatNumber value="${card.fee_domestic}" type="number" groupingUsed="true" var="fee_domestic"/>
+						<span>국내연회비: ${fee_domestic}원 &ensp;|</span>
+						<fmt:formatNumber type="number" maxFractionDigits="3" value="${card.fee_foreign}" var="fee_foreign" />
+						<span>해외연회비: ${fee_foreign}원 &ensp;|</span>
+						<%-- <fmt:formatNumber value="${card.prev_month_cost}" type="number" groupingUsed="true" var="prev_month_cost"/> --%>
 						<span>전월실적: ${card.prev_month_cost}만원</span>
 					</div>
 					<a href="${card.card_url}" class="company-button" target="_blank" rel="noopener noreferrer">카드사 바로가기</a>
@@ -469,7 +472,74 @@ $(function() {
 		});
 		
 	</script>
+	<!-- AI 추천 결과 모달(초기에는 숨김) -->
+<div class="pattern-modal-mask" id="resultModal" style="display:none;">
+  <div class="pattern-modal-content">
+    <div class="pattern-modal-header">
+      <span class="header-title">AI 추천 결과</span>
+      <button type="button" class="pattern-close-button" onclick="closeResultModal()">×</button>
+    </div>
+    <div class="model-center" id="modalStepContent">
+      <c:choose>
+        <c:when test="${not empty aiDetailResult}">
+          <c:forEach items="${aiDetailResult}" var="result">
+            <div id="step1" style="display:none;">
+              <div class="gauge-label">카드 적합도</div>
+              <div class="gauge-bar" style="--rate: ${(result.q_value-0.2) * 100}%;">
+                <div class="gauge-fill"></div>
+              </div>
+            </div>
+            <div id="step2" style="display:none;">
+              <div class="category-match">
+                혜택 일치 카테고리:
+                <span class="stars">
+                  <c:forEach begin="1" end="${result.matched_category_count}" var="i">★</c:forEach>
+                </span>
+                (${result.matched_category_count}개)
+              </div>
+              <c:forEach items="${benefitDetail}" var="benefitName">
+              	<p>${benefitName.benefitdetail_name}</p>
+              </c:forEach>
+            </div>
+            <div id="step3" style="display:none;">
+              <div class="recommend-status" style="margin-top:16px;">
+                <c:choose>
+                  <c:when test="${result.recommend}">
+                    <span class="recommend-yes">${userInfo.nickname}님께 추천합니다.</span>
+                  </c:when>
+                  <c:otherwise>
+                    <span class="recommend-no">추천 제외</span>
+                  </c:otherwise>
+                </c:choose>
+              </div>
+            </div>
+          </c:forEach>
+        </c:when>
+        <c:otherwise>
+          <p>추천 결과가 없습니다.</p>
+        </c:otherwise>
+      </c:choose>
+    </div>
+  </div>
+</div>
 
+<script>
+	function closeResultModal() {
+	  document.getElementById('resultModal').style.display = 'none';
+	}
+	window.onload = function() {
+	  const urlParams = new URLSearchParams(window.location.search);
+	  if (urlParams.get('patternId')) {
+	    document.getElementById('resultModal').style.display = 'flex';
+	    // 순차 노출 효과
+	    setTimeout(() => { document.getElementById('step1').style.display = 'block'; }, 1000);
+	    setTimeout(() => { document.getElementById('step2').style.display = 'block'; }, 2000);
+	    setTimeout(() => { document.getElementById('step3').style.display = 'block'; }, 3000);
+	  }
+	}
+
+</script>
+	
 </body>
 </html>
 

@@ -105,7 +105,7 @@ def get_recommend_result(pattern_id):
         rows.append(arr)
     df = pd.DataFrame(rows, columns=["카드번호"] + arr_key2)
     # KMeans 클러스터링
-    K = 10
+    K = 12
     benefit_vectors = df[arr_key2].values
     kmeans = KMeans(n_clusters=K, random_state=42)
     clusters = kmeans.fit_predict(benefit_vectors)
@@ -211,7 +211,7 @@ def find_cosine_card5(card_id):
     return [{"card_id": cid, "similarity": sim} for cid, sim in zip(similar_card_ids, similarities)]
 
 # --- 추천 3 (Q Table 방식) ---
-def get_consum_pattern_continuous(pattern_id, card_id, q_cutoff=0.8, min_matched=2):
+def get_consum_pattern_continuous(pattern_id, card_id, q_cutoff=0.75, min_matched=2):
     result = None
     # Q Table 불러오기 (parquet 경로 실제 서버 경로로 수정 필요!)
     DF_PARQUET = pd.read_parquet(

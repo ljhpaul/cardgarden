@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cardgarden.project.model.benefitDetail.BenefitDetailDTO;
+
 @Service
 public class CardService {
 
@@ -28,4 +30,12 @@ public class CardService {
 		List<CardDetailDTO> cardList = cardDAO.selectDetailByID(cardId);
 		return cardList;
 	}
+	
+	public List<BenefitDetailDTO> selectPatternCardID(int patternid, int cardid){
+		List<BenefitDetailDTO> cardList = cardDAO.selectPatternCardID(patternid,cardid);
+		return cardList;
+		
+	}
+	
+	
 }
