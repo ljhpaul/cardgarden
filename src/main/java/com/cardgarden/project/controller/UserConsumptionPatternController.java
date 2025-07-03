@@ -96,7 +96,7 @@ public class UserConsumptionPatternController {
 	@PostMapping("/updateCon")
 	public String updateConsumPattern(@RequestParam("benefitcategory_id") int[] selectedCategories,
 			@RequestParam("amount") int[] amount, @RequestParam("pattern_name") String pattern_name,int pattern_id,
-			RedirectAttributes redirectAttr,HttpServletRequest request) {
+			RedirectAttributes redirectAttr,HttpServletRequest request,HttpSession session) {
 
 		// 요청값 체크
 		System.out.println(pattern_name);
@@ -124,7 +124,7 @@ public class UserConsumptionPatternController {
 		
 		ucpService.updatetUserConsumptionPatternWithDetails(ucp,selectedCategories,amount);
 		
-		redirectAttr.addFlashAttribute("msg", "수정이 완료되었습니다!");
+		session.setAttribute("msg", "수정이 완료되었습니다!");
 		
 		return "redirect:/user/consumptionPattern";
 		

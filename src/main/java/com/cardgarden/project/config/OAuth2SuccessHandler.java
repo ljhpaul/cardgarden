@@ -54,7 +54,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
         if(userInfoService.existsByEmail(email)) {
         	int loginUserId = userInfoService.getUserIdByEmail(email);
         	session.setAttribute("loginUserId", loginUserId);
-        	session.setAttribute("mascotId", 120);  // 디폴트 flower 선택
+        	session.setAttribute("mascotBrand", "flower");  // 디폴트 flower 선택
             session.setMaxInactiveInterval(4000);
         	response.sendRedirect("/cardgarden/main");
         } else {
