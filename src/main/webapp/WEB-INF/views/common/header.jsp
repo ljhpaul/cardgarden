@@ -382,7 +382,7 @@ img.src = "${cpath}/resources/images/mascot/" + mascotBrand + "/mascot_" + masco
 $(document).ready(function () {
     const mascotImgs = document.querySelectorAll(".mascot");
 
-    const mascotBrand = ${mascotBrand}; 
+    const mascotBrand = "${mascotBrand}"; 
     
     mascotImgs.forEach(img => {
         if (img.src.includes("mascot/flower")) {
@@ -399,7 +399,7 @@ $(document).ready(function () {
         const remaining = sessionDuration - elapsedSec;
 
         let imgNum = 3;
-        if (remaining > 20) imgNum = 1;
+        if (remaining > 60) imgNum = 1;
         else if (remaining > 0) imgNum = 2;
 		
         mascotImgs.forEach(img => {

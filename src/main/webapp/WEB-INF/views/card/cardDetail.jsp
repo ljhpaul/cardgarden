@@ -16,7 +16,7 @@
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <link rel="stylesheet" href="${cpath}/resources/css/cardDetail.css" />
 <meta charset="UTF-8">
-<title>카드가든 상세페이지</title>
+<title>카드가든 : 카드상세</title>
 
 <!-- 반드시 jQuery 포함! -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -117,6 +117,25 @@ $(function() {
 						if (res.userLike !== undefined) {
 					        $("#userLike").text(res.userLike);
 					        $(".like-count.like-count-sticky").text(res.userLike);
+					        if (res.userLike === 0) {
+					            $(".like-count").hide();
+					        } else {
+					        	$(".like-count-header").css({
+					        	    top: "41px",
+					        	    right: "12px",
+					        	    fontSize: "11px",
+					        	    width: "16px",
+					        	    height: "15px"
+					        	}).show();
+
+					        	$(".like-count-sticky").css({
+					        	    top: "-6px",
+					        	    right: "-6px",
+					        	    fontSize: "11px",
+					        	    width: "15px",
+					        	    height: "14px"
+					        	}).show();
+					        }
 					    }
 						
 					} else {
@@ -146,6 +165,25 @@ $(function() {
 						if (res.userLike !== undefined) {
 					        $("#userLike").text(res.userLike);
 					        $(".like-count.like-count-sticky").text(res.userLike);
+					        if (res.userLike === 0) {
+					            $(".like-count").hide();
+					        } else {
+					        	$(".like-count-header").css({
+					        	    top: "41px",
+					        	    right: "12px",
+					        	    fontSize: "11px",
+					        	    width: "16px",
+					        	    height: "15px"
+					        	}).show();
+
+					        	$(".like-count-sticky").css({
+					        	    top: "-6px",
+					        	    right: "-6px",
+					        	    fontSize: "11px",
+					        	    width: "15px",
+					        	    height: "14px"
+					        	}).show();
+					        }
 					    }
 						
 					} else if (res.result === "login_required" || res.result === "need_login") {
@@ -235,7 +273,7 @@ $(function() {
 			      <div class="gauge-label">
 		              카드 적합도
 		            </div>
-		            <div class="gauge-bar"  style="--rate: ${result.q_value * 100}%;">
+		            <div class="gauge-bar"  style="--rate: ${(result.q_value-0.3) * 100}%;">
 		              <div class="gauge-fill" ></div>
 		            </div>
 			      <div class="category-match">
@@ -248,7 +286,7 @@ $(function() {
 			      <div class="recommend-status">
 			        <c:choose>
 			          <c:when test="${result.recommend}">
-			            <span class="recommend-yes">추천!</span>
+			            <span class="recommend-yes">${userInfo.nickname}님께 추천합니다.</span>
 			          </c:when>
 			          <c:otherwise>
 			            <span class="recommend-no">추천 제외</span>
@@ -300,7 +338,7 @@ $(function() {
 						<span>해외연회비: ${card.fee_foreign}원 &ensp;|</span>
 						<span>전월실적: ${card.prev_month_cost}만원</span>
 					</div>
-					<a href="${card.card_url}" class="company-button">카드사 바로가기</a>
+					<a href="${card.card_url}" class="company-button" target="_blank" rel="noopener noreferrer">카드사 바로가기</a>
 				</div>
 		</div>
 		</c:forEach>
@@ -396,13 +434,7 @@ $(function() {
 	</script>	
 	
 	<script>
-		/* $(function() {
-			$(document).on("click", ".btn-open-modal", function() {
-				$("#patternModal").css("display", "flex");
-			});
-			
-		}); */
-		
+
 		
 		$(function() {
 			$(document).on("click", ".btn-open-modal", function () {

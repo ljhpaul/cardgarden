@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>카드 소비패턴 혜택 리스트</title>
+<title>카드가든 : AI 카드추천</title>
 <style>
 	body {
 		font-family: 'NanumSquareRound', sans-serif;

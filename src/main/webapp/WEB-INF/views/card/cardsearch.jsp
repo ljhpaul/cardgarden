@@ -476,6 +476,25 @@ $(function () {
             if (res.userLike !== undefined) {
 		        $("#userLike").text(res.userLike);
 		        $(".like-count.like-count-sticky").text(res.userLike);
+		        if (res.userLike === 0) {
+		            $(".like-count").hide();
+		        } else {
+		        	$(".like-count-header").css({
+		        	    top: "41px",
+		        	    right: "12px",
+		        	    fontSize: "11px",
+		        	    width: "16px",
+		        	    height: "15px"
+		        	}).show();
+
+		        	$(".like-count-sticky").css({
+		        	    top: "-6px",
+		        	    right: "-6px",
+		        	    fontSize: "11px",
+		        	    width: "15px",
+		        	    height: "14px"
+		        	}).show();
+		        }
 		    }
             
           } else {
@@ -492,6 +511,25 @@ $(function () {
             if (res.userLike !== undefined) {
 		        $("#userLike").text(res.userLike);
 		        $(".like-count.like-count-sticky").text(res.userLike);
+		        if (res.userLike === 0) {
+		            $(".like-count").hide();
+		        } else {
+		        	$(".like-count-header").css({
+		        	    top: "41px",
+		        	    right: "12px",
+		        	    fontSize: "11px",
+		        	    width: "16px",
+		        	    height: "15px"
+		        	}).show();
+
+		        	$(".like-count-sticky").css({
+		        	    top: "-6px",
+		        	    right: "-6px",
+		        	    fontSize: "11px",
+		        	    width: "15px",
+		        	    height: "14px"
+		        	}).show();
+		        }
 		    }
             
             
