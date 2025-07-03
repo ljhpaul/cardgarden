@@ -10,7 +10,7 @@
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <link rel="stylesheet" href="${cpath}/resources/css/cardDetail.css" />
 <meta charset="UTF-8">
-<title>카드가든 상세페이지</title>
+<title>카드가든 : 카드상세</title>
 
 <!-- 반드시 jQuery 포함! -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -229,7 +229,7 @@ $(function() {
 			      <div class="gauge-label">
 		              카드 적합도
 		            </div>
-		            <div class="gauge-bar"  style="--rate: ${result.q_value * 100}%;">
+		            <div class="gauge-bar"  style="--rate: ${(result.q_value-0.3) * 100}%;">
 		              <div class="gauge-fill" ></div>
 		            </div>
 			      <div class="category-match">
@@ -242,7 +242,7 @@ $(function() {
 			      <div class="recommend-status">
 			        <c:choose>
 			          <c:when test="${result.recommend}">
-			            <span class="recommend-yes">추천!</span>
+			            <span class="recommend-yes">${userInfo.nickname}님께 추천합니다.</span>
 			          </c:when>
 			          <c:otherwise>
 			            <span class="recommend-no">추천 제외</span>
@@ -390,13 +390,7 @@ $(function() {
 	</script>	
 	
 	<script>
-		/* $(function() {
-			$(document).on("click", ".btn-open-modal", function() {
-				$("#patternModal").css("display", "flex");
-			});
-			
-		}); */
-		
+
 		
 		$(function() {
 			$(document).on("click", ".btn-open-modal", function () {

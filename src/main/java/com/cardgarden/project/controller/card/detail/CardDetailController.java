@@ -20,6 +20,8 @@ import com.cardgarden.project.model.cardDetail.CardService;
 import com.cardgarden.project.model.recommendAI.CardRecommendationDTO;
 import com.cardgarden.project.model.recommendAI.CardRecommendationService;
 import com.cardgarden.project.model.recommendAI.RecommendResultDTO;
+import com.cardgarden.project.model.user.dto.UserInfoDTO;
+import com.cardgarden.project.model.user.service.UserInfoService;
 import com.cardgarden.project.model.userCardLike.CardLikeService;
 import com.cardgarden.project.model.userPatternBenefit.UserPatternBenefitDTO;
 import com.cardgarden.project.model.userPatternBenefit.UserPatternBenefitService;
@@ -35,11 +37,16 @@ public class CardDetailController {
 
     @Autowired
     private CardLikeService cardLkieService;
+    
     @Autowired
     private CardRecommendationService cardRecommendationService;
     
+    @Autowired
+    private UserInfoService userInfoService;
+    
     @Value("${ai.recommendation.enabled:true}") // 기본값 true
     private boolean aiRecommendationEnabled;
+    
     @Value("${recommend.api.url}")
     private String recommendApiUrl;
     
@@ -51,7 +58,7 @@ public class CardDetailController {
                              Model model,
                              HttpSession session) {
         Integer userId = (Integer) session.getAttribute("loginUserId");
-
+        
         System.out.println("[DEBUG] aiRecommendationEnabled = " + aiRecommendationEnabled);
         System.out.println("[DEBUG] Properties recommend.api.url = " + recommendApiUrl);
         
@@ -76,6 +83,7 @@ public class CardDetailController {
         if (userId != null) {
             Map<Integer, List<UserPatternBenefitDTO>> patternList = getPatternList(userId);
             model.addAttribute("patternList", patternList);
+            model.addAttribute("userInfo",userInfoService.selectById(userId));
         }
 
         // patternId가 있으면 AI 추천 결과 추가
@@ -85,7 +93,7 @@ public class CardDetailController {
             model.addAttribute("aiDetailResult", aiDetailResult);
             System.out.println(aiDetailResult);
         }
-
+        
         session.setAttribute("cardid", cardid);
         System.out.println("patternId: " + patternId + ", cardid: " + cardid);
 

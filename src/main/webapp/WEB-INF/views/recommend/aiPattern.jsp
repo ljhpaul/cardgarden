@@ -183,6 +183,7 @@ document.addEventListener('DOMContentLoaded', function() {
   align-items: center;
   z-index: 2;
   flex-shrink: 0;
+  gap: 30px;
 }
 .btn {
   border-radius: 10px;
@@ -303,6 +304,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="modal-fade-blur bottom"></div>
       </div>
       <div class="pattern-submit-container">
+      	<a href="${cpath}/ConsumptionPattern/inCon" class="btn">패턴 입력</a>
         <input type="submit" value="제출하기" class="btn" />
       </div>
     </form>
