@@ -111,6 +111,25 @@ $(function() {
 						if (res.userLike !== undefined) {
 					        $("#userLike").text(res.userLike);
 					        $(".like-count.like-count-sticky").text(res.userLike);
+					        if (res.userLike === 0) {
+					            $(".like-count").hide();
+					        } else {
+					        	$(".like-count-header").css({
+					        	    top: "41px",
+					        	    right: "12px",
+					        	    fontSize: "11px",
+					        	    width: "16px",
+					        	    height: "15px"
+					        	}).show();
+
+					        	$(".like-count-sticky").css({
+					        	    top: "-6px",
+					        	    right: "-6px",
+					        	    fontSize: "11px",
+					        	    width: "15px",
+					        	    height: "14px"
+					        	}).show();
+					        }
 					    }
 						
 					} else {
@@ -140,6 +159,25 @@ $(function() {
 						if (res.userLike !== undefined) {
 					        $("#userLike").text(res.userLike);
 					        $(".like-count.like-count-sticky").text(res.userLike);
+					        if (res.userLike === 0) {
+					            $(".like-count").hide();
+					        } else {
+					        	$(".like-count-header").css({
+					        	    top: "41px",
+					        	    right: "12px",
+					        	    fontSize: "11px",
+					        	    width: "16px",
+					        	    height: "15px"
+					        	}).show();
+
+					        	$(".like-count-sticky").css({
+					        	    top: "-6px",
+					        	    right: "-6px",
+					        	    fontSize: "11px",
+					        	    width: "15px",
+					        	    height: "14px"
+					        	}).show();
+					        }
 					    }
 						
 					} else if (res.result === "login_required" || res.result === "need_login") {
@@ -294,7 +332,7 @@ $(function() {
 						<span>해외연회비: ${card.fee_foreign}원 &ensp;|</span>
 						<span>전월실적: ${card.prev_month_cost}만원</span>
 					</div>
-					<a href="${card.card_url}" class="company-button">카드사 바로가기</a>
+					<a href="${card.card_url}" class="company-button" target="_blank" rel="noopener noreferrer">카드사 바로가기</a>
 				</div>
 		</div>
 		</c:forEach>
