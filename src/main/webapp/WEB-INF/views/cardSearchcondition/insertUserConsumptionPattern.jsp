@@ -24,7 +24,7 @@ return;
 <html>
 <head>
 <meta charset="UTF-8">
-<title>소비패턴 등록</title>
+<title>카드가든 : 소비패턴 등록</title>
 <style>
 * {
 	box-sizing: border-box;
