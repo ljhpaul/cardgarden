@@ -120,6 +120,7 @@ public class MailAuthController {
                 valid = true;
                 session.setAttribute("emailVerified", true);
                 session.setAttribute("verifiedEmail", savedEmail);
+        		log.info("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! email(MailAuthController): "+session.getAttribute("verifiedEmail")+"");
             }
         }
         result.put("valid", valid);

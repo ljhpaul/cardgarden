@@ -5,7 +5,7 @@
 
 <%@ include file="../common/header.jsp" %>
 <link rel="stylesheet" href="${cpath}/resources/css/mymascot.css?after">
-
+<title>카드가든 : 내 마스코트</title>
 <div class="custom-top-container">
 
   <div class="custom-top-header">

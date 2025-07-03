@@ -9,7 +9,7 @@ const cpath = '${cpath}';
 
 <script src="${cpath}/resources/js/assetlike.js"></script>
 <link rel="stylesheet" href="${cpath}/resources/css/customDetail.css?ver=4">
-
+<title>카드가든 : 스티커 상세</title>
 <%@ include file="../common/header.jsp" %>
 
 <div class="custom-detail-container">

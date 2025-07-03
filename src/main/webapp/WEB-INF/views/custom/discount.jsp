@@ -5,7 +5,7 @@
 <c:set var="cpath" value="${pageContext.servletContext.contextPath}" />
 
 <link rel="stylesheet" href="${cpath}/resources/css/customTop.css?ver=2">
-
+<title>카드가든 : 오늘의 할인 상점</title>
 <div class="custom-top-container">
 
   <div class="custom-top-header" >

@@ -59,7 +59,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
         	response.sendRedirect("/cardgarden/main");
         } else {
         	session.setAttribute("socialJoin", true);
-        	response.sendRedirect("/cardgarden/user/join/term");
+        	response.sendRedirect("/cardgarden/user/join/term/social");
         }
     }
 	
