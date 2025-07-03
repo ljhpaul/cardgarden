@@ -43,7 +43,7 @@ public class SecurityConfig {
     // StrictHttpFirewall 설정
     @Bean
     public HttpFirewall allowUrlEncodedDoubleSlashHttpFirewall() {
-        StrictHttpFirewall firewall = new StrictHttpFirewall();  // // 허용 (주의)
+        StrictHttpFirewall firewall = new StrictHttpFirewall();
         firewall.setAllowBackSlash(true);
         return firewall;
     }

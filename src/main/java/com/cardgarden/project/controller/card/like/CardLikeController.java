@@ -43,7 +43,16 @@ public class CardLikeController {
         result.put("result", row > 0 ? "success" : "fail");
         return result;
     }
-
+    
+    
+    @PostMapping("/cardLike/pageSave")
+    public boolean cardLikeInsert(HttpSession session, String path){
+    	if (path == null) {
+    		return false;
+    	}
+    	session.setAttribute("redirectAfterLogin", path);
+    	return true; 
+    }
 
     @SuppressWarnings("unused")
 	@PostMapping("/cardUnlike")

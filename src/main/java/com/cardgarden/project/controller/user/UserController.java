@@ -46,6 +46,7 @@ public class UserController {
 	    if (loginUserIdObj == null) {
 	    	session.setAttribute("msg", "로그인이 필요한 기능입니다");
 	    	session.setAttribute("redirectAfterLogin", "/user/mypage");
+
 	        return "redirect:/user/login";
 	    }
 	    
@@ -148,13 +149,16 @@ public class UserController {
 	//내가 좋아요한 카드
 	@GetMapping("/card")
 	public String mmyLikeCardList(HttpServletRequest request,HttpSession session,Model model, RedirectAttributes redirectAttr){
+
 		
 	    HttpSession mySession = request.getSession();
 	    Object loginUserIdObj = mySession.getAttribute("loginUserId");
 	    // 로그인되지 않았을 경우 처리
 	    if (loginUserIdObj == null) {
+
 	    	session.setAttribute("msg", "로그인이 필요한 기능입니다");
 	    	session.setAttribute("redirectAfterLogin", "/user/mycard");
+
 	        return "redirect:/user/login";
 	    }
 	    

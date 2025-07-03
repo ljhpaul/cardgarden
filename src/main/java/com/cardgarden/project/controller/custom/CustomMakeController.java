@@ -34,6 +34,13 @@ public class CustomMakeController {
 
         return "custom/makeFrame";
     }
+    @GetMapping("/user/redirectToLogin")
+    public String redirectToLogin(HttpSession session) {
+        session.setAttribute("redirectAfterLogin", "/make/frame");
+        return "redirect:/user/login";
+    }
+
+
 
     @GetMapping("/background")
     public String makeBackground(
@@ -43,6 +50,7 @@ public class CustomMakeController {
 
         Integer loginUserId = (Integer) session.getAttribute("loginUserId");
         if (loginUserId == null) {
+        	session.setAttribute("redirectAfterLogin", "/make/frame");
             return "redirect:/user/login";
         }
 
@@ -150,6 +158,19 @@ public class CustomMakeController {
 
         return "custom/makeResult";
     }
+    @PostMapping("/custom/incrementUsed")
+    @ResponseBody
+    public void incrementUsed(@RequestParam int asset_id) {
+        service.incrementUsed(asset_id);
+    }
+
+    @PostMapping("/custom/decrementUsed")
+    @ResponseBody
+    public void decrementUsed(@RequestParam int asset_id) {
+        service.decrementUsed(asset_id);
+    }
+
+    
 
 
 

@@ -55,7 +55,6 @@ public class RecommendAIController {
 
 	}
 	
-	
 	@RequestMapping("/selectPattern")
 	public String selectPattern(@RequestParam("patternId") Integer patternId, HttpSession session) {
 	    session.setAttribute("patternId", patternId);
@@ -63,5 +62,5 @@ public class RecommendAIController {
 	}
 
 	
-	
+
 }

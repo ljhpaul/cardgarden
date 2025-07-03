@@ -273,9 +273,9 @@
       <img class="run-frame" src="${cpath}/resources/images/consumpattern/baseball1.png" alt="1" style="display:block;">
       <img class="run-frame" src="${cpath}/resources/images/consumpattern/baseball2.png" alt="2" style="display:none;">
       <img class="run-frame" src="${cpath}/resources/images/consumpattern/baseball3.png" alt="3" style="display:none;">
-      <img class="run-frame" src="${cpath}/resources/images/consumpattern/base1.png" alt="1" style="display:none;">
       <img class="run-frame" src="${cpath}/resources/images/consumpattern/base2.png" alt="2" style="display:none;">
       <img class="run-frame" src="${cpath}/resources/images/consumpattern/base3.png" alt="3" style="display:none;">
+      <img class="run-frame" src="${cpath}/resources/images/consumpattern/base1.png" alt="1" style="display:none;">
       <img class="run-frame" src="${cpath}/resources/images/consumpattern/base4.png" alt="3" style="display:none;">
     </div>
     <div class="loading-text">AI 측정중 입니다</div>

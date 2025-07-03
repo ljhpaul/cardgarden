@@ -120,6 +120,12 @@ public class CustomAssetController {
 
         return "custom/detail";
     }
+    @GetMapping("/redirectToLogin")
+    public String redirectToLogin(@RequestParam String redirect, HttpSession session) {
+        session.setAttribute("redirectAfterLogin", redirect);
+        return "redirect:/user/login";
+    }
+
 
     @GetMapping("/buy")
     public String buyConfirm(@RequestParam("asset_id") int assetId, HttpSession session, Model model) {
@@ -221,6 +227,7 @@ public class CustomAssetController {
     ) {
         Integer userId = (Integer) session.getAttribute("loginUserId");
         if (userId == null) {
+        	session.setAttribute("redirectAfterLogin", "/custom/free");
             return "redirect:/user/login";
         }
 
@@ -293,4 +300,65 @@ public class CustomAssetController {
 
         return result;
     }
+    @GetMapping("/detailInfo")
+    @ResponseBody
+    public Map<String, Object> getAssetInfo(@RequestParam int asset_id, HttpSession session) {
+        Integer userId = (Integer) session.getAttribute("loginUserId");
+
+        Map<String, Object> result = new HashMap<>();
+        CustomAssetDTO asset = service.getAssetDetail(asset_id);
+        
+        int userPoint = 0;
+        if (userId != null) {
+            userPoint = service.getUserPoint(userId);
+        }
+
+        result.put("asset_name", asset.getAsset_name());
+        result.put("final_price", asset.getFinal_price());
+        result.put("userPoint", userPoint);
+
+        return result;
+    }
+    @PostMapping("/buyDirect")
+    @ResponseBody
+    public Map<String, Object> buyDirect(@RequestParam int asset_id, HttpSession session) {
+        Integer userId = (Integer) session.getAttribute("loginUserId");
+        Map<String, Object> result = new HashMap<>();
+
+        if (userId == null) {
+            result.put("success", false);
+            result.put("msg", "로그인 필요");
+            return result;
+        }
+
+        CustomAssetDTO asset = service.getAssetDetail(asset_id);
+        int userPoint = service.getUserPoint(userId);
+        int price = asset.getFinal_price();
+
+        if (userPoint < price) {
+            result.put("success", false);
+            result.put("msg", "포인트가 부족합니다.");
+            return result;
+        }
+
+        Map<String, Object> param = new HashMap<>();
+        param.put("user_id", userId);
+        param.put("point", price);
+        service.updateUserPoint(param);
+
+        Map<String, Object> ownParam = new HashMap<>();
+        ownParam.put("user_id", userId);
+        ownParam.put("asset_id", asset_id);
+        service.insertOwnedAsset(ownParam);
+
+        int updatedPoint = service.getUserPoint(userId);
+        result.put("success", true);
+        result.put("updatedPoint", updatedPoint);
+        result.put("assetImg", "/resources/images/asset/" + asset.getAsset_type() + "/" + asset.getAsset_brand() + "/" + asset.getAsset_type() + "_" + asset.getAsset_brand() + "_" + asset.getAsset_no() + "_" + asset.getAsset_name() + ".png");
+
+        return result;
+    }
+
+
+    
 }

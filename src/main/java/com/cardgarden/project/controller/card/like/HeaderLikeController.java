@@ -18,21 +18,27 @@ public class HeaderLikeController {
 
     @ModelAttribute
     public void addUserLikeToModel(HttpServletRequest request, HttpSession session, Model model) {
-        // 만약 redirect 요청이면 Model에 담지 않도록 차단
         String uri = request.getRequestURI();
         if (uri.startsWith("/user/join/email") || uri.startsWith("/user/join/info") || uri.startsWith("/user/join/term")) {
-            return; // 이 경로에선 userLike 모델 추가 X
+            return;
         }
 
         Integer userId = (Integer) session.getAttribute("loginUserId");
-        Integer likeCount = null;
+        Integer likeCount = (Integer) session.getAttribute("userLike");
 
         if (userId != null) {
-            try {
-                likeCount = cardLikeService.cardLikeSelectCount(userId);
-            } catch (Exception e) {
-                System.out.println("cardLikeSelectCount 실행 오류: " + e.getMessage());
+            if (likeCount == null) {
+                try {
+                    likeCount = cardLikeService.cardLikeSelectCount(userId);
+                    session.setAttribute("userLike", likeCount);
+                } catch (Exception e) {
+                    System.out.println("cardLikeSelectCount 실행 오류: " + e.getMessage());
+                    likeCount = 0; // 실패 시 기본값
+                }
             }
+        } else {
+            likeCount = 0; // 로그인 안된 경우 0으로 처리
+            session.removeAttribute("userLike");
         }
 
         model.addAttribute("userLike", likeCount);
