@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="${cpath}/resources/css/customDetail.css?ver=4">
 
 <%@ include file="../common/header.jsp" %>
-
+<title>카드가든 : 오늘의 무료 스티커</title>
 <div class="custom-detail-container">
 
   <div class="detail-content-box">

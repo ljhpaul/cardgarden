@@ -6,7 +6,7 @@
 const cpath = '${cpath}';
 const isLogin = ${isLogin ? 'true' : 'false'};
 </script>
-
+<title>카드가든 : 커스텀 디자인 제작</title>
 <link rel="stylesheet" href="${cpath}/resources/css/customMakeFrame.css?ver=4">
 
 <div class="custom-main-container">

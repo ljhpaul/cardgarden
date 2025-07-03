@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="${cpath}/resources/css/attendance.css?after">  
 
 <div class="attendance-container">  
-
+<title>카드가든 : 출석체크</title>
     <!-- 상단 배너 -->  
     <div class="attendance-banner">  
         <div class="banner-text">  

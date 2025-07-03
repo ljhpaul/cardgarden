@@ -6,7 +6,7 @@
 <c:set var="cpath" value="${pageContext.servletContext.contextPath}" />
 
 <link rel="stylesheet" href="${cpath}/resources/css/customDetail.css?ver=4">
-
+<title>카드가든 : 커스텀 디자인 제작</title>
 <div class="custom-detail-container">
 
   <div class="detail-content-box">
