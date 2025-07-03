@@ -5,7 +5,7 @@
 
 <%@ include file="../common/header.jsp" %>
 <link rel="stylesheet" href="${cpath}/resources/css/mascotResult.css?after">
-
+<title>카드가든 : 마스코트 상점</title>
 <div class="custom-top-container">
   
   <h2>구매가 완료되었습니다!</h2>

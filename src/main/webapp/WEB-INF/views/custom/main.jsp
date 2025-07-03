@@ -4,7 +4,7 @@
 <c:set var="loginId" value="${sessionScope.loginId}" />
 <script>const loginId = '${loginId}';</script>
 
-
+<title>카드가든 : 커스텀 페이지</title>
 <c:set var="cpath" value="${pageContext.servletContext.contextPath}" />
 <link rel="stylesheet" href="${cpath}/resources/css/customMain.css?after">
 

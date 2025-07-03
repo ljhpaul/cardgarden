@@ -6,7 +6,7 @@
 <c:set var="cpath" value="${pageContext.servletContext.contextPath}" />
 
 <link rel="stylesheet" href="${cpath}/resources/css/customDetail.css?ver=3">
-
+<title>카드가든 : 스티커 구매</title>
 <div class="custom-detail-container">
 
   <div class="detail-content-box">

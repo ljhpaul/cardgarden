@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../common/header.jsp" %>
 <c:set var="cpath" value="${pageContext.servletContext.contextPath}" />
-
+<title>카드가든 : 커스텀 디자인 제작</title>
 <style>
 body {
   background-color: var(--main);
