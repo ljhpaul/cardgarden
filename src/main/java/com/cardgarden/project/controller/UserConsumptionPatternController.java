@@ -23,6 +23,7 @@ import com.cardgarden.project.model.benefitCategory.benefitCategoryDTO;
 import com.cardgarden.project.model.benefitCategory.benefitCategoryService;
 import com.cardgarden.project.model.userConsumptionPattern.UserConsumptionPatternDTO;
 import com.cardgarden.project.model.userConsumptionPattern.UserConsumptionPatternService;
+import com.mysql.cj.Session;
 
 @RequestMapping("/ConsumptionPattern")
 @Controller
@@ -50,7 +51,8 @@ public class UserConsumptionPatternController {
 
 	@PostMapping("/inCon")
 	public String insertConsumPattern(@RequestParam("benefitcategory_id") int[] selectedCategories,
-			@RequestParam("amount") int[] amount, @RequestParam("pattern_name") String pattern_name,
+			@RequestParam("amount") int[] amount, @RequestParam("pattern_name") String pattern_name, @RequestParam("cardid") Integer card_id,
+			@RequestParam(value = "showModal", required = false) String showModal,
 			RedirectAttributes redirectAttr,HttpServletRequest request) {
 
 		// 요청값 체크
@@ -85,9 +87,19 @@ public class UserConsumptionPatternController {
 		// UserConsumptionPattern 먼저 insert 
 		ucpService.insertUserConsumptionPatternWithDetails(ucp,selectedCategories,amount);
 		
+	    // 리디렉션 경로
+	    String redirectUrl;
+	    if (card_id != null) {
+	    	// 모달까지 바로 띄우기
+	        redirectUrl = "/card/detail?cardid=" + card_id + "&showModal=true";
+	    } else {
+	        redirectUrl = "/mypage/consumption"; // 기본경로
+	    }
+
 		redirectAttr.addFlashAttribute("msg", "등록이 완료되었습니다!");
 		
-		return "redirect:/ConsumptionPattern/inCon";
+		
+	    return "redirect:" + redirectUrl;
 		
 	}
 	
