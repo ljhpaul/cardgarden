@@ -15,7 +15,7 @@
      <typeAlias type="com.shinhan.spring.model.emp.EmpDTO" alias="empDTO"/> -->
      <typeAlias type="com.cardgarden.project.model.sample.SampleDTO" alias="sampleDTO"/>
 
-
+	<typeAlias type="com.cardgarden.project.model.cardDetail.CardBenefitRankDTO" alias="cardBenefitRankDTO"/>
     <typeAlias type="com.cardgarden.project.model.benefitDetail.BenefitDetailDTO" alias="BenefitDetailDTO"/>
     <typeAlias type="com.cardgarden.project.model.CardSearchCondition.CardDTO" alias="CardConditionDTO"/>
 	<typeAlias type="com.cardgarden.project.model.card.CardDTO" alias="CardDTO"/>

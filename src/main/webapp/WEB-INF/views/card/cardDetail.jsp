@@ -473,6 +473,7 @@ $(function() {
 		
 	</script>
 	<!-- AI 추천 결과 모달(초기에는 숨김) -->
+<!-- AI 추천 결과 모달(초기에는 숨김) -->
 <div class="pattern-modal-mask" id="resultModal" style="display:none;">
   <div class="pattern-modal-content">
     <div class="pattern-modal-header">
@@ -482,14 +483,14 @@ $(function() {
     <div class="model-center" id="modalStepContent">
       <c:choose>
         <c:when test="${not empty aiDetailResult}">
-          <c:forEach items="${aiDetailResult}" var="result">
-            <div id="step1" style="display:none;">
+          <c:forEach items="${aiDetailResult}" var="result" varStatus="status">
+            <div id="step1_${status.index}" style="display:none;">
               <div class="gauge-label">카드 적합도</div>
               <div class="gauge-bar" style="--rate: ${(result.q_value-0.2) * 100}%;">
                 <div class="gauge-fill"></div>
               </div>
             </div>
-            <div id="step2" style="display:none;">
+            <div id="step2_${status.index}" style="display:none;">
               <div class="category-match">
                 혜택 일치 카테고리:
                 <span class="stars">
@@ -497,22 +498,47 @@ $(function() {
                 </span>
                 (${result.matched_category_count}개)
               </div>
-              <c:forEach items="${benefitDetail}" var="benefitName">
-              	<p>${benefitName.benefitdetail_name}</p>
-              </c:forEach>
-            </div>
-            <div id="step3" style="display:none;">
-              <div class="recommend-status" style="margin-top:16px;">
+              <div id="step3_${status.index}" style="display:none;" class="benefit-div">
                 <c:choose>
-                  <c:when test="${result.recommend}">
-                    <span class="recommend-yes">${userInfo.nickname}님께 추천합니다.</span>
-                  </c:when>
-                  <c:otherwise>
-                    <span class="recommend-no">추천 제외</span>
-                  </c:otherwise>
-                </c:choose>
+				  <c:when test="${not empty benefitDetail}">
+				    <div class="pattern-title">개인 소비패턴 순위 & 혜택명</div>
+				    <c:forEach items="${benefitDetail}" var="benefit">
+				      <div class="benefit-row">
+				        ${benefit.amount_Rank}순위: ${benefit.benefitDetailDTO.benefitdetail_name}
+				      </div>
+				    </c:forEach>
+				  </c:when>
+				  <c:otherwise>
+				    <div class="pattern-title">개인 소비패턴 순위 & 혜택명</div>
+				    <div class="benefit-row">매칭되는 카테고리가 없습니다.</div>
+				  </c:otherwise>
+				</c:choose>
               </div>
             </div>
+            <div id="step4_${status.index}" style="display:none;">
+			  <div class="recommend-status" style="margin-top:16px;">
+			    <c:choose>
+			      <c:when test="${result.recommend}">
+			        <span class="recommend-yes">혜택 비교 & 소비패턴 금액 확인 결과</span><br>
+			        <span class="recommend-yes"> 해당 카드를 ${userInfo.nickname}님께 추천합니다.</span>
+			      </c:when>
+			      <c:otherwise>
+			          <c:if test="${result.q_value lt 0.5}">
+			            <span class="recommend-no"> 카드 적합도가 낮아 추천하지 못하였습니다.</span>
+			          </c:if>
+			          <c:if test="${result.q_value ge 0.5 && result.q_value lt 0.7}">
+			            <span class="recommend-no">카드 적합도는 나쁘지 않지만, 더 적합한 카드가 있을 수 있습니다.</span>
+			          </c:if>
+			          <c:if test="${result.matched_category_count lt 2}">
+			            <span class="recommend-no">소비패턴과 일치하는 혜택 카테고리가 거의 없습니다.</span>
+			          </c:if>
+			          <c:if test="${result.matched_category_count ge 2 && result.matched_category_count lt 4}">
+			            <span class="recommend-no">일치 카테고리가 조금 부족하여 아쉬운 점이 있습니다.</span>
+			          </c:if>
+			      </c:otherwise>
+			    </c:choose>
+			  </div>
+			</div>
           </c:forEach>
         </c:when>
         <c:otherwise>
@@ -524,6 +550,7 @@ $(function() {
 </div>
 
 <script>
+
 	function closeResultModal() {
 	  document.getElementById('resultModal').style.display = 'none';
 	}
@@ -531,10 +558,10 @@ $(function() {
 	  const urlParams = new URLSearchParams(window.location.search);
 	  if (urlParams.get('patternId')) {
 	    document.getElementById('resultModal').style.display = 'flex';
-	    // 순차 노출 효과
-	    setTimeout(() => { document.getElementById('step1').style.display = 'block'; }, 1000);
-	    setTimeout(() => { document.getElementById('step2').style.display = 'block'; }, 2000);
-	    setTimeout(() => { document.getElementById('step3').style.display = 'block'; }, 3000);
+	    setTimeout(() => { document.getElementById('step1_0').style.display = 'block'; }, 1000);
+	    setTimeout(() => { document.getElementById('step2_0').style.display = 'block'; }, 2000);
+	    setTimeout(() => { document.getElementById('step3_0').style.display = 'block'; }, 3000);
+	    setTimeout(() => { document.getElementById('step4_0').style.display = 'block'; }, 4000);
 	  }
 	}
 

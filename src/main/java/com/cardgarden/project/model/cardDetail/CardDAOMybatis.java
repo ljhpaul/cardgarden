@@ -32,7 +32,7 @@ public class CardDAOMybatis implements CardDAOInterface {
 		return cardList;
 	}
 	
-	public List<BenefitDetailDTO> selectPatternCardID(int patternid, int cardid){
+	public List<CardBenefitRankDTO> selectPatternCardID(int patternid, int cardid){
 	    Map<String, Object> param = new HashMap<>();
 	    param.put("patternid", patternid);
 	    param.put("cardid", cardid);

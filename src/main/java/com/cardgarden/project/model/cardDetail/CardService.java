@@ -31,8 +31,8 @@ public class CardService {
 		return cardList;
 	}
 	
-	public List<BenefitDetailDTO> selectPatternCardID(int patternid, int cardid){
-		List<BenefitDetailDTO> cardList = cardDAO.selectPatternCardID(patternid,cardid);
+	public List<CardBenefitRankDTO> selectPatternCardID(int patternid, int cardid){
+		List<CardBenefitRankDTO> cardList = cardDAO.selectPatternCardID(patternid,cardid);
 		return cardList;
 		
 	}
