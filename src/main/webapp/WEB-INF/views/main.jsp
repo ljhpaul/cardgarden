@@ -346,9 +346,6 @@ body {
 }
 
 
-
-
-
 #fairy-card-container {
   text-align: center;
   margin: 48px 0;
@@ -484,6 +481,25 @@ body {
   max-height: 90%;
   object-fit: contain;
 }
+
+/* 스크롤바 css */
+
+/* 스크롤바 너비 */
+.popup-card-list::-webkit-scrollbar {
+  width: 12px;
+}
+
+/* 스크롤바 색상 + radius 조정*/
+.popup-card-list::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 8px;
+}
+/* 트랙 색상 + 트랙 위치  */
+.popup-card-list::-webkit-scrollbar-track {
+  background: #f0f0f0;
+  margin-top: 125px; /* 트랙 시작 여백 */
+}
+
 
 
 </style>
