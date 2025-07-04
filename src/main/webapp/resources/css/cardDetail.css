@@ -668,8 +668,11 @@ body {
 	
 }
 .recommend-status{
-	padding-top: 50px;
-	text-align: center;
+	justify-content: center;
+	width: 100%;
+	padding-top:10px;
+	padding-bottom:10px;
+	gap: 3px;
 }
 
 .pattern-title {
@@ -707,4 +710,8 @@ body {
     margin-bottom: 18px;
     margin-top: 50px;
     transition: border-color 0.22s, box-shadow 0.22s, background 0.22s;
+}
+.recommend-status-result{
+	padding-top: 50px;
+    text-align: center;
 }
