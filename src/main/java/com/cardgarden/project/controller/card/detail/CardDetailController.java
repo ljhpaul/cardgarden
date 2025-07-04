@@ -88,7 +88,7 @@ public class CardDetailController {
         }
 
         // patternId가 있으면 AI 추천 결과 추가
-        if (patternId != null && aiRecommendationEnabled) {
+        if (patternId != null && aiRecommendationEnabled && userId != null) {
             List<RecommendResultDTO> aiDetailResult =
                     cardRecommendationService.getRecommendDetailResult(patternId, cardid);
             model.addAttribute("aiDetailResult", aiDetailResult);
