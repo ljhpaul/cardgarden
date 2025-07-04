@@ -283,8 +283,30 @@ $(function() {
 			        </span>
 			        (${result.matched_category_count}개)
 			      </div>
-			      <div class="recommend-status">
-			        <c:choose>
+			      <div class="recommend-status" style="display:flex;">
+			      <c:choose>
+				   <c:when test="${not empty benefitDetail}">
+				    <c:forEach items="${cardDetail}" var="group" varStatus="status">
+				      <c:set var="firstDetail" value="${group.value[0]}" />
+				      <div onclick="scrollToTarget('targetDiv${status.index}')">
+				        <c:set var="prevImg" value="" />
+				        <c:forEach items="${benefitDetail}" var="benefit">
+				          <c:if test="${firstDetail.benefitdetail_image eq benefit.benefitDetailDTO.benefitdetail_image and prevImg ne benefit.benefitDetailDTO.benefitdetail_image}">
+				              <img src="${cpath}${benefit.benefitDetailDTO.benefitdetail_image}" style="width:30px;">
+				          </c:if>
+				          <c:set var="prevImg" value="${benefit.benefitDetailDTO.benefitdetail_image}" />
+				        </c:forEach>
+				        
+				      </div>
+				    </c:forEach>
+				  </c:when>
+				  <c:otherwise>
+				    <span class="recommend-no">일치하는 카테고리가 없습니다.</span>
+				  </c:otherwise>
+				</c:choose>
+			        
+			      </div>
+			      <c:choose>
 			          <c:when test="${result.recommend}">
 			            <span class="recommend-yes">${userInfo.nickname}님께 추천합니다.</span>
 			          </c:when>
@@ -292,8 +314,8 @@ $(function() {
 			            <span class="recommend-no">추천 제외</span>
 			          </c:otherwise>
 			        </c:choose>
-			      </div>
 			    </li>
+			    
 			  </c:forEach>
 			</ul>
 
@@ -505,7 +527,9 @@ $(function() {
 				    <c:forEach items="${benefitDetail}" var="benefit">
 				      <div class="benefit-row">
 				        ${benefit.amount_Rank}순위: ${benefit.benefitDetailDTO.benefitdetail_name}
+				      	<img src="${cpath}${benefit.benefitDetailDTO.benefitdetail_image}"/ style="width:20px;">  
 				      </div>
+				      
 				    </c:forEach>
 				  </c:when>
 				  <c:otherwise>
@@ -516,24 +540,29 @@ $(function() {
               </div>
             </div>
             <div id="step4_${status.index}" style="display:none;">
-			  <div class="recommend-status" style="margin-top:16px;">
+			  <div class="recommend-status-result" style="margin-top:16px;">
 			    <c:choose>
 			      <c:when test="${result.recommend}">
-			        <span class="recommend-yes">혜택 비교 & 소비패턴 금액 확인 결과</span><br>
-			        <span class="recommend-yes"> 해당 카드를 ${userInfo.nickname}님께 추천합니다.</span>
+			      	
+				        <span class="recommend-yes">혜택 비교 & 소비패턴 금액 확인 결과</span><br>
+				        <c:forEach items="${benefitDetail}" var="benefit">
+				        	<span class="recommend-yes">${benefit.amount_Rank}위 </span>
+				        </c:forEach>
+				        <span class="recommend-yes">소비패턴이 일치하여 해당 카드를 ${userInfo.nickname}님께 추천합니다.</span>
+			        
 			      </c:when>
 			      <c:otherwise>
 			          <c:if test="${result.q_value lt 0.5}">
-			            <span class="recommend-no"> 카드 적합도가 낮아 추천하지 못하였습니다.</span>
+			            <span class="recommend-no">적합도: 카드 적합도가 낮아 추천하지 못하였습니다.</span><br>
 			          </c:if>
 			          <c:if test="${result.q_value ge 0.5 && result.q_value lt 0.7}">
-			            <span class="recommend-no">카드 적합도는 나쁘지 않지만, 더 적합한 카드가 있을 수 있습니다.</span>
+			            <span class="recommend-no">적합도: 카드 적합도는 나쁘지 않지만, 더 적합한 카드가 있을 수 있습니다.</span><br>
 			          </c:if>
 			          <c:if test="${result.matched_category_count lt 2}">
-			            <span class="recommend-no">소비패턴과 일치하는 혜택 카테고리가 거의 없습니다.</span>
+			            <span class="recommend-no">카테고리: 소비패턴과 일치하는 혜택 카테고리가 거의 없습니다.</span><br>
 			          </c:if>
 			          <c:if test="${result.matched_category_count ge 2 && result.matched_category_count lt 4}">
-			            <span class="recommend-no">일치 카테고리가 조금 부족하여 아쉬운 점이 있습니다.</span>
+			            <span class="recommend-no">카테고리:일치 카테고리가 조금 부족하여 아쉬운 점이 있습니다.</span><br>
 			          </c:if>
 			      </c:otherwise>
 			    </c:choose>
