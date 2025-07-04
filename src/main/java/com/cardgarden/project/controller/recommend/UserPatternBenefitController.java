@@ -49,5 +49,6 @@ public class UserPatternBenefitController {
         
         return "recommend/ai";
     }
+    
 
 }
