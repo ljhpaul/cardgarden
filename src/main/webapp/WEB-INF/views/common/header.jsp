@@ -33,7 +33,7 @@
 					</c:when>
 					<c:otherwise>
 						<a href="${cpath}/user/join">회원가입</a>
-						<a href="${cpath}/user/login">로그인</a>
+						<a href="${cpath}/user/login" onclick="saveRedirectPath()" id="loginLink">로그인</a>
 					</c:otherwise>
 				</c:choose>
 			</div>
@@ -206,6 +206,25 @@ canvas#rareCanvas {
 }
 </style>
 <script>
+
+function saveRedirectPath() {
+	let currentPath = window.location.pathname + window.location.search;
+	let contextPath = "${cpath}";
+	if (currentPath.startsWith(contextPath)) {
+		currentPath = currentPath.substring(contextPath.length); // "/card/detail?card_id=123"
+	}
+	console.log("리다이렉트 경로 저장:", currentPath);
+
+	$.ajax({
+		url: "${cpath}/card/cardLike/pageSave",  // 이미 만들어둔 redirect 저장용 컨트롤러 활용
+		type: "POST",
+		data: { path: currentPath },
+		async: false // 중요: 동기적으로 저장하고 바로 이동
+	});
+}
+
+
+
 //희귀 꽃 캔버스
 const rareCanvas = document.getElementById("rareCanvas");
 const rareCtx = rareCanvas.getContext("2d");
