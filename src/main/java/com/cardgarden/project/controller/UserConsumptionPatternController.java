@@ -35,6 +35,15 @@ public class UserConsumptionPatternController {
 	UserConsumptionPatternService ucpService;
 
 	String namespace = "com.cardgarden.inCon.";
+	
+	@GetMapping(value = "/loadBenefitCategories",produces = "application/json")
+	@ResponseBody
+	public List<benefitCategoryDTO> loadBenefitCategories() {
+		
+		List<benefitCategoryDTO> benefitCategoryList = bcService.selectAll();
+		
+	    return benefitCategoryList;
+	}
 
 	@GetMapping("/inCon")
 	public String insertView(Model model) {

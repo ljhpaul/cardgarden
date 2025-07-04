@@ -364,6 +364,49 @@ $(function() {
 						<span>전월실적: ${prev_month_cost}원</span>
 					</div>
 					<a href="${card.card_url}" class="company-button" target="_blank" rel="noopener noreferrer">카드사 바로가기</a>
+					
+					<button class="calcBenefitBtn" data-cardid="${card.card_id}">혜택 계산하기</button>
+					<script>
+					  $(document).on("click", ".calcBenefitBtn", function () {
+					    const cardId = $(this).data("cardid"); // 카드 ID 필요 시 사용 가능
+					
+					    // 모달 열기
+					    $("#userPatternModal").css("display", "flex");
+					
+					    // AJAX로 혜택 카테고리 불러오기
+					    $.ajax({
+					      url: "${cpath}/ConsumptionPattern/loadBenefitCategories",
+					      type: "GET",
+					      success: function (categoryList) {
+					        console.log("✅ 카테고리 목록:", categoryList);
+					
+					        // 기본 select 요소 채우기
+					        const $firstSelect = $("#userPatternModal select[name='benefitcategory_id']").first();
+					
+					        // 이미 옵션이 있으면 다시 안 넣음 (처음 1회만 로딩)
+					        if ($firstSelect.children("option").length <= 1) {
+					          $firstSelect.empty().append("<option disabled selected>카테고리 선택</option>");
+					
+					          categoryList.forEach(function (cat) {
+					            $firstSelect.append(
+					              $("<option>").val(cat.benefitcategory_id).text(cat.benefitCategory_name)
+					            );
+					          });
+					        }
+					
+					        // 입력칸 추가 버튼에서도 사용될 수 있도록 전역에 저장
+					        window.benefitCategoryList = categoryList;
+					      },
+					      error: function () {
+					        alert("❌ 혜택 카테고리 불러오기 실패");
+					      }
+					    });
+					  });
+					</script>
+
+					
+					
+					<div id="benefitResult" style="margin-top: 20px;"></div>
 				</div>
 		</div>
 		</c:forEach>
@@ -438,6 +481,14 @@ $(function() {
 			<jsp:include page="../recommend/aiPattern.jsp" />
 		</div>
 	</div>
+	
+	<!-- 소비패턴 입력 모달(혜택 계산기) -->
+	<div class="modal" id="userPatternModal" style="display: none;">
+	  <div class="modal_body">
+	    <jsp:include page="../recommend/insertUserConsumptionPattern.jsp" />
+	  </div>
+	</div>
+	
 	
 	<script>
 	  new Swiper(".recommend-swiper", {
