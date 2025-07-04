@@ -360,8 +360,8 @@ $(function() {
 						<span>국내연회비: ${fee_domestic}원 &ensp;|</span>
 						<fmt:formatNumber type="number" maxFractionDigits="3" value="${card.fee_foreign}" var="fee_foreign" />
 						<span>해외연회비: ${fee_foreign}원 &ensp;|</span>
-						<%-- <fmt:formatNumber value="${card.prev_month_cost}" type="number" groupingUsed="true" var="prev_month_cost"/> --%>
-						<span>전월실적: ${card.prev_month_cost}만원</span>
+						<fmt:formatNumber value="${card.prev_month_cost*1000}" type="number" groupingUsed="true" var="prev_month_cost"/>
+						<span>전월실적: ${prev_month_cost}원</span>
 					</div>
 					<a href="${card.card_url}" class="company-button" target="_blank" rel="noopener noreferrer">카드사 바로가기</a>
 				</div>
