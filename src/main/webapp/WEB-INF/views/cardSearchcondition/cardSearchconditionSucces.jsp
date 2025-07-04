@@ -330,12 +330,12 @@ input[type="submit"]:hover {
   </div>
 
 	<div style="text-align: left; width: 1100px; margin-top: -20px;">
-	  <span style="font-size: 20px;">총 <strong>${CardList.size()}</strong>개의 카드가 검색되었습니다.</span>
+	  <span style="font-size: 20px;" id="cardCountText">총 <strong>${CardList.size()}</strong>개의 카드가 검색되었습니다.</span>
 	</div>
 	
   <!-- 카드 리스트 출력 -->
   <c:forEach var="card" items="${CardList}">
-    <div class="tab"
+    <div class="tab" id="card_tab"
          data-company="${card.company}"
          data-like="${card.card_like}"
          data-fee_domestic="${card.fee_domestic}"
@@ -374,7 +374,8 @@ input[type="submit"]:hover {
 		      <span>없음</span>
 		    </c:when>
 		    <c:otherwise>
-		      <span>${card.fee_domestic} 원</span>
+		    <fmt:formatNumber type="number" maxFractionDigits="3" value="${card.fee_domestic}" var="fee_domestic" />
+		      <span>${fee_domestic} 원</span>
 		    </c:otherwise>
 		  </c:choose>
           <h3>전월실적</h3>
@@ -394,6 +395,23 @@ input[type="submit"]:hover {
   </c:forEach>
 </div>
 <script>
+// 카드 갯수 실시간 적용
+function updateCardCount() {
+	  const allCards = document.querySelectorAll("#card_tab");
+	  const hiddenCards = document.querySelectorAll("#card_tab[style*='display: none']");
+
+	  const count = allCards.length;
+	  const hidden = hiddenCards.length;
+	  const visibleCount = count - hidden;
+	  
+	  console.log("count" + count);
+	  console.log("hidden" + hidden);
+	  console.log("visibleCount" + visibleCount);
+
+	  document.getElementById("cardCountText").innerHTML =
+	    "총 <strong>"+ visibleCount+"</strong>개의 카드가 검색되었습니다.";
+	}
+
   // jQuery - 연회비 슬라이더
   $(function () {
     $("#slider-range").slider({
@@ -403,7 +421,9 @@ input[type="submit"]:hover {
       values: [0, 300000],
       step: 10000,
       slide: function (event, ui) {
-        $("#fee_domestic").val(ui.values[0] + "원 ~ " + ui.values[1] + "원");
+        const min = ui.values[0].toLocaleString();
+        const max = ui.values[1].toLocaleString();
+        $("#fee_domestic").val(min + "원 ~ " + max + "원");
         selectCardsByFee(ui.values[0], ui.values[1]);
       }
     });
@@ -441,6 +461,7 @@ input[type="submit"]:hover {
       const fee = parseInt(card.getAttribute("data-fee_domestic")) || 0;
       card.style.display = (fee >= min && fee <= max) ? "flex" : "none";
     });
+    updateCardCount();
   }
   // 전월실적으로 카드 필터링
   function selectCardsByMonthcost(min, max) {
@@ -449,6 +470,7 @@ input[type="submit"]:hover {
       const fee = parseInt(card.getAttribute("data-prev_month_cost")) || 0;
       card.style.display = (fee >= min && fee <= max) ? "flex" : "none";
     });
+    updateCardCount();
   }
 
   // 카드 정렬
@@ -475,6 +497,7 @@ input[type="submit"]:hover {
         const company = card.getAttribute("data-company");
         card.style.display = (selectedCompany === "모든카드사" || company === selectedCompany) ? "flex" : "none";
       });
+      updateCardCount();
     });
 
     sortSelect.addEventListener("change", function () {
@@ -520,6 +543,8 @@ input[type="submit"]:hover {
 	    document.querySelectorAll(".tab[data-company]").forEach(card => {
 	      card.style.display = "flex";
 	    });
+	    
+	    updateCardCount();
 	  });
 	});
   

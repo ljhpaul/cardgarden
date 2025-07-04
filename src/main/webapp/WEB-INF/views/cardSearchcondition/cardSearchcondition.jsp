@@ -38,7 +38,7 @@
 	.folder {
 	  background-color: #fff;
 	  border-radius: 16px;
-	  padding: 30px 20px;
+	  padding: 30px 30px;
 	  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 	  position: relative;
 	  border: 2px dashed #8FB098;
@@ -51,12 +51,16 @@
 	  border-radius: 12px 12px 0 0;
 	  font-size: 15px;
 	  box-shadow: 0 -2px 0 rgba(0,0,0,0.1);
-	  margin-bottom: 10px;
+	  margin-bottom: 4px;
 	  padding-left: 10px;
+	  
 	}
 	#benefitDetailListarea{
-		padding-left: 10px;
-		padding-top: 4px;
+		padding-left: 18px;
+		padding-top: 5px;
+		padding-bottom: 5px;
+		/* border: 2px dashed #8FB098; */
+	    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.08);
 	}
     .folder_btn {
       display: block;
