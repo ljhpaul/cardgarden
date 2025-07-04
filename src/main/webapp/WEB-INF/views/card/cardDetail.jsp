@@ -394,8 +394,9 @@ $(function() {
 					<c:forEach items="${cardDetail.value}" var="detail">
 						<p>
 							<strong>${detail.title}</strong>
+						<p>
+						  <c:out value="${detail.description}" escapeXml="false"/>
 						</p>
-						<p>${detail.description}</p>
 						<br>
 					</c:forEach>
 				</div>
@@ -431,8 +432,6 @@ $(function() {
     <div class="swiper-button-next"></div>
 </div>
 
-
-	
 	<div class="modal" id="patternModal" style="display: none;">
 		<div class="modal_body">
 			<jsp:include page="../recommend/aiPattern.jsp" />
