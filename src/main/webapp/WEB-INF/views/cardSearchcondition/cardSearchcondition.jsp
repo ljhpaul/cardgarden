@@ -53,7 +53,7 @@
 	  box-shadow: 0 -2px 0 rgba(0,0,0,0.1);
 	  margin-bottom: 4px;
 	  padding-left: 10px;
-	  
+	  cursor: pointer;
 	}
 	#benefitDetailListarea{
 		padding-left: 18px;
@@ -158,6 +158,7 @@
 </head>
 <body>
 <form id="searchForm" action="${cpath}/cardSearchcondition" method="post">
+  <div id="selectedCategories"></div>
   <div class="wrap">
     <div id="content">
       <div class="cardtype">
@@ -170,7 +171,7 @@
       </div>
       <c:forEach var="category" items="${benefitCategoryList}">
         <div class="folder">
-          <div class="tab">
+          <div class="tab category-tab" data-id="${category.benefitcategory_id}">
             <span class="emoji">
               <c:choose>
                 <c:when test="${category.benefitCategory_name.contains('모빌리티')}">&#x1F697;</c:when>
@@ -214,11 +215,51 @@
 		  </div>
 </form>
 <script>
+let cardsubmit;
+
+
+document.querySelectorAll(".category-tab").forEach(tab => {
+	  tab.addEventListener("click", function () {
+	    const categoryId = this.dataset.id;
+	    const container = document.getElementById("selectedCategories");
+
+	    if (this.classList.contains("selected")) {
+	      this.classList.remove("selected");
+	      this.style.backgroundColor = "#FFF5E1";
+
+	      // 이름까지 포함해 정확히 찾아서 삭제
+	      const inputToRemove = Array.from(container.querySelectorAll('input[name="benefitcategory_id"]'))
+	                                 .find(input => input.value == categoryId);
+	      if (inputToRemove) container.removeChild(inputToRemove);
+	    } else {
+	      this.classList.add("selected");
+	      this.style.backgroundColor = "#DFEED8";
+
+	      const input = document.createElement("input");
+	      input.type = "hidden";
+	      input.name = "benefitcategory_id";
+	      input.value = categoryId;
+	      container.appendChild(input);
+	    }
+
+	    // 디버깅 정확히 출력
+	    const selectedInputs = Array.from(container.querySelectorAll('input[name="benefitcategory_id"]'));
+	    console.log("선택된 카테고리들:", selectedInputs.map(i => i.value));
+	    console.log("현재 hidden input 개수:", selectedInputs.length);
+
+	    updateCardCount();
+	  });
+	});
+
 function updateCardCount() {
     const category = [];
     document.querySelectorAll('input[name="category"]:checked').forEach(ct => category.push(ct.value));
     const cardType = [];
     document.querySelectorAll('input[name="cardType"]:checked').forEach(ct => cardType.push(ct.value));
+    const benefitCategoryIds = [];
+    document.querySelectorAll('#selectedCategories input[name="benefitcategory_id"]').forEach(input => {
+      benefitCategoryIds.push(input.value);
+    });
 
 
     
@@ -228,11 +269,14 @@ function updateCardCount() {
       document.getElementById("cardCountdiv").style.backgroundColor = "#DFEED8";
       return;
     }
+    
+    console.log("카테고리:", category);
+    console.log("카테고리 탭:", benefitCategoryIds);
 
     $.ajax({
       url: "${cpath}/cardCount",
       method: "POST",
-      data: { category: category, cardType: cardType },
+      data: { category: category, cardType: cardType, benefitcategory_id: benefitCategoryIds },
       traditional: true,
       success: function(count) {
         $("#cardCount").text(count);
@@ -254,7 +298,7 @@ function updateCardCount() {
   }
 
   document.addEventListener("DOMContentLoaded", function () {
-	  const cardsubmit = document.getElementById("cardsubmit")
+	  cardsubmit = document.getElementById("cardsubmit");
     document.querySelectorAll('input[name="category"], input[name="cardType"]').forEach(input => {
       input.addEventListener("change", updateCardCount);
     });
