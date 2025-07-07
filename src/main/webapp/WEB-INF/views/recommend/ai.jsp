@@ -12,8 +12,6 @@
 	body {
 		font-family: 'NanumSquareRound', sans-serif;
 		background-color: #F0F3F1;
-		padding: 0;
-		margin: 0;
 	}
 	.pattern-page {
 		display: flex;
@@ -58,6 +56,8 @@
 	.pattern-content {
 		flex: 1 1 0;
 		min-width: 360px;
+		justify-content: center;
+		
 	}
 	.pattern-container {
 		display: grid;
@@ -228,6 +228,22 @@
 	.abcd{
 		height:100px
 	}
+	.pattern-container-nopattern{
+	display: grid;
+	
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    max-width: 900px;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.93);
+    border: none;
+    box-shadow: none;
+    padding: 25px;
+    text-align: left;
+    margin-left: 48px;
+    min-height: 370px;
+    border-radius: 20px;
+	}
 </style>
 </head>
 <body>
@@ -245,7 +261,7 @@
   <div class="pattern-content">
     <c:choose>
       <c:when test="${empty patternList}">
-        <div class="pattern-container" style="display:block;">
+        <div class="pattern-container-nopattern" style="display:block;">
           <p class="non-pattern">등록된 소비패턴이 없습니다.</p>
         </div>
       </c:when>

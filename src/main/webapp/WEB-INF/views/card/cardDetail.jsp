@@ -412,8 +412,11 @@ $(function() {
 		
 
 	</div>
-		<div class="card-benefit-section card-benefit-box">
-			<button class="calcBenefitBtn" data-cardid="${card.card_id}">혜택 계산해보기</button>
+		<div class="calcBenefitBtnArea">
+		  <button class="calcBenefitBtn" data-cardid="${card.card_id}">
+		    <img src="${cpath}/resources/images/benefitCal/Cal.png" alt="계산기" class="calcIcon" />
+		    혜택 미리 계산해보기
+		  </button>
 		</div>
 	<div class="card-benefit-section">
 		<c:forEach items="${cardDetail}" var="cardDetail" varStatus="status">
@@ -544,6 +547,8 @@ $(function() {
 				}
 			});
 		});
+		
+		
 		
 	</script>
 	<!-- AI 추천 결과 모달(초기에는 숨김) -->

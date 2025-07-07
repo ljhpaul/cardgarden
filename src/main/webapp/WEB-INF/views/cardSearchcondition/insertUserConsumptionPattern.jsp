@@ -151,6 +151,7 @@ input[type="submit"]:hover, input[type="reset"]:hover, #btnpuls:hover {
 			<form id="myfrm" action="${cpath}/ConsumptionPattern/inCon"
 				method="post">
 				<input type="hidden" name="job" value="insert">
+				<input type="hidden" name="cardid" value="${cardid}" />
 
 				<div class="form-group">
 					<label style="font-weight: 1000; font-size: 25px;">소비패턴 이름</label>
