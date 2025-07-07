@@ -428,10 +428,10 @@ function updateCardCount() {
       }
     });
 
-    $("#fee_domestic").val(
-      $("#slider-range").slider("values", 0) + "원 ~ " +
-      $("#slider-range").slider("values", 1) + "원"
-    );
+    // 초기값에도 쉼표 포맷 적용
+    const initMin = $("#slider-range").slider("values", 0).toLocaleString();
+    const initMax = $("#slider-range").slider("values", 1).toLocaleString();
+    $("#fee_domestic").val(initMin + "원 ~ " + initMax + "원");
   });
 
   // jQuery - 전월 실적 슬라이더
