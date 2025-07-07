@@ -717,19 +717,38 @@ body {
 	padding-top: 50px;
     text-align: center;
 }
-
-.calcBenefitBtnArea{
-	
-	
+.calcBenefitBtnArea {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
 }
 
-.calcBenefitBtn{
-	  border: none;
-	  outline: none;
-	  background-color: inherit;
-	  cursor: pointer;
-	  font-size: 18px;
-	  font-weight: bold;
-	
-	
+.calcBenefitBtn {
+  width:1000px;
+  height:90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 24px;
+  background-color: #f8f9fa;
+  border: 2px solid #8fb098; /* 포인트 컬러 */
+  border-radius: 30px;
+  font-size: 24px;
+  font-weight: bold;
+  color: #4b4b4b;
+  box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+  text-align: center;
+}
+
+.calcBenefitBtn:hover {
+  background-color: #dfeed8; /* 서브 컬러 */
+  transform: scale(1.03);
+  box-shadow: 3px 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.calcIcon {
+  width: 50px;
+  height: 50px;
 }

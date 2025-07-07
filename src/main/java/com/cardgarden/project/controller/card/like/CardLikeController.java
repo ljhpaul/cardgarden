@@ -42,9 +42,11 @@ public class CardLikeController {
         Map<String, Object> result = new HashMap<>();
         if (row > 0) {
             int likeCount = cardLikeService.cardLikeSelectCount(userId);
+            int cardLike = cardLikeService.cardLikeCount(cardId);
             session.setAttribute("userLike", likeCount);
             result.put("result", "success");
             result.put("userLike", likeCount);
+            result.put("cardLike", cardLike);
         } else {
             result.put("result", "fail");
         }
@@ -80,9 +82,11 @@ public class CardLikeController {
         Map<String, Object> result = new HashMap<>();
         if (row > 0) {
             int likeCount = cardLikeService.cardLikeSelectCount(userId);
+            int cardLike = cardLikeService.cardLikeCount(cardId);
             session.setAttribute("userLike", likeCount);
             result.put("result", "success");
             result.put("userLike", likeCount);
+            result.put("cardLike", cardLike);
         } else {
             result.put("result", "fail");
         }

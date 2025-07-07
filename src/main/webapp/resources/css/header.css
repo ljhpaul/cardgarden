@@ -248,10 +248,6 @@ header.main-header {
   text-decoration: none;
 }
 
-.menu-center a:hover {
-  color: var(--m1);
-  text-decoration: none;
-}
 
 .menu-right {
   display: flex;

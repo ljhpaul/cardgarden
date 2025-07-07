@@ -11,4 +11,6 @@ public interface CardLikeDAOInterface {
 	
 	public CardDTO selectByIdWithLike(Map<String, Object> params);
 	public int cardLikeSelectCount(int userId);
+	public int cardLikeCount(int cardId);
+	
 }

@@ -296,7 +296,7 @@ def get_consum_pattern_continuous(pattern_id, card_id, q_cutoff=0.75, min_matche
 
 
 app = Flask(__name__)
-CORS(app)  # 이 줄 추가!
+CORS(app)
 
 @app.route('/recommend', methods=['GET'])
 def recommend_route():

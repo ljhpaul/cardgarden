@@ -257,6 +257,18 @@ document.addEventListener('DOMContentLoaded', function() {
   margin-top: 20px;
   margin-left: 26px;
 }
+.img-nopattern{
+	width: 300px;
+    margin-top: 6%;
+    margin-left: 0%;
+    border-radius: 20px;
+    box-shadow: 0 2px 16px rgba(100,130,120,0.08);
+}
+	
+	.img-nopattern:hover {
+		box-shadow: 0 3px 24px rgba(180, 140, 90, 0.22);
+		transition: box-shadow 0.18s;
+	}
 </style>
 
 <!-- 모달 -->
@@ -298,7 +310,9 @@ document.addEventListener('DOMContentLoaded', function() {
             <c:otherwise>
               <div class="no-pattern-message" style="text-align:center;">
                 <p>아직 등록된 소비 패턴이 없습니다.</p>
-                <a href="${cpath}/ConsumptionPattern/inCon?cardid=${cardid}" class="btn">패턴 입력하러 가기</a>
+                <a href="${cpath}/ConsumptionPattern/inCon?cardid=${cardid}">
+			      <img src="${cpath}/resources/images/consumpattern/goconsumpattern.png" alt="소비패턴 입력하러 가기" class="img-nopattern">
+			    </a>
               </div>
             </c:otherwise>
           </c:choose>
@@ -306,9 +320,11 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="modal-fade-blur bottom"></div>
       </div>
       <div class="pattern-submit-container">
-      	<a href="${cpath}/ConsumptionPattern/inCon" class="btn">패턴 입력</a>
-        <input type="submit" value="제출하기" class="btn" />
-      </div>
+        <c:if test="${not empty patternList}">
+	      <a href="${cpath}/ConsumptionPattern/inCon?cardid=${cardid}" class="btn">패턴 입력</a>	    
+	      <input type="submit" value="제출하기" class="btn" />
+	    </c:if>
+	  </div>
     </form>
   </div>
 </div>

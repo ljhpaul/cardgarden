@@ -60,7 +60,9 @@ public class CardSearchconditionController {
 	
 	@PostMapping("/cardSearchcondition")
 	public String cardSearchcondition(@RequestParam(name = "category", required = false) String[] selectedCategories,
-					@RequestParam("cardType") String[] selectedcardType,Model model) {
+					@RequestParam("cardType") String[] selectedcardType,
+					@RequestParam(name = "benefitcategory_id", required = false) Integer[] selectedbenefitCategoryId,
+					Model model) {
 		System.out.println(Arrays.toString(selectedcardType));
 		
 	    Map<String, Object> param = new HashMap<>();
@@ -71,6 +73,10 @@ public class CardSearchconditionController {
 	        param.put("selectedCategories", Arrays.asList(selectedCategories));
 	        param.put("categorySize", selectedCategories.length);
 	    }
+	    if (selectedbenefitCategoryId != null) {
+	        param.put("selectedbenefitCategoryId", Arrays.asList(selectedbenefitCategoryId));
+	    }
+
 	    param.put("selectedcardType", Arrays.asList(selectedcardType));
 		
 		//조건에 맞게 검색하기
@@ -90,12 +96,17 @@ public class CardSearchconditionController {
 	@PostMapping("/cardCount")
 	@ResponseBody
 	public int getCardCount(@RequestParam(name = "category", required = false) String[] selectedCategories,
-	                        @RequestParam("cardType") String[] selectedcardType) {
+	                        @RequestParam("cardType") String[] selectedcardType,
+	                        @RequestParam(name = "benefitcategory_id", required = false) Integer[] selectedBenefitCategoryIds) {
 	    Map<String, Object> param = new HashMap<>();
 
 	    if (selectedCategories != null) {
 	        param.put("selectedCategories", Arrays.asList(selectedCategories));
 	        param.put("categorySize", selectedCategories.length);
+	    }
+	    
+	    if (selectedBenefitCategoryIds != null) {
+	        param.put("selectedbenefitCategoryId", Arrays.asList(selectedBenefitCategoryIds));
 	    }
 	    param.put("selectedcardType", Arrays.asList(selectedcardType));
 

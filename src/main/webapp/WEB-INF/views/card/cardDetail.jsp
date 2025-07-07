@@ -113,7 +113,9 @@ $(function() {
 					if (res.result === "success") {
 						$btn.data("liked", false);
 						$icon.attr("src", "${cpath}/resources/images/cardlikeImage/unlike.png");
-						$count.text(Number($count.text()) - 1);
+						if (res.cardLike !== undefined) {
+					        $count.text(res.cardLike); 
+					    }
 						if (res.userLike !== undefined) {
 					        $("#userLike").text(res.userLike);
 					        $(".like-count.like-count-sticky").text(res.userLike);
@@ -159,7 +161,9 @@ $(function() {
 					if (res.result === "success") {
 						$btn.data("liked", true);
 						$icon.attr("src", "${cpath}/resources/images/cardlikeImage/like.png");
-						$count.text(Number($count.text()) + 1);
+						if (res.cardLike !== undefined) {
+					        $count.text(res.cardLike);  
+					    }
 						// 좋아요 애니메이션 추가
 						createRandomBurstEffect($btn[0], "${cpath}/resources/images/cardlikeImage/like.png");
 						if (res.userLike !== undefined) {
@@ -412,8 +416,11 @@ $(function() {
 		
 
 	</div>
-		<div class="card-benefit-section card-benefit-box">
-			<button class="calcBenefitBtn" data-cardid="${card.card_id}">혜택 계산해보기</button>
+		<div class="calcBenefitBtnArea">
+		  <button class="calcBenefitBtn" data-cardid="${card.card_id}">
+		    <img src="${cpath}/resources/images/benefitCal/Cal.png" alt="계산기" class="calcIcon" />
+		    혜택 미리 계산해보기
+		  </button>
 		</div>
 	<div class="card-benefit-section">
 		<c:forEach items="${cardDetail}" var="cardDetail" varStatus="status">
@@ -544,6 +551,8 @@ $(function() {
 				}
 			});
 		});
+		
+		
 		
 	</script>
 	<!-- AI 추천 결과 모달(초기에는 숨김) -->
