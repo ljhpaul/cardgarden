@@ -222,6 +222,7 @@ document.querySelectorAll(".category-tab").forEach(tab => {
 	  tab.addEventListener("click", function () {
 	    const categoryId = this.dataset.id;
 	    const container = document.getElementById("selectedCategories");
+	    const folder = this.closest(".folder");
 
 	    if (this.classList.contains("selected")) {
 	      this.classList.remove("selected");
@@ -240,6 +241,9 @@ document.querySelectorAll(".category-tab").forEach(tab => {
 	      input.name = "benefitcategory_id";
 	      input.value = categoryId;
 	      container.appendChild(input);
+	      
+	      const checkboxes = folder.querySelectorAll('input[name="category"]');
+	      checkboxes.forEach(cb => cb.checked = false);
 	    }
 
 	    // 디버깅 정확히 출력
@@ -297,23 +301,57 @@ function updateCardCount() {
     });
   }
 
-  document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function () {
+	  // 기존 로직 유지
 	  cardsubmit = document.getElementById("cardsubmit");
-    document.querySelectorAll('input[name="category"], input[name="cardType"]').forEach(input => {
-      input.addEventListener("change", updateCardCount);
-    });
 
-    document.getElementById("searchForm").addEventListener("submit", function (e) {
-      const checked = document.querySelectorAll('input[name="cardType"]:checked');
-      if (checked.length === 0) {
-        alert("신용카드 또는 체크카드 중 하나는 선택해야 합니다.");
-        e.preventDefault();
-        document.getElementById("focus").focus();
-      }else{
-        cardsubmit.disabled = false;
-    }
-    });
-  });
+	  document.querySelectorAll('input[name="category"]').forEach(checkbox => {
+		  checkbox.addEventListener("change", function () {
+		    const folder = checkbox.closest(".folder");
+		    const tab = folder.querySelector(".category-tab");
+		    const categoryId = tab.dataset.id;
+		    const container = document.getElementById("selectedCategories");
+
+		    // 탭이 선택된 상태라면 소카테고리 체크 시 탭 해제 + hidden input 제거
+		    if (tab.classList.contains("selected")) {
+		      const anyChecked = folder.querySelector('input[name="category"]:checked');
+		      if (anyChecked) {
+		        // 탭 해제
+		        tab.classList.remove("selected");
+		        tab.style.backgroundColor = "#FFF5E1";
+
+		        // hidden input 제거 
+		        const hiddenInputs = Array.from(container.querySelectorAll('input[name="benefitcategory_id"]'));
+		        hiddenInputs.forEach(input => {
+		          if (input.value == categoryId) {
+		            container.removeChild(input);
+		          }
+		        });
+
+		        console.log(`탭 자동 해제됨 → 카테고리 ID: ${categoryId}`);
+		      }
+		    }
+
+		    updateCardCount();
+		  });
+		});
+
+	  // 기존 이벤트들도 그대로 유지
+	  document.querySelectorAll('input[name="category"], input[name="cardType"]').forEach(input => {
+	    input.addEventListener("change", updateCardCount);
+	  });
+
+	  document.getElementById("searchForm").addEventListener("submit", function (e) {
+	    const checked = document.querySelectorAll('input[name="cardType"]:checked');
+	    if (checked.length === 0) {
+	      alert("신용카드 또는 체크카드 중 하나는 선택해야 합니다.");
+	      e.preventDefault();
+	      document.getElementById("focus").focus();
+	    } else {
+	      cardsubmit.disabled = false;
+	    }
+	  });
+	});
 </script>
 </body>
 </html>
