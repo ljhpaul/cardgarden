@@ -297,7 +297,7 @@ $(function() {
 				          <c:set var="prevImg" value="${benefit.benefitDetailDTO.benefitdetail_image}" />
 				        </c:forEach>
 				        
-				      </div>
+				      </div> 
 				    </c:forEach>
 				  </c:when>
 				  <c:otherwise>
@@ -365,7 +365,6 @@ $(function() {
 					</div>
 					<a href="${card.card_url}" class="company-button" target="_blank" rel="noopener noreferrer">카드사 바로가기</a>
 					
-					<button class="calcBenefitBtn" data-cardid="${card.card_id}">혜택 계산하기</button>
 					<script>
 					  $(document).on("click", ".calcBenefitBtn", function () {
 					    const cardId = $(this).data("cardid"); // 카드 ID 필요 시 사용 가능
@@ -383,7 +382,7 @@ $(function() {
 					        // 기본 select 요소 채우기
 					        const $firstSelect = $("#userPatternModal select[name='benefitcategory_id']").first();
 					
-					        // 이미 옵션이 있으면 다시 안 넣음 (처음 1회만 로딩)
+					        // 이미 옵션이 있으면 다시 안 넣음
 					        if ($firstSelect.children("option").length <= 1) {
 					          $firstSelect.empty().append("<option disabled selected>카테고리 선택</option>");
 					
@@ -413,6 +412,9 @@ $(function() {
 		
 
 	</div>
+		<div class="card-benefit-section card-benefit-box">
+			<button class="calcBenefitBtn" data-cardid="${card.card_id}">혜택 계산해보기</button>
+		</div>
 	<div class="card-benefit-section">
 		<c:forEach items="${cardDetail}" var="cardDetail" varStatus="status">
 			<c:set var="firstItem" value="${cardDetail.value[0]}" />

@@ -1,5 +1,6 @@
 package com.cardgarden.project.controller.card.detail;
 
+import java.nio.file.spi.FileSystemProvider;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -50,8 +51,9 @@ public class CardDetailController {
     @Value("${recommend.api.url}")
     private String recommendApiUrl;
     
+    @Value("${benefit.api.baseurl}")
+	private String apiBaseUrl;
     
-
     @RequestMapping("/detail")
     public String cardDetail(@RequestParam("cardid") int cardid,
                              @RequestParam(value = "patternId", required = false) Integer patternId,
@@ -84,7 +86,7 @@ public class CardDetailController {
             Map<Integer, List<UserPatternBenefitDTO>> patternList = getPatternList(userId);
             model.addAttribute("patternList", patternList);
             model.addAttribute("userInfo",userInfoService.selectById(userId));
-            
+            model.addAttribute("apiBaseUrl", apiBaseUrl);
         }
 
         // patternId가 있으면 AI 추천 결과 추가
@@ -93,7 +95,6 @@ public class CardDetailController {
                     cardRecommendationService.getRecommendDetailResult(patternId, cardid);
             model.addAttribute("aiDetailResult", aiDetailResult);
             model.addAttribute("benefitDetail",cardService.selectPatternCardID(patternId, cardid));
-            System.out.println(aiDetailResult);
         }
         
         session.setAttribute("cardid", cardid);

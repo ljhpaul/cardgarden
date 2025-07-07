@@ -2,7 +2,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.List" %>
 <%@ page import="com.cardgarden.project.model.benefitCategory.benefitCategoryDTO" %>
+
 <c:set var="cpath" value="${pageContext.request.contextPath}" />
+<%@ page isELIgnored="false" %>
 
 <!DOCTYPE html>
 <html>
@@ -62,8 +64,7 @@
       font-size: 15px;
       color: #3e4e42;
     }
-
-    input[type="text"],
+    
     input[type="number"],
     select {
       width: 100%;
@@ -157,11 +158,35 @@
     </div>
   </div>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      let benefitCategoryList = [];
+ <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    let benefitCategoryList = [];
+    const cpath = "${cpath}";
 
-      // ✅ 서버에서 카테고리 로딩
+    // ✅ 서버에서 카테고리 로딩
+    fetch(`${cpath}/ConsumptionPattern/loadBenefitCategories`)
+      .then(res => res.json())
+      .then(data => {
+        benefitCategoryList = data;
+      })
+      .catch(err => {
+        console.error("[ERROR] 카테고리 목록 로딩 실패:", err);
+      });
+
+    // ✅ 계산하기 버튼 클릭
+    document.getElementById("calcBtn").addEventListener("click", function () {
+      const selects = document.querySelectorAll('select[name="benefitcategory_id"]');
+      const amounts = document.querySelectorAll('input[name="amount"]');
+      
+      const pattern = {};
+      
+      // [3] 입력값 확인
+      for (let i = 0; i < selects.length; i++) {
+        const category = selects[i].options[selects[i].selectedIndex].textContent.trim();
+        const amount = parseInt(amounts[i].value.trim());
+        console.log(`[DEBUG] category: ${category}, amount: ${amount}`);
+
+      // 서버에서 카테고리 로딩
       fetch("${cpath}/ConsumptionPattern/loadBenefitCategories")
         .then(res => res.json())
         .then(data => {
@@ -169,13 +194,13 @@
           console.log("✅ 카테고리 목록 로딩 완료:", benefitCategoryList);
         });
 
-      // ✅ 계산하기 버튼 클릭
+      // 계산하기 버튼 클릭
       document.getElementById("calcBtn").addEventListener("click", function () {
         const selects = document.querySelectorAll('select[name="benefitcategory_id"]');
         const amounts = document.querySelectorAll('input[name="amount"]');
 
         const pattern = {};
-        for (let i = 0; i < selects.length; i++) {
+/*         for (let i = 0; i < selects.length; i++) {
           const category = selects[i].options[selects[i].selectedIndex].textContent.trim();
           const amount = parseInt(amounts[i].value.trim());
 
@@ -188,7 +213,7 @@
         if (!cardId || Object.keys(pattern).length < 3) {
           alert("카드 ID가 없거나 소비영역을 3개 이상 입력해야 합니다.");
           return;
-        }
+        } */
 
         fetch("http://localhost:5000/api/benefit-calc", {
           method: "POST",
@@ -211,74 +236,138 @@
           });
       });
 
-   // ✅ 계산 결과 출력 함수 (백틱 없이)
+   // 계산 결과 출력 함수
       function showBenefitResult(result) {
         let html = '<div style="padding:16px; border:1px solid #ccc; border-radius:10px; background:#f9f9f9;">';
         html += '<h3>총 혜택: ' + result["총 혜택"].toLocaleString() + '원</h3>';
         html += '<ul style="padding-left:20px;">';
 
-        for (const [cat, amt] of Object.entries(result.details)) {
-          html += '<li>' + cat + ' ▶ ' + amt.toLocaleString() + '원</li>';
+        if (category !== "카테고리 선택" && !isNaN(amount) && amount > 0) {
+          pattern[category] = amount;
         }
-
-        html += '</ul></div>';
-
-        document.getElementById("resultBox").innerHTML = html;
       }
 
+      const cardId = new URLSearchParams(window.location.search).get("cardid");
 
-      // ✅ 입력칸 추가
+      if (!cardId) {
+        alert("카드 ID가 없습니다.");
+        return;
+      }
+      const API_BASE_URL = "${apiBaseUrl}";
+      // [4] 요청 URL과 Body 미리 출력
+
+      // 입력칸 추가
       document.getElementById("btnpuls").addEventListener("click", function () {
         const div = document.createElement("div");
         div.classList.add("form-group");
 
-        const label1 = document.createElement("label");
-        label1.textContent = "소비영역";
 
-        const select = document.createElement("select");
-        select.name = "benefitcategory_id";
-        select.required = true;
+      const requestBody = {
+        cardId: parseInt(cardId),
+        pattern: pattern
+      };
+      console.log("[DEBUG] fetchUrl:", API_BASE_URL);
+      console.log("[DEBUG] requestBody:", requestBody);
 
-        const defaultOption = document.createElement("option");
-        defaultOption.disabled = true;
-        defaultOption.selected = true;
-        defaultOption.textContent = "카테고리 선택";
-        select.appendChild(defaultOption);
-
-        benefitCategoryList.forEach(item => {
-          const option = document.createElement("option");
-          option.value = item.benefitcategory_id;
-          option.textContent = item.benefitCategory_name || item.benefitcategory_name;
-          select.appendChild(option);
-        });
-
-        const label2 = document.createElement("label");
-        label2.textContent = "소비금액";
-
-        const input = document.createElement("input");
-        input.type = "number";
-        input.name = "amount";
-        input.placeholder = "금액을 입력하세요";
-        input.min = "0";
-
-        const span = document.createElement("span");
-        span.classList.add("remove");
-        span.textContent = "삭제";
-        span.addEventListener("click", function () {
-          this.parentElement.remove();
-        });
-
-        div.appendChild(label1);
-        div.appendChild(select);
-        div.appendChild(document.createElement("br"));
-        div.appendChild(document.createElement("br"));
-        div.appendChild(label2);
-        div.appendChild(input);
-        div.appendChild(span);
-
-        document.getElementById("container").appendChild(div);
+      fetch(API_BASE_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(requestBody)
+      })
+      .then(res => {
+        // [5] 응답 객체 전체 출력
+        console.log("[DEBUG] fetch response object:", res);
+        // 404, 500 등 status 확인
+        console.log("[DEBUG] response status:", res.status);
+        return res.json();
+      })
+      .then(data => {
+        // [6] 결과 데이터 출력
+        console.log("[DEBUG] 계산 결과 data:", data);
+        showBenefitResult(data);
+      })
+      .catch(err => {
+        // [7] 에러 출력
+        console.error("❌ 계산 실패:", err);
+        alert("서버와의 통신 중 오류가 발생했습니다.");
       });
     });
-  </script>
+
+    // ✅ 계산 결과 출력 함수 (백틱 없이)
+    function showBenefitResult(result) {
+      let html = '<div style="padding:16px; border:1px solid #ccc; border-radius:10px; background:#f9f9f9;">';
+      html += '<h3>총 혜택: ' + result["총 혜택"].toLocaleString() + '원</h3>';
+      html += '<ul style="padding-left:20px;">';
+
+      for (const [cat, amt] of Object.entries(result.details)) {
+        html += '<li>' + cat + ' ▶ ' + amt.toLocaleString() + '원</li>';
+      }
+
+      html += '</ul></div>';
+
+      document.getElementById("resultBox").innerHTML = html;
+      // [8] 결과 DOM에 반영 완료 콘솔
+      console.log("[DEBUG] 결과가 화면에 출력되었습니다.");
+    }
+
+    // ✅ 입력칸 추가
+    document.getElementById("btnpuls").addEventListener("click", function () {
+      const div = document.createElement("div");
+      div.classList.add("form-group");
+
+      const label1 = document.createElement("label");
+      label1.textContent = "소비영역";
+
+      const select = document.createElement("select");
+      select.name = "benefitcategory_id";
+      select.required = true;
+
+      const defaultOption = document.createElement("option");
+      defaultOption.disabled = true;
+      defaultOption.selected = true;
+      defaultOption.textContent = "카테고리 선택";
+      select.appendChild(defaultOption);
+
+      benefitCategoryList.forEach(item => {
+        const option = document.createElement("option");
+        option.value = item.benefitcategory_id;
+        option.textContent = item.benefitCategory_name || item.benefitcategory_name;
+        select.appendChild(option);
+      });
+
+      const label2 = document.createElement("label");
+      label2.textContent = "소비금액";
+
+      const input = document.createElement("input");
+      input.type = "number";
+      input.name = "amount";
+      input.placeholder = "금액을 입력하세요";
+      input.min = "0";
+
+      const span = document.createElement("span");
+      span.classList.add("remove");
+      span.textContent = "삭제";
+      span.addEventListener("click", function () {
+        this.parentElement.remove();
+        console.log("[DEBUG] 입력칸 삭제됨");
+      });
+
+      div.appendChild(label1);
+      div.appendChild(select);
+      div.appendChild(document.createElement("br"));
+      div.appendChild(document.createElement("br"));
+      div.appendChild(label2);
+      div.appendChild(input);
+      div.appendChild(span);
+
+      document.getElementById("container").appendChild(div);
+      console.log("[DEBUG] 입력칸 추가됨");
+    });
+  });
+</script>
+
+
 </body>
 </html>
