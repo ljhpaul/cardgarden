@@ -200,14 +200,14 @@
           pattern[category] = amount;
         }
       }
-
+	
       const cardId = new URLSearchParams(window.location.search).get("cardid");
       if (!cardId || Object.keys(pattern).length < 3) {
         alert("카드 ID가 없거나 소비영역을 3개 이상 입력해야 합니다.");
         return;
       }
-
-      fetch("http://localhost:5000/api/benefit-calc", {
+      const API_BASE_URL = "${apiBaseUrl}";
+      fetch(API_BASE_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ cardId: parseInt(cardId), pattern: pattern })
