@@ -12,10 +12,8 @@
   <meta charset="UTF-8">
   <title>카드가든 : 소비패턴 등록</title>
   <style>
-    * {
+ * {
       box-sizing: border-box;
-      margin: 0;
-      padding: 0;
     }
 
     @font-face {
@@ -29,12 +27,14 @@
       font-family: 'NanumSquareRound', sans-serif;
       background-color: #f0f3f1;
       color: #333;
+
     }
 
     .wrap {
       display: flex;
       justify-content: center;
       padding: 40px;
+      
     }
 
     .form-container {
