@@ -27,14 +27,12 @@
       font-family: 'NanumSquareRound', sans-serif;
       background-color: #f0f3f1;
       color: #333;
-
     }
 
     .wrap {
       display: flex;
       justify-content: center;
       padding: 40px;
-      
     }
 
     .form-container {
@@ -44,6 +42,8 @@
       padding: 40px;
       border-radius: 16px;
       box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+      height: 60vh; /* ! 중요: 고정 높이 */
+      overflow-y : auto;
     }
 
     h1 {
