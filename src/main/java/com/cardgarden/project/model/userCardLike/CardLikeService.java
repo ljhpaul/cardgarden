@@ -32,4 +32,8 @@ public class CardLikeService {
 		return cardLikeDAO.cardLikeSelectCount(userId);
 	}
 	
+	public int cardLikeCount(int cardId) {
+		return cardLikeDAO.cardLikeCount(cardId);
+	}
+	
 }
