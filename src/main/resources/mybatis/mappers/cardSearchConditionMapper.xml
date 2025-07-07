@@ -5,27 +5,47 @@
 <mapper namespace="com.cardgarden.cardSearchcondition">
 
 	<!-- 카드 조건조회 -->
-		<select id="selectByConditions" resultMap="CardWithBenefitsMap" parameterType="map">
+	<select id="selectByConditions" resultMap="CardWithBenefitsMap" parameterType="map">
 		  SELECT c.*, cbd.cardbenefitdetail_text
 		  FROM Card c
 		  JOIN CardBenefitDetail cbd ON c.card_id = cbd.card_id
 		  WHERE c.card_id IN (
-		    <choose>
-		      <when test="selectedCategories != null and selectedCategories.size() > 0">
-		        SELECT card_id
-		        FROM CardBenefitDetail
-		        WHERE benefitdetail_id IN
+		    SELECT cbd.card_id
+		    FROM CardBenefitDetail cbd
+		    JOIN BenefitDetail bd ON cbd.benefitdetail_id = bd.benefitdetail_id
+		
+		    <where>
+		      <if test="selectedCategories != null and selectedCategories.size() > 0">
+		        bd.benefitdetail_id IN
 		        <foreach collection="selectedCategories" item="id" open="(" separator="," close=")">
 		          #{id}
 		        </foreach>
-		        GROUP BY card_id
-		        HAVING COUNT(DISTINCT benefitdetail_id) = #{categorySize}
-		      </when>
-		      <otherwise>
-		        SELECT card_id FROM CardBenefitDetail GROUP BY card_id
-		      </otherwise>
-		    </choose>
+		      </if>
+		      <if test="selectedbenefitCategoryId != null and selectedbenefitCategoryId.size() > 0">
+		        <if test="selectedCategories != null and selectedCategories.size() > 0">
+		          AND
+		        </if>
+		        bd.benefitcategory_id IN
+		        <foreach collection="selectedbenefitCategoryId" item="cat" open="(" separator="," close=")">
+		          #{cat}
+		        </foreach>
+		      </if>
+		    </where>
+		
+		    GROUP BY cbd.card_id
+		    <trim prefix="HAVING" prefixOverrides="AND |OR">
+		      <if test="selectedCategories != null and selectedCategories.size() > 0">
+		        COUNT(DISTINCT CASE WHEN bd.benefitdetail_id IS NOT NULL THEN bd.benefitdetail_id END) = #{categorySize}
+		      </if>
+		      <if test="selectedbenefitCategoryId != null and selectedbenefitCategoryId.size() > 0">
+		        <if test="selectedCategories != null and selectedCategories.size() > 0">AND</if>
+		        COUNT(DISTINCT CASE WHEN bd.benefitcategory_id IS NOT NULL THEN bd.benefitcategory_id END) = 
+		        <bind name="catSize" value="selectedbenefitCategoryId.size()" />
+		        ${catSize}
+		      </if>
+		    </trim>
 		  )
+		
 		  <if test="selectedcardType != null and selectedcardType.size() > 0">
 		    AND c.card_type IN
 		    <foreach collection="selectedcardType" item="type" open="(" separator="," close=")">
@@ -33,6 +53,7 @@
 		    </foreach>
 		  </if>
 		</select>
+
 		
 		<select id="cardSelectByCompany" resultMap="CardWithBenefitsMap" parameterType="String">
 			SELECT c.*, cbd.cardbenefitdetail_text
