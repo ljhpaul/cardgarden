@@ -8,12 +8,11 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cardgarden.project.model.cardDetail.CardDTO;
 import com.cardgarden.project.model.cardDetail.CardService;
@@ -27,9 +26,13 @@ public class RecommendAIController {
 	@Autowired
 	private CardRecommendationService cardRecommendationService;
 	
+	
 	@Autowired
 	private CardService cardService;
 	
+	 @Value("${benefit.api.baseurl}")
+	 private String apiBaseUrl;
+	    
 	@RequestMapping("/aiResult")
 	public String cardDetail(Model model, HttpSession session) throws Exception {
 		Integer patternId = (Integer) session.getAttribute("patternId");
@@ -63,7 +66,12 @@ public class RecommendAIController {
 	    return "redirect:/recommend/aiResult";
 	}
 	
+//	@RequestMapping
+//	public String insertUserPattern(Model model) {
+//		model.addAttribute("apiBaseUrl", apiBaseUrl);
+//	    System.out.println(apiBaseUrl);
+//	    return "recommend/insertUserConsumptionPattern";
+//	}
 
-	
 
 }

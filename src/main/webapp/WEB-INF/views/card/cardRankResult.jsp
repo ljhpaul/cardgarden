@@ -7,7 +7,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>카드가든 랭킹</title>
+<title>카드가든 : 랭킹</title>
 <style>
 /* 전체 화면 영역 지정 및 분할 스타일 */
 .wrap {

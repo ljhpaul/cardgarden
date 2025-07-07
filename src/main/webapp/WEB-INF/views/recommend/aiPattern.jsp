@@ -199,6 +199,8 @@ document.addEventListener('DOMContentLoaded', function() {
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  width: 140px;
+  height: 45px;
 }
 .btn:hover {
   background: var(--m3,#49615A);
