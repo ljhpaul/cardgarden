@@ -160,12 +160,6 @@
   </div>
 
  <script>
-
- // 오류 패턴 감지
- if ("${apiBaseUrl}" === "" || "${apiBaseUrl}" === null || "${apiBaseUrl}" === "${apiBaseUrl}") {
-   console.error("[JSP-ERROR] apiBaseUrl이 제대로 넘어오지 않았습니다! 컨트롤러 model.addAttribute 또는 JSP View 설정/EL을 확인하세요.");
- }
- 
   document.addEventListener("DOMContentLoaded", function () {
     let benefitCategoryList = [];
     const cpath = "${cpath}";
@@ -193,6 +187,62 @@
         const amount = parseInt(amounts[i].value.trim());
         console.log(`[DEBUG] category: ${category}, amount: ${amount}`);
 
+      // 서버에서 카테고리 로딩
+      fetch("${cpath}/ConsumptionPattern/loadBenefitCategories")
+        .then(res => res.json())
+        .then(data => {
+          benefitCategoryList = data;
+          console.log("✅ 카테고리 목록 로딩 완료:", benefitCategoryList);
+        });
+
+      // 계산하기 버튼 클릭
+      document.getElementById("calcBtn").addEventListener("click", function () {
+        const selects = document.querySelectorAll('select[name="benefitcategory_id"]');
+        const amounts = document.querySelectorAll('input[name="amount"]');
+
+        const pattern = {};
+/*         for (let i = 0; i < selects.length; i++) {
+          const category = selects[i].options[selects[i].selectedIndex].textContent.trim();
+          const amount = parseInt(amounts[i].value.trim());
+
+          if (category !== "카테고리 선택" && !isNaN(amount) && amount > 0) {
+            pattern[category] = amount;
+          }
+        }
+
+        const cardId = new URLSearchParams(window.location.search).get("cardid");
+        if (!cardId || Object.keys(pattern).length < 3) {
+          alert("카드 ID가 없거나 소비영역을 3개 이상 입력해야 합니다.");
+          return;
+        } */
+
+        fetch("http://localhost:5000/api/benefit-calc", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            cardId: parseInt(cardId),
+            pattern: pattern
+          })
+        })
+          .then(res => res.json())
+          .then(data => {
+            console.log("✅ 계산 결과:", data);
+            showBenefitResult(data);
+          })
+          .catch(err => {
+            console.error("❌ 계산 실패:", err);
+            alert("서버와의 통신 중 오류가 발생했습니다.");
+          });
+      });
+
+   // 계산 결과 출력 함수
+      function showBenefitResult(result) {
+        let html = '<div style="padding:16px; border:1px solid #ccc; border-radius:10px; background:#f9f9f9;">';
+        html += '<h3>총 혜택: ' + result["총 혜택"].toLocaleString() + '원</h3>';
+        html += '<ul style="padding-left:20px;">';
+
         if (category !== "카테고리 선택" && !isNaN(amount) && amount > 0) {
           pattern[category] = amount;
         }
@@ -200,12 +250,18 @@
 
       const cardId = new URLSearchParams(window.location.search).get("cardid");
 
-      if (!cardId || Object.keys(pattern).length < 3) {
-        alert("카드 ID가 없거나 소비영역을 3개 이상 입력해야 합니다.");
+      if (!cardId) {
+        alert("카드 ID가 없습니다.");
         return;
       }
       const API_BASE_URL = "${apiBaseUrl}";
       // [4] 요청 URL과 Body 미리 출력
+
+      // 입력칸 추가
+      document.getElementById("btnpuls").addEventListener("click", function () {
+        const div = document.createElement("div");
+        div.classList.add("form-group");
+
 
       const requestBody = {
         cardId: parseInt(cardId),
