@@ -717,3 +717,19 @@ body {
 	padding-top: 50px;
     text-align: center;
 }
+
+.calcBenefitBtnArea{
+	
+	
+}
+
+.calcBenefitBtn{
+	  border: none;
+	  outline: none;
+	  background-color: inherit;
+	  cursor: pointer;
+	  font-size: 18px;
+	  font-weight: bold;
+	
+	
+}
