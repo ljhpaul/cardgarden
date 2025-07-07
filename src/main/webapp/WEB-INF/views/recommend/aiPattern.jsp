@@ -306,7 +306,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="modal-fade-blur bottom"></div>
       </div>
       <div class="pattern-submit-container">
-      	<a href="${cpath}/ConsumptionPattern/inCon" class="btn">패턴 입력</a>
+      	<a href="${cpath}/ConsumptionPattern/inCon?cardid=${cardid}" class="btn">패턴 입력하러 가기</a>
         <input type="submit" value="제출하기" class="btn" />
       </div>
     </form>
