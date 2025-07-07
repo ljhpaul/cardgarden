@@ -45,22 +45,25 @@ public class JoinController {
 		return "join/joinMethod";
 	}
 	
-	//1-1(1). 약관 동의
+	//1-1(1). 약관 동의(일반)
 	@GetMapping("/term")
 	public String termAgreeView(HttpSession session, Model model) {
+		
+		// 약관 불러오기
 		List<TermDTO> termList = termService.selectAll();
 		model.addAttribute("termList", termList);
+		
+		// 소셜 회원가입 세션 초기화
 		session.removeAttribute("socialId");
         session.removeAttribute("socialName");
         session.removeAttribute("socialGender");
         session.removeAttribute("socialBirth");
         session.removeAttribute("socialPhone");
         session.removeAttribute("socialJoin");
-        
 		session.removeAttribute("emailVerified");
 		session.removeAttribute("verifiedEmail");
 		SecurityContextHolder.getContext().setAuthentication(null);
-		log.info("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! email(JoinController_1): "+session.getAttribute("verifiedEmail")+"");
+		
 		return "join/termAgree";
 	}
 	
