@@ -65,7 +65,6 @@
       color: #3e4e42;
     }
 
-    input[type="text"],
     input[type="number"],
     select {
       width: 100%;
