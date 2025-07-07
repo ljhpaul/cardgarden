@@ -207,6 +207,17 @@ $('#user_password, #user_password_check').on("input blur keyup", function() {
   }
 });
 
+// 기존 비밀번호와 일치 여부 확인
+$("#enrollBtn").on("click", function(e) {
+  let prevPwd = $("#prevPwd").val();
+  let newPwd = $("#user_password").val();
+  if(prevPwd == newPwd) {
+	alert("기존 비밀번호와 새 비밀번호가 같습니다.");
+	e.preventDefault();
+	return;
+  }
+});
+
 // 가입버튼 활성화 함수
 function updateEnrollBtn() {
   if(checkPwd) {
