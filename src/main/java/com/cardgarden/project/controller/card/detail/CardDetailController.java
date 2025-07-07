@@ -63,7 +63,7 @@ public class CardDetailController {
         
         System.out.println("[DEBUG] aiRecommendationEnabled = " + aiRecommendationEnabled);
         System.out.println("[DEBUG] Properties recommend.api.url = " + recommendApiUrl);
-        
+        model.addAttribute("apiBaseUrl", apiBaseUrl);
         // 카드 기본 정보 (로그인 여부에 따라 다름)
         List<CardDTO> cardList = getCardList(cardid, userId);
         model.addAttribute("cardList", cardList);
@@ -86,7 +86,7 @@ public class CardDetailController {
             Map<Integer, List<UserPatternBenefitDTO>> patternList = getPatternList(userId);
             model.addAttribute("patternList", patternList);
             model.addAttribute("userInfo",userInfoService.selectById(userId));
-            model.addAttribute("apiBaseUrl", apiBaseUrl);
+            
         }
 
         // patternId가 있으면 AI 추천 결과 추가
