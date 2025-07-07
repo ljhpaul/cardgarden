@@ -41,5 +41,10 @@ public class CardLikeDAOMybatis implements CardLikeDAOInterface {
         int result =  sqlSession.selectOne(namespace+".cardLikeSelectCount", userId);
         return result;
     }
+    @Override
+    public int cardLikeCount(int cardId) {
+        int result =  sqlSession.selectOne(namespace+".cardLikeCount", cardId);
+        return result;
+    }
 
 }

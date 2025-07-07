@@ -113,7 +113,9 @@ $(function() {
 					if (res.result === "success") {
 						$btn.data("liked", false);
 						$icon.attr("src", "${cpath}/resources/images/cardlikeImage/unlike.png");
-						$count.text(Number($count.text()) - 1);
+						if (res.cardLike !== undefined) {
+					        $count.text(res.cardLike); 
+					    }
 						if (res.userLike !== undefined) {
 					        $("#userLike").text(res.userLike);
 					        $(".like-count.like-count-sticky").text(res.userLike);
@@ -159,7 +161,9 @@ $(function() {
 					if (res.result === "success") {
 						$btn.data("liked", true);
 						$icon.attr("src", "${cpath}/resources/images/cardlikeImage/like.png");
-						$count.text(Number($count.text()) + 1);
+						if (res.cardLike !== undefined) {
+					        $count.text(res.cardLike);  
+					    }
 						// 좋아요 애니메이션 추가
 						createRandomBurstEffect($btn[0], "${cpath}/resources/images/cardlikeImage/like.png");
 						if (res.userLike !== undefined) {
