@@ -266,6 +266,88 @@ $(function() {
 			</div>
 		</div>
 		
+				<!-- 카드 타입/브랜드/연회비 등 -->
+				<div class="card-bottom-center">
+					<a href="${card.card_url}" class="company-button" target="_blank" rel="noopener noreferrer">카드사 바로가기</a>
+					<div class="card-tags">
+						<span class="card-type">
+							<c:choose>
+								<c:when test="${card.card_type == '신용카드'}">신용</c:when>
+								<c:when test="${card.card_type == '체크카드'}">체크</c:when>
+								<c:otherwise>신용</c:otherwise>
+							</c:choose>
+						</span>
+						<c:choose>
+							<c:when test="${card.brand eq 'visa'}">
+								<img src="${cpath}/resources/images/type/visa.png" alt="Visa" class="brand-logo" />
+							</c:when>
+							<c:when test="${card.brand eq 'master'}">
+								<img src="${cpath}/resources/images/type/master.png" alt="Master" class="brand-logo" />
+							</c:when>
+							<c:when test="${card.brand eq 'visa/master'}">
+								<img src="${cpath}/resources/images/type/visa.png" alt="Visa" class="brand-logo" />
+								<img src="${cpath}/resources/images/type/master.png" alt="Master" class="brand-logo" />
+							</c:when>
+							<c:when test="${card.brand eq 'none'}">
+								<span>국내 전용</span>
+							</c:when>
+							<c:otherwise>
+								<span>${card.brand}</span>
+							</c:otherwise>
+						</c:choose>
+					</div>
+					<div class="card-tags">
+						<fmt:formatNumber value="${card.fee_domestic}" type="number" groupingUsed="true" var="fee_domestic"/>
+						<span>국내연회비: ${fee_domestic}원 &ensp;|</span>
+						<fmt:formatNumber type="number" maxFractionDigits="3" value="${card.fee_foreign}" var="fee_foreign" />
+						<span>해외연회비: ${fee_foreign}원 &ensp;|</span>
+						<fmt:formatNumber value="${card.prev_month_cost*10000}" type="number" groupingUsed="true" var="prev_month_cost"/>
+						<span>전월실적: ${prev_month_cost}원</span>
+					</div>
+					
+					<script>
+					  $(document).on("click", ".calcBenefitBtn", function () {
+					    const cardId = $(this).data("cardid"); // 카드 ID 필요 시 사용 가능
+					
+					    // 모달 열기
+					    $("#userPatternModal").css("display", "flex");
+					
+					    // AJAX로 혜택 카테고리 불러오기
+					    $.ajax({
+					      url: "${cpath}/ConsumptionPattern/loadBenefitCategories",
+					      type: "GET",
+					      success: function (categoryList) {
+					        console.log("✅ 카테고리 목록:", categoryList);
+					
+					        // 기본 select 요소 채우기
+					        const $firstSelect = $("#userPatternModal select[name='benefitcategory_id']").first();
+					
+					        // 이미 옵션이 있으면 다시 안 넣음
+					        if ($firstSelect.children("option").length <= 1) {
+					          $firstSelect.empty().append("<option disabled selected>카테고리 선택</option>");
+					
+					          categoryList.forEach(function (cat) {
+					            $firstSelect.append(
+					              $("<option>").val(cat.benefitcategory_id).text(cat.benefitCategory_name)
+					            );
+					          });
+					        }
+					
+					        // 입력칸 추가 버튼에서도 사용될 수 있도록 전역에 저장
+					        window.benefitCategoryList = categoryList;
+					      },
+					      error: function () {
+					        alert("❌ 혜택 카테고리 불러오기 실패");
+					      }
+					    });
+					  });
+					</script>
+
+					
+					
+					<div id="benefitResult" style="margin-top: 20px;"></div>
+				</div>
+		
 		<!-- ✅ AI 추천 결과: card-info 아래, card-bottom-center 위로 이동 -->
 		<div class="ai-recommendation">
 		  <c:choose>
@@ -330,87 +412,7 @@ $(function() {
 		  </c:choose>
 		</div>
 		
-		<!-- 카드 타입/브랜드/연회비 등 -->
-				<div class="card-bottom-center">
-					<div class="card-tags">
-						<span class="card-type">
-							<c:choose>
-								<c:when test="${card.card_type == '신용카드'}">신용</c:when>
-								<c:when test="${card.card_type == '체크카드'}">체크</c:when>
-								<c:otherwise>신용</c:otherwise>
-							</c:choose>
-						</span>
-						<c:choose>
-							<c:when test="${card.brand eq 'visa'}">
-								<img src="${cpath}/resources/images/type/visa.png" alt="Visa" class="brand-logo" />
-							</c:when>
-							<c:when test="${card.brand eq 'master'}">
-								<img src="${cpath}/resources/images/type/master.png" alt="Master" class="brand-logo" />
-							</c:when>
-							<c:when test="${card.brand eq 'visa/master'}">
-								<img src="${cpath}/resources/images/type/visa.png" alt="Visa" class="brand-logo" />
-								<img src="${cpath}/resources/images/type/master.png" alt="Master" class="brand-logo" />
-							</c:when>
-							<c:when test="${card.brand eq 'none'}">
-								<span>국내 전용</span>
-							</c:when>
-							<c:otherwise>
-								<span>${card.brand}</span>
-							</c:otherwise>
-						</c:choose>
-					</div>
-					<div class="card-tags">
-						<fmt:formatNumber value="${card.fee_domestic}" type="number" groupingUsed="true" var="fee_domestic"/>
-						<span>국내연회비: ${fee_domestic}원 &ensp;|</span>
-						<fmt:formatNumber type="number" maxFractionDigits="3" value="${card.fee_foreign}" var="fee_foreign" />
-						<span>해외연회비: ${fee_foreign}원 &ensp;|</span>
-						<fmt:formatNumber value="${card.prev_month_cost*10000}" type="number" groupingUsed="true" var="prev_month_cost"/>
-						<span>전월실적: ${prev_month_cost}원</span>
-					</div>
-					<a href="${card.card_url}" class="company-button" target="_blank" rel="noopener noreferrer">카드사 바로가기</a>
-					
-					<script>
-					  $(document).on("click", ".calcBenefitBtn", function () {
-					    const cardId = $(this).data("cardid"); // 카드 ID 필요 시 사용 가능
-					
-					    // 모달 열기
-					    $("#userPatternModal").css("display", "flex");
-					
-					    // AJAX로 혜택 카테고리 불러오기
-					    $.ajax({
-					      url: "${cpath}/ConsumptionPattern/loadBenefitCategories",
-					      type: "GET",
-					      success: function (categoryList) {
-					        console.log("✅ 카테고리 목록:", categoryList);
-					
-					        // 기본 select 요소 채우기
-					        const $firstSelect = $("#userPatternModal select[name='benefitcategory_id']").first();
-					
-					        // 이미 옵션이 있으면 다시 안 넣음
-					        if ($firstSelect.children("option").length <= 1) {
-					          $firstSelect.empty().append("<option disabled selected>카테고리 선택</option>");
-					
-					          categoryList.forEach(function (cat) {
-					            $firstSelect.append(
-					              $("<option>").val(cat.benefitcategory_id).text(cat.benefitCategory_name)
-					            );
-					          });
-					        }
-					
-					        // 입력칸 추가 버튼에서도 사용될 수 있도록 전역에 저장
-					        window.benefitCategoryList = categoryList;
-					      },
-					      error: function () {
-					        alert("❌ 혜택 카테고리 불러오기 실패");
-					      }
-					    });
-					  });
-					</script>
 
-					
-					
-					<div id="benefitResult" style="margin-top: 20px;"></div>
-				</div>
 		</div>
 		</c:forEach>
 		
@@ -419,7 +421,7 @@ $(function() {
 		<div class="calcBenefitBtnArea">
 		  <button class="calcBenefitBtn" data-cardid="${card.card_id}">
 		    <img src="${cpath}/resources/images/benefitCal/Cal.png" alt="계산기" class="calcIcon" />
-		    혜택 미리 계산해보기
+		    <a>혜택 미리 계산해보기</a>
 		  </button>
 		</div>
 	<div class="card-benefit-section">

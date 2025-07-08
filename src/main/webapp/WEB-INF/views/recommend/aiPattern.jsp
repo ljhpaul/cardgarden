@@ -201,6 +201,7 @@ document.addEventListener('DOMContentLoaded', function() {
   cursor: pointer;
   width: 140px;
   height: 45px;
+  line-height: 1;
 }
 .btn:hover {
   background: var(--m3,#49615A);
