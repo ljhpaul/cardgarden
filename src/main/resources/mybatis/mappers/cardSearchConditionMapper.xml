@@ -4,8 +4,38 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cardgarden.cardSearchcondition">
 
-	<!-- 카드 조건조회 -->
-	<select id="selectByConditions" resultMap="CardWithBenefitsMap" parameterType="map">
+<!-- 카드조건조회 -->
+<select id="selectByConditions" resultMap="CardWithBenefitsMap" parameterType="map">
+		  SELECT c.*, cbd.cardbenefitdetail_text
+		  FROM Card c
+		  JOIN CardBenefitDetail cbd ON c.card_id = cbd.card_id
+		  WHERE c.card_id IN (
+		    <choose>
+		      <when test="selectedCategories != null and selectedCategories.size() > 0">
+		        SELECT card_id
+		        FROM CardBenefitDetail
+		        WHERE benefitdetail_id IN
+		        <foreach collection="selectedCategories" item="id" open="(" separator="," close=")">
+		          #{id}
+		        </foreach>
+		        GROUP BY card_id
+		        HAVING COUNT(DISTINCT benefitdetail_id) = #{categorySize}
+		      </when>
+		      <otherwise>
+		        SELECT card_id FROM CardBenefitDetail GROUP BY card_id
+		      </otherwise>
+		    </choose>
+		  )
+		  <if test="selectedcardType != null and selectedcardType.size() > 0">
+		    AND c.card_type IN
+		    <foreach collection="selectedcardType" item="type" open="(" separator="," close=")">
+		      #{type}
+		    </foreach>
+		  </if>
+		</select>
+
+	<!-- 카드 조건조회 대카테고리 추가 버전 -->
+	<select id="selectByConditionsTRY" resultMap="CardWithBenefitsMap" parameterType="map">
   SELECT c.*, cbd.cardbenefitdetail_text
   FROM Card c
   JOIN CardBenefitDetail cbd ON c.card_id = cbd.card_id
