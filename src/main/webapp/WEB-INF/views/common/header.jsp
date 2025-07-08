@@ -409,7 +409,7 @@ $(document).ready(function () {
         }
     });
 
-    const sessionDuration = 120;
+    const sessionDuration = 80;
     let lastActionTime = Date.now();
     $(document).on("click", () => { lastActionTime = Date.now(); });
 	
@@ -418,7 +418,7 @@ $(document).ready(function () {
         const remaining = sessionDuration - elapsedSec;
 
         let imgNum = 3;
-        if (remaining > 60) imgNum = 1;
+        if (remaining > 40) imgNum = 1;
         else if (remaining > 0) imgNum = 2;
 		
         mascotImgs.forEach(img => {

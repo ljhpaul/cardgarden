@@ -2,7 +2,7 @@
 <%@ include file="../common/header.jsp" %>
 <c:set var="cpath" value="${pageContext.servletContext.contextPath}" />
 
-<link rel="stylesheet" href="${cpath}/resources/css/customMakeBackground.css?ver=3">
+<link rel="stylesheet" href="${cpath}/resources/css/customMakeBackground.css?after">
 <title>카드가든 : 커스텀 디자인 제작</title>
 <div class="background-page-container">
 
@@ -118,6 +118,7 @@ document.querySelectorAll(".bg-option").forEach(function(img) {
     selectedBackgroundLocked = isLocked;
 
     cardFrame.style.backgroundImage = "url('" + url + "')";
+    console.log("배경 이미지 설정:","url('" + url + "')");
   });
 });
 
