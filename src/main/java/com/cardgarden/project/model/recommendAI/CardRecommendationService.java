@@ -15,4 +15,15 @@ public class CardRecommendationService {
 		List<CardRecommendationDTO> resultList = cardRecommendationDAO.getRecommendResult(patternId);
 		return resultList;
 	}
+	
+	public List<RecommendResultDTO> getRecommendDetailResult(int patternId, int cardId) {
+		List<RecommendResultDTO> resultMessage = cardRecommendationDAO.getRecommendDetailResult(patternId, cardId);
+		return resultMessage;
+	}
+	
+	public List<CardRecommendationDTO> getRecommendCosine(int cardid) {
+		List<CardRecommendationDTO> resultList = cardRecommendationDAO.getRecommendCosine(cardid);
+		return resultList;
+		
+	}
 }

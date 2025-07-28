@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="${cpath}/resources/css/common.css">
 <link rel="stylesheet" href="${cpath}/resources/css/header.css">
 <link rel="stylesheet" href="${cpath}/resources/css/font-awesome.min.css">
-<link rel="stylesheet" href="${cpath}/resources/css/join.css">
+<link rel="stylesheet" href="${cpath}/resources/css/userStyle.css">
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="${cpath}/resources/js/header.js"></script>
@@ -15,13 +15,10 @@
     <title>카드가든 : 회원가입</title>
 </head>
 
-
-
-
-<body class="join-bg">
-<div class="join-container">
-<div class="join-box">
-  <h2 class="join-title">약관 동의</h2>
+<body class="bg-main">
+<div class="container">
+<div class="box">
+  <h2 class="title-lg">약관 동의</h2>
 <!--   <div class="term-step-nav">
     <span class="step current">약관 동의</span>
     <span class="step">&nbsp;|&nbsp;이메일 인증</span>
@@ -57,7 +54,7 @@
         </div>
       </c:forEach>
     </div>
-    <button type="submit" id="next-btn" class="join-btn" disabled>다음</button>
+    <button type="submit" id="next-btn" class="btn" disabled>다음</button>
   </form>
 </div>
 </div>
@@ -68,29 +65,26 @@
     <div class="term-modal-title" id="modalTitle">약관 제목</div>
     <div class="term-modal-content" id="modalContent" style="white-space: pre-wrap;"></div>
     <div class="term-modal-btns">
-      <button type="button" class="join-btn term-modal-btn" id="agreeBtn">동의</button>
-      <button type="button" class="join-btn term-modal-btn" id="closeBtn">닫기</button>
+      <button type="button" class="btn term-modal-btn" id="agreeBtn">동의</button>
+      <button type="button" class="btn term-modal-btn" id="closeBtn">닫기</button>
     </div>
   </div>
 </div>
 
 <style>
-.join-box {
-  max-width: 520px;
-  margin: 70px auto 80px;
-  background: #fff;
-  border-radius: 24px;
-  box-shadow: 0 2px 16px rgba(100,130,120,0.08);
-  padding: 44px 50px 32px;
-  font-family: var(--font);
+body {
+	font-family: 'NanumSquareRound', sans-serif;
+	background-color: #F0F3F1;
+	padding: 0;
+	margin: 0;
 }
-
-.join-title {
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: var(--m1);
-  margin-top: 10px;
-  margin-bottom: 45px;
+.box {
+  max-width: 520px;
+  margin: 10px auto 80px;
+  padding: 44px 50px 32px;
+}
+.container {
+  padding-top: 10px;
 }
 
 .term-step-nav {
@@ -197,7 +191,7 @@
   background: #eee; color: #aaa; cursor: not-allowed;
 }
 @media (max-width: 600px) {
-  .join-box { padding: 24px 7vw 20px; }
+  .box { padding: 24px 7vw 20px; }
   .term-modal { padding: 19px 5vw 17px; }
 }
 </style>

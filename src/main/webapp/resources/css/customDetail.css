@@ -1,0 +1,214 @@
+/* ===== 전체 레이아웃 ===== */
+body {
+  background-color: var(--main);
+  font-family: var(--font);
+  padding: 0;
+  margin: 0;
+}
+
+.custom-detail-container {
+  max-width: 1000px;
+  margin: auto;
+  margin-top: -10px;
+  background-color: var(--main);
+  padding: 20px;
+}
+
+/* ===== 경로 표시 ===== */
+.path-section {
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
+.path-section a {
+  text-decoration: none;
+  color: var(--m3);
+  font-weight: bold;
+}
+
+/* ===== 하얀 컨테이너 ===== */
+.detail-content-box {
+  background-color: white;
+  border-radius: 20px;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.detail-main-section {
+  display: flex;
+  gap: 30px;
+  align-items: center;
+}
+
+/* ===== 이미지 영역 ===== */
+.detail-image-box {
+  flex-shrink: 0;
+}
+
+.image-bg {
+  border: 1rem solid var(--m1);
+  padding: 10px;
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image-bg img {
+  width: 180px;
+  height: 180px;
+  object-fit: contain;
+}
+
+/* ===== 상세 정보 ===== */
+.detail-info-box {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.detail-info-box h2 {
+  font-size: 22px;
+  font-weight: 800;
+}
+
+.detail-info-box p {
+  font-size: 16px;
+  margin: 4px 0;
+  line-height: 1.4;
+}
+
+/* ===== 가격 + 좋아요 ===== */
+.discount-point {
+  color: var(--s1);
+  font-weight: bold;
+}
+
+.price-heart-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.like-section {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.like-btn, .unlike-btn {
+  background: none;
+  border: none;
+  color: var(--m3);
+  cursor: pointer;
+  font-size: 18px;
+  text-align: center;
+}
+
+.like-btn img,
+.unlike-btn img {
+  width: 20px;
+  vertical-align: middle;
+  margin-right: 4px;
+}
+
+/* ===== 버튼 영역 ===== */
+.btn-group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.buy-btn, .make-btn {
+  background-color: var(--s1);
+  color: white;
+  padding: 15px 30px;
+  border-radius: 10px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  min-width: 120px;
+  text-align: center;
+}
+
+.buy-btn:disabled {
+  background-color: #ddd;
+  cursor: not-allowed;
+}
+
+.owned-text {
+  color: gray;
+  font-weight: bold;
+  padding: 8px 0;
+}
+
+/* ===== 관련 상품 영역 ===== */
+.related-section-inner {
+  margin-top: 30px;
+}
+
+.related-inner-box {
+  background-color: var(--main);
+  padding: 20px;
+  border-radius: 12px;
+  margin-top: 10px;
+}
+
+.related-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 20px;
+}
+
+.related-card {
+  background-color: var(--m2);
+  padding: 15px;
+  border-radius: 10px;
+  text-align: center;
+  text-decoration: none;
+  color: var(--m3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: all 0.2s ease;
+}
+
+.related-card:hover {
+  transform: translateY(-5px);
+  color: var(--m1);
+}
+
+.related-image-bg {
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.related-image-bg img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+}
+
+.related-name {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.link-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+  z-index: 10;
+}

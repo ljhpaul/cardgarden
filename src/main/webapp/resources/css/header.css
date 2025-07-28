@@ -1,3 +1,10 @@
+body {
+	font-family: 'NanumSquareRound', sans-serif;
+	background-color: #F0F3F1;
+	margin : 0;
+	padding : 0;
+}
+
 header.main-header {
   width: 100%;
   font-family: var(--font);
@@ -17,11 +24,11 @@ header.main-header {
   box-sizing: border-box;
   position: relative;
   height: 100px;
-
 }
 
 /* 왼쪽 로그인 */
 .header-left {
+  width: 160px;
   margin-left: 20px;
   display: flex;
   gap: 20px;
@@ -57,6 +64,9 @@ header.main-header {
 
 /* 오른쪽 검색 */
 .header-right {
+  height: 56px; /* 원하는 고정 높이 */
+  min-height: 56px;
+  max-height: 56px;
   margin-right: 20px;
   display: flex;
   align-items: center;
@@ -76,6 +86,8 @@ header.main-header {
   font-size: 15px;
   font-weight: 400;
   color: var(--m3);
+  box-sizing: border-box;
+  line-height: 1; /* 고정 */
 }
 .header-right input::placeholder {
   color: var(--m1);
@@ -86,8 +98,15 @@ header.main-header {
   color: var(--m3);
 }
 
-.header-right a{
-margin-bottom: 15px;
+.header-right a {
+  margin: 0; /* 기존 margin-bottom 제거 */
+  display: flex;
+  align-items: center;
+  height: 100%; /* 높이 맞추기 */
+}
+
+.header-right form {
+	margin : 0;
 }
 
 .header-right input:focus {
@@ -108,7 +127,23 @@ margin-bottom: 15px;
   padding: 10px 0;
   border-top: 1px solid var(--m1);
   border-bottom: 1px solid var(--m1);
+  box-shadow: 0 0 6px rgba(100,130,120,0.08);
+  position: relative;
 }
+
+
+.header-bottom-sticky {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 200px;
+  padding: 10px 0;
+  position: relative;
+}
+.menu-item {
+  position: relative;
+}
+
 .header-bottom a {
   font-size: 20px;
   font-weight: bold;
@@ -121,6 +156,45 @@ margin-bottom: 15px;
 .header-bottom a:hover {
   color: var(--m1);        
   text-decoration: none;
+}
+
+.submenu {
+  display: block;               /* 항상 block이지만... */
+  opacity: 0;                   /* 처음에는 안 보이게 */
+  visibility: hidden;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: white;
+  border: 1px solid var(--m1);
+  border-radius: 8px;
+  padding: 10px;
+  min-width: 150px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transform: translateY(10px); /* 약간 아래에 있음 */
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  z-index: 1000;
+}
+
+.submenu a {
+  display: block;
+  padding: 8px 12px;
+  color: var(--m3);
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.submenu a:hover {
+  background-color: var(--m1);
+  color: white;
+  border-radius: 4px;
+}
+
+.menu-item:hover .submenu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);     /* 제자리로 */
 }
 
 .sticky-menu {
@@ -166,7 +240,7 @@ margin-bottom: 15px;
   flex-grow: 1;
 }
 
-.menu-center a {
+.menu-center > .header-bottom-sticky > .menu-item > a {
   font-size: 16px;
   font-weight: bold;
   font-family: var(--font);
@@ -174,17 +248,12 @@ margin-bottom: 15px;
   text-decoration: none;
 }
 
-.menu-center a:hover {
-  color: var(--m1);
-  text-decoration: none;
-}
 
 .menu-right {
   display: flex;
   align-items: center;
   gap: 10px;
   height:100%;
-
 }
 
 .menu-right input {
@@ -219,3 +288,20 @@ margin-bottom: 15px;
   color: var(--m3); 
 }
 
+
+.like-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.like-count {
+  position: absolute;
+  background-color: #ff0000;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 750;
+  z-index: 10;
+}

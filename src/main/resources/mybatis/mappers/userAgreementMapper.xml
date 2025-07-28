@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.cardgarden.project.mapper.UserAgreementMapper">
+
+	<!-- 사용자의 모든 동의 내역 -->
+	<select id="selectByUserId" parameterType="int" resultType="UserAgreementDTO">
+		SELECT user_id, term_id, is_agreed
+		  FROM userAgreement
+		 WHERE user_id = #{user_id}
+	</select>
+	
+	<!-- 단일조회: 특정 사용자·약관 -->
+	<select id="getAgreedByUserIdAndTermId" parameterType="UserAgreementDTO" resultType="string">
+		SELECT is_agreed
+		  FROM userAgreement
+		 WHERE user_id = #{user_id}
+		   AND term_id = #{term_id}
+	</select>
+
+	<insert id="insert" parameterType="UserAgreementDTO">
+		INSERT INTO userAgreement (user_id, term_id, is_agreed)
+		VALUES (#{user_id}, #{term_id}, #{is_agreed})
+	</insert>
+
+	<update id="update" parameterType="UserAgreementDTO">
+		UPDATE userAgreement
+		   SET is_agreed = #{is_agreed}
+		 WHERE user_id = #{user_id}
+		   AND term_id = #{term_id}
+	</update>
+
+	<delete id="delete" parameterType="UserAgreementDTO">
+		DELETE FROM userAgreement
+		 WHERE user_id = #{user_id}
+		   AND term_id = #{term_id}
+	</delete>
+
+</mapper>

@@ -15,20 +15,35 @@
      <typeAlias type="com.shinhan.spring.model.emp.EmpDTO" alias="empDTO"/> -->
      <typeAlias type="com.cardgarden.project.model.sample.SampleDTO" alias="sampleDTO"/>
 
+	<typeAlias type="com.cardgarden.project.model.cardDetail.CardBenefitRankDTO" alias="cardBenefitRankDTO"/>
     <typeAlias type="com.cardgarden.project.model.benefitDetail.BenefitDetailDTO" alias="BenefitDetailDTO"/>
     <typeAlias type="com.cardgarden.project.model.CardSearchCondition.CardDTO" alias="CardConditionDTO"/>
-
+	<typeAlias type="com.cardgarden.project.model.card.CardDTO" alias="CardDTO"/>
+	
+	<typeAlias type="com.cardgarden.project.model.userCardLike.CardLikeDTO" alias="cardLikeDTO" />
      <typeAlias type="com.cardgarden.project.model.cardDetail.CardDTO" alias="DetailcardDTO" />
      <typeAlias type="com.cardgarden.project.model.cardDetail.CardDetailDTO" alias="cardDetailDTO" />
 
      <typeAlias type="com.cardgarden.project.model.user.dto.UserInfoDTO" alias="userInfoDTO"/>
+     <typeAlias type="com.cardgarden.project.model.user.dto.UserAgreementDTO" alias="userAgreementDTO"/>
      <typeAlias type="com.cardgarden.project.model.term.dto.TermDTO" alias="termDTO"/>
+     
      <typeAlias type="com.cardgarden.project.model.benefitCategory.benefitCategoryDTO" alias="benefitCategoryDTO"/>
      <typeAlias type="com.cardgarden.project.model.userConsumptionPattern.UserConsumptionPatternDTO" alias="UserConsumptionPatternDTO"/>
      <typeAlias type="com.cardgarden.project.model.userConsumptionPatternDetail.UserConsumptionPatternDetailDTO" alias="UserConsumptionPatternDetailDTO"/>
 
      <typeAlias type="com.cardgarden.project.model.userPatternBenefit.UserPatternBenefitDTO" alias="userPatternBenefitDTO"/>
 
+     <typeAlias type="com.cardgarden.project.model.custom.dto.CustomAssetDTO" alias="CustomAssetDTO"/>
+     <typeAlias type="com.cardgarden.project.model.custom.dto.CustomCardDTO" alias="CustomCardDTO"/>
+      
+     <typeAlias type="com.cardgarden.project.model.event.dto.AttendanceDTO" alias="AttendanceDTO"/>
+     <typeAlias type="com.cardgarden.project.model.event.dto.WeeklyBonusDTO" alias="WeeklyBonusDTO" />
+     <typeAlias type="com.cardgarden.project.model.event.dto.MonthlyBonusDTO" alias="MonthlyBonusDTO" />
+
+     
+     
   </typeAliases>
+  
   
 </configuration>

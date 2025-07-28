@@ -25,47 +25,106 @@
 	<!-- 전체 목록 -->
 	<select id="selectAll" resultType="userInfoDTO">
 		SELECT *
-		FROM userinfo
+		FROM userInfo
 	</select>
 
 	<!-- user_id로 조회 -->
 	<select id="selectById" parameterType="int" resultType="userInfoDTO">
 		SELECT *
-		FROM userinfo
+		FROM userInfo
 		WHERE user_id = #{user_id}
 	</select>
 
 	<!-- email로 전체 조회 (이메일로 유저 한명 조회, 필요시) -->
 	<select id="selectByEmail" parameterType="string" resultType="userInfoDTO">
 		SELECT *
-		FROM userinfo
+		FROM userInfo
 		WHERE email = #{email}
 	</select>
-
-	<!-- 아이디 중복체크 -->
-	<select id="countByLoginId" parameterType="string" resultType="int">
+	
+	<!-- 로그인 아이디로 user_id 조회 -->
+	<select id="getUserIdByLoginId" parameterType="string" resultType="int">
+		SELECT user_id
+		FROM userInfo
+		WHERE user_name = #{user_name}
+	</select>
+	
+	<!-- 이메일로 user_id 조회 -->
+	<select id="getUserIdByEmail" parameterType="string" resultType="int">
+		SELECT user_id
+		FROM userInfo
+		WHERE email = #{email}
+	</select>
+	
+	<!-- 이름과 이메일로 로그인아이디 조회 -->
+	<select id="getLoginIdByNameAndEmail" parameterType="map" resultType="string">
+		SELECT user_name
+		  FROM userInfo
+		 WHERE name = #{name}
+		   AND email = #{email}
+	</select>
+	
+	<!-- 로그인 아이디로 비밀번호 조회 -->
+	<select id="getPasswordByLoginId" parameterType="string" resultType="string">
+		SELECT user_password
+		  FROM userInfo
+		 WHERE user_name = #{user_name}
+	</select>
+	
+	<!-- 로그인 아이디와 이메일로 비밀번호 조회 -->
+	<select id="getPasswordByLoginIdAndEmail" parameterType="map" resultType="string">
+		SELECT user_password
+		  FROM userInfo
+		 WHERE user_name = #{user_name}
+		   AND email = #{email}
+	</select>
+	
+	<!-- 로그인 아이디와 이메일로 비밀번호 조회 -->
+	<select id="getPointById" parameterType="int" resultType="int">
+		SELECT point
+		  FROM userInfo
+		 WHERE user_id = #{user_id}
+	</select>
+	
+	<!-- 로그인 아이디로 포인트 조회 -->
+	<select id="get" parameterType="map" resultType="string">
+		SELECT user_password
+		  FROM userInfo
+		 WHERE user_name = #{user_name}
+		   AND email = #{email}
+	</select>
+	
+	<!-- 아이디 중복체크/회원유무 확인 -->
+	<select id="countByLoginId" parameterType="String" resultType="int">
 		SELECT COUNT(*)
-		FROM userinfo
-		WHERE login_id = #{login_id}
+		FROM userInfo
+		WHERE user_name = #{user_name}
+	</select>
+
+	<!-- 이름존재 확인 -->
+	<select id="countByName" parameterType="String" resultType="int">
+		SELECT COUNT(*)
+		FROM userInfo
+		WHERE name = #{name}
 	</select>
 
 	<!-- 이메일 중복체크 -->
-	<select id="countByEmail" parameterType="string" resultType="int">
+	<select id="countByEmail" parameterType="String" resultType="int">
 		SELECT COUNT(*)
-		FROM userinfo
+		FROM userInfo
 		WHERE email = #{email}
 	</select>
 
 	<!-- 닉네임 중복체크 -->
-	<select id="countByNickname" parameterType="string" resultType="int">
+	<select id="countByNickname" parameterType="String" resultType="int">
 		SELECT COUNT(*)
-		FROM userinfo
+		FROM userInfo
 		WHERE nickname = #{nickname}
 	</select>
 
-	<!-- 신규 유저 등록 -->
+	<!-- 유저 등록 -->
 	<insert id="insert" parameterType="userInfoDTO">
-		INSERT INTO userinfo
+		INSERT INTO userInfo
 		(user_id, user_name, user_password,
 		email, nickname, name, gender, birth,
 		phone, address, created_at,
@@ -77,31 +136,145 @@
 		#{address}, #{created_at}, #{point},
 		#{is_admin})
 	</insert>
+	
+	<!-- 신규 유저 등록 -->
+	<insert id="createUser" parameterType="userInfoDTO">
+		INSERT INTO userInfo
+		(user_name, user_password,
+		email, nickname, name, 
+		gender, birth,
+		phone, address)
+		VALUES
+		(#{user_name}, #{user_password},
+		#{email}, #{nickname}, #{name},
+		#{gender}, #{birth}, 
+		#{phone}, #{address})
+	</insert>
+	<!-- 보유자산 넣기 -->
+	<insert id="insertOwnedAsset" parameterType="map">
+	    INSERT INTO OwnedAsset (user_id, asset_id)
+	    VALUES (#{user_id}, #{asset_id})
+	</insert>
+	
 
 	<!-- 정보 수정(패스워드, 닉네임 등) -->
 	<update id="update" parameterType="userInfoDTO">
-		UPDATE userinfo
+		UPDATE userInfo
 		SET
-		user_name = #{user_name},
+		nickname = #{nickname},
+		name = #{name},
+		gender = #{gender},
+		phone = #{phone},
+		address = #{address}
+		WHERE user_id = #{user_id}
+	</update>
+	
+	<!-- 로그인아이디와 이메일로 비밀번호 수정 -->
+	<update id="setPasswordByLoginIdAndEmail" parameterType="map">
+		UPDATE userInfo
+		   SET user_password = #{user_password}
+		 WHERE user_name = #{user_name}
+		   AND email = #{email}
+	</update>
+	
+		<!-- 관리자가 회원정보 수정 -->
+		<update id="updateUserAdmin" parameterType="userInfoDTO">
+		UPDATE userInfo
+		SET
 		user_password = #{user_password},
-		email = #{email},
 		nickname = #{nickname},
 		name = #{name},
 		gender = #{gender},
 		birth = #{birth},
 		phone = #{phone},
 		address = #{address},
-		created_at = #{created_at},
-		point = #{point},
-		is_admin = #{is_admin}
+		point = #{point}
 		WHERE user_id = #{user_id}
-	</update>
+		</update>
 
 	<!-- 회원 탈퇴/삭제 -->
 	<delete id="delete" parameterType="int">
-		DELETE FROM userinfo
+		DELETE FROM userInfo
 		WHERE
 		user_id = #{user_id}
 	</delete>
+	
+	
+	<!-- 내 소비패턴 조회 	-->
+	<select id="selectMyConsumptionPattern" parameterType="int" resultMap="userConsumptionPatternMap">
+	    SELECT 
+	        p.pattern_id AS p_pattern_id,
+	        p.user_id,
+	        p.pattern_name,
+	        p.created_at,
+	        d.pattern_id AS d_pattern_id,
+	        d.benefitcategory_id,
+	        d.amount
+	    FROM UserConsumptionPattern p
+	    JOIN UserConsumptionPatternDetail d ON p.pattern_id = d.pattern_id
+	    WHERE p.user_id = #{user_id}
+	</select>
+	
+	<!-- 기존의  UserConsumptionPatternDTO에 UserConsumptionPatternDetailDTO'자체'를 필드에 추가-->
+	<resultMap id="userConsumptionPatternMap" type="UserConsumptionPatternDTO">
+	    <id property="pattern_id" column="p_pattern_id"/>
+	    <result property="user_id" column="user_id"/>
+	    <result property="pattern_name" column="pattern_name"/>
+	    <result property="created_at" column="created_at"/>
+	
+	    <collection property="details" ofType="UserConsumptionPatternDetailDTO">
+	        <result property="pattern_id" column="d_pattern_id"/>
+	        <result property="benefitcategory_id" column="benefitcategory_id"/>
+	        <result property="amount" column="amount"/>
+	    </collection>
+	</resultMap>
+	<!-- 내 소비패턴 조회 끝 -->
+	
+	<!-- 내가 좋아요한 카드 -->
+	<select id="userLikeCard" parameterType="int" resultMap="CardWithBenefitsMap">
+		SELECT c.*, cbd.cardbenefitdetail_text
+		FROM likecard l
+		JOIN card c ON l.card_id = c.card_id
+		JOIN CardBenefitDetail cbd ON c.card_id = cbd.card_id
+		WHERE l.user_id = #{user_id};
+	</select>
+	<resultMap id="CardWithBenefitsMap" type="CardConditionDTO">
+		  <id property="card_id" column="card_id"/>
+		  <result property="card_name" column="card_name"/>
+		  <result property="company" column="company"/>
+		  <result property="card_type" column="card_type"/>
+		  <result property="brand" column="brand"/>
+		  <result property="card_image" column="card_image"/>
+		  <result property="card_url" column="card_url"/>
+		  <result property="fee_domestic" column="fee_domestic"/>
+		  <result property="fee_foreign" column="fee_foreign"/>
+		  <result property="prev_month_cost" column="prev_month_cost"/>
+		  <result property="card_like" column="card_like"/>
+		  <result property="card_views" column="card_views"/>
+		  <collection property="benefits" ofType="string">
+		    <result column="cardbenefitdetail_text"/>
+		  </collection>
+		</resultMap>
+	<!-- 내가 좋요한 카드 끝 -->
+	
+	<select id="selectDefaultMascotId" resultType="int">
+	    SELECT mascot_id
+	    FROM UserInfo
+	    WHERE user_id = #{userId}
+	</select>
+	
+	<select id="selectMyCustomCardList" parameterType="int" resultType="com.cardgarden.project.model.custom.dto.CustomCardDTO">
+	    SELECT customcard_id, customcard_name, user_id, created_at
+	    FROM CustomCard
+	    WHERE user_id = #{userId}
+	    ORDER BY created_at DESC
+	</select>
+	
+	<delete id="deleteCustomCard" parameterType="int">
+	    DELETE FROM CustomCard
+	    WHERE customcard_id = #{customcard_id}
+	</delete>
+	
 
+	
 </mapper>

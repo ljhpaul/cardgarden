@@ -31,18 +31,23 @@ DROP TABLE IF EXISTS UserInfo;
 CREATE TABLE UserInfo (
   user_id INT PRIMARY KEY AUTO_INCREMENT COMMENT '회원 고유 ID',
   user_name VARCHAR(50) NOT NULL UNIQUE COMMENT '아이디',
-  user_password VARCHAR(255) NOT NULL COMMENT '비밀번호 (암호화 저장)',
+  user_password VARCHAR(255) DEFAULT NULL COMMENT '비밀번호 (암호화 저장)',
   email VARCHAR(100) NOT NULL UNIQUE COMMENT '이메일',
   nickname VARCHAR(30) NOT NULL UNIQUE COMMENT '닉네임',
   name VARCHAR(30) DEFAULT NULL COMMENT '이름',
   gender VARCHAR(10) DEFAULT NULL COMMENT '성별',
   birth DATE DEFAULT NULL COMMENT '생년월일',
-  phone VARCHAR(20) NOT NULL UNIQUE COMMENT '전화번호',
+  phone VARCHAR(20) NOT NULL COMMENT '전화번호',
   address VARCHAR(200) DEFAULT NULL COMMENT '주소',
-  created_at DATE NOT NULL COMMENT '가입일',
+  created_at DATE NOT NULL DEFAULT (CURDATE()) COMMENT '가입일',
   point INT DEFAULT 0 COMMENT '보유 포인트 수',
   is_admin VARCHAR(2) DEFAULT 'N' COMMENT '관리자 여부(Y/N-기본값)'
 );
+
+alter table userInfo modify column phone VARCHAR(20) NOT NULL COMMENT '전화번호';
+alter table userinfo drop index phone;
+alter table userInfo modify column created_at DATE NOT NULL DEFAULT (CURDATE()) COMMENT '가입일';
+alter table userInfo modify column user_password VARCHAR(255) DEFAULT NULL COMMENT '비밀번호 (암호화 저장)';
 
 CREATE TABLE Card (
   card_id INT PRIMARY KEY AUTO_INCREMENT COMMENT '카드 번호',
@@ -100,6 +105,13 @@ CREATE TABLE UserConsumptionPattern (
   FOREIGN KEY (user_id) REFERENCES UserInfo(user_id)
 );
 
+ALTER TABLE UserConsumptionPattern
+DROP FOREIGN KEY userconsumptionpattern_ibfk_1;
+
+ALTER TABLE UserConsumptionPattern
+ADD CONSTRAINT userconsumptionpattern_ibfk_1 FOREIGN KEY (user_id)
+REFERENCES UserInfo(user_id) ON DELETE CASCADE;
+
 CREATE TABLE CustomCard (
   customcard_id INT PRIMARY KEY AUTO_INCREMENT COMMENT '생성된 커스텀카드1',
   customcard_name VARCHAR(100) DEFAULT NULL COMMENT '커스텀카드 이름',
@@ -107,6 +119,11 @@ CREATE TABLE CustomCard (
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '생성시간',
   FOREIGN KEY (user_id) REFERENCES UserInfo(user_id)
 );
+
+ALTER TABLE customcard DROP FOREIGN KEY customcard_ibfk_1;
+ALTER TABLE customcard
+ADD CONSTRAINT customcard_ibfk_1
+FOREIGN KEY (user_id) REFERENCES userinfo(user_id) ON DELETE CASCADE;
 
 CREATE TABLE point_history (
   id INT PRIMARY KEY AUTO_INCREMENT COMMENT '포인트 내역 고유 번호',
@@ -124,6 +141,12 @@ CREATE TABLE Attendance (
   PRIMARY KEY (user_id, date),
   FOREIGN KEY (user_id) REFERENCES UserInfo(user_id)
 );
+
+ALTER TABLE Attendance
+DROP FOREIGN KEY attendance_ibfk_1;
+ALTER TABLE Attendance
+ADD CONSTRAINT attendance_ibfk_1
+FOREIGN KEY (user_id) REFERENCES UserInfo(user_id) ON DELETE CASCADE;
 
 CREATE TABLE WeeklyBonus (
   user_id INT NOT NULL COMMENT '사용자',
@@ -155,12 +178,21 @@ CREATE TABLE CardBenefitDetail (
 CREATE TABLE UserAgreement (
   user_id INT NOT NULL COMMENT '회원 ID',
   term_id INT NOT NULL COMMENT '약관 ID',
-  is_agreed VARCHAR(2) NOT NULL DEFAULT 'N' COMMENT '동의 여부(Y/N)',
-  agreed_at DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '동의 시각',
+  is_agreed VARCHAR(2) NOT NULL DEFAULT 'N' COMMENT '동의 여부(Y/N)'
   PRIMARY KEY (user_id, term_id),
-  FOREIGN KEY (user_id) REFERENCES UserInfo(user_id),
+  FOREIGN KEY (user_id) REFERENCES UserInfo(user_id) ON DELETE CASCADE,
   FOREIGN KEY (term_id) REFERENCES Term(term_id)
 );
+
+select * from UserAgreement ua ;
+alter TABLE UserAgreement drop agreed_at;
+alter table UserAgreement DROP agreed_at;
+ALTER TABLE UserAgreement
+  ADD CONSTRAINT useragreement_ibfk_1
+  FOREIGN KEY (user_id) REFERENCES UserInfo(user_id) ON DELETE CASCADE;
+
+ALTER TABLE UserAgreement DROP FOREIGN KEY useragreement_ibfk_1;
+
 
 CREATE TABLE LikeCard (
   card_id INT NOT NULL COMMENT '좋아요 한 카드 번호',
@@ -169,6 +201,13 @@ CREATE TABLE LikeCard (
   FOREIGN KEY (card_id) REFERENCES Card(card_id),
   FOREIGN KEY (user_id) REFERENCES UserInfo(user_id)
 );
+
+ALTER TABLE LikeCard
+DROP FOREIGN KEY likecard_ibfk_2;
+
+ALTER TABLE LikeCard
+ADD CONSTRAINT likecard_ibfk_2 FOREIGN KEY (user_id)
+REFERENCES UserInfo(user_id) ON DELETE CASCADE;
 
 CREATE TABLE LikeAsset (
   user_id INT NOT NULL COMMENT '누가 좋아요 눌렀는지',
@@ -186,6 +225,13 @@ CREATE TABLE OwnedAsset (
   FOREIGN KEY (asset_id) REFERENCES CustomAsset(asset_id)
 );
 
+ALTER TABLE OwnedAsset
+DROP FOREIGN KEY ownedasset_ibfk_1;
+
+ALTER TABLE OwnedAsset
+ADD CONSTRAINT ownedasset_ibfk_1 FOREIGN KEY (user_id)
+REFERENCES UserInfo(user_id) ON DELETE CASCADE;
+
 CREATE TABLE UserConsumptionPatternDetail (
   pattern_id INT NOT NULL COMMENT '소비패턴 고유번호',
   benefitcategory_id INT NOT NULL COMMENT '혜택 대분류',
@@ -194,4 +240,37 @@ CREATE TABLE UserConsumptionPatternDetail (
   FOREIGN KEY (pattern_id) REFERENCES UserConsumptionPattern(pattern_id),
   FOREIGN KEY (benefitcategory_id) REFERENCES BenefitCategory(benefitcategory_id)
 );
+
+ALTER TABLE UserConsumptionPatternDetail
+DROP FOREIGN KEY userconsumptionpatterndetail_ibfk_1;
+
+ALTER TABLE UserConsumptionPatternDetail
+ADD CONSTRAINT userconsumptionpatterndetail_ibfk_1 FOREIGN KEY (pattern_id)
+REFERENCES UserConsumptionPattern(pattern_id) ON DELETE CASCADE;
 #=========================================================================================
+
+CREATE TRIGGER LikeCardTrigger_Insert
+AFTER INSERT ON likecard
+FOR EACH ROW
+BEGIN
+    UPDATE Card
+    SET card_like = (
+        SELECT COUNT(*)
+        FROM LikeCard
+        WHERE card_id = NEW.card_id
+    )
+    WHERE card_id = NEW.card_id;
+END;
+12:35
+CREATE TRIGGER LikeCardTrigger_Delete
+AFTER DELETE ON likecard
+FOR EACH ROW
+BEGIN
+    UPDATE Card
+    SET card_like = (
+        SELECT COUNT(*)
+        FROM LikeCard
+        WHERE card_id = OLD.card_id
+    )
+    WHERE card_id = OLD.card_id;
+END;

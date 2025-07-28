@@ -8,9 +8,8 @@ import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.javamail.JavaMailSender; // Spring Mail 쓴다면
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.mail.SimpleMailMessage;    // (생략 가능)
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -43,41 +42,6 @@ public class MailAuthController {
 	    log.info(email + " : " + map.toString());
 	    return map;
 	}
-
-    /** 2. 인증코드 발송 요청 */
-	/* @PostMapping("/send") */
-    public Map<String, Object> sendMailWithCodeFirstVersion(@RequestParam String email, HttpSession session) {
-        Map<String, Object> result = new HashMap<>();
-
-        // 인증코드 생성
-        String code = String.format("%06d", new Random().nextInt(1000000));
-        long expire = System.currentTimeMillis() + 3 * 60 * 1000; // 3분
-
-        // 세션에 저장
-        session.setAttribute("emailCode", code);
-        session.setAttribute("emailExpire", expire);
-        session.setAttribute("emailToVerify", email);
-
-        // 실제 메일 발송 (이메일 발송 설정 필요)
-        try {
-            if (mailSender != null) {
-                SimpleMailMessage message = new SimpleMailMessage();
-                message.setTo(email);
-                message.setSubject("[카드가든] 이메일 인증번호 안내");
-                message.setText("인증번호: " + code + "\n3분 이내 입력해 주세요.");
-                mailSender.send(message);
-                log.info("[MAIL] 인증코드 발송: " + email + ", code=" + code);
-            } else {
-                log.warn("[MAIL] mailSender 미설정. 콘솔 출력: code=" + code);
-            }
-            result.put("success", true);
-        } catch (Exception e) {
-            log.error("[MAIL] 이메일 발송 실패", e);
-            result.put("success", false);
-            result.put("error", "메일 발송 실패");
-        }
-        return result;
-    }
     
     /** 2. 인증코드 발송 요청 */
     @PostMapping("/send")
@@ -156,6 +120,7 @@ public class MailAuthController {
                 valid = true;
                 session.setAttribute("emailVerified", true);
                 session.setAttribute("verifiedEmail", savedEmail);
+        		log.info("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! email(MailAuthController): "+session.getAttribute("verifiedEmail")+"");
             }
         }
         result.put("valid", valid);

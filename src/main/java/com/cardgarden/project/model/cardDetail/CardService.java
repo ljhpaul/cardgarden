@@ -5,13 +5,20 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cardgarden.project.model.benefitDetail.BenefitDetailDTO;
+
 @Service
 public class CardService {
 
     @Autowired
     private CardDAOInterface cardDAO;
 	
-	
+    public List<CardDTO> getTopLikeCardByCompany() {
+        return cardDAO.selectTopLikeCardByCompany();
+    }
+    
+    
+    
 	public List<CardDTO> selectById(int cardId){
 		List<CardDTO> cardList = cardDAO.selectById(cardId);
 		return cardList;
@@ -23,4 +30,12 @@ public class CardService {
 		List<CardDetailDTO> cardList = cardDAO.selectDetailByID(cardId);
 		return cardList;
 	}
+	
+	public List<CardBenefitRankDTO> selectPatternCardID(int patternid, int cardid){
+		List<CardBenefitRankDTO> cardList = cardDAO.selectPatternCardID(patternid,cardid);
+		return cardList;
+		
+	}
+	
+	
 }

@@ -202,3 +202,13 @@ $RECYCLE.BIN/
 
 # Email Security Info
 application-context-email.xml
+
+# DB Security Info
+mysqlDB.properties
+
+#Python
+src/main/resources/application.properties
+src/main/resources/mysqlDB.properties
+*.ipynb_checkpoints
+*.pyc
+__pycache__/

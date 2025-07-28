@@ -1,0 +1,47 @@
+package com.cardgarden.project.model.custom.dao;
+
+import java.util.List;
+import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import com.cardgarden.project.model.custom.dto.CustomAssetDTO;
+import com.cardgarden.project.model.custom.dto.CustomCardDTO;
+
+@Repository
+public class CustomMakeDAOMybatis implements CustomMakeDAOInterface {
+
+    @Autowired
+    private SqlSessionTemplate sqlSession;
+    // 배경
+    private final String namespace = "com.cardgarden.custommake";
+
+    public List<CustomAssetDTO> selectBackgroundList() {
+        return sqlSession.selectList(namespace + ".selectBackgroundList");
+    }
+    public List<Integer> selectOwnedBackgroundList(int userId) {
+        return sqlSession.selectList(namespace + ".selectOwnedBackgroundList", userId);
+    }
+    // 스티커
+    public List<CustomAssetDTO> selectStickerList() {
+        return sqlSession.selectList(namespace + ".selectStickerList");
+    }
+    public List<Integer> selectOwnedStickerList(int userId) {
+        return sqlSession.selectList(namespace + ".selectOwnedStickerList", userId);
+    }
+    public void plusUsed(int assetId) {
+        sqlSession.update(namespace + ".incrementUsed", assetId);
+    }
+
+    public void minusUsed(int assetId) {
+        sqlSession.update(namespace + ".decrementUsed", assetId);
+    }
+    // 커스텀 카드 추가
+    public void insertCustomCard(CustomCardDTO dto) {
+        sqlSession.insert(namespace + ".insertCustomCard", dto);
+    }
+    public CustomCardDTO selectLatestCustomCardByUser(int userId) {
+        return sqlSession.selectOne(namespace + ".selectLatestCustomCardByUser", userId);
+    }
+
+
+}

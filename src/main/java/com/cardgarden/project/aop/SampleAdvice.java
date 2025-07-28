@@ -12,8 +12,8 @@ import lombok.extern.slf4j.Slf4j;
 public class SampleAdvice {
 
     // 원하는 타겟 패키지/계층명으로 수정해서 사용
-//   @Pointcut("within(com.cardgarden.project.model.sample.SampleService)")
-   @Pointcut("execution(* selectAll())")
+//	@Pointcut("within(com.cardgarden.project.model.sample.SampleService)")
+	@Pointcut("execution(* selectAll())")
     public void targetMethod() {}
 
     @Before("targetMethod()")
@@ -39,7 +39,6 @@ public class SampleAdvice {
       //------------------------------------------------------------
       /* 주관심사를 다녀온 후 */
        log.info("[SampleAdvice] Around - after: {}", jp.getSignature().toShortString());
-       
        
       //============================================================      
        return result;

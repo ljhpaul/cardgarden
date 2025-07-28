@@ -14,7 +14,7 @@
 </resultMap>
  -->
 
-<mapper namespace="com.firstzone.cardLike">
+<mapper namespace="com.cardgarden.cardLike">
 	<insert id="cardLikeInsert" parameterType="map">
 	    INSERT INTO LikeCard (card_id, user_id)
 	    VALUES (#{card_id}, #{user_id})
@@ -24,6 +24,16 @@
 	    DELETE FROM LikeCard
 	    WHERE card_id = #{card_id} AND user_id = #{user_id}
 	</delete>
+	<select id="cardLikeSelectCount" parameterType="int" resultType="int">
+	  SELECT COUNT(*)
+	  FROM LikeCard
+	  WHERE user_id=#{user_id}
+	</select>
+	<select id="cardLikeCount" parameterType="int" resultType="int">
+	  SELECT COUNT(*)
+	  FROM LikeCard
+	  WHERE card_id=#{card_id}
+	</select>
 </mapper> 
 
 	

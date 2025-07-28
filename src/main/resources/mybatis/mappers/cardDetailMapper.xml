@@ -14,7 +14,7 @@
 </resultMap>
  -->
 
-<mapper namespace="com.firstzone.card">
+<mapper namespace="com.cardgarden.card">
 	<select id="selectById" parameterType="int" resultType="DetailcardDTO">
 		select *
 		from Card
@@ -27,7 +27,30 @@
 			inner join BenefitDetail bd
 				on cbd.benefitdetail_id = bd.benefitdetail_id
 		where card_id = #{cardid};
-	</select>	
+	</select>
+	<select  id="selectLike" parameterType="map" resultType="DetailcardDTO">
+		SELECT 
+		c.*, 
+		CASE WHEN lc.user_id IS NOT NULL THEN 1 ELSE 0 END AS liked
+		FROM Card c
+		LEFT JOIN LikeCard lc 
+			ON c.card_id = lc.card_id 
+			AND lc.user_id = #{userId}
+		WHERE c.card_id = #{cardId}
+		
+	</select>
+	
+	<!-- 카드 회사별 좋아요 수 1위 카드 조회 -->
+<select id="selectTopLikeCardByCompany" resultType="cardDTO">
+  SELECT *
+  FROM (
+    SELECT *, ROW_NUMBER() OVER (PARTITION BY company ORDER BY card_like DESC) AS rnk
+    FROM Card
+  ) ranked
+  WHERE rnk = 1
+</select>
+	
+	
 </mapper>
 
 	

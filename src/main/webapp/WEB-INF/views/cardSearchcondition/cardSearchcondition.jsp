@@ -6,7 +6,7 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title>카드조회</title>
+  <title>카드가든 : 카드조회</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&family=Nanum+Square+Round&display=swap" rel="stylesheet">
@@ -14,10 +14,11 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: 'Nanum Square Round', sans-serif;
-      background-color: #F0F3F1;
-    }
+	body {
+	  font-family: 'Nanum Square Round', sans-serif;
+	  background-color: #F0F3F1;
+	  color: #333;
+	}
     .wrap {
       display: flex;
       justify-content: center;
@@ -34,28 +35,33 @@
       border-radius: 12px;
       box-shadow: 0 8px 24px rgba(0,0,0,0.1);
     }
-   .folder {
-      background-color: #f9f9f9;
-      border-radius: 16px;
-      padding: 30px 20px; /* 글씨 위치 조정  */
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-      position: relative;
-      font-size: 16px;
-    }
-    .tab {
-      font-weight: bold;
-      margin-bottom: 5px;
-      font-size: 16px;
-      display: inline-block;
-      background-color: #f9f9f9;
-      padding: 6px 12px; /* 대카테고리 글씨 영역 */
-      border-top-left-radius: 10px;
-      border-top-right-radius: 10px;
-      position: absolute;
-      top: -25px;
-      left: 0px;
-     box-shadow: 0 -2px 0 rgba(0,0,0,0.1);
-    }
+	.folder {
+	  background-color: #fff;
+	  border-radius: 16px;
+	  padding: 30px 30px;
+	  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+	  position: relative;
+	  border: 2px dashed #8FB098;
+	}
+	.tab {
+	  background-color: #FFF5E1;
+	  color: #646F58;
+	  font-weight: bold;
+	  padding: 8px 14px;
+	  border-radius: 12px 12px 0 0;
+	  font-size: 15px;
+	  box-shadow: 0 -2px 0 rgba(0,0,0,0.1);
+	  margin-bottom: 4px;
+	  padding-left: 10px;
+	  cursor: pointer;
+	}
+	#benefitDetailListarea{
+		padding-left: 18px;
+		padding-top: 5px;
+		padding-bottom: 5px;
+		/* border: 2px dashed #8FB098; */
+	    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.08);
+	}
     .folder_btn {
       display: block;
       margin: 4px 0;
@@ -68,16 +74,18 @@
       gap: 16px;
       margin-bottom: 20px;
     }
-    .card-btn {
-      background-color: #e0e0e0;
-      border-radius: 12px;
-      padding: 20px;
-      text-align: center;
-      cursor: pointer;
-      font-size: 20px;
-      font-weight: bold;
-      transition: background-color 0.3s;
-    }
+	.card-btn {
+	  background-color: #DFEED8;
+	  color: #2E4637;
+	  border-radius: 14px;
+	  padding: 20px;
+	  text-align: center;
+	  cursor: pointer;
+	  font-size: 20px;
+	  font-weight: bold;
+	  transition: all 0.3s;
+	  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.08);
+	}
     .card-btn:hover {
       background-color: #c8e6c9;
     }
@@ -89,37 +97,59 @@
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
       padding: 20px;
     }
-    #cardCountdiv {
-      height: 80px;
-      background-color: gray;
-      color: white;
-      font-size: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 10px;
-      margin-bottom: 20px;
-      transition: background-color 0.5s;
-    }
+	#cardCountdiv {
+	  background-color: #DFEED8;
+	  color: #2E4637;
+	  font-size: 16px;
+	  display: flex;
+	  flex-direction: column;
+	  align-items: center;
+	  justify-content: center;
+	  border-radius: 14px;
+	  margin-top: 50px;
+	  margin-bottom: 20px;
+	  padding: 20px 10px;
+	  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+	  transition: background-color 0.4s ease;
+	  text-align: center;
+	}
+	
+	.count-title {
+	  font-size: 18px;
+	  font-weight: bold;
+	  margin-bottom: 6px;
+	}
+	
+	.count-number {
+	  font-size: 30px;
+	  font-weight: 800;
+	  color: #fffff;
+	}
     input[type="checkbox"]:focus {
       outline: 3px solid #FF9900;
       outline-offset: 4px;
     }
-    input[type="submit"] {
-      width: 100%;
-      padding: 14px;
-      font-size: 16px;
-      font-weight: bold;
-      background-color: #4CAF50;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background-color 0.3s;
-    }
+	input[type="submit"] {
+	  background-color: #8FB098;
+	  color: white;
+	  border: none;
+	  padding: 16px;
+	  font-size: 17px;
+	  font-weight: bold;
+	  border-radius: 10px;
+	  cursor: pointer;
+	  transition: background-color 0.3s ease;
+	  width:250px;
+	}
     input[type="submit"]:hover {
       background-color: #388E3C;
     }
+    /* 비활성화된 상태 */
+	input[type="submit"]:disabled {
+	  cursor: not-allowed;
+	  background-color: #ccc; /* 선택 */
+	  opacity: 0.6; /* 선택 */
+	}
     .emoji {
       font-size: 20px;
       margin-right: 6px;
@@ -128,6 +158,7 @@
 </head>
 <body>
 <form id="searchForm" action="${cpath}/cardSearchcondition" method="post">
+  <div id="selectedCategories"></div>
   <div class="wrap">
     <div id="content">
       <div class="cardtype">
@@ -140,7 +171,7 @@
       </div>
       <c:forEach var="category" items="${benefitCategoryList}">
         <div class="folder">
-          <div class="tab">
+          <div class="tab category-tab" data-id="${category.benefitcategory_id}">
             <span class="emoji">
               <c:choose>
                 <c:when test="${category.benefitCategory_name.contains('모빌리티')}">&#x1F697;</c:when>
@@ -160,6 +191,7 @@
             </span>
             ${category.benefitCategory_name}
           </div>
+          <div id="benefitDetailListarea">
           <c:forEach var="detail" items="${benefitDetailList}">
             <c:if test="${detail.benefitcategory_id == category.benefitcategory_id}">
               <label class="folder_btn">
@@ -168,39 +200,99 @@
               </label>
             </c:if>
           </c:forEach>
+          </div>
         </div>
       </c:forEach>
     </div>
-    <div class="right">
-      <div id="cardCountdiv">
-        고객님에게 맞는 카드는 <span id="cardCount">0</span>개 입니다
-      </div>
-      <input type="submit" value="카드보러가기">
-    </div>
-  </div>
+		<div class="right">
+		  <div id="cardCountdiv">
+		    <span class="count-title">고객님에게는</span>
+		    <span id="cardCount" class="count-number">0</span> 
+		    <span style="font-weight: bold;">개의 카드가 적합합니다</span>
+		  </div>
+		  <input id="cardsubmit" type="submit" value="카드 보러 가기">
+		</div>
+		  </div>
 </form>
 <script>
-  function updateCardCount() {
+let cardsubmit;
+
+
+document.querySelectorAll(".category-tab").forEach(tab => {
+	  tab.addEventListener("click", function () {
+	    const categoryId = this.dataset.id;
+	    const container = document.getElementById("selectedCategories");
+	    const folder = this.closest(".folder");
+
+	    if (this.classList.contains("selected")) {
+	      this.classList.remove("selected");
+	      this.style.backgroundColor = "#FFF5E1";
+
+	      // 이름까지 포함해 정확히 찾아서 삭제
+	      const inputToRemove = Array.from(container.querySelectorAll('input[name="benefitcategory_id"]'))
+	                                 .find(input => input.value == categoryId);
+	      if (inputToRemove) container.removeChild(inputToRemove);
+	    } else {
+	      this.classList.add("selected");
+	      this.style.backgroundColor = "#DFEED8";
+
+	      const input = document.createElement("input");
+	      input.type = "hidden";
+	      input.name = "benefitcategory_id";
+	      input.value = categoryId;
+	      container.appendChild(input);
+	      
+	      const checkboxes = folder.querySelectorAll('input[name="category"]');
+	      checkboxes.forEach(cb => cb.checked = false);
+	    }
+
+	    // 디버깅 정확히 출력
+	    const selectedInputs = Array.from(container.querySelectorAll('input[name="benefitcategory_id"]'));
+	    console.log("선택된 카테고리들:", selectedInputs.map(i => i.value));
+	    console.log("현재 hidden input 개수:", selectedInputs.length);
+
+	    updateCardCount();
+	  });
+	});
+
+function updateCardCount() {
     const category = [];
     document.querySelectorAll('input[name="category"]:checked').forEach(ct => category.push(ct.value));
     const cardType = [];
     document.querySelectorAll('input[name="cardType"]:checked').forEach(ct => cardType.push(ct.value));
+    const benefitCategoryIds = [];
+    document.querySelectorAll('#selectedCategories input[name="benefitcategory_id"]').forEach(input => {
+      benefitCategoryIds.push(input.value);
+    });
 
+
+    
     if (cardType.length === 0) {
       alert("신용카드 또는 체크카드 중 하나는 선택해야 합니다.");
       document.getElementById("cardCount").textContent = 0;
-      document.getElementById("cardCountdiv").style.backgroundColor = "gray";
+      document.getElementById("cardCountdiv").style.backgroundColor = "#DFEED8";
       return;
     }
+    
+    console.log("카테고리:", category);
+    console.log("카테고리 탭:", benefitCategoryIds);
 
     $.ajax({
       url: "${cpath}/cardCount",
       method: "POST",
-      data: { category: category, cardType: cardType },
+      data: { category: category, cardType: cardType, benefitcategory_id: benefitCategoryIds },
       traditional: true,
       success: function(count) {
         $("#cardCount").text(count);
-        $("#cardCountdiv").css("background-color", count > 0 ? "#4CAF50" : "gray");
+        $("#cardCountdiv").css("background-color", count > 0 ? "#4CAF50" : "#DFEED8");
+        if(count == 0){
+            console.log("카드가 0개임 비활성화");
+            cardsubmit.disabled = true;
+        }else{
+        	console.log("카드가 있음 활성화");
+            cardsubmit.disabled = false;
+        }
+
       },
       error: function() {
         $("#cardCount").text("오류");
@@ -209,20 +301,57 @@
     });
   }
 
-  document.addEventListener("DOMContentLoaded", function () {
-    document.querySelectorAll('input[name="category"], input[name="cardType"]').forEach(input => {
-      input.addEventListener("change", updateCardCount);
-    });
+document.addEventListener("DOMContentLoaded", function () {
+	  // 기존 로직 유지
+	  cardsubmit = document.getElementById("cardsubmit");
 
-    document.getElementById("searchForm").addEventListener("submit", function (e) {
-      const checked = document.querySelectorAll('input[name="cardType"]:checked');
-      if (checked.length === 0) {
-        alert("신용카드 또는 체크카드 중 하나는 선택해야 합니다.");
-        e.preventDefault();
-        document.getElementById("focus").focus();
-      }
-    });
-  });
+	  document.querySelectorAll('input[name="category"]').forEach(checkbox => {
+		  checkbox.addEventListener("change", function () {
+		    const folder = checkbox.closest(".folder");
+		    const tab = folder.querySelector(".category-tab");
+		    const categoryId = tab.dataset.id;
+		    const container = document.getElementById("selectedCategories");
+
+		    // 탭이 선택된 상태라면 소카테고리 체크 시 탭 해제 + hidden input 제거
+		    if (tab.classList.contains("selected")) {
+		      const anyChecked = folder.querySelector('input[name="category"]:checked');
+		      if (anyChecked) {
+		        // 탭 해제
+		        tab.classList.remove("selected");
+		        tab.style.backgroundColor = "#FFF5E1";
+
+		        // hidden input 제거 
+		        const hiddenInputs = Array.from(container.querySelectorAll('input[name="benefitcategory_id"]'));
+		        hiddenInputs.forEach(input => {
+		          if (input.value == categoryId) {
+		            container.removeChild(input);
+		          }
+		        });
+
+		        console.log(`탭 자동 해제됨 → 카테고리 ID: ${categoryId}`);
+		      }
+		    }
+
+		    updateCardCount();
+		  });
+		});
+
+	  // 기존 이벤트들도 그대로 유지
+	  document.querySelectorAll('input[name="category"], input[name="cardType"]').forEach(input => {
+	    input.addEventListener("change", updateCardCount);
+	  });
+
+	  document.getElementById("searchForm").addEventListener("submit", function (e) {
+	    const checked = document.querySelectorAll('input[name="cardType"]:checked');
+	    if (checked.length === 0) {
+	      alert("신용카드 또는 체크카드 중 하나는 선택해야 합니다.");
+	      e.preventDefault();
+	      document.getElementById("focus").focus();
+	    } else {
+	      cardsubmit.disabled = false;
+	    }
+	  });
+	});
 </script>
 </body>
 </html>
