@@ -3,10 +3,15 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.cardgarden</groupId>
-	<artifactId>spring</artifactId>
+	<artifactId>cardgarden</artifactId>
 	<name>springLegacyProject</name>
 	<packaging>war</packaging>
-	<version>1.0.0-BUILD-SNAPSHOT</version>
+	<version>1.0.0</version>
+	
+	<build>
+        <finalName>cardgarden</finalName>
+    </build>
+	
 	<properties>
 		<java-version>11</java-version>
 		<org.springframework-version>5.3.5</org.springframework-version>
