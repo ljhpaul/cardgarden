@@ -7,11 +7,7 @@
 	<name>springLegacyProject</name>
 	<packaging>war</packaging>
 	<version>1.0.0</version>
-	
-	<build>
-        <finalName>cardgarden</finalName>
-    </build>
-	
+
 	<properties>
 		<java-version>11</java-version>
 		<org.springframework-version>5.3.5</org.springframework-version>
@@ -21,31 +17,31 @@
 	<dependencies>
 		<!-- Spring Security OAuth2 Client -->
 		<dependency>
-		  <groupId>org.springframework.security</groupId>
-		  <artifactId>spring-security-oauth2-client</artifactId>
-		  <version>5.8.0</version>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-oauth2-client</artifactId>
+			<version>5.8.0</version>
 		</dependency>
 		<dependency>
-		  <groupId>org.springframework.security</groupId>
-		  <artifactId>spring-security-oauth2-core</artifactId>
-		  <version>5.8.0</version>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-oauth2-core</artifactId>
+			<version>5.8.0</version>
 		</dependency>
 		<dependency>
-		  <groupId>org.springframework.security</groupId>
-		  <artifactId>spring-security-config</artifactId>
-		  <version>5.8.0</version>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>5.8.0</version>
 		</dependency>
 		<dependency>
-		  <groupId>org.springframework.security</groupId>
-		  <artifactId>spring-security-core</artifactId>
-		  <version>5.8.0</version>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+			<version>5.8.0</version>
 		</dependency>
 		<dependency>
-		  <groupId>org.springframework.security</groupId>
-		  <artifactId>spring-security-web</artifactId>
-		  <version>5.8.0</version>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>5.8.0</version>
 		</dependency>
-		
+
 		<!-- for mail authorization -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -314,6 +310,7 @@
 		</dependency>
 	</dependencies>
 	<build>
+		<finalName>cardgarden</finalName>
 		<plugins>
 			<plugin>
 				<artifactId>maven-eclipse-plugin</artifactId>
