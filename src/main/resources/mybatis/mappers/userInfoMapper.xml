@@ -25,41 +25,41 @@
 	<!-- 전체 목록 -->
 	<select id="selectAll" resultType="userInfoDTO">
 		SELECT *
-		FROM userInfo
+		FROM UserInfo
 	</select>
 
 	<!-- user_id로 조회 -->
 	<select id="selectById" parameterType="int" resultType="userInfoDTO">
 		SELECT *
-		FROM userInfo
+		FROM UserInfo
 		WHERE user_id = #{user_id}
 	</select>
 
 	<!-- email로 전체 조회 (이메일로 유저 한명 조회, 필요시) -->
 	<select id="selectByEmail" parameterType="string" resultType="userInfoDTO">
 		SELECT *
-		FROM userInfo
+		FROM UserInfo
 		WHERE email = #{email}
 	</select>
 	
 	<!-- 로그인 아이디로 user_id 조회 -->
 	<select id="getUserIdByLoginId" parameterType="string" resultType="int">
 		SELECT user_id
-		FROM userInfo
+		FROM UserInfo
 		WHERE user_name = #{user_name}
 	</select>
 	
 	<!-- 이메일로 user_id 조회 -->
 	<select id="getUserIdByEmail" parameterType="string" resultType="int">
 		SELECT user_id
-		FROM userInfo
+		FROM UserInfo
 		WHERE email = #{email}
 	</select>
 	
 	<!-- 이름과 이메일로 로그인아이디 조회 -->
 	<select id="getLoginIdByNameAndEmail" parameterType="map" resultType="string">
 		SELECT user_name
-		  FROM userInfo
+		  FROM UserInfo
 		 WHERE name = #{name}
 		   AND email = #{email}
 	</select>
@@ -67,14 +67,14 @@
 	<!-- 로그인 아이디로 비밀번호 조회 -->
 	<select id="getPasswordByLoginId" parameterType="string" resultType="string">
 		SELECT user_password
-		  FROM userInfo
+		  FROM UserInfo
 		 WHERE user_name = #{user_name}
 	</select>
 	
 	<!-- 로그인 아이디와 이메일로 비밀번호 조회 -->
 	<select id="getPasswordByLoginIdAndEmail" parameterType="map" resultType="string">
 		SELECT user_password
-		  FROM userInfo
+		  FROM UserInfo
 		 WHERE user_name = #{user_name}
 		   AND email = #{email}
 	</select>
@@ -82,14 +82,14 @@
 	<!-- 로그인 아이디와 이메일로 비밀번호 조회 -->
 	<select id="getPointById" parameterType="int" resultType="int">
 		SELECT point
-		  FROM userInfo
+		  FROM UserInfo
 		 WHERE user_id = #{user_id}
 	</select>
 	
 	<!-- 로그인 아이디로 포인트 조회 -->
 	<select id="get" parameterType="map" resultType="string">
 		SELECT user_password
-		  FROM userInfo
+		  FROM UserInfo
 		 WHERE user_name = #{user_name}
 		   AND email = #{email}
 	</select>
@@ -97,34 +97,34 @@
 	<!-- 아이디 중복체크/회원유무 확인 -->
 	<select id="countByLoginId" parameterType="String" resultType="int">
 		SELECT COUNT(*)
-		FROM userInfo
+		FROM UserInfo
 		WHERE user_name = #{user_name}
 	</select>
 
 	<!-- 이름존재 확인 -->
 	<select id="countByName" parameterType="String" resultType="int">
 		SELECT COUNT(*)
-		FROM userInfo
+		FROM UserInfo
 		WHERE name = #{name}
 	</select>
 
 	<!-- 이메일 중복체크 -->
 	<select id="countByEmail" parameterType="String" resultType="int">
 		SELECT COUNT(*)
-		FROM userInfo
+		FROM UserInfo
 		WHERE email = #{email}
 	</select>
 
 	<!-- 닉네임 중복체크 -->
 	<select id="countByNickname" parameterType="String" resultType="int">
 		SELECT COUNT(*)
-		FROM userInfo
+		FROM UserInfo
 		WHERE nickname = #{nickname}
 	</select>
 
 	<!-- 유저 등록 -->
 	<insert id="insert" parameterType="userInfoDTO">
-		INSERT INTO userInfo
+		INSERT INTO UserInfo
 		(user_id, user_name, user_password,
 		email, nickname, name, gender, birth,
 		phone, address, created_at,
@@ -139,7 +139,7 @@
 	
 	<!-- 신규 유저 등록 -->
 	<insert id="createUser" parameterType="userInfoDTO">
-		INSERT INTO userInfo
+		INSERT INTO UserInfo
 		(user_name, user_password,
 		email, nickname, name, 
 		gender, birth,
@@ -159,7 +159,7 @@
 
 	<!-- 정보 수정(패스워드, 닉네임 등) -->
 	<update id="update" parameterType="userInfoDTO">
-		UPDATE userInfo
+		UPDATE UserInfo
 		SET
 		nickname = #{nickname},
 		name = #{name},
@@ -171,7 +171,7 @@
 	
 	<!-- 로그인아이디와 이메일로 비밀번호 수정 -->
 	<update id="setPasswordByLoginIdAndEmail" parameterType="map">
-		UPDATE userInfo
+		UPDATE UserInfo
 		   SET user_password = #{user_password}
 		 WHERE user_name = #{user_name}
 		   AND email = #{email}
@@ -179,7 +179,7 @@
 	
 		<!-- 관리자가 회원정보 수정 -->
 		<update id="updateUserAdmin" parameterType="userInfoDTO">
-		UPDATE userInfo
+		UPDATE UserInfo
 		SET
 		user_password = #{user_password},
 		nickname = #{nickname},
@@ -194,7 +194,7 @@
 
 	<!-- 회원 탈퇴/삭제 -->
 	<delete id="delete" parameterType="int">
-		DELETE FROM userInfo
+		DELETE FROM UserInfo
 		WHERE
 		user_id = #{user_id}
 	</delete>
@@ -233,8 +233,8 @@
 	<!-- 내가 좋아요한 카드 -->
 	<select id="userLikeCard" parameterType="int" resultMap="CardWithBenefitsMap">
 		SELECT c.*, cbd.cardbenefitdetail_text
-		FROM likecard l
-		JOIN card c ON l.card_id = c.card_id
+		FROM LikeCard l
+		JOIN Card c ON l.card_id = c.card_id
 		JOIN CardBenefitDetail cbd ON c.card_id = cbd.card_id
 		WHERE l.user_id = #{user_id};
 	</select>

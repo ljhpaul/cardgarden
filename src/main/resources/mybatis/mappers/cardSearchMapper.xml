@@ -9,7 +9,7 @@
   SELECT DISTINCT 
       c.*, 
       CASE WHEN lc.user_id IS NOT NULL THEN 1 ELSE 0 END AS liked
-  FROM card c
+  FROM Card c
   LEFT JOIN CardBenefitDetail cbd ON c.card_id = cbd.card_id
   LEFT JOIN BenefitDetail bd ON cbd.benefitdetail_id = bd.benefitdetail_id
   LEFT JOIN LikeCard lc ON c.card_id = lc.card_id AND lc.user_id = #{user_id}
@@ -48,7 +48,7 @@
 
 <select id="countCards" resultType="int" parameterType="map">
   SELECT COUNT(DISTINCT c.card_id)
-  FROM card c
+  FROM Card c
   LEFT JOIN CardBenefitDetail cbd ON c.card_id = cbd.card_id
   LEFT JOIN BenefitDetail bd ON cbd.benefitdetail_id = bd.benefitdetail_id
   WHERE
