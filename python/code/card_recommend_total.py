@@ -28,12 +28,12 @@ N_CAT = len(arr_key2)
 
 # DB 연결
 def get_engine():
-    return create_engine("mysql+pymysql://cardgarden:1234@localhost/cardgarden?charset=utf8mb4")
+    return create_engine("mysql+pymysql://cardgarden:1234@cardgarden-db/cardgarden?charset=utf8mb4")
 
 # --- 추천 1 ---
 def get_recommend_result(pattern_id):
     engine = get_engine()
-    sql_user = "SELECT user_id, gender, birth FROM userInfo WHERE user_id > 1"
+    sql_user = "SELECT user_id, gender, birth FROM UserInfo WHERE user_id > 1"
     sql_pattern = "SELECT pattern_id, user_id FROM UserConsumptionPattern WHERE user_id > 1 ORDER BY CREATED_AT DESC"
     sql_detail = "SELECT pattern_id, benefitcategory_id, amount FROM UserConsumptionPatternDetail"
     sql_detail_patternid = f"SELECT pattern_id, benefitcategory_id, amount FROM UserConsumptionPatternDetail WHERE pattern_id = {pattern_id}"
@@ -214,9 +214,7 @@ def find_cosine_card5(card_id):
 def get_consum_pattern_continuous(pattern_id, card_id, q_cutoff=0.75, min_matched=2):
     result = None
     # Q Table 불러오기 (parquet 경로 실제 서버 경로로 수정 필요!)
-    DF_PARQUET = pd.read_parquet(
-        "/Users/isanghyeon/Documents/workspace-sts-3.9.18.RELEASE/cardgarden/python/result/q_table_final.parquet"
-    )
+    DF_PARQUET = pd.read_parquet("/app/result/q_table_final.parquet")
     # DB에서 패턴/카테고리 정보
     engine = get_engine()
     sql_detail_patternid = f"""
