@@ -28,7 +28,7 @@ N_CAT = len(arr_key2)
 
 # DB 연결
 def get_engine():
-    return create_engine("mysql+pymysql://cardgarden:1234@cardgarden-db/cardgarden?charset=utf8mb4")
+    return create_engine("mysql+pymysql://cardgarden:1234@db/cardgarden?charset=utf8mb4")
 
 # --- 추천 1 ---
 def get_recommend_result(pattern_id):
@@ -105,7 +105,7 @@ def get_recommend_result(pattern_id):
         rows.append(arr)
     df = pd.DataFrame(rows, columns=["카드번호"] + arr_key2)
     # KMeans 클러스터링
-    K = 12
+    K = 18
     benefit_vectors = df[arr_key2].values
     kmeans = KMeans(n_clusters=K, random_state=42)
     clusters = kmeans.fit_predict(benefit_vectors)
