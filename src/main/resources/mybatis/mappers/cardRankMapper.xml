@@ -7,15 +7,15 @@
 
 <!-- CardMapper.xml -->
 <select id="getTop10All" resultType="DetailcardDTO">
-  SELECT * FROM card ORDER BY card_like DESC LIMIT 10
+  SELECT * FROM Card ORDER BY card_like DESC LIMIT 10
 </select>
 
 <select id="getTop10ByType" resultType="DetailcardDTO" parameterType="String">
-  SELECT * FROM card WHERE card_type = #{type} ORDER BY card_like DESC LIMIT 10
+  SELECT * FROM Card WHERE card_type = #{type} ORDER BY card_like DESC LIMIT 10
 </select>
 
 <select id="getTop10ByCompany" resultType="DetailcardDTO" parameterType="String">
-  SELECT * FROM card WHERE company LIKE CONCAT('%', #{company}, '%') ORDER BY card_like DESC LIMIT 10
+  SELECT * FROM Card WHERE company LIKE CONCAT('%', #{company}, '%') ORDER BY card_like DESC LIMIT 10
 </select>
 
 <select id="getTop10ByBenefit" resultType="DetailcardDTO" parameterType="String">
