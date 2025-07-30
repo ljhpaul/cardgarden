@@ -8,32 +8,32 @@
 	<!-- 사용자의 모든 동의 내역 -->
 	<select id="selectByUserId" parameterType="int" resultType="UserAgreementDTO">
 		SELECT user_id, term_id, is_agreed
-		  FROM userAgreement
+		  FROM UserAgreement
 		 WHERE user_id = #{user_id}
 	</select>
 	
 	<!-- 단일조회: 특정 사용자·약관 -->
 	<select id="getAgreedByUserIdAndTermId" parameterType="UserAgreementDTO" resultType="string">
 		SELECT is_agreed
-		  FROM userAgreement
+		  FROM UserAgreement
 		 WHERE user_id = #{user_id}
 		   AND term_id = #{term_id}
 	</select>
 
 	<insert id="insert" parameterType="UserAgreementDTO">
-		INSERT INTO userAgreement (user_id, term_id, is_agreed)
+		INSERT INTO UserAgreement (user_id, term_id, is_agreed)
 		VALUES (#{user_id}, #{term_id}, #{is_agreed})
 	</insert>
 
 	<update id="update" parameterType="UserAgreementDTO">
-		UPDATE userAgreement
+		UPDATE UserAgreement
 		   SET is_agreed = #{is_agreed}
 		 WHERE user_id = #{user_id}
 		   AND term_id = #{term_id}
 	</update>
 
 	<delete id="delete" parameterType="UserAgreementDTO">
-		DELETE FROM userAgreement
+		DELETE FROM UserAgreement
 		 WHERE user_id = #{user_id}
 		   AND term_id = #{term_id}
 	</delete>

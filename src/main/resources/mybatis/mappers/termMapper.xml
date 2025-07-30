@@ -14,21 +14,21 @@
   <!-- 원래는 typeAliases 대신 "com.shinhan.spring.model.dept.DeptDTO 써줘야 함 -->
   <!-- MyBatis가 select 결과를 읽어서 resultType 객체를 생성 : 기본 생성자가 없으면 오류~! -->
   <select id="selectAll" resultType="termDTO">
-    select * from term
+    select * from Term
   </select>
   
   <select id="selectById" parameterType="int" resultType="termDTO">
-    select * from term 
+    select * from Term 
     where term_id = #{term_id}
   </select>
   
   <insert id="insert" parameterType="termDTO">
-    insert into term(term_id, term_name, term_content, is_required, created_at) 
+    insert into Term(term_id, term_name, term_content, is_required, created_at) 
     values(#{term_id}, #{term_name}, #{term_content}, #{is_required}, #{created_at})
   </insert>
   
   <update id="update" parameterType="termDTO">
-    update term set 
+    update Term set 
     	term_name = #{term_name} 
     	term_content = #{term_content} 
     	is_required = #{is_required} 
@@ -37,7 +37,7 @@
   </update>
   
   <delete id="delete" parameterType="int">
-    delete from term 
+    delete from Term 
     where term_id = #{term_id}
   </delete>
   
