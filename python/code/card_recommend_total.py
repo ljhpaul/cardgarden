@@ -28,7 +28,7 @@ N_CAT = len(arr_key2)
 
 # DB 연결
 def get_engine():
-    return create_engine("mysql+pymysql://cardgarden:1234@db/cardgarden?charset=utf8mb4")
+    return create_engine("mysql+pymysql://cardgarden:1234@cardgarden-db/cardgarden?charset=utf8mb4")
 
 # --- 추천 1 ---
 def get_recommend_result(pattern_id):
