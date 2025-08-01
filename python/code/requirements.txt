@@ -7,3 +7,4 @@ sqlalchemy
 pymysql
 scipy
 pyarrow
+gunicorn
