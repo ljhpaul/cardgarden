@@ -17,6 +17,7 @@ COPY python/code/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY python/code/ .
+COPY wait-for-it.sh .
 COPY python/result/q_table_final.parquet ./result/
 
-CMD ["gunicorn", "card_recommend_total:app", "-w", "4", "-b", "0.0.0.0:5004", "--timeout", "600"]
+CMD ["./wait-for-it.sh", "cardgarden-db:3306", "--timeout=60", "--strict", "--", "gunicorn", "card_recommend_total:app", "-w", "4", "-b", "0.0.0.0:5004", "--timeout", "600"]
