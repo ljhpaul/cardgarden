@@ -1,0 +1,10 @@
+FROM docker.io/library/mysql:8.0.33
+
+MAINTAINER "LEE JEONGHEON<colosair@gmail.com>"
+
+ENV MYSQL_ROOT_PASSWORD=1234
+ENV MYSQL_DATABASE=cardgarden
+ENV MYSQL_USER=cardgarden
+ENV MYSQL_PASSWORD=1234
+
+ADD cardgarden_final.sql /docker-entrypoint-initdb.d/
